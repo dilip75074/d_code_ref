@@ -1,0 +1,36 @@
+<div class="stpls_help_container" ng-init="loadHelp('STS')">
+    <span ng-if="!helpContent" class="spinner" us-spinner></span>
+
+    <div class="row help_center animated" ng-class="{fadeIn: helpContent, fadeOutLeft: helpSection}" ng-if="helpContent">
+
+        <div class="col-xs-12 col-sm-2">
+
+          <button id="backButton" class="btn btn_chevron_back" ng-click="$root.back()">
+            <i class="icon_chevron_back pull-left"></i><span class="back_text pull-right">{{'LCR_BACK'|translate}}</span>
+          </button>
+
+        </div>
+
+        <h3 class="header page_header col-xs-12">
+
+            <span class="glyphicon glyphicon-question-sign"></span>
+
+            {{'PROD_HELP_SHIP_TO_STORE'|translate}}
+
+        </h3>
+
+        <div ng-if="helpContent">
+
+            <div ng-repeat="(header, c) in helpContent track by $index" class="col-xs-12 animated fadeIn">
+                <h4 ng-bind="header">{{header}}}</h4>
+                <div ng-repeat="i in c">
+                    <div panel-body animated fadeInDown ng-scope>
+                        <span>{{i}}</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

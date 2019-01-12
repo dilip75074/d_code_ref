@@ -1,0 +1,256 @@
+<style>
+	.font-size-16 {
+		font-size: 16px!important;
+	}
+</style>
+<div class="content-panel" ng-init="$parent.activeTab=1;">
+	<div class="vracks" style="max-width:inherit;">
+		<div class="loading-vrack" ng-hide="loadVrackInfo" style="width:928px!important;height:175px!important;">
+			<!--<span class="loading-label">{{'dashboard.view.LOADING'|translate}}</span>-->
+			<div class="loader-image"></div>
+		</div>
+		<ul class="vrack-network-info" ng-show="loadVrackInfo" style="{{displayBlock}}">
+			<li id="network"  class="vrack-info-padding-top-30">
+				<h2 style="font-size: 34px!important" translate="dashboard.view.VRACK"></h2>
+				<div style="border-right: 2px solid;border-color: #129bd3;">
+				<ul class="feature-list">
+					 <li>
+					 	<label class="font-size-16"><plain translate="dashboard.view.TYPE"/> :</label>
+					 	<span class="font-size-16">{{ dashboardInfo.vrackType }}</span>
+					 </li>
+					 <li>
+						<label class="font-size-16"><plain translate="dashboard.view.VRM"/> :</label>
+						<span class="font-size-16">{{ dashboardInfo.primaryVrmIP }}</span>
+					 </li>
+				</ul>
+				</div> 
+			</li>
+			<!-- <li id="workload">
+				<h3>Resource Pools</h3>
+				<div class="left-border">
+					<span class="block-setter"><span id="workload-system-icon"></span></span>
+					
+					<div ng-if="dashboardInfo.workloads.length != 0 && dashboardInfo.workloads != null" ng-click="showWorkloadList()">
+						<span class="counters middle-align">{{ dashboardInfo.workloads.length }}</span>
+						<span class="counters-text middle-align" ng-show="dashboardInfo.workloads.length == 1">Resource Pool</span>
+						<span class="counters-text middle-align" ng-show="dashboardInfo.workloads.length != 1">Resource Pools</span>
+					</div>
+					<span class="storage-unit">
+						<span style="display:inline;" ng-repeat="workload in dashboardInfo.workloads"><span style="display:inline;" ng-show="$index != 0"> | </span>{{ workload.storage }} GB</span>
+					</span>
+					<span class="counters middle-align">&nbsp;</span>
+					<span class="counters-text middle-align" ng-click="showWorkloadConfiguration()">Configure</span>
+				</div>
+				<div class="vrack-element-overlay"></div>
+			</li> -->	
+			<li id="workload" ng-class="{'vrack-info-padding-top-9':dashboardInfo.workloads.length > 0,'vrack-info-padding-top-30':dashboardInfo.workloads.length == 0 || dashboardInfo.workloads == null}">
+				<h3 translate="dashboard.view.RESOURCE_POOLS"></h3>
+				<div>
+					<span class="block-setter"><span id="workload-system-icon"></span></span>
+					
+					<div ng-apply-privilege="VRM_VIEW_WORKLOAD" ng-if="dashboardInfo.workloads.length != 0 && dashboardInfo.workloads != null" ng-click="showWorkloadList()">
+						<span class="counters middle-align">{{ dashboardInfo.workloads.length }}</span>
+						<span class="counters-text middle-align" ng-show="dashboardInfo.workloads.length == 1" translate="dashboard.view.RESOURCE_POOL"></span>
+						<span class="counters-text middle-align" ng-show="dashboardInfo.workloads.length != 1" translate="dashboard.view.RESOURCE_POOLS"></span>
+					</div>
+					<span class="storage-unit" ng-click="showPopup()">
+						<!--<span style="display:inline;" ng-repeat="workload in dashboardInfo.workloads"><span style="display:inline;" ng-show="$index != 0"> | </span>{{ (workload.storage / 1024 / 1024).toFixed(2) }} TB</span>-->
+						<span style="display:inline;">{{ (totalWorkloadStorage / 1024 / 1024).toFixed(2) }}</span> <plain translate="dashboard.view.TB"/>
+					</span>
+					<span class="counters middle-align">&nbsp;</span>
+					<span class="counters-text middle-align" ng-click="showWorkloadConfiguration()" translate="dashboard.view.CONGIGURE"></span>
+				</div>
+				<div class="vrack-element-overlay"></div>
+			</li>		
+		</ul>
+		<ul class="vrack-resources-info" ng-show="loadVrackInfo" style="{{displayBlock}};height:184px;"">
+			<li ng-apply-privilege="VRM_VIEW_LRM" id="logical-resources" ng-click="showLogicalResourcesPool()" ng-class="{'vrack-info-padding-top-9':dashboardInfo.workloads.length > 0,'vrack-info-padding-top-30':dashboardInfo.workloads.length == 0 || dashboardInfo.workloads == null}">
+				<h3 translate="dashboard.view.LOGICAL_RESOURCES"></h3>
+				<div ng-class="{'vrack-info-margin-top-22':dashboardInfo.workloads.length != 0 && dashboardInfo.workloads != null}">
+					<span class="block-setter"><span id="logical-resources-icon"></span></span>
+					<span class="counters middle-align">{{ dashboardInfo.numberOfHypervisorManagers }}</span>
+					<span class="counters-text middle-align" ng-show="dashboardInfo.numberOfHypervisorManagers == 1" translate="dashboard.view.VCENTER"></span>
+					<span class="counters-text middle-align" ng-show="dashboardInfo.numberOfHypervisorManagers != 1" translate="dashboard.view.VCENTERS"></span>
+				</div>
+				<div class="vrack-element-overlay"></div>
+			</li>
+			<li ng-apply-privilege="VRM_VIEW_PRM" id="physical-resources" ng-click="showPhysicalResourcesPool()" ng-class="{'vrack-info-padding-top-9':dashboardInfo.workloads.length > 0,'vrack-info-padding-top-30':dashboardInfo.workloads.length == 0 || dashboardInfo.workloads == null}">
+				<h3 translate="dashboard.view.PHYSICAL_RESOURCES"></h3>
+				<div class="left-border" ng-class="{'vrack-info-margin-top-22':dashboardInfo.workloads.length != 0 && dashboardInfo.workloads != null}">
+					<span class="block-setter"><span id="physical-resources-icon"></span></span>
+					<span class="counters middle-align">{{ dashboardInfo.numberOfRacks }}</span>
+					<span class="counters-text middle-align" ng-show="dashboardInfo.numberOfRacks == 1" translate="dashboard.view.RACK"></span>
+					<span class="counters-text middle-align" ng-show="dashboardInfo.numberOfRacks != 1" translate="dashboard.view.RACK"></span>
+				</div>
+				<div class="vrack-element-overlay"></div>							
+			</li>
+		</ul>
+	</div>
+				
+	<div class="resources" style="margin-top:-100px;">
+		<h2 translate="dashboard.view.RESOURCES"></h2>
+		<ul class="cards">
+			<li>
+				<h3 translate="dashboard.view.CPU"></h3>
+				<div class="loading-cards" ng-hide="loadCPUInfo">
+					<span class="loader-image"></span>
+					<div style="margin-top:40px;line-height:normal">
+						<plain translate="dashboard.view.PLEASE_WAIT"/><br/>
+						<plain translate="dashboard.view.LOADING_DATA"/>
+					</div>
+				</div>
+				<div class="card-wrapper" ng-show="loadCPUInfo" style="{{displayCPUBlock}}">
+					<div id="cpu-graph" class="graph text-align-center">
+						<div ng-if="availableCPU != 0" class="dashboard-doughnut-count cpuCount width178">{{ usedInnerCPUPercentage | number:0}}<span ng-if="usedInnerCPUPercentage != null">%</span>
+						</div>
+						<div ng-hide="showCpuStatsGraphMessage">
+							<div ang:chartjs:doughnut 
+								data-chartjs-model="cpuStatsData" 
+								data-chartjs-width="150" 
+								data-chartjs-height="150"
+								data-chartjs-segment-show-stroke="false"
+								data-chartjs-percentage-inner-cutout="80"
+								data-chartjs-animation-easing="easeOutQuint" ng-show="showGraph"></div>
+						</div>
+							<div style="padding:32px 0px 32px 0px;" class="graph-loading" ng-show="showCpuStatsGraphMessage">{{ cpuStatsGraphMessage }}</div>
+					</div>
+					<div class="card-content card-content-width-187">
+						<p>
+							<label translate="dashboard.view.USED"></label>
+							<span>{{usedCPU || 0}}<plain translate="dashboard.view.GHz"/></span>
+						</p>
+						<p>
+							<label translate="dashboard.view.ALLOCATED"></label>
+							<span>{{allocatedCPU || 0}}<plain translate="dashboard.view.GHz"/></span>
+						</p>
+						<p>
+							<label translate="dashboard.view.AVAILABLE"></label>
+							<span>{{availableCPU  || 0}}<plain translate="dashboard.view.GHz"/></span>
+						</p>
+					</div>	
+				</div>
+			</li>
+			<li>
+				<h3 translate="dashboard.view.MEMORY"></h3>
+				<div class="loading-cards" ng-hide="loadMemoryInfo">
+					<span class="loader-image"></span>
+					<div style="margin-top:40px;line-height:normal">
+						<plain translate="dashboard.view.PLEASE_WAIT"/><br/>
+						<plain translate="dashboard.view.LOADING_DATA"/>
+					</div>
+				</div>
+				<div class="card-wrapper" ng-show="loadMemoryInfo" style="{{displayMemoryBlock}}">
+					<div id="memory-graph" class="graph text-align-center">
+						<div ng-if="availableMemory != 0" class="dashboard-doughnut-count memoryCount width178">{{ usedInnerMemoryPercentage | number:0}}<span ng-if="usedInnerMemoryPercentage != null">%</span>
+						</div>
+							<div ng-hide="showMemoryStatsGraphMessage">
+								<div ang:chartjs:doughnut 
+								data-chartjs-model="memoryStatsData"
+								data-chartjs-width="150" 
+								data-chartjs-height="150"
+								data-chartjs-segment-show-stroke="false"
+								data-chartjs-percentage-inner-cutout="80"
+								data-chartjs-animation-easing="easeOutQuint" ng-show="showGraph"></div>				
+							</div>
+							<div style="padding:32px 0px 32px 0px;" class="graph-loading" ng-show="showMemoryStatsGraphMessage">{{ memoryStatsGraphMessage }}</div>
+							
+					</div>
+					<div class="card-content card-content-width-187">
+						<p>
+							<label translate="dashboard.view.USED"></label>
+							<span>{{usedMemory || 0}}<plain translate="dashboard.view.GB"/></span>
+						</p>
+						<p>
+							<label translate="dashboard.view.ALLOCATED"></label>
+							<span>{{allocatedMemory || 0}}<plain translate="dashboard.view.GB"/></span>
+						</p>
+						<p>
+							<label translate="dashboard.view.AVAILABLE"></label>
+							<span>{{availableMemory || 0}}<plain translate="dashboard.view.GB"/></span>
+						</p>
+					</div>
+				</div>
+			</li>
+			<li>
+				<h3 translate="dashboard.view.STORAGE"></h3>
+				<div class="loading-cards" ng-hide="loadStorageInfo">
+					<span class="loader-image"></span>
+					<div style="margin-top:40px;line-height:normal">
+						<plain translate="dashboard.view.PLEASE_WAIT"/><br/>
+						<plain translate="dashboard.view.LOADING_DATA"/>
+					</div>
+				</div>
+				<div class="card-wrapper" ng-show="loadStorageInfo" style="{{displayStorageBlock}}">
+					<div id="storage-graph" class="graph text-align-center">
+						<div ng-if="availableStorage != 0" class="dashboard-doughnut-count storageCount width178">{{ usedInnerStoragePercentage | number:0}}<span ng-if="usedInnerStoragePercentage != null">%</span>
+						</div>
+						<div ng-hide="showStorageStatsGraphMessage">
+							<div ang:chartjs:doughnut 
+								data-chartjs-model="storageStatsData"
+								data-chartjs-width="150" 
+								data-chartjs-height="150"
+								data-chartjs-segment-show-stroke="false"
+								data-chartjs-percentage-inner-cutout="80"
+								data-chartjs-animation-easing="easeOutQuint" ng-show="showGraph"></div>
+							</div>
+							<div style="padding:32px 0px 32px 0px;" class="graph-loading" ng-show="showStorageStatsGraphMessage">{{ storageStatsGraphMessage }}</div>
+					</div>
+					<div class="card-content card-content-width-187">
+						<p>
+							<label translate="dashboard.view.USED"></label>
+							<span>{{usedStorage || 0}}<plain translate="dashboard.view.TB"/></span>
+						</p>
+						<p>
+							<label translate="dashboard.view.ALLOCATED"></label>
+							<span>{{allocatedStorage || 0}}<plain translate="dashboard.view.TB"/></span>
+						</p>
+						<p>
+							<label translate="dashboard.view.AVAILABLE"></label>
+							<span>{{availableStorage || 0}}<plain translate="dashboard.view.TB"/></span>
+						</p>
+					</div>	
+				</div>
+			</li>
+			<li ng-controller="TopologyController">
+				<h3 translate="dashboard.view.TOPOLOGY"></h3>
+				<div class="loading-cards"  ng-hide="topologyLoaded">
+					<span class="loader-image"></span>
+					<div style="margin-top:40px;line-height:normal">
+						<plain translate="dashboard.view.PLEASE_WAIT"/><br/>
+						<plain translate="dashboard.view.LOADING_DATA"/>
+					</div>
+				</div>
+				<div class="card-wrapper" ng-show="topologyLoaded" style="{{displayStorageBlock}}">
+					<div id="storage-graph" class="graph text-align-center">
+						<!-- <div ng-if="availableStorage != 0" class="dashboard-doughnut-count storageCount width178">{{ usedInnerStoragePercentage | number:0}}<span ng-if="usedInnerStoragePercentage != null">%</span>
+						</div> -->
+						<!-- <div ang:chartjs:doughnut 
+							data-chartjs-model=""
+							data-chartjs-width="150" 
+							data-chartjs-height="150"
+							data-chartjs-segment-show-stroke="false"
+							data-chartjs-percentage-inner-cutout="80"
+							data-chartjs-animation-easing="easeOutQuint" ng-show="showGraph"></div>
+							<div class="graph-loading" ng-show="showStorageStatsGraphMessage">No Topology stats found</div> -->
+						<!-- <img src="app/img/networkPools.png" style="padding-top: 25px; padding-left: 10px;"/>	 -->
+						<minimal-topology ng-show="topologyLoaded" topology-displayed = "displayMiniTopology()" network-data="networkTopologyObject" ng-if="loadTopologyInfo" ng-click="loadSelectedPage('topology')"></minimal-topology>
+					</div>
+					<div class="card-content card-content-width-187">
+						<p>
+							<label>&nbsp;&nbsp;&nbsp;</label>
+							<span>&nbsp;&nbsp;&nbsp;</span>
+						</p>
+						<p>
+							<label>&nbsp;&nbsp;&nbsp;</label>
+							<span>&nbsp;&nbsp;&nbsp;</span>
+						</p>
+						<p>
+							<label>&nbsp;&nbsp;&nbsp;</label>
+							<span>&nbsp;&nbsp;&nbsp;</span>
+						</p>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>

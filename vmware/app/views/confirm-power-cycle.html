@@ -1,0 +1,24 @@
+<style>
+.modal-sm{ width:500px!important; height:200px!important; border-radius:3px; margin-top:7%; }
+.physical-container-wrapper{ max-width:0px!important; min-width:500px!important; max-height:280px!important;}
+</style>
+
+<div ng-model="template" ng-controller="PhysicalResourcesController">
+	<div class="physical-container physical-container-wrapper">
+		<header>
+			<span id="edit-configuration" title="Workload Configuration" translate="confirmpowercycle.view.CONFIRMATION"></span> 
+			<span class="dialog-close" ng-click="cancelPopup()"> 
+			<img src="app/img/close-icon.png">
+			</span>
+		</header>
+		<div class="view-rack-container clearfix" style="text-align:center!important; max-height:94%; max-width: 895px; overflow: auto; height:300px;">
+			<div style="padding:20px 0 50px 0">
+				<plain translate="confirmpowercycle.view.POWER_CYCLE_CONFIRMATION" />{{powerCycleType}}?
+			</div>
+			<center>
+				<input type="button" value="Cancel" class="submit" ng-click="cancelPopup()"/>
+				<input type="button" value="Submit" class="submit" ng-click="submitHostManagementDetail()"/>
+			</center>
+		</div>
+	</div>
+</div>

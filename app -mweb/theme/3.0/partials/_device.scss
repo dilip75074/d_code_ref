@@ -1,0 +1,56 @@
+// convenience methods for device.js classes
+
+$device-class-mobile: 'mobile';
+$device-class-tablet: 'tablet';
+$device-orientation-portrait: 'portrait';
+$device-orientation-landscape: 'landscape';
+$device-os-ios: 'ios';
+$device-os-android: 'android';
+$device-os-windows: 'windows';
+$device-os-blackberry: 'blackberry';
+
+
+$device-types: ($device-class-mobile, $device-class-tablet);
+$device-orientations: ($device-orientation-portrait, $device-orientation-landscape);
+$device-os: ($device-os-ios, $device-os-android, $device-os-windows, $device-os-blackberry);
+
+@for $f from 1 through length($device-types) {
+  $device: nth($device-types, $f);
+  .#{$device} {
+    .not-#{$device} { display: none; }
+
+    //add operating system specifics
+    @for $o from 1 through length($device-os) {
+      $os: nth($device-os, $o);
+      &.#{$os} {
+        .not-#{$os}-#{$device} { display: none; }
+      }
+    }
+    //add orientation specifics
+    @for $or from 1 through length($device-orientations) {
+      $orientation: nth($device-orientations, $or);
+      &.#{$orientation} {
+        .not-#{$device}-#{$orientation} { display: none; }
+      }
+    }
+  }
+}
+
+@for $o from 1 through length($device-os) {
+  $os: nth($device-os, $o);
+  .#{$os} {
+    .not-#{$os} { display: none; }
+  }
+}
+
+@for $or from 1 through length($device-orientations) {
+  $orientation: nth($device-orientations, $or);
+  .#{$orientation} {
+    .not-#{$orientation} { display: none; }
+  }
+}
+
+
+.not-short {
+  @include hide-short();
+}

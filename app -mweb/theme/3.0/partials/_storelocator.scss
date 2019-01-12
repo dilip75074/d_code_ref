@@ -1,0 +1,477 @@
+@import "compass/css3/opacity";
+.locator_header {
+  margin-top: 15px;
+  font-size: $base-font-size-page-header;
+}
+/* Store Banner */
+.store_banner {
+  font-size: $base-font-size -2;
+  background-color: $palette--white;
+  width: 100%;
+  height: 30px;
+  overflow: hidden;
+
+  #{$stp--overlay-page-selector} & {
+    display: none;
+  }
+
+  .store_info {
+    padding: 7px 9px 0;
+    height: 15px;
+    visibility: hidden;
+    &.ready {
+      visibility: visible;
+    }
+
+    .nearstore_text {
+      padding-right: 5px;
+      padding-left: 3px;
+    }
+    .store_hours {
+    }
+  }
+}
+
+/* Store Locator */
+.btn_chevron_back.locator,
+.btn_chevron_back.locator:active {
+   padding: 0px;
+}
+
+.map_btn {
+  margin-top: -43px;
+}
+
+input#searchInput_id, .locator_store_result,  {
+  border: 1px solid $palette--gray-light-3;
+  border-radius: 4px;
+}
+
+input#searchInput_id {
+
+}
+
+.locator_search_bar {
+  padding-bottom: 10px;
+  background: #f7f7f7;
+  padding-top: 10px;
+  padding-bottom: 0;
+
+  .input_finder {
+    border-top-left-radius: 15px !important;
+    border-bottom-left-radius: 15px !important;
+    border: none;
+    box-shadow: none;
+    padding-right: 0;
+  }
+
+  .finder_search_btn {
+    border-top-right-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+    border: none;
+    box-shadow: none;
+    padding: 13px 10px 13px 10px;
+    background-color: $palette--white;
+    height: 44px;
+  }
+
+  .input-group.error {
+
+    input {
+      border: 1px solid $palette--brightred;
+      padding: 18px 0 18px 10px;
+      border-right: none;
+    }
+
+    button {
+      border: 1px solid $palette--brightred;
+      border-left: none;
+      padding: 11px 10px 9px 10px;
+    }
+  }
+
+  .geo_btn {
+    padding: 5px 10px;
+    margin-top: 5px;
+    margin-left: (-$base-gutter-width);
+    background: none;
+    border: none;
+  }
+
+  .refine_btn {
+    margin-top: 2px;
+    padding: 6px 16px 6px 17px
+  }
+
+  .refine_container {
+    background: white;
+    box-shadow: inset 0 1px 5px rgba(0,0,0,0.4);
+    margin-top: 15px;
+    margin-bottom: -10px;
+    padding-top: 5px;
+
+    .feature_row {
+      height: 32px;
+    }
+
+    .feature_row span {
+      line-height: 32px;
+      vertical-align: middle;
+    }
+
+    .feature_label_display {
+      margin-left: 4px;
+    }
+
+    div > div {
+      margin: 10px 0;
+      border-bottom: 1px solid $palette--gray-med-light;
+      padding: 0 10px 10px 40px;
+      height: 32px;
+      width: 100%;
+      background-repeat: no-repeat;
+      background-position: 10px 0;
+
+      span.check {
+        float: right;
+        line-height: 32px;
+        vertical-align: middle;
+      }
+    }
+
+    div:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.locator_inital {
+  background: #f7f7f7;
+  padding: 5px 0 15px;
+  min-height: 350px;
+
+  h5 {
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.19;
+    color: #333333;
+  }
+
+  .no_remembered {
+    border-radius: 0;
+
+    .panel-body {
+      padding: 6px $base-gutter-width;
+      border-radius: 0;
+
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .spinner {
+    margin-top: 50px;
+  }
+}
+
+
+.locator_results_view {
+  min-height: 350px;
+  background: #f7f7f7;
+  margin: 0 -15px;
+  padding: 5px 15px;
+  // NOTE: the above scss is very bad.
+  // changes for store detail
+  .store_detail_locator & {
+    display: none;
+  }
+
+  .error {
+    font-size: $base-font-size-headline;
+    color: $palette--brightred;
+  }
+}
+
+.results_back {
+  padding: 0;
+  line-height: normal;
+  margin-left: -4px;
+}
+
+.locator_result_container {
+  background: #f7f7f7;
+  padding-top: 10px;
+
+  select {
+    height: 25px;
+    width: 75px;
+    display: inline-block;
+    font-size: 11px;
+    padding: 0 10px;
+  }
+
+  .locator_results {
+    min-height: 400px;
+  }
+
+  .map_button_container {
+    text-align: right;
+
+    button {
+      height: 25px;
+      padding: 2px 10px;
+      background: none;
+      margin-right: 5px;
+    }
+  }
+}
+
+.locator_store_result {
+  background: white;
+  padding: 6px $base-gutter-width;
+  margin-bottom: 5px;
+
+  h6 {
+    font-size: 18px;
+  }
+
+  p.addr_first {
+    margin-bottom: 0;
+  }
+}
+
+.locator_store_result.ng-click-active {
+  background: $palette--offwhite;
+}
+
+.store_attribute_container {
+  display: inline-block;
+}
+
+
+.locator_map {
+  padding-bottom: 50px;
+
+  .map_container {
+    opacity: 1;
+  }
+
+  .hide_map {
+    opacity: 0;
+  }
+
+  .map_store_detail {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-bottom: 10px;
+  }
+
+  .map_loading {
+    display: block;
+    height: 5px;
+    width: 100%;
+  }
+
+  .angular-google-map-container {
+    border-radius: 4px;
+    box-shadow: 0 1px 10px $palette--gray-med-light;
+  }
+}
+
+
+.store_detail {
+  background: #f7f7f7;
+
+  .panel {
+    padding: $base-gutter-width $base-gutter-width 0;
+    margin: $base-gutter-width;
+    overflow: hidden;
+
+    .remembered_store {
+      background: none;
+      font-size: 11px;
+      padding: 0;
+      margin-right: -4px;
+
+      p {
+        margin: 3px 5px;
+      }
+    }
+
+    .btn {
+      color: $base-font-color;
+    }
+
+    .btn:active {
+      box-shadow: none;
+    }
+
+    h4 {
+      @include border--base-top;
+      margin-top: 15px;
+      padding-top: 10px;
+      font-size: 20px;
+    }
+
+    .directions {
+      font-size: 12px;
+      margin-top: -14px;
+    }
+
+    .hours {
+      padding: 0 0 5px;
+
+      h6 {
+        margin-bottom: 6px;
+      }
+
+      p {
+        margin-bottom: 0;
+
+        strong {
+          width: 65px;
+          display: inline-block;
+        }
+      }
+    }
+
+    .special_hours {
+      margin: 0 0 15px;
+    }
+
+    .phone {
+
+      h5 {
+        margin: 5px 0;
+      }
+
+      a {
+        font-size: 15px;
+      }
+    }
+
+    p.addr_first {
+      margin-bottom: 0;
+    }
+
+    .stacked {
+      margin: 15px (-$base-gutter-width) 0;
+
+      a {
+        display: block;
+        @include font-bold;
+        font-size: 14px;
+        color: $palette--gray-dark;
+        width: 100%;
+        @include border--base-top;
+        padding: 8px $base-gutter-width;
+      }
+
+      a:first-of-type {
+        border-top: none;
+      }
+
+      .store_events_container {
+        margin: 5px 10px 15px;
+        text-align: center;
+
+      }
+    }
+  }
+}
+
+.store_attribute_legend {
+  position: fixed;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+  background: rgba(0, 0, 0, 0.8);
+  color: $palette--white;
+  font-size: $base-font-size-cart;
+  bottom: 0;
+  padding: 30px 2px 25px 2px;
+  z-index: 1000;
+
+  div.border {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 30px;
+    bottom: 15px;
+    border: 3px solid rgba(250,250,250,0.5);
+  }
+
+  .close_btn {
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    background-color: rgba(0, 0, 0, 0.8);
+
+    .glyphicon {
+      font-size: 20px;
+      color:  $palette--offwhite;
+    }
+  }
+
+}
+
+.retry {
+  margin-bottom: 10px;
+  @include font-bold;
+}
+
+.store_icon {
+
+  display: inline-block;
+  margin-right: 4px;
+
+  &.ups_shipping {
+    @include retina-sprite($store-ups-group);
+  }
+  &.tech_services {
+    @include retina-sprite($store-tech-services-group);
+  }
+  &.ship_to_store {
+    @include retina-sprite($store-shiptostore-group);
+  }
+  &.pick_up_store {
+    @include retina-sprite($store-bopis-group);
+  }
+  &.mobile_printing {
+    @include retina-sprite($store-mobile-printing-group);
+  }
+  &.mobile_store {
+    @include retina-sprite($store-mobile-group);
+  }
+  &.copy_print {
+    @include retina-sprite($store-print-group);
+  }
+  &.comp_workstation {
+    @include retina-sprite($store-workstation-group);
+  }
+  &.usps {
+    @include retina-sprite($store-usps-group);
+  }
+  &.apple {
+    @include retina-sprite($store-apple-group);
+  }
+  &.ca_post {
+    @include retina-sprite($store-ca-post-group);
+  }
+  &.purolotor {
+    @include retina-sprite($store-purolotor-group);
+  }
+  &.furniture {
+    @include retina-sprite($store-furniture-group);
+  }
+  &.rental {
+    @include retina-sprite($store-rental-group);
+  }
+  &.graphic {
+    @include retina-sprite($store-graphic-group);
+  }
+}

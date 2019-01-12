@@ -1,0 +1,14 @@
+.star-rating {
+  line-height: $star-solid-height;
+  white-space: nowrap;
+  &.lg {
+    line-height: $star-solid-lg-height;
+  }
+  .icon-star {
+    vertical-align: bottom;
+  }
+  .star-rating-count {
+    color: #9b9b9b;
+    font-weight: 200;
+  }
+}

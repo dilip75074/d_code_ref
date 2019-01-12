@@ -1,0 +1,35 @@
+<style>
+    .modal-sm{ width:500px!important; height:330px!important; border-radius:3px; margin-top:7%; }
+    .view-rack-container li{ height: 40px!important; background: none;  border: 0px;}
+    .btn{
+        background: #0095d3;
+        border-bottom: 2px solid #0082b8;
+        color: #fff;
+        display: inline-block;
+        font-size: 18px;
+        outline: none;
+        text-decoration: none;
+        padding: 12px 42px 11px 41px;
+        margin: 13px 0 48px 0;
+    }
+    .physical-container-wrapper{ max-width:0px!important; min-width:500px!important; max-height:640px}
+</style>
+
+<div ng-model="template"  ng-controller="IaasConfigurationController">
+    <div class="physical-container physical-container-wrapper">
+        <header>
+            <span id="edit-configuration" title="Workload Configuration" translate="vcacConfirmation.view.DIALOG_HEADER"></span>
+        </header>
+
+        <div style="padding:20px;"><plain translate="vcacConfirmation.view.MESSAGE_TITLE" /></div>
+        <div style="padding-left: 100px; font-style: italic; "> {{vcac.iaasIp}} {{vcac.iaasHost}}</div>
+        <div style="padding-left: 100px; font-style: italic; "> {{vcac.vcacIp}} {{vcac.vcacHost}}</div>
+        <div style="padding:30px;"><plain translate="vcacConfirmation.view.MESSAGE_FOOTER" /></div>
+
+
+        <div class="submit-container center-align">
+            <a class="btn" ng-click="vcacConfirmClose()"><plain translate="vcacConfirmation.view.BUTTON_CANCEL" /></a>
+            <a class="btn" ng-click="vcacConfirmStart()"><plain translate="vcacConfirmation.view.BUTTON_CONFIRM" /></a>
+        </div>
+    </div>
+</div>

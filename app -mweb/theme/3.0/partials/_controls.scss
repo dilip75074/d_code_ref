@@ -1,0 +1,228 @@
+//CUSTOM UI CONTROLS
+//ui-switch
+.switch {
+  $radius: $toggle--height / 2;
+
+  background: $palette--white;
+  border: 1px solid $palette--toggle-switch;
+  position: relative;
+  display: inline-block;
+  box-sizing: content-box;
+  overflow: visible;
+  height: $toggle--height;
+  width: $toggle--width;
+  padding: 0;
+  margin: 0;
+  border-radius: $radius;
+  cursor: pointer;
+  box-shadow: rgb(223, 223, 223) 0px 0px 0px 0px inset;
+  transition: 0.3s ease-out all;
+  -webkit-transition: 0.3s ease-out all;
+  top: -1px;
+}
+/*adding a wide width for larger switch text*/
+.switch.wide {
+  width: $toggle--width-wide;
+}
+.switch small {
+  background: $palette--white;
+  border-radius: 100%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  width: $toggle--height;
+  height: $toggle--height;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.3s ease-out all;
+  -webkit-transition: 0.3s ease-out all;
+}
+.switch.checked {
+  background: $palette--stpls-dark-sky-blue;
+  border-color: $palette--stpls-dark-sky-blue;
+  height: $toggle--height;
+  width: $toggle--width;
+}
+.switch.checked small {
+  left: 26px;
+}
+/*wider switch text moves small further to the right*/
+.switch.wide.checked small {
+  left:52px;
+}
+/*styles for switch-text*/
+.switch .switch-text {
+  @include font-light;
+  font-size: $base-font-size-sku-number;
+}
+
+.switch .off {
+  display:block;
+  position: absolute;
+  right: 10%;
+  top: 25%;
+  z-index: 0;
+  color:$palette--stpls-light-grey;
+}
+
+.switch .on {
+  display: none;
+  z-index: 0;
+  color: $palette--white;
+  position: absolute;
+  top: 25%;
+  left: 9%;
+}
+
+.switch.checked .off {
+  display:none;
+}
+
+.switch.checked .on {
+  display:block;
+
+}
+
+.switch.disabled {
+  opacity: .50;
+  cursor: not-allowed;
+}
+
+//angular-toggle-switch
+.toggle-switch {
+
+  $radius: $toggle--height / 2;
+  $knob-width: $toggle--height;
+
+  @include font-medium;
+  font-size: 12px;
+  background: $palette--white;
+  height: $toggle--height;
+  width: $toggle--width;
+  border-radius: $radius;
+  position: relative;
+
+
+
+  $switch-yes: '.switch-left';
+  $switch-no: '.switch-right';
+  $switch-knob: '.knob';
+
+  //general display
+  #{$switch-knob} {
+    display: none;
+  }
+
+  &.disabled {
+    #{$switch-yes}, #{$switch-no}  {
+      background-color: $palette--gray-med-light;
+    }
+  }
+
+  #{$switch-yes}, #{$switch-no} {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    box-sizing: border-box;
+    border-radius: $radius;
+    text-transform: uppercase;
+    line-height: $toggle--height;
+    color: $palette--white;
+
+    -webkit-animation-duration: 300ms;
+    animation-duration: 300ms;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+
+  }
+
+  #{$switch-yes} {
+    background: $palette--stpls-dark-sky-blue
+  }
+
+
+  #{$switch-no} {
+    color: $palette--stpls-dark-sky-blue;
+    background: $palette--gray-light;
+    border: 1px solid $palette--gray-light-3;
+    box-sizing: content-box;
+    margin-top: -1px;
+  }
+
+  //container
+  > div {
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: $knob-width;
+    @include transition-config(all $base-transition-timing);
+
+    &.switch-on {
+      left: ($toggle--width - $knob-width);
+      #{$switch-no} {
+        -webkit-animation-name: fadeOut;
+        animation-name: fadeOut;
+      }
+    }
+    &.switch-off {
+      left: 0;
+      #{$switch-yes} {
+        -webkit-animation-name: fadeOut;
+        animation-name: fadeOut;
+      }
+    }
+  }
+}
+
+// input clear buttons
+.input-reset {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  cursor: pointer;
+  height: $input--height;
+  line-height: 50px;
+  padding: 0 $base-gutter-width;
+  &.active {
+    display: block;
+    background: none !important;
+  }
+  i {
+    display: inline-block;
+  }
+}
+.row > [class^="col-"] > input ~ .input-reset {
+  right: $base-gutter-width;
+}
+
+// page control UI
+.page-control-container {
+  $tap-size: 30px;
+  $dot-diameter: 8px;
+  $dot-spacing: $dot-diameter - 2;
+  text-align: center;
+  height: $tap-size;
+  .page-control {
+    display: inline-block;
+    height: $tap-size;
+    padding: (($tap-size - $dot-diameter) / 2) ($dot-spacing / 2);
+    > span {
+      display: block;
+      height: $dot-diameter;
+      width: $dot-diameter;
+      border: 1px solid $palette--gray-med-light;
+      border-radius: $dot-diameter;
+    }
+    &.active {
+      > span {
+        background: $palette--gray-med-light;
+      }
+    }
+  }
+}

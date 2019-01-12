@@ -1,0 +1,7 @@
+<p ng-if="tagFilter(1)" class="shipping_tag" translate="CLS_FREE_SHIPPING"></p>
+<p ng-if="tagFilter(16)" class="shipping_tag" translate="CLS_RETAIL_SKU"></p>		<!--  this is the right order -->
+<p ng-if="tagFilter(2)" class="shipping_tag" translate="CLS_BOPIS_TAG"></p>
+<p ng-if="tagFilter(4)" class="shipping_tag" ng-click="showShippingLogicInfo(true); $event.stopPropagation()">{{addOnTag()}}</p>
+<p ng-if="tagFilter(4)" class="glyphicon glyphicon-info-sign" ng-click="showShippingLogicInfo(true); $event.stopPropagation()"></p>
+<p ng-if="tagFilter(8)" class="shipping_tag" ng-click="showShippingLogicInfo(false); $event.stopPropagation()">{{'PROD_OVERSIZED'|translate}}</p>
+<p ng-if="tagFilter(8)" class="glyphicon glyphicon-info-sign" ng-click="showShippingLogicInfo(false); $event.stopPropagation()"></p>

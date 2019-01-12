@@ -1,0 +1,333 @@
+{
+  "appVersion": 0.1,
+  "environment": "dev-local",
+  "locale": "en_CA",
+  "countryCode": "CA",
+  "catalogId": "10061",
+  "defaultZip": "",
+  "appTheme": "3.0",
+  "seo" : {
+    "staples": "Staples",
+    "canonicalDomain": "http://www.staples.ca",
+    "siteName": "Staples.ca",
+    "fbAppId": "361004070585054",
+    "ogTracking": "?cid=SM:SBD:FACEBOOK:OG",
+    "siteVerification":"NufknHLyFfKz_1NDDcLXCc2-3UWbNsTLi3s75SacodY",
+    "ogImage": "/assets/images/sprites/spls_logo.png"
+  },
+
+  "localization": {
+    "en_CA": {
+      "seo": {
+        "title": "Office Supplies, Printer Ink, Toner, Computers, Printers & Office Furniture",
+        "description": "Shop Staples for office supplies, technology, printer ink, furniture, cleaning supplies, copy & print services, coffee and snacks and more.",
+        "description_category": "Shop Staples for {{name}}. Enjoy everyday low prices and get everything you need for a home office or business.",
+        "description_product": "Shop Staples for great deals on {{name}}.",
+        "keywords": ""
+      }
+    },
+    "fr_CA": {
+      "seo": {
+        "staples": "Bureau en Gros",
+        "title": "Fournitures de bureau, technologie, encre et beaucoup plus",
+        "description": "Votre partenaire en fournitures de bureau, technologie, nettoyage et salle de pause. Découvrez toute une gamme de produits chez Bureau en Gros. Expédition gratuite sur les commandes de plus de 45 $.",
+        "description_category": "Magasinez chez Bureau en Gros pour {{name}}. Vous trouverez des prix réduits à tous les jours ainsi que tout le nécessaire pour votre bureau à domicile ou votre PME.",
+        "description_product": "Magasinez chez Bureau en Gros pour {{name}}. Vous trouverez des prix réduits à tous les jours ainsi que tout le nécessaire pour votre bureau à domicile ou votre PME.",
+        "keywords": ""
+      }
+    }
+  },
+
+  "mobileServiceEnvironments": {
+    "local_prod": {
+      "host": "http://m-local.staples.com:8080/mobileServices",
+      "channel": "/chapi"
+    },
+    "local_sapi": {
+      "host": "http://m-local.staples.com:8080/mobileServices",
+      "channel": "/chapi/s"
+    },
+    "dev_prod": {
+      "host": "https://minternal-dev.staples.ca/mobileServices",
+      "channel": "/chapi"
+    },
+    "dev_sapi": {
+      "host": "https://minternal-dev.staples.ca/mobileServices",
+      "channel": "/chapi/s"
+    },
+    "qa_prod": {
+      "host": "https://minternal-qa.staples.com/mobileServices",
+      "channel": "/chapi"
+    },
+    "qa_sapi": {
+      "host": "https://minternal-qa.staples.com/mobileServices",
+      "channel": "/chapi/s"
+    },
+    "pre_prod": {
+      "host": "https://minternal-preprod.staples.ca/mobileServices",
+      "channel": "/chapi",
+      "powserver": ""
+    },
+    "prod": {
+      "host": "https://minternal.staples.ca/mobileServices",
+      "channel": "/chapi",
+      "powserver": ""
+    }
+  },
+
+  "mobileServiceEnvironment": "dev_sapi",
+
+  "sprocket": {
+    "server" : {
+      "default": "www.staples.ca"
+    }
+  },
+
+  "soasta": {
+
+    "dev-local": "6VMHC-M4AED-V7HH4-BMLMU-WBQH7",
+    "dev": "VWYNS-K6KJ6-BD99U-85MVF-KWH8W",
+    "qa": "RW76T-XME3J-4FRN6-ZKR9Y-56FS2",
+    "accept": "ZCYZV-V53L5-37T6K-HU8GS-5C6AV",
+    "preview": "3VZ32-QAUGE-TYXP5-UVTPZ-ZH9J9",
+    "preprod": "9J5F4-G783A-AUA85-23GF5-FPMKN",
+    "prod": "WLGUY-KPQ5F-JHGVR-47SAR-UWDTN"
+
+  },
+
+  "shippingConfig": {
+    "default": {
+      "baseShippingCharge": 9.95,
+      "addOnBasketSize": 25,
+      "channel": "INTERNAL_MWEB_US",
+      "minimumBasketSizeForFreeShipping": 49.99,
+      "heavyWeightShipCharge": 14.99
+    },
+    "prod": {
+      "baseShippingCharge": 9.95,
+      "addOnBasketSize": 25,
+      "channel": "INTERNAL_MWEB_US",
+      "minimumBasketSizeForFreeShipping": 49.99,
+      "heavyWeightShipCharge": 14.99
+    }
+  },
+
+  "visa_sdk_url": {
+    "default": "https://sandbox-assets.v.me/checkout-widget/resources/js/integration/v1/sdk.js",
+    "prod": "https://assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js"
+  },
+
+  "resonance" :{
+    "qahost" : "qa.res-x.com",
+    "appid": "staplesca01"
+  },
+
+  "thirdPartyAssets" : {
+    "default": [
+      "//nexus.ensighten.com/staples2/prod-dotcom-mobile2/Bootstrap.js",
+      "//d3c3cq33003psk.cloudfront.net/opentag-25674-1606470.js"
+    ],
+    "prod": [
+      "//nexus.ensighten.com/staples2/prod-dotcom-mobile2/Bootstrap.js",
+      "//d3c3cq33003psk.cloudfront.net/opentag-25674-1606445.js"
+    ]
+  },
+
+  "store_features": [
+	{
+	  "name": "CAF1",
+	  "label": "SF_CAF1_LABEL",
+	  "image": "ship_to_store",
+	  "tooltip": "SF_CAF1_TOOLTIP"
+	},
+	{
+	  "name": "CAF3",
+	  "label": "SF_CAF3_LABEL",
+	  "image": "ca_post",
+	  "tooltip": "SF_CAF3_TOOLTIP"
+	},
+	{
+	  "name": "CAF4",
+	  "label": "SF_CAF4_LABEL",
+	  "image": "purolotor",
+	  "tooltip": "SF_CAF4_TOOLTIP"
+	},
+	{
+	  "name": "CAF5",
+	  "label": "SF_CAF5_LABEL",
+	  "image": "furniture",
+	  "tooltip": "SF_CAF5_TOOLTIP"
+	},
+	{
+	  "name": "CAF6",
+	  "label": "SF_CAF6_LABEL",
+	  "image": "rental",
+	  "tooltip": "SF_CAF6_TOOLTIP"
+	},
+	{
+	  "name": "CAF7",
+	  "label": "SF_CAF7_LABEL",
+	  "image": "apple",
+	  "tooltip": "SF_CAF7_TOOLTIP"
+	},
+	{
+	  "name": "CAF8",
+	  "label": "SF_CAF8_LABEL",
+	  "image": "graphic",
+	  "tooltip": "SF_CAF8_TOOLTIP"
+	}
+  ],
+
+  "inktoner_dept_filter": {
+  	"local_prod": "Department_id:2735",
+  	"local_sapi": "Department_id:306",
+  	"dev_prod": "Department_id:2735",
+  	"dev_sapi": "Department_id:306",
+  	"qa_prod": "Department_id:2735",
+  	"qa_sapi": "Department_id:306"
+  },
+
+  "apps": {
+    "ios": "376393873",
+    "android": "app.staples"
+  },
+
+  "externalLinks": {
+    "ios_app": "https://itunes.apple.com/us/app/staples/id376393873?mt=8&uo=4",
+    "android_app": "https://play.google.com/store/apps/details?id=app.staples&amp;hl=en",
+    "desktop": "http://www.staples.ca/",
+    "terms": "http://m.staples.ca/sbdca/en_CA/content/help-centre/policies-and-legal.html?desktopSiteActive=true",
+    "helpCenter": "http://m.staples.ca/sbdca/en_CA/content/help-centre/index.html",
+    "legacyHome": "http://m.staples.ca/",
+    "legacyCart": "http://m.staples.ca/office/supplies/yourorder"
+  },
+  "browse": [ ],
+
+  "sprocketGlobals": {
+    "nav": {
+      "origin": "/html/{country}/{lang}/header.html",
+      "parser": "nav"
+    }
+  },
+
+  "defaultRoute": "/",
+
+  "routes": {
+
+    "home": {
+      "internalActive": true
+    },
+
+    "product": {
+      "internalActive": true
+    },
+    "cart": {
+      "internalActive": true
+    },
+
+    "login": {
+      "internalActive": true
+    },
+
+    "logout": {
+      "internalActive": true
+    },
+    "forgotpassword": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+    "account": {
+      "internalActive": true,
+      "externalURL": "/touch/myaccount.html"
+    },
+
+    "checkout": {
+      "internalActive": true
+    },
+
+    "browse": {
+      "internalActive": true
+    },
+
+    "category": {
+      "internalActive": true
+    },
+
+    "deals": {
+      "internalActive": true
+    },
+
+    "search": {
+      "internalActive": true
+    },
+
+    "inkToner": {
+      "internalActive": true,
+      "externalURL": "/touch/inkandtoner.html"
+    },
+
+    "locator": {
+      "internalActive": true
+    },
+
+    "locator.results": {
+      "internalActive": true
+    },
+
+    "stores": {
+      "internalActive": true
+    },
+
+    "spd": {
+      "sprocket": {
+        "prefix": "/sbd/"
+      }
+    },
+
+    "weeklyAd": {
+      "internalActive": false,
+      "externalURL" : "http://weeklyad.staples.ca/staplessd/weeklyad?storeInfo={storeInfo}"
+    },
+
+    "conveyor": {
+      "internalActive": true
+    },
+
+    "rewards": {
+      "internalActive": false,
+      "externalURL": "/rewards/rewards.html"
+    },
+
+    "hotDeals": {
+      "internalActive": false,
+      "externalURL": "/touch/hotdeals.html?type=topweeklydeals"
+    },
+
+    "couponWallet": {
+      "internalActive": false,
+      "externalURL": "/touch/couponwallet.html"
+    },
+
+    "easyReorder": {
+      "internalActive": false,
+      "externalURL": "/touch/easyreorder.html"
+    },
+
+    "myOrder": {
+      "internalActive": false,
+      "externalURL": "/touch/myorder.html"
+    },
+
+    "mailingList": {
+      "internalActive": false,
+      "externalURL": "/office/supplies/StaplesEmailSubscriptionChange?fromUrl=extemail&errorUrl=emailsuberror&langId=-1&emailSubAction=emailCapture&successUrl=emailsubdetails&storeId=10001"
+    },
+
+    "followUs": {
+      "internalActive": false,
+      "externalURL": "/touch/followus.html"
+    }
+
+  }
+
+}

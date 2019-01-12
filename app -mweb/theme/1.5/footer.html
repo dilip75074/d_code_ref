@@ -1,0 +1,33 @@
+<div class="stpls_footer" ng-show="$root.app_loaded">
+
+	<button class="btn translate" ng-if="$root.locale != 'en_US'" ng-click="toggleLocale($root.locale == 'fr_CA' ? 'en_CA' : 'fr_CA')">{{($root.locale == 'fr_CA' ? 'English' : 'Français')}}</button>
+
+	<button class="btn"  ng-click="$root.showTerms()" translate="FT_TERMS"></button>
+
+	<button class="btn" ng-click="$root.showHelpCenter()" translate="FT_HELP"></button>
+
+	<button class="btn" ng-click="$root.showDesktop()" translate="FT_DESKTOP"></button>
+
+	<div class="download">
+
+	<span ng-switch="$root.deviceIsIOS">
+
+			<a ng-switch-when="true" target="_new" href="https://itunes.apple.com/us/app/staples/id376393873?mt=8&uo=4" translate="STPLS_APP"></a>
+
+			<a ng-switch-when="false" target="_new" href="https://play.google.com/store/apps/details?id=app.staples&amp;hl=en" translate="STPLS_APP"></a>
+
+	</span>
+
+	</div>
+
+
+	<p ng-init="show_env = false" ng-click="show_env = !show_env">© <span ng-bind="year"></span> Staples, Inc.</p>
+
+	<div ng-show="show_env" class="dev_info animated fadeInDown">
+
+		<p>Current environment: <strong ng-bind="$root.environment"></strong></p>
+
+	</div>
+
+
+</div>

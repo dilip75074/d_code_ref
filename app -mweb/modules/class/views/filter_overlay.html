@@ -1,0 +1,69 @@
+<div ng-show="dailydeals" class="dailydeals filter_overlay full_overlay animated fadeInDown" xmlns="http://www.w3.org/1999/html">
+	<div class="list">
+		<div class="container-fluid">
+			<div class="row page_header">
+				<div class="col-xs-10 title">
+					<div class="medium">
+						<span  ng-bind-html="displayTerm"></span> ({{search.result_count}})
+					</div>
+				</div>
+				<div class="col-xs-2 apply_btn sort_filter">
+					<button id="filterButton" class="btn filter_btn pull-right" ng-click="applyFilters($event)" translate="CLS_APPLY"></button>
+				</div>
+			</div>
+		</div>
+
+		<div class="row filter" ng-repeat="filter in search_filters | filter: validFilter">
+			<div id="selfilterItemsContId" class="container">
+				<button class="btn expand" ng-click="filter.active = !filter.active">
+					<span id="selfilterItemNameId" ng-bind="filter.name"></span>
+					(<span id="selfilterItemCountId" ng-bind="filter.count"></span>) <i ng-show="filter.active" class="checkmark icon_delete pull-right"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div ng-hide="dailydeals" class="filter_overlay full_overlay animated fadeInDown">
+	<div class="header clearfix">
+		<span class="pull-left"><button id="closeId" ng-click="cancelFilterOverlay()">{{'CANCEL'|translate}}</button></span>
+		<span class="pull-right"> <button id="applyId" class="btn apply_btn stpls_secondary" ng-click="applyFilters($event)" translate="CLS_APPLY"></button></span>
+		<p id="filterHdrId" class="page_header" translate="CLS_FILTER"></p>
+	</div>
+
+	<div class="list list_selected">
+		<div class="row filter" ng-repeat="filter in search_filters">
+			<div id="selfilterItemsContId" class="container container_selected">
+				<div ng-repeat="item in filter.details">
+					<div ng-if="item.activeSav && item.active">
+						<button id="selfilterItemPlusBtnId" class="btn expand" ng-click="unCheckItem(item)">
+							<!--<span id="selfilterGroupNameId" ng-bind-html="filter.name"></span>-->
+							<span id="selfilterItemNameId" class="transformName" ng-bind-html="item.name"></span>
+							<span class="transformAll">(</span><span id="selfilterItemCountId" class="transformAll" ng-bind="item.prodCount"></span><span class="transformAll">)</span>
+							<span id="selfilterItemRemoveId" class="transformAll icon_delete pull-right"></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="list">
+		<div class="row filter" ng-repeat="filter in search_filters">
+			<div id="filterItemsContId" class="container">
+				<button id="filterExpandBtnId" class="btn expand" ng-init="filter.expand = false" ng-click="toggleFilterOverlayItem($index)">
+					<span id="filterGroupNameId" ng-bind-html="filter.name"></span>
+					<span id="filterItemPlusId" class="icon_plus pull-right" ng-if="!filter.expand"></span>
+					<span id="filterItemMinusId" class="icon_minus pull-right" ng-if="filter.expand"></span>
+				</button>
+				<div class="items animated fadeInDown" ng-if="filter.expand">
+					<button id="filterItemId" class="btn item_btn" ng-repeat="item in filter.details" ng-click="item.active = !item.active">
+						<span id="filterItemCheckId" class="check" ng-class="{checked: item.active}"></span>
+						<span id="filterItemNameId" ng-bind-html="item.name"></span>
+						(<span id="filterItemCountId" ng-bind="item.prodCount"></span>)
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

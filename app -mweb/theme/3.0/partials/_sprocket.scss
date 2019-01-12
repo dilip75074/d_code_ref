@@ -1,0 +1,8 @@
+.sprkt-container {
+  position: relative;
+  .sprkt-body {
+    .sprkt-overlay & {
+      padding: 0 $base-gutter-width;
+    }
+  }
+}

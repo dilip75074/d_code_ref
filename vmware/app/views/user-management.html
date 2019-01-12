@@ -1,0 +1,125 @@
+<div class="content-panel clearfix" ng-init="$parent.activeTab=2;">
+    <div class="usermanagement-wrapper">
+		<!-- Permission Section -->
+		<div class="user-permissions" ng-controller="PermissionController" ng-init="fetchAllPermissions()">
+			<div class="permission-edit-options clearfix">
+				<h2 class="l-float" translate="usermanagement.view.PERMISSIONS"></h2>
+				<div class="new-user-info">
+					<span ng-apply-privilege="VRM_ADD_PERMISSIONS" ng-show="isAddDisable==false" ng-click="showAddPermissionPopup();"><span class="add-user"></span><span translate="usermanagement.view.ADD"></span></span>
+                    <span ng-apply-privilege="VRM_ADD_PERMISSIONS" ng-show="isAddDisable==true" style="color:gray"><span class="add-user"></span><span translate="usermanagement.view.ADD"></span></span>
+				</div>
+			</div>
+			<ul class="access-wrapper clearfix" style="max-height:280px; overflow-y:auto;">
+				<li class="clearfix" ng-repeat-start="permission in permissionList">
+					<div class="new-user-permission l-float">
+						<span class="user-role margin-right-medium"></span>
+						<span>{{permission.entity}}<a>@{{permission.domain}}</a></span>
+					</div>
+
+					<div class="new-users-type">
+						<div ng-show="editPermission[$index]==false&&delPermission[$index]==false">
+							<label ng-class="{'shift-left':!isNotAdmin(permission)}">{{permission.role.description}}</label>
+							
+							<div ng-init="hideTooltip[$index]=1" ng-click="toggleTooltip($index, $event);" style="float:right;margin-top:7px" class="menu-toggle-black" ng-show="hideTooltip[$index]==1&&isNotAdmin(permission)"> 
+								<ul class="menu-tooltip margin-left-140px" ng-show="showTooltip[$index] == 1">
+									<li ng-apply-privilege="VRM_ADD_PERMISSIONS" class="logout" ng-click="editButton($index, permission);"><span><a translate="usermanagement.view.EDIT"></a></span></li>
+									<li ng-apply-privilege="VRM_DELETE_PERMISSIONS" class="logout" ng-click="deleteButton($index);"><span><a translate="usermanagement.view.DELETE"></a></span></li>
+								</ul>
+	                         </div>
+	                    </div>
+	                    
+                        <div ng-apply-privilege="VRM_DELETE_PERMISSIONS" class="edit-users-options r-float" ng-show="delPermission[$index]==true">
+                               <span class="done-icon" ng-click="deletePermission(permission, $index);"></span><span ng-click="deletePermission(permission, $index);" translate="usermanagement.view.CONFIRM_DELETE"></span>
+                               <span class="delete-icon" ng-click="cancelUpdates($index)"></span><span ng-click="cancelUpdates($index)" translate="usermanagement.view.CANCEL"></span>
+                        </div>
+                        <div ng-apply-privilege="VRM_ADD_PERMISSIONS" ng-show="editPermission[$index]==true">
+							<select ng-model="selectedRoleId[$index]" ng-init="selectedRoleId[$index]=permission.role.id">
+								<option value='{{role.id}}' ng-repeat="role in roleListPermissionPage" ng-selected="permission.role.id==role.id">{{role.description}}</option>
+							</select>
+							
+							<span ng-click="changedPermission(permission, selectedRoleId[$index], $index)"><span class="done-icon"></span><span translate="usermanagement.view.DONE"></span></span>
+                            <span ng-click="cancelUpdates($index, permission);"><span class="delete-icon"></span><span translate="usermanagement.view.CANCEL"></span></span>
+
+						</div>
+					</div>
+				</li>
+				<hr ng-repeat-end ng-if="$index!=permissionList.length-1">
+			</ul>
+		</div>
+        <!-- Roles section -->
+        <div class="user-roles" ng-controller="RoleController" ng-init="fetchAllRoles(); fetchPrivileges();">
+            <div class="role-edit-options clearfix">
+                <h2 class="l-float" translate="usermanagement.view.ROLES"></h2>
+                <div class="new-user-info">
+                    <span ng-apply-privilege="VRM_ADD_ROLES" ng-click="addButton();" ng-hide="isAddDisable"><span class="add-user"></span><span translate="usermanagement.view.ADD"></span></span>
+                    <span ng-apply-privilege="VRM_ADD_ROLES" ng-show="isAddDisable"><span class="add-user"></span><span style="color:gray" translate="usermanagement.view.ADD"></span></span>
+                </div>
+            </div>
+            <div class="roles-wrapper clearfix">
+                <div class="roles-info" style="max-height:329px;overflow-y:auto;">
+                    <div class="display-none" ng-class="{'loading-div': showLoadingRole == true}" translate="usermanagement.view.LOADING"></div>
+                    <div style="color:red; padding:20px;" ng-show="displayRoleErrorMsg">{{roleErrorMessage}}</div>
+                    <ul ng-class="{'display-block': showLoadingRole == false, 'display-none': showLoadingRole == true}">
+                        <li ng-repeat="role in roleList" ng-click="setSelected(role, $index)" ng-class="{selectedRow: $index === idSelected}">
+                       		<span ng-init="renameRoleArray[$index]=false; showConfirmDelete[$index]=false; confirmDelete[$index]=false;" ng-show="renameRoleArray[$index]==false">
+                               	{{role.description}}
+                           	</span>
+                       		<input focus-me="rename$index" type='text' maxlength="20"  ng-show="renameRoleArray[$index]==true" ng-enter="rename(role, role.name, $index)" ng-change="rename(role, role.name, $index)"  ng-model="role.name" value="{{role.name}}"/>
+                       		<div ng-init="hideTooltip[$index]=1" ng-click="toggleTooltip($index, $event);" style="float:right;margin-top:7px" class="menu-toggle-black" ng-show="hideTooltip[$index]==1&&role.name!='Admin'">	
+	                   			<ul class="menu-tooltip margin-left-140px" ng-show="showTooltip[$index] == 1">
+									<li ng-apply-privilege="VRM_ADD_ROLES" class="logout" ng-click="editButton($index, role);rename$index=true">
+										<span>
+											<a><plain translate="usermanagement.view.EDIT" /></a>
+										</span>
+									</li>
+									<li ng-apply-privilege="VRM_DELETE_ROLES" class="logout" ng-click="deleteButton($index, role)">
+										<span>
+											<a><plain translate="usermanagement.view.DELETE" /></a>
+										</span>
+									</li>
+								</ul>
+                       		</div>
+                       		<div ng-apply-privilege="VRM_ADD_ROLES" class="edit-users-options r-float" ng-show="editingRole[$index]==1 && role.name!='Admin'">
+                                <span class="done-icon" ng-click="submit()"></span><span ng-click="submit()" translate="usermanagement.view.DONE"></span>
+                                <span class="delete-icon" ng-click="cancelButton()"></span><span ng-click="cancelButton()" translate="usermanagement.view.CANCEL"></span>
+                            </div>
+                            <div ng-apply-privilege="VRM_DELETE_ROLES" class="edit-users-options r-float" ng-show="confirmDelete[$index]==1&& role.name!='Admin'">
+                                <span class="done-icon" ng-click="removeRole(role, $index);"></span><span ng-click="removeRole(role, $index);" translate="usermanagement.view.CONFIRM_DELETE"></span>
+                                <span class="delete-icon" ng-click="cancelButton()"></span><span ng-click="cancelButton()" translate="usermanagement.view.CANCEL"></span>
+                            </div>
+                            <!-- <div class="edit-users-options r-float" ng-show="confirmDelete[$index]==true && role.name!='Admin'">
+                                <span class="rename-role" ng-click="renameRoleArray[$index]=true;rename$index=true"></span><span ng-click="renameRoleArray[$index]=true;rename$index=true">RENAME</span>
+                                <span class="delete-icon" ng-click="showConfirmDelete[$index]=true;confirmDelete[$index]=false"></span><span ng-click="showConfirmDelete[$index]=true;confirmDelete[$index]=false;">DELETE</span>
+                            </div>
+                             -->
+                        </li>
+                    </ul>
+                </div>
+                <div class="roles-options">
+                    <div class="role-options-type">
+                        <div class="display-none" ng-class="{'loading-div': showLoadingPrivilege == true}" translate="usermanagement.view.LOADING"></div>
+                        <div style="color:red; padding:20px;" ng-show="displayPrivilegeErrorMsg">{{privilegeErrorMessage}}</div>
+                        <form ng-class="{'display-block': showLoadingPrivilege == false, 'display-none': showLoadingPrivilege == true}">
+                            <div ng-repeat="privilege in privilegeList">
+                                <label class="tree-inactive">
+                                    <input ng-disabled="$parent.isDisabled" ng-click="editParentPrivilege(privilege, $event)" value="{{privilege}}" ng-checked="privilege.selected" type="checkbox" class="role-checkbox">
+                                    {{privilege.categoryName}}
+                                </label>
+
+                                <div class="form-group"  ng-if="null != privilege.subCat && privilege.subCat.length > 0">
+                                    <label class="tree-inactive" ng-repeat="item in privilege.subCat" ng-if="null != item">
+                                        <input ng-disabled="$parent.isDisabled" ng-click="editChildPrivilege(privilege, $event, item)" value="{{item}}" ng-checked="item.selected" type="checkbox" class="role-checkbox">
+                                        {{item.name}}
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div style="color:red">
+            	{{roleAndPrivilegesError}}
+            </div>
+        </div>
+    </div>
+</div>

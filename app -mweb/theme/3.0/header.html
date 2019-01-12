@@ -1,0 +1,67 @@
+<div id="main-header">
+
+  <div ng-controller="HeaderSearchCtrl" class="full-header head">
+      <div class="header-image" data-home-header="{{$parent.sticky_header}}">
+
+          <!-- sidebar toggle -->
+          <!--for personalized cards design-->
+          <div class="card-design-container" >
+              <div class="pull-left">
+                  <div class="profile-white">
+                      <i class="profile-white" ng-click="$root.toRoute('account')"></i>
+                  </div>
+                  <div class="ink-toner">
+                      <i class="ink-toner-white" ng-click="$root.toRoute('inkToner')"></i>
+                  </div>
+              </div>
+              <div class="pull-right">
+                  <div class="cart-white" ng-click="$root.toRoute('cart')">
+                      <i class="cart-white"></i>
+                      <span class="indicator animated fadeInDown" ng-show="$root.cart_count > 0" ng-bind="($root.cart_count || '')"></span>
+                  </div>
+                <!--  <div class="chat">
+                      <i class="chat-white"></i>
+                  </div> -->
+              </div>
+          </div>
+
+          <div class="logo-container">
+              <div class="page-1" ng-click="$root.toRoute('home');" style="width:{{$parent.logo_width}}"></div>
+          </div>
+
+          <div class="search-container">
+            <div class="trigger-search" focus-search="searchTextfield">
+              <img class="search-mag" src="../../assets/images/search.png" />
+              <span class="search-text">Search Millions of Items...</span>
+            </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="condense-header head" ng-hide="show_search">
+      <div class="col-xs-12">
+          <div class="condense-header-left">
+              <button id="backButton" type="button" class="btn btn_chevron_back scTrack scLink" sctype="scLink" scvalue="Back button on header" ng-click="$root.back()">
+                  <i class="icon-back"></i>
+              </button>
+              <button id="homeButton" type="button" class="btn btn_chevron_back" ng-click="$root.toRoute('home')">
+                  <i class="icon-home"></i>
+              </button>
+          </div>
+          <h1 ng-if="!bannerurl" class="displayTerm" id="descriptionButton">
+              <span ng-bind-html="displayTerm"></span>
+          </h1>
+          <div class="condense-header-right">
+              <button id="search_btn" class="btn" focus-search="searchTextfield"><i class="search"></i></button>
+          <div class="cart-white" ng-click="$root.toRoute('cart')">
+              <i class="cart"></i>
+              <span class="indicator animated fadeInDown" ng-show="$root.cart_count > 0" ng-bind="($root.cart_count || '')"></span>
+          </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="row stpls-search-container">
+    <header-search></header-search>
+  </div>
+</div>

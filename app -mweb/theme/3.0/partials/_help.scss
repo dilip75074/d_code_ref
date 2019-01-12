@@ -1,0 +1,53 @@
+/* Help Center */
+
+.stpls_help_container {
+
+  background: $palette--header-background;
+  margin: -4px -15px 0;
+  padding: 0 15px;
+
+  .message_us {
+      display: inline-block;
+      background: $palette--blue;
+      padding: 5px 2px 5px 7px;
+      width: 135px;
+      height: 36px;
+      color: $palette--white;
+      font-size: $base-font-size-form;
+      border: 1px solid $palette--blue;
+      box-shadow: none;
+      border-radius: $base-radius;
+      text-decoration: none !important;
+  }
+
+  .help_center {
+    .chat_header {
+      margin-bottom: 20px;
+      margin-top: 16px;
+      color: $palette--gray-dark;
+    }
+
+    .header {
+      margin-bottom: 20px;
+      margin-top: 20px;
+      color: $palette--gray-dark;
+
+      .glyphicon {
+        margin-right: 5px;
+        vertical-align: top;
+        color: $palette--gray-dark;
+      }
+    }
+  }
+
+  .help_section {
+    .header {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .panel {
+       background: $palette--white;
+    }
+  }
+}

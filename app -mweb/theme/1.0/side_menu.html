@@ -1,0 +1,95 @@
+<div class="col-xs-6 sidebar-offcanvas stpls_side_menu">
+
+	<div class="side_nav_header">
+		<button ng-click="$root.toRoute('locator')">
+			<span class="store_icon"></span>
+			<strong translate="SM_STORE"></strong>
+		</button>
+		<button ng-click="$root.toRoute('weeklyad')">
+			<span class="ad_icon"></span>
+			<strong translate="SM_AD"></strong>
+		</button>
+		<button ng-click="$root.toRoute('rewards')">
+			<span class="rewards_icon"></span>
+			<strong translate="SM_REWARDS"></strong>
+		</button>
+	</div>
+
+	<div class="side_nav_main">
+		<button ng-click="$root.toRoute('browse')">{{'SM_CAT' | translate}} <span class="chevron stpls_sprite"></span></button>
+		<button ng-click="$root.toRoute('orderbyitem')">{{'SM_NUM' | translate}} <span class="chevron stpls_sprite"></span></button>
+		<button ng-click="$root.toRoute('category', {identifier: 'HC2SC10'})" ng-if="locale == 'en_US'">{{'SM_NEW' | translate}} <span class="chevron stpls_sprite"></span></button>
+	</div>
+
+	<div class="side_nav_sub">
+
+		<button ng-click="$root.toRoute('hotDeals')">
+			<span class="hot_deals_icon"></span>
+			<strong translate="SM_DEAL"></strong>
+		</button>
+
+		<button ng-click="$root.toRoute('weeklyAd')">
+			<span class="weekly_ad_icon"></span>
+			<strong translate="SM_AD"></strong>
+		</button>
+
+		<button ng-click="$root.toRoute('couponWallet')" ng-if="locale == 'en_US'">
+			<span class="coupon_wallet_icon"></span>
+			<strong translate="SM_COUPON"></strong>
+		</button>
+
+		<div class="break"></div>
+
+		<button ng-click="$root.toRoute('favoriteList')">
+			<span class="my_fav_icon"></span>
+			<strong translate="SM_FAV"></strong>
+		</button>
+
+		<button ng-click="$root.toRoute('easyReorder')">
+			<span class="reorder_icon"></span>
+			<strong translate="SM_ORDER"></strong>
+		</button>
+
+		<button ng-click="$root.toRoute('orders')">
+			<span class="my_orders_icon"></span>
+			<strong translate="SM_MY_ORDER"></strong>
+		</button>
+
+		<div class="break"></div>
+
+		<button ng-click="$root.toRoute('inkToner', {style: 'main'})">
+			<span class="ink_toner_icon"></span>
+			<strong translate="SM_INK"></strong>
+		</button>
+
+
+	</div>
+
+	<div class="side_nav_main">
+		<button ng-click="$root.toRoute('myAccount')">{{'SM_ACCT' | translate}}<span class="chevron"></span></button>
+		<button ng-click="$root.toRoute('myAccount')">{{'SM_LOGIN' | translate}}<span class="chevron"></span></button>
+	</div>
+
+	<div class="side_nav_footer">
+		<p>
+			<button ng-click="$root.toRoute('mailingList')">{{'SM_LIST' | translate}}</button>
+			<button ng-click="$root.toRoute('followUs')">{{'SM_FOLLOW' | translate}}</button>
+		</p>
+		<p>
+
+			<span ng-switch="$root.deviceIsIOS">
+
+				<a ng-switch-when="true" target="_new" ng-click="$root.toExternalLink('ios_app')">{{'SM_APP' | translate}}</a>
+
+				<a ng-switch-when="false" target="_new" ng-click="$root.toExternalLink('android_app')">{{'SM_APP' | translate}}</a>
+
+			</span>
+
+
+			<button ng-click="$root.showDesktop()">{{'SM_DESKTOP' | translate}}</button>
+
+		</p>
+	</div>
+
+
+</div>

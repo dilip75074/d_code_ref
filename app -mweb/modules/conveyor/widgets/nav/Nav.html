@@ -1,0 +1,16 @@
+<div class="conveyor-nav-container">
+  <h2 class="nav-title" ng-if="config.title.length" ng-bind-html="config.title"></h2>
+  <div class="list-group row {{config.presentation}}"> <!-- stacked -->
+    <a ng-repeat="item in items" widget-cols stp-href="{{item.link}}" class="list-group-item">
+      <span>
+        <span class="nav-icon-container" ng-if="item.icon">
+          <i class="nav-icon glyphicon glyphicon-{{item.icon}} {{item.icon}}"></i>
+        </span>
+        <span class="conveyor-nav-text">{{item.text}}</span>
+        <span ng-if="config.presentation !== 'grid'">
+          <span class="indicator icon_chevron_forward"></span>
+        </span>
+      </span>
+    </a>
+  </div>
+</div>

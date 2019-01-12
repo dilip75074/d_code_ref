@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC>
+<html>
+<head>
+    <script type="text/javascript"language="javascript">
+        try
+        {   var cookieStr=document.cookie;
+            var hasTokenCookie=/WCToken/.test(cookieStr);
+            var isGuestUser=/WCState=guest/.test(cookieStr);
+            var isLoggedIn=(hasTokenCookie && !isGuestUser ? true : false);
+            window.parent.postMessage({"isUserIdentified":hasTokenCookie,"isLoggedIn":isLoggedIn}, 'https://m.staples.com');
+        }
+        catch(e)
+        {}
+    </script>
+</head>
+</html>

@@ -1,0 +1,118 @@
+<div class="stpls_inkandtoner_container">
+
+	<!--  Initial Page shows Search Box, plus
+		  9 Major Ink/Printer Brands for browsing -->
+	<div ng-if="style !== 'all'">
+		<h4><strong>{{'INK_HEADER'|translate}}</strong></h4>
+
+		<form action ng-submit='searchByValue(searchParam);$event.preventDefault()'>
+			<div class="row search--ink-toner">
+				<span ng-click="searchByValue(searchParam)" class="search scTrack cta" bindtype="dom" sctype="cta" ctatype="itfsearch" locater="itfsearch"></span>
+				<input id="searchId" name="searchField" type="search" ng-model="searchParam" class="form-control" placeholder="{{'INK_SEARCH_PH'|translate}}" />
+
+				<div class="results_dropdown" ng-show="searchResults">
+					<div class="row results_shift" ng-repeat="item in searchResults track by $index">
+						<div class="col-xs-12 scTrack itfmodelresult" sctype="itfmodelresult" locater="itf:dropdown:modelresult" scvalue="Staples Multi..." ng-click="searchParam=item.name;toSearchByCartridge(item.sku)">
+							<p>{{item.name}}</p>
+						</div>
+					</div>
+				</div>
+				<div class="row" ng-show="!searchResults && searched">
+					<div class="col-xs-12">
+						<p class="red">{{'INK_SEARCH_ERROR'|translate}}</p>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<div class="row">
+			<div class="col-xs-8">
+				<h4>{{'INK_BRAND_HEADER'|translate}}</h4>
+			</div>
+			<div class="col-xs-4">
+				<h4><a ng-click="seeAll()" class="pull-right">{{'INK_SEEALL_LINK'|translate}}</a></h4>
+			</div>
+		</div>
+
+		<!--  Show matrix of popular printer brands -->
+		<div class="row brand_row">
+			<div class="col-xs-4 no_padding brand_col">
+				<button ng-click="goToDetails('CG812', 'HP')" class="btn btn_full_width btn_bybrand">
+					<span class="inktoner_logo brand_hp"></span>
+				</button>
+			</div>
+			<div class="col-xs-4 no_padding brand_col">
+				<button ng-click="goToDetails('CG628', 'Brother')" class="btn btn_full_width btn_bybrand">
+					<span class="inktoner_logo brand_brother"></span>
+				</button>
+			</div>
+			<div class="col-xs-4 no_padding brand_col">
+				<button ng-click="goToDetails('CG703', 'Canon')" class="btn btn_full_width btn_bybrand">
+					<span class="inktoner_logo brand_canon"></span>
+				</button>
+			</div>
+		</div>
+		<div class="row brand_row">
+			<div class="col-xs-4 no_padding brand_col">
+				<button ng-click="goToDetails('CG782', 'Epson')" class="btn btn_full_width btn_bybrand">
+					<span class="inktoner_logo brand_epson"></span>
+				</button>
+			</div>
+			<div class="col-xs-4 no_padding brand_col">
+				<button ng-click="goToDetails('CG883', 'Dell')" class="btn btn_full_width btn_bybrand">
+					<span class="inktoner_logo brand_dell"></span>
+				</button>
+			</div>
+			<div class="col-xs-4 no_padding brand_col">
+				<button ng-click="goToDetails('CG620', 'Xerox')" class="btn btn_full_width btn_bybrand">
+					<span class="inktoner_logo brand_xerox"></span>
+				</button>
+			</div>
+		</div>
+		<div class="row brand_row">
+			<div class="col-xs-4 no_padding brand_col">
+				<button ng-click="goToDetails('CG554', 'Lexmark')" class="btn btn_full_width btn_bybrand">
+					<span class="inktoner_logo brand_lexmark"></span>
+				</button>
+			</div>
+			<div class="col-xs-4 no_padding brand_col">
+				<button ng-click="goToDetails('CG682', 'Samsung')" class="btn btn_full_width btn_bybrand">
+					<span class="inktoner_logo brand_samsung"></span>
+				</button>
+			</div>
+			<div class="col-xs-4 no_padding brand_col">
+				<button ng-click="goToDetails('CG778', 'Okidata')" class="btn btn_full_width btn_bybrand">
+					<span class="inktoner_logo brand_oki"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!--  AllBrands is the top-level of Ink & Toner
+		  Categories, i.e. Brands -->
+	<div ng-if="style === 'all'">
+
+		<h4><strong>{{'INK_HEADER'|translate}}</strong></h4>
+
+		<!--  Show All Ink & Toner Brands -->
+		<div class="category_main">
+
+				<div class="section">
+					<div class="section_back scTrack scLink" sctype="scLink" scvalue="Back button on header">
+						<button ng-click="$root.back();" class="btn btn_chevron_back">
+							<i class="icon_chevron_back pull-left"></i><span class="back_text pull-right">Back</span>
+						</button>
+					</div>
+					<div ng-repeat="cat in cats track by $index">
+						<div class="row">
+							<div class="col-xs-12">
+								<button class="category_name btn_full_width" nodrag ng-click="goToDetails(cat.identifier, cat.desc[0].name)">
+									{{cat.desc[0].name}}
+								</button>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>

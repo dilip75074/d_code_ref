@@ -1,0 +1,19 @@
+$conveyor-prefix: '.conveyor';
+$conveyor-widget-container: '.widget-container';
+
+.container-fluid {
+  #{$conveyor-prefix}-layout {
+    //unbootstrap container
+    margin: 0 (-$base-gutter-width);
+  }
+}
+
+// widgets
+@import 'conveyor/reference';
+@import 'conveyor/tophat';
+@import 'conveyor/hero';
+@import 'conveyor/nav';
+@import 'conveyor/text';
+@import 'conveyor/search';
+@import 'conveyor/banner';
+@import 'conveyor/bundle';

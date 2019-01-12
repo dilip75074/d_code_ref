@@ -1,0 +1,74 @@
+<div class="content-panel clearfix" ng-init="$parent.activeTab=3; fetchActivities(); fetchCriticalAlarmsList();">
+				<div class="activities-wrapper">
+					<h2 translate="activities.view.CRITICAL_ALARMS"></h2>
+					<ul class="activitiy-content" style="max-height:201px!important; overflow-y:auto;">
+						<li ng-show="alarmlist.length == 0" style="text-align: center;" translate="activities.view.NO_CRITICAL_ALARMS_FOUND"></li>
+						<li class="white-border-bottom" ng-repeat="item in alarmlist" ng-class="{'no-border-bottom':$last}">
+							<span class="activitiy-content-para">{{item.body.description}}</span>
+							<span class="activitiy-content-time">
+								<p am-time-ago="item.header.eventTimeStamp"></p>
+							</span>
+						</li>
+					</ul>
+				</div>
+				<div class="summary-wrapper">
+					<h2 translate="activities.view.SUMMARY"></h2>
+					<ul class="summary-content clearfix" style="margin-left: 100px;">
+						<li style="width: 350px">
+							<div  class="notification-wrapper">
+								<h3 translate="activities.view.NOTIFICATIONS"></h3>
+								<div class="loading-cards" ng-hide="hideNotificationLoadingMask">
+									<span class="loader-image"></span>
+									<div style="margin-top:40px;line-height:normal" class="ng-binding">
+										<plain translate="activities.view.PLEASE_WAIT"/><br/>
+										<plain translate="activities.view.LOADING_DATA"/>
+									</div>
+								</div>
+								<a ng-apply-privilege="VRM_VIEW_NOTIFICATION" ng-if="totalNotificationCount==0" ng-click="showPopup('notifications')"><img src="app/img/notification.png"/></a>
+								<a ng-apply-privilege="VRM_VIEW_NOTIFICATION" ng-if="totalNotificationCount>0" ng-click="showPopup('notifications')"><img src="app/img/Notifications-active.png"/></a>
+								
+								<p class="count" ng-bind="totalNotificationCount"></p>
+								<div class="notifications" ng-if="totalNotificationCount>=0">
+									<p ng-repeat="item in countObject">{{item.severityType}}<span ng-bind="item.count">0</span></p>
+								</div>
+							</div>
+						</li>
+						<li style="width: 350px">
+							<div class="notification-wrapper">
+								<h3 translate="activities.view.TASKS"></h3>
+								<div class="loading-cards" ng-hide="hideTaskLoadingMask">
+									<span class="loader-image"></span>
+									<div style="margin-top:40px;line-height:normal" class="ng-binding">
+										<plain translate="activities.view.PLEASE_WAIT"/><br/>
+										<plain translate="activities.view.LOADING_DATA"/>
+									</div>
+								</div>
+								<a  ng-if="totalTaskCount==0" ng-click="showPopup('tasks')"><img src="app/img/task.png"/></a>
+								<a ng-apply-privilege="VRM_VIEW_WORKLOAD" ng-if="totalTaskCount>0" ng-click="showPopup('tasks')"><img src="app/img/Tasks-active.png"/></a>
+								
+								<p class="count" ng-bind="totalTaskCount"></p>
+								<div class="notifications" ng-if="totalTaskCount>=0">
+									<p><plain translate="activities.view.NEW" /><span ng-bind="taskCountObject.recentCount">0</span></p>
+									<p><plain translate="activities.view.RUNNING" /><span ng-bind="taskCountObject.runningCount">0</span></p>
+									<p><plain translate="activities.view.FAILED" /><span ng-bind="taskCountObject.failedCount">0</span></p>
+									<p><plain translate="activities.view.RESUMING" /><span ng-bind="taskCountObject.resumingCount">0</span></p>
+								</div>
+							</div>
+						</li>
+						<li style="display:none;">
+							<div class="notification-wrapper">
+								<h3 translate="activities.view.AUDITS"></h3>
+								<img src="app/img/audit.png"/>
+								<!-- <a ng-if="totalAuditCount == 0" ng-click="showPopup('audits')"><img src="app/img/audit.png"/></a>
+								<a ng-if="totalAuditCount > 0" ng-click="showPopup('audits')"><img src="app/img/Audits-active.png"/></a>
+								
+								<p class="count" ng-bind="totalAuditCount">0</p> -->
+								<!-- <div class="notifications">
+									<p>Unread<span>0</span></p>
+									<p>In Progress<span>0</span></p>
+								</div> -->
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>

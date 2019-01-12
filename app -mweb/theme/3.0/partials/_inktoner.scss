@@ -1,0 +1,129 @@
+
+.stpls_inkandtoner_container {
+
+  a {
+    color: $palette--blue;
+  }
+
+  .brand_row {
+    margin: 6px -3px;
+  }
+
+  .brand_col {
+    padding: 0px 3px;
+  }
+
+  .btn_bybrand {
+    border-radius: 0px;
+    border: 1px solid $palette--gray-light;
+    background-color: $palette--offwhite;
+    padding: 5px 0px;
+    height: 75px;
+
+    .inktoner_logo {
+      margin: 5px auto;
+
+      &.brand_hp {
+        display: block;
+        @include retina-sprite($inktoner-logos-hp-group);
+      }
+
+      &.brand_brother {
+        display: block;
+        @include retina-sprite($inktoner-logos-brother-group);
+      }
+
+      &.brand_canon {
+        display: block;
+        @include retina-sprite($inktoner-logos-canon-group);
+      }
+
+      &.brand_epson {
+        display: block;
+        @include retina-sprite($inktoner-logos-epson-group);
+      }
+
+      &.brand_dell {
+        display: block;
+        @include retina-sprite($inktoner-logos-dell-group);
+      }
+
+      &.brand_xerox {
+        display: block;
+        @include retina-sprite($inktoner-logos-xerox-group);
+      }
+
+      &.brand_lexmark {
+        display: block;
+        @include retina-sprite($inktoner-logos-lexmark-group);
+      }
+
+      &.brand_samsung {
+        display: block;
+        @include retina-sprite($inktoner-logos-samsung-group);
+      }
+
+      &.brand_oki {
+        display: block;
+        @include retina-sprite($inktoner-logos-oki-group);
+      }
+    }
+  }
+  .category_main {
+    padding: 0;
+
+    .section {
+      @include border--base-top;
+      margin-left: (-$base-gutter-width);
+      margin-right: (-$base-gutter-width);
+
+      .section_back {
+        @include border--base-bottom;
+      }
+
+          .category_name {
+              position: relative;
+              @include font-normal;
+              font-size: $base-font-size-sidenav;
+              text-align: left;
+              background: none;
+              border: none;
+              @include border--base-bottom;
+              padding: 10px 0 12px 15px;
+          }
+
+    }
+ }
+
+  .results_dropdown {
+     margin-top: 8px;
+     border: 2px solid $palette--gray-light;
+     height: 288px;
+
+     .results_shift {
+        padding-left: 12px;
+        height: 24px;
+        border: none;
+
+         p {
+          color: #9E9E9E;
+          @include border--base-bottom;
+          font-weight: normal;
+          margin: 2px 0 4px 0;
+          padding: 0px 0 4px 0;
+        }
+     }
+ }
+
+  .search--ink-toner {
+      position: relative;
+
+      span {
+          position: absolute;
+          right: $base-gutter-width;
+          top: 10px;
+          padding: 0px;
+          pointer-events: none;
+      }
+  }
+}

@@ -1,0 +1,58 @@
+<h4 class="locator_header font-bold" translate="LCR_HEADER"></h4>
+
+<div ng-show="locator_results && !$parent.loading">
+	<button ng-show="locator_view == 'list'" class="btn btn-default stpls_secondary_half map_btn pull-right" ng-class="{disabled: !map_api_loaded}" ng-click="toggleResultView()"><span class="glyphicon glyphicon-globe"></span> {{'LCR_MAP'|translate}}</button>
+	<button  ng-show="locator_view == 'map'" class="btn btn-default stpls_secondary_half map_btn pull-right" ng-click="toggleResultView()"><span class="glyphicon glyphicon glyphicon-list"></span> {{'LCR_LIST'|translate}}</button>
+</div>
+
+<div class="row locator_search_bar">
+
+	<div class="col-xs-7">
+		<div class="input-group" ng-class="{error: locator_search.input_error}">
+			<form name="locator" action ng-submit="searchByInput();$event.preventDefault()">
+				<input id="searchInput_id" type="search" class="input_finder form-control" ng-focus="locator_search.input_error = false" ng-required="true" name="locatorsearch_input" placeholder="{{'LCR_SEARCH'|translate}}" ng-model="locator_search.input" onchange="angular.element(this).scope().searchByInput()" input-reset-control required/>
+			</form>
+
+			<span class="input-group-btn">
+				<button class="btn finder_search_btn" type="button" ng-click="searchByInput()">
+					<i class="search"></i>
+				</button>
+			</span>
+		</div>
+	</div>
+
+	<div class="col-xs-1 no_padding">
+		<button class="btn geo_btn" ng-click="searchByGeo()" ng-class="{active: locator_search.geo && locator_view != 'initial'}"><span class="geo_icon"></span></button>
+	</div>
+
+	<div class="col-xs-4" ng-show="locator_results.length && locator_view != 'initial' && !store_detail && locator_view != 'map'">
+		<button class="btn stpls_secondary refine_btn pull-right" ng-click="toggleStoreAttrFilter()" ng-class="{active: refine_select}" translate="LCR_REFINE"></button>
+	</div>
+
+	<!-- List store feature set for selecting filters -->
+	<div class="col-xs-12 refine_container animated fadeIn" ng-show="refine_select">
+		<div ng-repeat="feature in storeFeatures">
+			<div class="feature_row" ng-click="toggleResultRefine(feature.name)">
+				<span class="store_icon {{feature.image}}"></span>
+				<span class="feature_label_display" ng-bind-html="feature.label | translate"></span>
+				<span class="check" ng-class="{checked: locator_search.refine_selected[feature.name]}"></span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--  Refined Store Results -->
+<div class="locator_results_view" ui-view="results"></div>
+
+
+<!--  Feature Legend -->
+<div class="row store_attribute_legend animated fadeInUp" ng-show="locator_search.refine_legend" ng-click="$emit('locator.toggleRefineLegend')">
+	<!--<div class="border"></div>-->
+	<button class="close_btn"><span class="glyphicon glyphicon-remove"></span></button>
+	<div ng-repeat="feature in storeFeatures">
+		<div class="col-xs-6">
+			<span class="store_icon {{feature.image}}"></span>
+			<span class="feature_label_display" ng-bind-html="feature.label | translate"></span>
+		</div>
+	</div>
+</div>

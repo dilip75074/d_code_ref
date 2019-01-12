@@ -1,0 +1,31 @@
+<div class="homecards-container">
+    <div class="card-header-row">
+        <span class="card-type">{{data.title}}</span>
+        <div class="card-help pull-right scTrack scLink" sctype="scLink" scvalue="{{data.title}}:View All">
+            <a href="/coupons/?icid=HP:HP:DEALSDROP:COUPON:TEXT:WEEKLY:20140101:0" route="coupons">View All</a>
+        </div>
+    </div>
+    <!--<ng-include src="'modules/mcs/views/common/two-products.html'"></ng-include>-->
+    <div class="card-categories-row">
+        <!--<div class="card-hero-row tile" ng-repeat="coupon in coupons">-->
+        <div class="each-category">
+            <a class="category-image">
+                <img class="img-responsive animated fadeIn scTrack pfm" sctype="pfm" sku="{{coupons[0].skuNumber}}" locater="home:coupons" lazy-load-image="true" lazy-src="{{coupons[0].image}}" ng-click="clickProduct(coupons[0], $event)"/>
+            </a>
+            <div class="category-name">
+                <span class="category-title" ng-click="clickProduct(coupons[0], $event)">{{coupons[0].offer}}</span>
+                <span class="category-subtitle coupons">{{coupons[0].itemName}}</span>
+            </div>
+        </div>
+
+        <div class="each-category">
+            <div class="category-image">
+                <img class="img-responsive animated fadeIn  scTrack pfm" sctype="pfm" sku="{{coupons[1].skuNumber}}" locater="home:coupons" lazy-load-image="true" lazy-src="{{coupons[1].image}}" ng-click="clickProduct(coupons[1], $event)"/>
+            </div>
+            <div class="category-name">
+                <span class="category-title" ng-click="clickProduct(coupons[1], $event)">{{coupons[1].offer}}</span>
+                <span class="category-subtitle coupons">{{coupons[1].itemName}}</span>
+            </div>
+        </div>
+    </div>
+</div>

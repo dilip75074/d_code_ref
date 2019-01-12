@@ -1,0 +1,41 @@
+<div class="homecards-container">
+    <div class="card-header-row">
+        <span class="card-type">Rewards</span>
+        <div class="card-help pull-right scTrack scLink" sctype="scLink" scvalue="Rewards:{{link}}">
+            <a ng-click="gotoRewards()">{{link}}</a>
+        </div>
+    </div>
+
+    <div ng-if="hasRewardsNum">
+        <div class="card-hero-row rewards">
+            <div class="hero-content">
+
+                <span class="rewards-name">{{profile.userName}}</span>
+                <!--<span class="message-text rewards-tier">{{profile.customerTier}} member</span>-->
+                <span class="rewards-amount">{{amountRewards | currency}}</span>
+                <span class="message-text redeem-text">Redeemable</span>
+            </div>
+
+            <div class="hero-image">
+                <div id="rewardsNumBarCode" class="barcode" barcode-generator="{{rewardsNumber}}"></div>
+                <!--<img class="animated fadeIn" lazy-load-image="true" lazy-src="{{product.image}}"/>-->
+                <span class="rewards-number">#{{rewardsNumber}}</span>
+            </div>
+        </div>
+    </div>
+    <div ng-if="!hasRewardsNum">
+        <div  class="card-hero-row">
+            <div class="hero-content full-width">
+                <span class="hero-title very-big-title">Staples Rewards</span>
+                <span class="hero-title big-title">It pays to get with the program!</span>
+                <span class="message-text">Sign up for free now and start earning rewards on tons of products.</span>
+            </div>
+        </div>
+        <div class="card-footer-row">
+            <div class="card-btn scTrack scLink" sctype="scLink" scvalue="Enroll">
+                <button ng-click="gotoEnroll()">Enroll</button>
+            </div>
+        </div>
+    </div>
+
+</div>

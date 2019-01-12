@@ -1,0 +1,594 @@
+<style>
+    .manager-close{ top: 92px; right: 5px;}
+    .label-font{ font-family: 'ProximaNova-Light'; color: #666; font-weight: bold;}
+</style>
+<div id="review-dialog" class="review-dialog configure-dialog" ng-model="template" ng-controller="IaasConfigurationController" ng-init="fetchMinMaxRange();">
+<div class="ui-dialog-titlebar ui-widget-header ui-corner-all clearfix">
+    <span class="ui-dialog-title" translate="iaasconfiguration.view.IAAS_CONFIGURATION"></span>
+		<span class="manager-close" ng-click="cancel()" style="margin:-80px 10px 0 0!important;">
+			<img src="app/img/close-icon.png">
+		</span>
+	</div>
+	<div class="edit-tabs">
+		<div id="configure-parent">
+			<ul class="view-tabs clearfix" ng-init="iaasConfigScreenShow='general'">
+				<li>
+					<a href="javascript:;" class="active" ng-click="iaasWorkloadWorkflowNavigation('general')" ng-class="{'active':iaasConfigScreenShow=='general'}">
+						<plain translate="iaasconfiguration.view.GENERAL" />
+						<span class="serial">1</span>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" ng-click="iaasWorkloadWorkflowNavigation('workload')" ng-class="{'active':iaasConfigScreenShow=='workload'}">
+						<plain translate="iaasconfiguration.view.WORKLOAD" />
+						<span class="serial">2</span>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" ng-click="iaasWorkloadWorkflowNavigation('system')" ng-class="{'active':iaasConfigScreenShow=='system'}">
+					  	<plain translate="iaasconfiguration.view.SYSTEM" />
+					  	<span class="serial">3</span>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" ng-click="isHeaderTabNetworkSelected=true; iaasWorkloadWorkflowNavigation('network');showNetworkSetup=false" ng-class="{'active':iaasConfigScreenShow=='network'}">
+						<plain translate="iaasconfiguration.view.NETWORK" />
+						<span class="serial">4</span>
+					</a>
+				</li>
+				<li class="last">
+					<a href="javascript:;" ng-click="iaasWorkloadWorkflowNavigation('review');" ng-class="{'active':iaasConfigScreenShow=='review'}">
+						<plain translate="iaasconfiguration.view.REVIEW" />
+						<span class="serial">5</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="error-message-container" ng-show="iaasConfigurationErrorMessage != ''" style="height: auto;">
+			<div class="error-message-content">
+				<table>
+					<tr>
+						<td>
+							<img src="app/img/error-warning-icon.png" />
+						</td>
+						<td>
+							<p>
+								<span><plain translate="iaasconfiguration.view.SYSTEM_WARNING" />: </span><p>{{ iaasConfigurationErrorMessage }}</p>
+							</p>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+
+		<div class="tabContent form-modal" ng-show="iaasConfigScreenShow=='general'" style="margin-left:0px!important; margin-top:0px!important;">
+			<div  class="network-config">
+		    	<h2 translate="iaasconfiguration.view.GENERAL_CONFIGURATION"></h2>
+
+		    	<form name="formIaaSGeneralConfiguration" novalidate>
+		            <input type="text" id="dns" placeholder="Name" ng-model="iaasConfig.general.name" required/>
+					<p class="font-size-18" style="color: #666;font-size: 13px;font-weight: bold;margin: 0 0 18px 0;line-height: 13px;text-align:left;width: 295px;" translate="iaasconfiguration.view.RESOURCES"></p>
+					<div style="border:1px solid;height:275px">
+						<div class="range-slider-vdi" style="padding: 15px 0 0 15px;">
+				           <p class="range-slider-title" translate="iaasconfiguration.view.CPU"></p><input type="range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" min="{{minCPU}}" max="{{maxCPU}}" step="0.01" ng-model="iaasConfig.general.requiredResources.cpu" ng-disabled="disableCPU"/>
+				           <label for="amount" class="range-count">{{iaasConfig.general.requiredResources.cpu}} of {{maxCPU}} GHz</label>
+						</div>
+
+						<div class="range-slider-vdi" style="padding: 0 0 0 15px;">
+				          <p class="range-slider-title" translate="iaasconfiguration.view.MEMORY"></p><input type="range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" min="{{minMemory}}" max="{{maxMemory}}" step="0.01" ng-model="iaasConfig.general.requiredResources.memory" ng-disabled="disableMemory"/>
+				           <label for="amount" class="range-count">{{iaasConfig.general.requiredResources.memory}} of {{maxMemory}} GB</label>
+						</div>
+
+						<div class="range-slider-vdi" style="padding: 0 0 0 15px;">
+				           <p class="range-slider-title" translate="iaasconfiguration.view.STORAGE"></p><input type="range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" min="{{minStorage}}" max="{{maxStorage}}" step="0.01" ng-model="iaasConfig.general.requiredResources.storage" ng-disabled="disableStorage"/>
+				           <label for="amount" class="range-count">{{iaasConfig.general.requiredResources.storage}} of {{maxStorage}} TB</label>
+						</div>
+					</div>
+		 			<div class="submit-container center-align">
+		 				<input type="button" value="Next" class="submit" ng-click="iaasWorkloadWorkflowNavigation('workload')"/>
+		            </div>
+
+		 		</form>
+			</div>
+  		</div>
+
+  		<div class="tabContent form-modal" ng-show="iaasConfigScreenShow=='workload'" style="margin-left:0px!important; margin-top:0px!important;">
+  			<div class="network-config">
+		    	<h2 translate="iaasconfiguration.view.WORKLOAD"></h2>
+		    	<form name="formIaaSWorkload" novalidate>
+			    	<div class="configure-checkbx" ng-init="iaasConfig.general.workloadType='dev'" style="margin-left: 52px;">
+				      	<p class="font-size-18" style="color: #666;" translate="iaasconfiguration.view.PERFORMANCE"></p>
+				      	<div style="margin-bottom: 20px;" ng-click="iaasConfig.general.workloadType='dev'">
+					      	<span ng-class="{'cheked':iaasConfig.general.workloadType=='dev', 'uncheked':iaasConfig.general.workloadType!='dev'}">
+					      		<input type="radio" name="performanceRadio" value="dev" ng-model="iaasConfig.general.workloadType"/>
+					      	</span>
+							<label translate="iaasconfiguration.view.DEV_WORKLOAD"></label>
+						</div>
+						<div style="margin-bottom: 20px;" ng-click="iaasConfig.general.workloadType='normal'">
+							<span ng-class="{'cheked':iaasConfig.general.workloadType=='normal', 'uncheked':iaasConfig.general.workloadType!='normal'}">
+								<input type="radio" name="performanceRadio" value="normal" ng-model="iaasConfig.general.workloadType"/>
+							</span>
+							<label translate="iaasconfiguration.view.NORMAL_WORKLOAD"></label>
+						</div>
+
+						<div ng-click="iaasConfig.general.workloadType='production'">
+							<span ng-class="{'cheked':iaasConfig.general.workloadType=='production', 'uncheked':iaasConfig.general.workloadType!='production'}">
+								<input type="radio" name="performanceRadio" value="production" ng-model="iaasConfig.general.workloadType"/>
+							</span>
+							<label translate="iaasconfiguration.view.PRODUCTION_HIGH_PERFORMANCE"></label>
+						</div>
+		    		</div>
+
+		    		<div class="configure-checkbx" ng-init="iaasConfig.general.redundancy='low'" style="margin-left: 52px;">
+				      	<p class="font-size-18" style="color: #666;" translate="iaasconfiguration.view.AVAILABILITY"></p>
+				      	<div style="margin-bottom: 20px;" ng-click="iaasConfig.general.redundancy='low'">
+					      	<span ng-class="{'cheked':iaasConfig.general.redundancy=='low', 'uncheked':iaasConfig.general.redundancy!='low'}">
+					      		<input type="radio" name="availabilityRadio" value="low" ng-model="iaasConfig.general.redundancy"/>
+					      	</span>
+							<label translate="iaasconfiguration.view.LOW_REDUNDANCY"></label>
+						</div>
+
+						<div style="margin-bottom: 20px;" ng-click="iaasConfig.general.redundancy='normal'">
+							<span ng-class="{'cheked':iaasConfig.general.redundancy=='normal', 'uncheked':iaasConfig.general.redundancy!='normal'}">
+								<input type="radio" name="availabilityRadio" value="normal" ng-model="iaasConfig.general.redundancy"/>
+							</span>
+							<label translate="iaasconfiguration.view.NORMAL_REDUNDANCY"></label>
+						</div>
+
+						<div ng-click="iaasConfig.general.redundancy='high'">
+							<span ng-class="{'cheked':iaasConfig.general.redundancy=='high', 'uncheked':iaasConfig.general.redundancy!='high'}">
+								<input type="radio" name="availabilityRadio" value="high" ng-model="iaasConfig.general.redundancy"/>
+							</span>
+							<label translate="iaasconfiguration.view.HIGH_REDUNDANCY"></label>
+						</div>
+			    	</div>
+					<div class="submit-container center-align">
+						<input value="Back" class="submit" type="button" ng-click="iaasWorkloadWorkflowNavigation('general');">
+		 				<input type="button" value="Next" class="submit" ng-click="iaasWorkloadWorkflowNavigation('system');"/>
+                <p><a ng-href="#/" id="configureVCACLink" ng-click="showvCACForm()">Install and Configure vCAC Instead</a></p>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="tabContent form-modal"  style="margin-left:0px!important; margin-top:0px!important;"  ng-show="iaasConfigScreenShow=='vcac-config'">
+    <div class="network-config change-password">
+        <div ng-show="(formvCACConfiguration.$invalid && submitted==1)" class="error-message-container">
+            <img class="error-icon malign" src="app/img/error-warning-icon.png" />
+            <p class="malign">
+                <span class="error-title" ng-show="formvCACConfiguration.$invalid && submitted==1" translate="physicalnetworksetup.view.FILL_MANDATORY_FIELDS"></span>
+            </p>
+        </div>
+        <h2 translate="iaasconfiguration.view.VCAC_TAB"></h2>
+        <form name="formvCACConfiguration" ng-class="{'validate': submitted==3}" novalidate style="margin-left: 7px;">
+
+            <label for="vcacHost" class="label-font" translate="iaasconfiguration.view.VCAC"></label>
+            <input type="text" id="vcacHost" placeholder="vCAC Host" ng-trim="false"  ng-model="iaasConfig.vcac.vcacHost" required/>
+
+            <label for="iaasHost" class="label-font" translate="iaasconfiguration.view.IAAS"></label>
+            <input type="text" id="iaasHost" placeholder="IAAS Host" ng-trim="false"  ng-model="iaasConfig.vcac.iaasHost" required/>
+
+            <label for="ntp" class="label-font" translate="iaasconfiguration.view.VCAC_PASSWORD"></label>
+
+            <input type="password" ng-trim="false" placeholder="System Administrator password" ng-model="iaasConfig.vcac.password" required />
+            <input type="password" ng-trim="false" name="confirm_password" placeholder="Confirm password" ng-model="iaasConfig.vcac.passwordConfirm" confirmpassword="{{iaasConfig.vcac.password}}" required />
+
+            <div id="vdi.block">
+
+
+
+                <p style="color: #666;font-size: 13px;font-weight: bold;margin: 0 0 18px 0;line-height: 13px;text-align:left;width: 295px;" translate="workloadconfiguration.view.UPLOAD_WINDOWS_ISO"></p>
+
+                <p style="color: #666;font-size: 12px;font-weight: bold;line-height: 12px;text-align:left;width: 400px;" translate="workloadconfiguration.view.LICENSE_KEY"></p>
+
+                <div style="padding:10px 10px 10px 10px!important; border: solid 1px #ccc; width:420px; height:175px;" flow-init flow-file-added="isoFileAdded()" flow-file-success="isoFileComplete()" flow-file-progress="isoFileProgress($flow)" flow-file-error="isoFileError($flow)">
+                    <input type="file" required flow-btn/>
+                    <input id="cancleISOUpload" type="hidden" ng-click="$flow.cancel();" value="Cancel" style="float:right;"/>&nbsp;<input id="selectedIsoFile" type="hidden" ng-click="$flow.upload();" value="Upload" style="float:right;"/>
+                    <div style="margin-top:25px; height: 45px;" flow-transfers><label style="word-wrap: break-word;" ng-show="$flow.files.length == 0"><plain translate="workloadconfiguration.view.FILE_NAME" /> {{systemConfig.isoFileName}}</label><label style="word-wrap: break-word;" ng-repeat="file in $flow.files" ng-init="systemConfig.isoFileName = $flow.files[0].name"><plain translate="workloadconfiguration.view.FILE_NAME" />: {{file.name}}</label></div> <br />
+                    <input type="text" placeholder="Windows license key" ng-model="systemConfig.licenseKey" maxlength="29" ng-pattern="/^\(?([a-zA-Z0-9]{5})\)?[-]([a-zA-Z0-9]{5})[-]([a-zA-Z0-9]{5})[-]([a-zA-Z0-9]{5})[-]([a-zA-Z0-9]{5})$/" style="margin-top:20px; margin-left: -2px; width:400px;" required/>
+                    <input type="hidden" ng-model="systemConfig.isoFileName" />
+                </div>
+
+            </div>
+
+            <!-- We need to disable this div in case if user selects Reserve Resources only -->
+            <br style="clear:both" />
+            <div class="submit-container center-align" padding="padding:30px 0!important;">
+                <input value="Back" class="submit" type="button" ng-click="iaasWorkloadWorkflowNavigation('workload');"/>
+                <input type="submit" value="Finish" class="submit" ng-click="confirmvCAC()" ng-disabled="notEnoughResources==true"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+  		<div class="tabContent form-modal" ng-show="iaasConfigScreenShow=='system'" style="margin-left:0px!important; margin-top:0px!important;">
+  			<div class="network-config change-password">
+		        <div ng-show="(formIaaSSystemConfig.$invalid && submitted==1)" class="error-message-container">
+					<img class="error-icon malign" src="app/img/error-warning-icon.png" />
+					<p class="malign">
+						<span class="error-title" ng-show="formIaaSSystemConfig.$invalid && submitted==1" translate="physicalnetworksetup.view.FILL_MANDATORY_FIELDS"></span>
+						<span class="error-title" ng-show="formIaaSSystemConfig.$valid && showUpdateMessage==1" translate="physicalnetworksetup.view.CLICK_NEXT_SAVE_UPDATES"></span>
+					</p>
+				</div>
+		        <h2 translate="iaasconfiguration.view.SYSTEM_CONFIGURATION"></h2>
+		        <form ng-class="{'validate': submitted==1}" name="formIaaSSystemConfig" novalidate>
+		            <label for="subnet" class="label-font" translate="iaasconfiguration.view.SUBNET"></label>
+		            <div class="ip-address-form">
+		                <input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-1" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.subnet.part1" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-2" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.subnet.part2" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-3" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.subnet.part3" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-4" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.subnet.part4" required />
+		            </div>
+
+		            <label for="subnet-mask" class="label-font" translate="iaasconfiguration.view.SUBNET_MASK"></label>
+		            <div class="ip-address-form">
+		                <input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.subnetMask.part1" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.subnetMask.part2" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.subnetMask.part3" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.subnetMask.part4" required />
+		            </div>
+
+		            <label for="gateway" class="label-font" translate="iaasconfiguration.view.GATEWAY"></label>
+		            <div class="ip-address-form">
+		                <input type="text" ng-trim="false" ng-pattern="part1Ip" id="gateway-1" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.gateway.part1" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="gateway-2" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.gateway.part2" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="gateway-3" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.gateway.part3" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="gateway-4" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.gateway.part4" required />
+		            </div>
+
+		            <label for="vlan-id" class="label-font" translate="iaasconfiguration.view.VLAN_ID"></label>
+		            <input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" id="vlan-id" placeholder="ID Number (optional)" ng-model="iaasConfig.systemConfigdata.vlanId"/>
+
+		            <label for="dns" class="label-font" translate="iaasconfiguration.view.DNS"></label>
+		            <div class="ip-address-form">
+		                <input type="text" ng-trim="false" ng-pattern="part1Ip" id="dns-1" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.dns.part1" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="dns-2" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.dns.part2" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="dns-3" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.dns.part3" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="dns-4" placeholder="xxx" maxlength="3" ng-model="iaasConfig.systemConfigdata.dns.part4" required />
+		            </div>
+
+		            <label for="ntp" class="label-font" translate="iaasconfiguration.view.NTP"></label>
+		            <input type="text" id="ntp" placeholder="NTP" ng-trim="false" ng-pattern="ntpRegEx" ng-model="iaasConfig.systemConfigdata.ntp" required/>
+
+		            <div class="submit-container center-align">
+		            	<input value="Back" class="submit" type="button" ng-click="iaasWorkloadWorkflowNavigation('workload');"/>
+		                <input type="button" value="Next" class="submit" ng-click="validateForm('formIaaSSystemConfig', 'network')"/>
+		            </div>
+		        </form>
+		     </div>
+  		</div>
+
+  		<div class="tabContent form-modal" ng-show="iaasConfigScreenShow=='network'" style="margin-left:0px!important; margin-top:0px!important;" ng-init="networkConfigSubmitted=false;submitted=0;showNetworkSetup=false">
+	     	<div class="network-config change-password" ng-show="showNetworkSetup==false">
+		        <div ng-show="(formIaaSNetworkConfig.$invalid && submitted==1)" class="error-message-container">
+					<img class="error-icon malign" src="app/img/error-warning-icon.png" />
+					<p class="malign">
+						<span class="error-title" ng-show="formIaaSNetworkConfig.$invalid && submitted==1" translate="physicalnetworksetup.view.FILL_MANDATORY_FIELDS"></span>
+						<span class="error-title" ng-show="formIaaSNetworkConfig.$valid && showUpdateMessage==1" translate="physicalnetworksetup.view.CLICK_NEXT_SAVE_UPDATES"></span>
+					</p>
+				</div>
+		        <h2 translate="iaasconfiguration.view.MANAGEMENT_CONFIGURATION"></h2>
+		        <form ng-class="{'validate': submitted==1}" name="formIaaSNetworkConfig" novalidate>
+		            <label for="subnet" class="label-font" translate="iaasconfiguration.view.SUBNET"></label>
+		            <div class="ip-address-form">
+		                <input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-1" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.subnet.part1" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-2" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.subnet.part2" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-3" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.subnet.part3" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-4" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.subnet.part4" required />
+		            </div>
+
+		            <label for="subnet-mask" class="label-font" translate="iaasconfiguration.view.SUBNET_MASK"></label>
+		            <div class="ip-address-form">
+		                <input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.subnetMask.part1" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.subnetMask.part2" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.subnetMask.part3" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.subnetMask.part4" required />
+		            </div>
+
+		            <label for="gateway" class="label-font" translate="iaasconfiguration.view.GATEWAY"></label>
+		            <div class="ip-address-form">
+		                <input type="text" ng-trim="false" ng-pattern="part1Ip" id="gateway-1" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.gateway.part1" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="gateway-2" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.gateway.part2" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="gateway-3" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.gateway.part3" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="gateway-4" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.gateway.part4" required />
+		            </div>
+
+		            <label for="vlan-id" class="label-font" translate="iaasconfiguration.view.VLAN_ID"></label>
+		            <input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" id="vlan-id" placeholder="ID Number (optional)" ng-model="iaasConfig.networkConfigData.vlanId"/>
+
+		            <label for="dns" class="label-font" translate="iaasconfiguration.view.DNS"></label>
+		            <div class="ip-address-form">
+		                <input type="text" ng-trim="false" ng-pattern="part1Ip" id="dns-1" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.dns.part1"/> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="dns-2" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.dns.part2"/> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="dns-3" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.dns.part3"/> <span class="middot">&middot;</span>
+		                <input type="text" ng-trim="false" ng-pattern="range" id="dns-4" placeholder="xxx" maxlength="3" ng-model="iaasConfig.networkConfigData.dns.part4"/>
+		            </div>
+
+		            <label for="ntp" class="label-font" translate="iaasconfiguration.view.NTP"></label>
+		            <input type="text" id="ntp" placeholder="NTP" ng-trim="false" ng-pattern="ntpRegEx" ng-model="iaasConfig.networkConfigData.ntp"/>
+
+		            <div class="submit-container center-align">
+		            	<input value="Back" class="submit" type="button" ng-click="iaasWorkloadWorkflowNavigation('system');"/>
+		                <input type="button" value="Next" class="submit" ng-click="validateForm('formIaaSNetworkConfig', 'review');"/>
+		                <p><a ng-href="#/" id="setup-physical-network" ng-click="validateForm('formIaaSNetworkConfig', 'advancedPhysicalConfig')"><plain translate="iaasconfiguration.view.ADVANCED_NETWORK_SETTINGS" /></a></p>
+		            </div>
+		        </form>
+		    </div>
+
+
+  			<div id="form-modal" class="form-modal" style="margin:0px" ng-show="showNetworkSetup">
+				<ul id="step-navi" ng-init="phySetup=1" style="padding-top: 20px;margin-bottom: 0px;">
+					<li class="step-1"><a href="javascript:;" ng-click="phySetup=1;" ng-class="{'active':phySetup==1}"><plain translate="physicalnetworksetup.view.VMOTION" /></a></li>
+					<li class="step-2"><a href="javascript:;" ng-click="phySetup=2;" ng-class="{'active':phySetup==2}"><plain translate="physicalnetworksetup.view.VSAN" /></a></li>
+					<li class="step-3"><a href="javascript:;" ng-click="phySetup=3;" ng-class="{'active':phySetup==3}"><plain translate="iaasconfiguration.view.VXLAN" /></a></li>
+				</ul>
+
+				<form ng-class="{'validate': submitted==1}" name="formvmotion" novalidate>
+					<div id="physical-network-setup-form-1" ng-show="phySetup==1" class="physical-vxlan change-password">
+						<div ng-show="(formvmotion.$invalid && submitted==1) || (formvmotion.$valid && showUpdateMessage==1)"
+							class="error-message-container">
+							<img class="error-icon malign" src="app/img/error-warning-icon.png" />
+							<p class="malign">
+								<!-- <span class="error-title">System Error: </span>-->
+								<span class="error-title" ng-show="formvmotion.$invalid && submitted==1" translate="physicalnetworksetup.view.FILL_MANDATORY_FIELDS"></span>
+								<span class="error-title" ng-show="formvmotion.$valid && showUpdateMessage==1" translate="physicalnetworksetup.view.CLICK_NEXT_SAVE_UPDATES"></span>
+							</p>
+						</div>
+						<h2 translate="physicalnetworksetup.view.ENTER_VMOTION_INFORMATION"></h2>
+						<label for="vlan-id" translate="physicalnetworksetup.view.VLAN_ID"></label>
+						<input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" name="vlan-id" placeholder="ID Number (optional)" ng-model="vMotiondata.vlanId"/>
+						<label for="network-start-ip" translate="iaasconfiguration.view.SUBNET"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" id="network-start-ip-1" placeholder="xxx" maxlength="3" ng-model="vMotiondata.subnet.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-2" placeholder="xxx" maxlength="3" ng-model="vMotiondata.subnet.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-3" placeholder="xxx" maxlength="3" ng-model="vMotiondata.subnet.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-4" placeholder="xxx" maxlength="3" ng-model="vMotiondata.subnet.part4" required/>
+							<div class="error-field"><label for="subnet-start-ip" class="error" generated="true"></label></div>
+						</div>
+						<label for="subnet-mask" translate="physicalnetworksetup.view.SUBNET_MASK"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="vMotiondata.subnetMask.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="vMotiondata.subnetMask.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="vMotiondata.subnetMask.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="vMotiondata.subnetMask.part4" required/>
+							<div class="error-field"><label for="subnet-mask" class="error" generated="true"></label></div>
+						</div>
+						<label for="gateway" translate="physicalnetworksetup.view.GATEWAY"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" id="gateway-1" placeholder="xxx" maxlength="3" ng-model="vMotiondata.gateway.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="gateway-2" placeholder="xxx" maxlength="3" ng-model="vMotiondata.gateway.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="gateway-3" placeholder="xxx" maxlength="3" ng-model="vMotiondata.gateway.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="gateway-4" placeholder="xxx" maxlength="3" ng-model="vMotiondata.gateway.part4" required/>
+							<div class="error-field"><label for="gateway" class="error" generated="true"></label></div>
+						</div>
+						<div class="next-container center-align">
+							<input type="button" value="Back" class="physical-network-setup-button" ng-click="back();">
+							<input type="button" value="Next" class="physical-network-setup-button" ng-click="validateTab('VMOTION')">
+						</div>
+					</div>
+				</form>
+
+				<form ng-class="{'validate': submitted==2}" name="formvsan" novalidate>
+					<div id="physical-network-setup-form-2" ng-show="phySetup==2" class="physical-vxlan change-password">
+						<div ng-show="((formvsan.$invalid && submitted==2) || (formvsan.$valid && showUpdateMessage==2))"
+							class="error-message-container">
+							<img class="error-icon malign" src="app/img/error-warning-icon.png" />
+							<p class="malign">
+								<!-- <span class="error-title">System Error: </span>-->
+								<span class="error-title" ng-show="formvsan.$invalid && submitted==2" translate="physicalnetworksetup.view.FILL_MANDATORY_FIELDS"></span>
+								<span class="error-title" ng-show="formvsan.$valid && showUpdateMessage==2" translate="physicalnetworksetup.view.CLICK_NEXT_SAVE_UPDATES"></span>
+							</p>
+						</div>
+						<h2 translate="physicalnetworksetup.view.ENTER_VSAN_INFORMATION"></h2>
+						<label for="vlan-id" translate="physicalnetworksetup.view.VLAN_ID"></label>
+						<input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" id="vlan-id" placeholder="ID Number (optional)" ng-model="vSANdata.vlanId"/>
+						<label for="network-start-ip" translate="iaasconfiguration.view.SUBNET"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" id="network-start-ip-1" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnet.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-2" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnet.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-3" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnet.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-4" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnet.part4" required/>
+							<div class="error-field"><label for="network-start-ip" class="error" generated="true"></label></div>
+						</div>
+						<label for="subnet-mask" translate="physicalnetworksetup.view.SUBNET_MASK"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnetMask.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnetMask.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnetMask.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnetMask.part4" required/>
+							<div class="error-field"><label for="subnet-mask" class="error" generated="true"></label></div>
+						</div>
+						<label for="gateway" translate="physicalnetworksetup.view.GATEWAY"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" id="gateway-1" placeholder="xxx" maxlength="3" ng-model="vSANdata.gateway.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="gateway-2" placeholder="xxx" maxlength="3" ng-model="vSANdata.gateway.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="gateway-3" placeholder="xxx" maxlength="3" ng-model="vSANdata.gateway.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="gateway-4" placeholder="xxx" maxlength="3" ng-model="vSANdata.gateway.part4" required/>
+							<div class="error-field"><label for="gateway" class="error" generated="true"></label></div>
+						</div>
+
+						<div class="next-container center-align">
+							<input type="button" value="Next" class="physical-network-setup-button" ng-click="validateTab('VSAN')">
+						</div>
+					</div>
+				</form>
+
+				<form ng-class="{'validate': submitted==3}" name="formvxlan" novalidate>
+					<div id="physical-network-setup-form-3" ng-show="phySetup==3" class="physical-vxlan change-password">
+						<div ng-show="((formvxlan.$invalid && submitted==3) || (formvxlan.$valid && showUpdateMessage==3))"
+							class="error-message-container">
+							<img class="error-icon malign" src="app/img/error-warning-icon.png" />
+							<p class="malign">
+								<!-- <span class="error-title">System Error: </span>-->
+								<span class="error-title" ng-show="formvxlan.$invalid && submitted==3" translate="physicalnetworksetup.view.FILL_MANDATORY_FIELDS"></span>
+								<span class="error-title" ng-show="formvxlan.$valid && showUpdateMessage==3" translate="physicalnetworksetup.view.CLICK_NEXT_SAVE_UPDATES"></span>
+							</p>
+						</div>
+						<h2 translate="iaasconfiguration.view.ENTER_VXLAN_DATA"></h2>
+						<label for="vlan-id" translate="physicalnetworksetup.view.VLAN_ID"></label>
+						<input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" id="vlan-id" placeholder="ID Number (optional)" ng-model="vXlandata.vlanId"/>
+						<label for="network-start-ip" translate="iaasconfiguration.view.SUBNET"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" id="network-start-ip-1" placeholder="xxx" maxlength="3" ng-model="vXlandata.subnet.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-2" placeholder="xxx" maxlength="3" ng-model="vXlandata.subnet.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-3" placeholder="xxx" maxlength="3" ng-model="vXlandata.subnet.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-4" placeholder="xxx" maxlength="3" ng-model="vXlandata.subnet.part4" required/>
+							<div class="error-field"><label for="network-start-ip" class="error" generated="true"></label></div>
+						</div>
+						<label for="subnet-mask" translate="physicalnetworksetup.view.SUBNET_MASK"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="vXlandata.subnetMask.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="vXlandata.subnetMask.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="vXlandata.subnetMask.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="vXlandata.subnetMask.part4" required/>
+							<div class="error-field"><label for="subnet-mask" class="error" generated="true"></label></div>
+						</div>
+						<label for="gateway" translate="physicalnetworksetup.view.GATEWAY"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" id="gateway-1" placeholder="xxx" maxlength="3" ng-model="vXlandata.gateway.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="gateway-2" placeholder="xxx" maxlength="3" ng-model="vXlandata.gateway.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="gateway-3" placeholder="xxx" maxlength="3" ng-model="vXlandata.gateway.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" id="gateway-4" placeholder="xxx" maxlength="3" ng-model="vXlandata.gateway.part4" required/>
+							<div class="error-field"><label for="gateway" class="error" generated="true"></label></div>
+						</div>
+
+						<div class="next-container center-align">
+							<input type="button" value="Next" class="physical-network-setup-button" ng-click="validateTab('VXLAN')">
+						</div>
+					</div>
+				</form>
+			</div>
+  		</div>
+
+  		<div class="tabContent form-modal" ng-show="iaasConfigScreenShow=='review'" style="margin-left:0px!important; margin-top:0px!important;">
+  			<div class="container review-container" ng-init="editClicked=2">
+				<h2 style="display: block;padding: 20px 0;" translate="iaasconfiguration.view.REVIEW_IAAS_PROFILE"></h2>
+				<div class="clearfix">
+					<div class="configuration-section">
+						<h3 translate="iaasconfiguration.view.CONFIGURATION"></h3>
+						<div class="content-general">
+							<p class="title bold" translate="iaasconfiguration.view.GENERAL_IAAS"></p>
+							<ul class="general-list">
+								<li><p ng-class="{'invalidCls':finish==true && undefined==iaasConfig.general.name}" class="list-title"><plain translate="iaasconfiguration.view.NAME" />:</p><span>{{iaasConfig.general.name}}</span></li>
+								<li><p class="list-title"><plain translate="iaasconfiguration.view.CPU" />:</p><span>{{iaasConfig.general.requiredResources.cpu}}GHz</span></li>
+								<li><p class="list-title"><plain translate="iaasconfiguration.view.MEMORY" />:</p><span>{{iaasConfig.general.requiredResources.memory}}GB</span></li>
+								<li><p class="list-title"><plain translate="iaasconfiguration.view.STORAGE" />:</p><span>{{iaasConfig.general.requiredResources.storage}}TB</span></li>
+								<li><p class="list-title"><plain translate="iaasconfiguration.view.PERFORMANCE" />:</p><span>{{iaasConfig.general.workloadType | uppercase}}</span></li>
+								<li><p class="list-title"><plain translate="iaasconfiguration.view.AVAILABILITY" />:</p><span>{{iaasConfig.general.redundancy | uppercase}}</span></li>
+							</ul>
+						</div>
+
+						<div class="content-general availability" style="width:325px;">
+							<p class="title bold" translate="iaasconfiguration.view.SYSTEM_CONFIGURATION_UPPER_CASE"></p>
+							<ul class="general-list">
+								<li><p ng-class="{'invalidCls':finish==true && undefined==systemData.subnet}" class="list-title"><plain translate="iaasconfiguration.view.HEADER_SUBNET" />:</p><span>{{systemData.subnet}}</span></li>
+								<li><p ng-class="{'invalidCls':finish==true && undefined==systemData.subnetMask}" class="list-title"><plain translate="iaasconfiguration.view.HEADER_SUBNET_MASK" />:</p><span>{{systemData.subnetMask}}</span></li>
+								<li><p ng-class="{'invalidCls':finish==true && undefined==systemData.gateway}" class="list-title"><plain translate="iaasconfiguration.view.GATEWAY_UPPER_CASE" />:</p><span>{{systemData.gateway}}</span></li>
+								<li><p class="list-title"><plain translate="iaasconfiguration.view.VLAN_ID" />:</p><span>{{systemData.vlanId}}</span></li>
+								<li><p ng-class="{'invalidCls':finish==true && undefined==systemData.dns}" class="list-title"><plain translate="iaasconfiguration.view.DNS" />:</p><span>{{systemData.dns}}</span></li>
+								<li><p ng-class="{'invalidCls':finish==true && undefined==systemData.ntp}" class="list-title"><plain translate="iaasconfiguration.view.NTP" />:</p><span>{{systemData.ntp}}</span></li>
+							</ul>
+						</div>
+
+						<div class="content-general availability" style="width:325px;">
+							<p class="title bold" translate="iaasconfiguration.view.MANAGEMENT_CONFIGURATION_UPPERCASE"></p>
+							<ul class="general-list">
+								<li><p ng-class="{'invalidCls':finish==true && undefined==basicNetworkData.subnet}" class="list-title"><plain translate="iaasconfiguration.view.HEADER_SUBNET" />:</p><span>{{basicNetworkData.subnet}}</span></li>
+								<li><p ng-class="{'invalidCls':finish==true && undefined==basicNetworkData.subnetMask}" class="list-title"><plain translate="iaasconfiguration.view.HEADER_SUBNET_MASK" />:</p><span>{{basicNetworkData.subnetMask}}</span></li>
+								<li><p ng-class="{'invalidCls':finish==true && undefined==basicNetworkData.gateway}" class="list-title"><plain translate="iaasconfiguration.view.GATEWAY_UPPER_CASE" />:</p><span>{{basicNetworkData.gateway}}</span></li>
+								<li><p class="list-title"><plain translate="iaasconfiguration.view.VLAN_ID" />:</p><span>{{basicNetworkData.vlanId}}</span></li>
+								<li><p ng-class="{'invalidCls':finish==true && undefined==basicNetworkData.dns}" class="list-title"><plain translate="iaasconfiguration.view.DNS" />:</p><span>{{basicNetworkData.dns}}</span></li>
+								<li><p ng-class="{'invalidCls':finish==true && undefined==basicNetworkData.ntp}" class="list-title"><plain translate="iaasconfiguration.view.NTP" />:</p><span>{{basicNetworkData.ntp}}</span></li>
+							</ul>
+						</div>
+
+						<!-- <div class="content-general availability" ng-show="validAdvancedNetwork"> -->
+						<div class="content-general availability" style="width: 700px;">
+							<p class="title bold" translate="iaasconfiguration.view.ADVANCED_NETWORK_SETTINGS_UPPERCASE"></p>
+							<div class="content-general" style="margin-right: 20px;">
+								<p class="title bold" translate="physicalnetworksetup.view.VMOTION_UPPERCASE"></p>
+								<ul class="general-list">
+									<li><p class="list-title"><plain translate="physicalnetworksetup.view.VLAN_ID" />:</p><span>{{VMOTION.vlanId}}</span></li>
+									<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNET" />:</p><span>{{VMOTION.subnet}}</span></li>
+									<li><p class="list-title"><plain translate="iaasconfiguration.view.HEADER_SUBNET_MASK" />:</p><span>{{VMOTION.subnetMask}}</span></li>
+									<li><p class="list-title"><plain translate="physicalnetworksetup.view.GATEWAY_U" />:</p><span>{{VMOTION.gateway}}</span></li>
+								</ul>
+							</div>
+							<div class="content-general availability" style="margin-right: 20px;">
+								<p class="title bold" translate="physicalnetworksetup.view.VSAN_U"></p>
+								<ul class="general-list">
+									<li><p class="list-title"><plain translate="physicalnetworksetup.view.VLAN_ID" />:</p><span>{{VSAN.vlanId}}</span></li>
+									<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNET" />:</p><span>{{VSAN.subnet}}</span></li>
+									<li><p class="list-title"><plain translate="iaasconfiguration.view.HEADER_SUBNET_MASK" />:</p><span>{{VSAN.subnetMask}}</span></li>
+									<li><p class="list-title"><plain translate="physicalnetworksetup.view.GATEWAY_U" />:</p><span>{{VSAN.gateway}}</span></li>
+								</ul>
+							</div>
+							<div class="content-general availability" style="margin-right: 20px;">
+								<p class="title bold" translate="iaasconfiguration.view.VXLAN"></p>
+								<ul class="general-list">
+									<li><p class="list-title"><plain translate="physicalnetworksetup.view.VLAN_ID" />:</p><span>{{VXLAN.vlanId}}</span></li>
+									<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNET" />:</p><span>{{VXLAN.subnet}}</span></li>
+									<li><p class="list-title"><plain translate="iaasconfiguration.view.HEADER_SUBNET_MASK" />:</p><span>{{VXLAN.subnetMask}}</span></li>
+									<li><p class="list-title"><plain translate="physicalnetworksetup.view.GATEWAY_U" />:</p><span>{{VXLAN.gateway}}</span></li>
+								</ul>
+							</div>
+						</div>
+
+						<!-- <div class="content-general availability" style="margin-left:220px;" ng-show="!validAdvancedNetwork"> -->
+
+					</div>
+					<div class="configuration-section components">
+						<h3 translate="iaasconfiguration.view.COMPONENTS"></h3>
+						<div class="content-components content-general">
+							<p class="title bold" translate="iaasconfiguration.view.SERVERS"></p>
+							<ul class="general-list">
+								<li>
+									<p class="list-title"><plain translate="iaasconfiguration.view.RATIO" />:</p>
+									<span ng-show="editClicked==0">{{selectedRatio}}</span>
+									<select style="float:left" ng-model="selectedRatio" ng-change="showIaaSConfigReview();hideEdit=false" ng-show="editClicked==1">
+										<option value='{{ratio}}' ng-repeat="ratio in ratioList" ng-selected="selectedRatio==ratio">{{ratio || 0}}</option>
+									</select>
+									<span style="margin-left:25px" ng-click="editClicked=1" ng-show="editClicked==0"><span class="edit-user"></span><span style="font-family: 'ProximaNova-Sbold' !important;cursor: pointer;" translate="iaasconfiguration.view.EDIT"></span></span>
+									<span style="margin-left:15px" ng-show="editClicked==1" ng-click="editClicked=0;"><span class="delete-icon"></span><span style="font-family: 'ProximaNova-Sbold' !important;cursor: pointer;" class="user-cancel" translate="iaasconfiguration.view.CANCEL"></span></span>
+								</li>
+								<li><p class="list-title"><plain translate="iaasconfiguration.view.HOSTS" />:</p><span>{{hosts || 0}}</span></li>
+								<li><p class="list-title"><plain translate="iaasconfiguration.view.VCENTERS" />:</p><span>{{vCenters || 0}}</span></li>
+							</ul>
+						</div>
+						<div class="content-components content-general">
+							<p class="title bold" translate="iaasconfiguration.view.ALLOTTED_RESOURCES"></p>
+							<ul class="general-list">
+								<li><p class="list-title"><plain translate="iaasconfiguration.view.CPU" />:</p><span>{{allottedResources.cpu || 0}}GHz</span></li>
+								<li><p class="list-title"><plain translate="iaasconfiguration.view.MEMORY" />:</p><span>{{allottedResources.memory || 0}}GB</span></li>
+								<li><p class="list-title"><plain translate="iaasconfiguration.view.STORAGE" />:</p><span>{{usableStorage || 0}}TB</span></li>
+							</ul>
+						</div>
+						<div class="content-components content-general" style="width:250px!important;">
+							<p class="title bold" translate="iaasconfiguration.view.CLUSTERS_INFO" ng-if="clusters.length>0"></p>
+							<ul class="general-list" style="max-height: 180px;overflow-y: auto;overflow-x: hidden;">
+								<li ng-repeat="cluster in clusters track by $index">
+									<p class="list-title" translate="iaasconfiguration.view.VCENTER"></p><span ng-if="cluster.exisitingCluster">(existing)&nbsp;</span><span>: {{cluster.vcIpAddress}}</span>
+									<br/>
+									<p class="list-title" translate="iaasconfiguration.view.RACK_NAME"></p><span>: {{cluster.rackName}}</span>
+									<br/>
+									<p class="list-title" translate="iaasconfiguration.view.HOSTS">:</p><br/>
+									<span style="clear:both;" ng-repeat="hostAddress in cluster.hostAddresses">
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{hostAddress}}
+									</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="submit-container center-align">
+				<input value="Back" class="submit" type="button" ng-click="reviewBackBtnCLicked=true; iaasWorkloadWorkflowNavigation('network');">
+				<input type="submit" value="Finish" class="submit" ng-click="submitIaaSConfigReview()" ng-disabled="notEnoughResources==true"/>
+			</div>
+  		</div>
+	</div>
+</div>

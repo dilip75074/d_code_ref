@@ -1,0 +1,47 @@
+<div class="rewards_prompt">
+
+    <div class="modal-body">
+
+        <div class="row">
+            <div ng-if="p.reward">
+                <div class="col-xs-5">
+                    <img class="animated fadeIn" width="110%" height="110%" lazy-load-image="true" lazy-src="assets/images/img_rewards_black_sm.png" />
+                </div>
+
+                <div class="col-xs-7">
+                    <div>
+                        <p class="atc-title page_header">
+                            {{p.header.title}}
+                            <button class="button close" ng-if="p.header.close" ng-click="close()">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </p>
+                        <br>
+                        <p class="atc-name">
+                            {{p.reward.name}}
+                        </p>
+                        <p class="atc-exp">
+                            (expires {{p.reward.expdate}})
+                        </p>
+                        <p class="atc-savings">
+                            {{p.reward.savings}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer" ng-if="p.actions">
+
+        <div class="col-xs-{{action_col}}"  ng-if="p.actions.primary">
+            <button class="btn stpls_primary btn_full_width" ng-bind="p.actions.primary.title" ng-click="path(p.actions.primary)"></button>
+        </div>
+
+        <div class="col-xs-{{action_col}}" ng-if="p.actions.secondary">
+            <button class="btn stpls_secondary_half btn_full_width" ng-bind="p.actions.secondary.title" ng-click="path(p.actions.secondary)"></button>
+        </div>
+
+    </div>
+
+</div>

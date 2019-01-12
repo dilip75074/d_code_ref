@@ -1,0 +1,761 @@
+{
+  "appVersion": 0.1,
+  "backend": {
+    "sticky": true,
+    "buildID": "23fa34"
+  },
+  "preRender": {
+    "engine": "angular",
+    "container": "common/directives/page/pageContainer.html",
+    "view": "content@",
+    "modules": [
+      "ng",
+      "ngSanitize",
+      "stplsRouter",
+      "stplsSeo",
+      "stplsTemplates",
+      "stplsTranslate",
+      "stplsFilters",
+      "stplsFooter",
+      "stplsDeals",
+      "stplsConveyor",
+      "stplsNavigation"
+    ],
+    "invokers": {
+      "router": {
+        "service": "stplsRouter",
+        "method": "addRoutes"
+      },
+      "translations": {
+        "service": "$translate",
+        "method": "use"
+      }
+    }
+  },
+  "redirects": {
+    "/stores": {
+      "state": "locator.results",
+      "method": "locator.intercept",
+      "delimiter": "-",
+      "map": {
+        "city": "addr",
+        "state": "addr",
+        "zipcode": "addr",
+        "storeId": "store"
+      }
+    },
+    "/locator/results/:seo/store/:store": {
+      "state": "stores",
+      "method": "locator.intercept",
+      "status": 301
+    }
+  },
+  "rewrites": {
+    "/mobileServices/git": "/healthCheck.html",
+
+    "^/+product[/_](?!product)(\\w+)": "/-/product_$1",
+    "^/+cat(?:egory)?[/_](?!cat)(\\w+)": "/-/cat_$1",
+    "^/search/([\\w\\+-]+)": "/$1/directory_$1",
+    "^/inkToner.*": "/Ink-Toner-Finder/cat_SC43",
+    "^/inkandtonernew": "/Ink-Toner-Finder/cat_SC43",
+    "^/coupons(?!\\/)": "/coupons/",
+    "^/skmobreswidget/coupons": "/coupons/",
+    "^/home": "/",
+    "^/office/supplies/home": "/",
+    "^/easylogin/": "/login/",
+    "^/office/supplies/login": "/login/",
+    "^/office/supplies/LogonForm": "/login/",
+    "^/browsepage": "/browse/",
+    "^/(dailydeals)": "/deals/$1/",
+
+    "^/touch/store.html": "/locator",
+    "^/touch/coupon.html": "/office/supplies/StaplesAddToCart",
+
+    "^/rush(\\?.*)?$": "/sbd/cre/marketing/rush/index.html",
+    "^/erincondren": "/Erin-Condren/cat_BI1381682",
+    "^/backtoschool": "/deals/Back-to-School-Center/BI783896",
+    "^/lesslist": "/deals/Less-List/BI783921",
+    "^/college": "/deals/College/BI783919",
+    "^/visacheckout": "/sbd/cre/marketing/visa-checkout/index.html",
+    "^/staplesforstudents": "/sbd/cre/marketing/bts-2016/katy-perry/index.html",
+
+    "^/webapp/wcs/stores/servlet/(\\w+)(\\?.*)?$": "/office/supplies/$1$2",
+    "^/office/supplies/loginassist": "/forgotpassword",
+    "^/office/supplies/yourorder": "/cart",
+    "^/office/supplies/RewardsLandingView": "/rewards/about/",
+    "^/office/supplies/StaplesMyOrderDetail": "/orders"
+  },
+  "routes": {
+    "home": {
+      "state": "home",
+      "url": "/",
+      "robots": "index, follow",
+      "params": {
+        "error": null,
+        "msg": null
+      },
+      "views": {
+        "content@": {
+          "controller": "HomeCtrl",
+          "templateUrl": "modules/home/views/container.html",
+          "method": "browse.getHomeResult",
+          "isoMutations" : {
+            ".seo-home-copy": {
+              "target": ".copyright",
+              "method": "append"
+            }
+          }
+        }
+      }
+    },
+    "notfound": {
+      "state": "404",
+      "status": 404,
+      "url": "/not-found",
+      "views": {
+        "content@": {
+          "templateUrl": "modules/error/404.html"
+        }
+      }
+    },
+    "cart": {
+      "state": "cart",
+      "url": "/cart",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "CartCtrl",
+          "templateUrl": "modules/cart/views/container.html"
+        }
+      }
+    },
+    "guestHome": {
+      "state": "guestHome",
+      "url": "/Welcome-to-Staples",
+      "views": {
+        "content@": {
+          "controller": "GuestHomeCtrl",
+          "templateUrl": "modules/guestHome/views/container.html"
+        }
+      }
+    },
+    "addtocart": {
+      "state": "addtocart",
+      "url": "/office/supplies/StaplesAddToCart?&sku&qty&promoName&URL&Couponcode",
+      "views": {
+        "content@": {
+          "controller": "AtcCtrl"
+        }
+      }
+    },
+    "login": {
+      "state": "login",
+      "url": "/login/:returnRte",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "LoginCtrl",
+          "templateUrl": "modules/login/views/container.html"
+        }
+      }
+    },
+    "logout": {
+      "state": "logout",
+      "url": "/logout",
+      "views": {
+        "content@": {
+          "controller": "LoginCtrl",
+          "templateUrl": "modules/login/views/container.html"
+        }
+      }
+    },
+    "forgotpassword": {
+      "state": "forgotpassword",
+      "url": "/forgotpassword/:returnRte",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "LoginCtrl",
+          "templateUrl": "modules/login/views/forgotPassword.html"
+        }
+      }
+    },
+    "account": {
+      "state": "account",
+      "url": "/account",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "AccountCtrl",
+          "templateUrl": "modules/account/views/container.html"
+        }
+      }
+    },
+    "profile": {
+      "state": "profile",
+      "url": "/profile",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "ProfileCtrl",
+          "templateUrl": "modules/profile/views/container.html"
+        }
+      }
+    },
+    "profilelinkrewards": {
+      "state": "profilelinkrewards",
+      "url": "/profile/:id",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "ProfileCtrl",
+          "templateUrl": "modules/profile/views/container.html"
+        }
+      }
+    },
+    "reorders": {
+      "state": "reorders",
+      "url": "/reorders",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "ClassCtrl",
+          "templateUrl": "modules/class/views/container.html"
+        }
+      }
+    },
+    "orders": {
+      "state": "orders",
+      "url": "/orders",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "OrdersCtrl",
+          "templateUrl": "modules/orders/views/container.html"
+        }
+      }
+    },
+    "order": {
+      "state": "order",
+      "url": "/orders/:id",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "OrderDetailCtrl",
+          "templateUrl": "modules/orders/views/orderdetail.html"
+        }
+      }
+    },
+    "checkout": {
+      "state": "checkout",
+      "url": "/checkout/:id",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "CheckoutCtrl",
+          "templateUrl": "modules/checkout/views/container.html"
+        }
+      }
+    },
+    "confirmorder": {
+      "state": "confirmorder",
+      "url": "/confirmorder",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "ConfirmCtrl",
+          "templateUrl": "modules/checkout/views/confirmOrder.html"
+        }
+      }
+    },
+    "checkoutaddresslist": {
+      "state": "checkoutaddresslist",
+      "url": "/checkoutaddresslist",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "ProfileCtrl",
+          "templateUrl": "modules/address/views/Addresses.html"
+        }
+      }
+    },
+    "checkoutcardlist": {
+      "state": "checkoutcardlist",
+      "url": "/checkoutcardlist",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "ProfileCtrl",
+          "templateUrl": "modules/creditcard/views/CreditCards.html"
+        }
+      }
+    },
+    "browse": {
+      "state": "browse",
+      "url": "/browse/:identifier",
+      "robots": "index, follow",
+      "views": {
+        "content@": {
+          "controller": "BrowseCtrl",
+          "templateUrl": "modules/browse/views/container.html"
+        }
+      }
+    },
+    "inkToner": {
+      "state": "inkToner",
+      "url": "/*seo/cat_SC43?style&icid",
+      "robots": "index, follow",
+      "params": {
+        "seo": "Ink-Toner-Finder",
+        "style": {
+          "value": "main",
+          "squash": true
+        }
+      },
+      "views": {
+        "content@": {
+          "controller": "inkTonerCtrl",
+          "templateUrl": "modules/inkToner/views/container.html"
+        }
+      }
+    },
+    "inkToner.details": {
+      "state": "inkToner.details",
+      "url": "/details/:id/:name",
+      "robots": "index, follow",
+      "views": {
+        "content@": {
+          "controller": "inkTonerCtrl",
+          "templateUrl": "modules/inkToner/views/details.html"
+        }
+      }
+    },
+    "deals": {
+      "state": "deals",
+      "url": "/deals/:seo/:identifier?page&filter&limit&icid&bannerurl",
+      "robots": "index, follow",
+      "params": {
+        "page": {
+          "value": "1",
+          "squash": true
+        },
+        "limit": {
+          "value": "20",
+          "squash": true
+        }
+      },
+      "views": {
+        "content-topper@": {
+          "controller": "ConveyorCtrl",
+          "templateUrl": "modules/conveyor/views/Template.html"
+        },
+        "content@": {
+          "controller": "ClassCtrl",
+          "templateUrl": "modules/class/views/container.html",
+          "method": "browse.getDeals"
+        }
+      }
+    },
+    "category": {
+      "state": "category",
+      "url": "/*seo/cat_:identifier?page&fids&sort&bannerurl",
+      "robots": "index, follow",
+      "views": {
+        "content-topper@": {
+          "controller": "ConveyorCtrl",
+          "templateUrl": "modules/conveyor/views/Template.html"
+        },
+        "content@": {
+          "controller": "ClassCtrl",
+          "templateUrl": "modules/class/views/container.html",
+          "method": "browse.getCategoryResults"
+        }
+      }
+    },
+    "category.facet": {
+      "state": "category.facet",
+      "url": "/:facet",
+      "robots": "index, follow",
+      "views": {
+        "content@": {
+          "controller": "ClassCtrl",
+          "templateUrl": "modules/class/views/container.html",
+          "method": "browse.getCategoryResults"
+        }
+      }
+    },
+    "search": {
+      "state": "search",
+      "url": "/*seo/directory_:term?page&fids&sort",
+      "params": {
+        "term": null,
+        "filter": null,
+        "sort": {
+          "value": "best_match",
+          "squash": true
+        }
+      },
+      "URLParams": ["term", "sort", "filter"],
+      "robots": "noindex, follow",
+      "views": {
+        "content@": {
+          "controller": "ClassCtrl",
+          "templateUrl": "modules/class/views/container.html",
+          "method": "browse.getSearchResults"
+        }
+      }
+    },
+    "conveyor": {
+      "state": "conveyor",
+      "url": "/conveyor",
+      "views": {
+        "content@": {
+          "controller": "ConveyorCtrl",
+          "templateUrl": "modules/conveyor/views/Template.html"
+        }
+      }
+    },
+    "conveyor.preview": {
+      "hide": true,
+      "state": "conveyor.preview",
+      "url": "/preview",
+      "views": {
+        "content@": {
+          "controller": "ConveyorCtrl",
+          "templateUrl": "modules/conveyor/views/Template.html"
+        }
+      }
+    },
+    "conveyor.reference": {
+      "hide": true,
+      "state": "conveyor.reference",
+      "url": "/reference",
+      "views": {
+        "content@": {
+          "controller": "ConveyorRefCtrl",
+          "templateUrl": "modules/conveyor/views/Reference.html"
+        }
+      }
+    },
+    "studio": {
+      "state": "studio",
+      "url": "/content/:seo/:slug?icid",
+      "robots": "index, follow",
+      "params": {
+        "seo" : "studio"
+      },
+      "views": {
+        "content@": {
+          "controller": "ConveyorCtrl",
+          "templateUrl": "modules/conveyor/views/Template.html",
+          "method": "conveyor.preRender"
+        }
+      }
+    },
+    "product": {
+      "state": "product",
+      "url": "/*seo/product_:sku",
+      "robots": "index, follow",
+      "views": {
+        "content-topper@": {
+          "controller": "ConveyorCtrl",
+          "templateUrl": "modules/conveyor/views/Template.html"
+        },
+        "content@": {
+          "controller": "ProductCtrl",
+          "templateUrl": "modules/product/views/skuPage.html",
+          "method": "browse.getProductResult"
+        }
+      }
+    },
+    "productReviews": {
+      "state": "productReviews",
+      "url": "/productReviews/:sku",
+      "views": {
+        "content@": {
+          "controller": "ProductCtrl",
+          "templateUrl": "modules/product/views/skuReviewsFullPage.html"
+        }
+      }
+    },
+    "locator": {
+      "state": "locator",
+      "url": "/locator",
+      "robots": "index, follow",
+      "views": {
+        "content@": {
+          "controller": "StoreLocatorCtrl",
+          "templateUrl": "modules/locator/views/container.html"
+        },
+        "results@locator": {
+          "templateUrl": "modules/locator/views/initial.html"
+        }
+      }
+    },
+    "locator.results": {
+      "state": "locator.results",
+      "url": "/results/:addr",
+      "robots": "index, follow",
+      "params": {
+        "map": null
+      },
+      "views": {
+        "results@locator": {
+          "controller": "StoreLocatorResultsCtrl",
+          "templateUrl": "modules/locator/views/results.html",
+          "method": "locator.checkURL"
+        }
+      }
+    },
+    "stores": {
+      "state": "stores",
+      "url": "/stores/:seo/:store",
+      "robots": "index, follow",
+      "params": {
+        "addr": null,
+        "results": null,
+        "detail": null
+      },
+      "views": {
+        "content@": {
+          "controller": "StoreLocatorDetailCtrl",
+          "templateUrl": "modules/locator/views/detail.html",
+          "method": "locator.getStore"
+        },
+        "locator@stores": {
+          "controller": "StoreLocatorCtrl",
+          "templateUrl": "modules/locator/views/container.html"
+        }
+      }
+    },
+
+    "weeklyAd": {},
+    "sbd": {
+      "state": "sbd",
+      "url": "/sb:system/:path/*resource?icid",
+      "sprocket": true,
+      "views": {
+        "content@": {
+          "controller": "SprocketCtrl",
+          "templateUrl": "modules/sprocket/views/container.html"
+        }
+      }
+    },
+
+    "coupons": {
+      "state": "coupons",
+      "url": "/coupons/*path?icid",
+      "sprocket": true,
+      "views": {
+        "content@": {
+          "controller": "SprocketCtrl",
+          "templateUrl": "modules/sprocket/views/container.html"
+        }
+      }
+    },
+
+    "helpCenter": {
+      "state": "helpCenter",
+      "url": "/help",
+      "robots": "index, follow",
+      "views": {
+        "content@": {
+          "controller": "HelpCtrl",
+          "templateUrl": "modules/help/views/container.html"
+        }
+      }
+    },
+
+    "feedback": {},
+
+    "helpShipToStore": {
+      "state": "helpShipToStore",
+      "url": "/shipToStoreInfo",
+      "robots": "index, follow",
+      "views": {
+        "content@": {
+          "controller": "ProductHelpCtrl",
+          "templateUrl": "modules/help/views/product/shipToStore.html"
+        }
+      }
+    },
+
+    "helpDeliveryPolicy": {
+      "state": "helpDeliveryPolicy",
+      "url": "/deliveryPolicyInfo",
+      "robots": "index, follow",
+      "views": {
+        "content@": {
+          "controller": "ProductHelpCtrl",
+          "templateUrl": "modules/help/views/product/deliveryPolicy.html"
+        }
+      }
+    },
+
+    "termsandConditions": {
+      "state": "termsandConditions",
+      "url": "/termsandConditions",
+      "robots": "index, follow",
+      "views": {
+        "content@": {
+          "controller": "HelpCtrl",
+          "templateUrl": "modules/help/views/Terms.html"
+        }
+      }
+    },
+    "rewards": {
+      "state": "rewards",
+      "url": "/rewards",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "RewardsCtrl",
+          "templateUrl": "modules/rewards/container.html"
+        }
+      }
+    },
+
+    "rewardsEnroll": {
+      "state": "rewardsEnroll",
+      "url": "/rewards/enroll",
+      "secure": true,
+      "views": {
+        "content@": {
+          "controller": "RewardsCtrl",
+          "templateUrl": "modules/rewards/container_enroll.html"
+        }
+      }
+    },
+
+    "rewardsAbout": {
+      "state": "rewardsAbout",
+      "url": "/rewards/about/:tier",
+      "views": {
+        "content@": {
+          "controller": "RewardsHelpCtrl",
+          "templateUrl": "modules/rewards/AboutRewards.html"
+        }
+      }
+    },
+
+    "rewardsTerms": {
+      "state": "rewardsTerms",
+      "url": "/rewards/terms",
+      "views": {
+        "content@": {
+          "controller": "RewardsHelpCtrl",
+          "templateUrl": "modules/rewards/TCRewards.html"
+        }
+      }
+    },
+    "register": {
+      "state": "register",
+      "url": "/register",
+      "secure": true,
+      "robots": "index, nofollow",
+      "views": {
+        "content@": {
+          "controller": "RegisterCtrl",
+          "templateUrl": "modules/account/views/register.html"
+        }
+      }
+    },
+    "bopisStores": {
+      "state": "bopisStores",
+      "url": "/bopisStores/:sku/:storeNo/:zip/:returnRte",
+      "params": {
+        "product": {
+          "value": null,
+          "squash": true
+        }
+      },
+      "views": {
+        "content@": {
+          "controller": "InventoryCtrl",
+          "templateUrl": "modules/inventory/views/store_inventory.html"
+        }
+      }
+    },
+    "shipToStores": {
+      "state": "shipToStores",
+      "url": "/shipToStores/:storeNo/:zip",
+      "views": {
+        "content@": {
+          "controller": "ShipToStoreCtrl",
+          "templateUrl": "modules/locator/views/shipToStores.html"
+        }
+
+      }
+    },
+    "displayStores": {
+      "state": "displayStores",
+      "url": "/displayStores/:storeNo/:zip",
+      "views": {
+        "content@": {
+          "controller": "ShipToStoreCtrl",
+          "templateUrl": "modules/locator/views/shipToStores.html"
+        }
+
+      }
+    },
+    "mcs": {
+      "state": "mcs",
+      "url": "/mcs",
+      "views": {
+        "content@": {
+          "controller": "McsCtrl",
+          "templateUrl": "modules/mcs/views/Template.html"
+        }
+
+      }
+    },
+
+    "newsearch": {
+      "state": "newsearch",
+      "url": "/search",
+      "params" : {
+        "term": null
+      },
+      "views": {
+        "content@": {
+          "controller": "HeaderSearchCtrl",
+          "templateUrl": "modules/search/views/Search.html"
+        }
+      }
+    },
+
+    "footer" :{
+      "state": "footer",
+      "url": "/footer.html",
+      "robots": "noindex, nofollow",
+      "views": {
+        "content@": {
+          "container": "modules/footer/views/footerContainer.html",
+          "controller": "FooterCtrl",
+          "templateUrl": "modules/footer/views/container.html",
+          "method": "browse.getFooterData"
+        }
+
+      }
+    },
+
+    "hotDeals": {},
+    "couponWallet": {},
+    "optin": {
+      "state": "optin",
+      "url": "/smsEmailOptin:opt?code",
+      "params": {
+        "code": {
+          "value": "MTH",
+          "squash": true
+        }
+      },
+      "views": {
+        "content@": {
+          "controller": "OptinCtrl",
+          "templateUrl": "modules/marketing/views/optin.html"
+        }
+      }
+    }
+  }
+}

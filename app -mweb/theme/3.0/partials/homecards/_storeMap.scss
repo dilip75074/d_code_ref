@@ -1,0 +1,60 @@
+#{$homecards-prefix}-container {
+  .card-map-row {
+    padding: $base-cards-more-padding;
+    display: inline-flex;
+    width: 100%;
+
+    .store-info {
+      width: 50%;
+      color: $palette--gray-dark;
+      font-size: $base-cards-font-size;
+      display: inline-block;
+
+      .store-location {
+        display: block;
+        font-size: $base-cards-font-size-little-huge;
+        @include font-medium;
+      }
+      .store-address {
+        display: block;
+        color: $palette--stpls-warm-grey;
+        @include font-light;
+      }
+      .store-phone {
+        display: block;
+        color: $palette--stpls-dark-sky-blue;
+        padding-bottom: $base-cards-more-padding;
+        @include font-medium;
+      }
+      .store-hours-text {
+        display: block;
+        color: $palette--stpls-nasty-green;
+        font-size: $base-cards-font-size-little-huge;
+      }
+      .store-hours-time {
+        display: block;
+      }
+    }
+
+    .store-map {
+      width: 50%;
+      display: inline-block;
+
+      .map-image {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+      }
+
+      a[href^="http://maps.google.com/maps"]{display:none !important}
+      a[href^="https://maps.google.com/maps"]{display:none !important}
+
+      .gmnoprint a, .gmnoprint span, .gm-style-cc {
+        display:none;
+      }
+      .gmnoprint div {
+        background:none !important;
+      }
+    }
+  }
+}

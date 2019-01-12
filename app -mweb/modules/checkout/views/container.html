@@ -1,0 +1,323 @@
+<div id="checkoutPage" class="stpls_checkout_container overlay_view animated">
+
+	<p ng-show="!canCheckout" class="animated guest_error" translate="CHK_GUEST_MUST_SIGNIN_ERROR"></p>
+
+	<div class="cart-checkout-header header clearfix" ng-show="!focused">
+		<button id="backbtn_id2" type="button" class="btn btn_chevron_back scTrack scLink" sctype="scLink" scvalue="Back button on header">
+			<i class="icon-back" ng-click="$root.back()"></i>
+		</button>
+		<div class="pull-right">
+			<p id="signinbtn_id" class="signin" ng-show="!canCheckout || (!checkoutData.sessionUser && normalCheckoutMode)" ng-click="login()">{{'CHK_SIGNIN'|translate}}</p>
+		</div>
+		<div class="name">
+			<p id="header_id2" translate="CHK_HEADER"></p>
+		</div>
+	</div>
+
+	<div ng-show="initializing && isLoading" class="initializing" >
+		<div id="spinnerdiv_id" class="animated loading" >
+			<span class="spinner" us-spinner="{top: 400}"></span>
+			<p class="text_spacer"><strong>{{processingMessage}}</strong></p>
+		</div>
+	</div>
+
+	<form id="checkout_form" ng-show="canCheckout && !initializing" name="checkoutForm" novalidate>
+
+		<!--  LOADING SPINNER -->
+		<div class="animated loading" ng-show="isLoading">
+			<div id="spinnerdiv_id" class="animated loading" >
+				<span id="spinner_id" class="spinner" us-spinner="{top: 400}"></span>
+				<p id="spinnermsg_id" class="text_spacer"><strong>{{processingMessage}}</strong></p>
+			</div>
+		</div>
+
+		<div class="alert alert-danger" ng-show="cart === null"><span>{{'CHK_CART_ERROR'|translate}}</span></div>
+
+		<div class="header-row" translate="CHK_SHIPPING_ADD_HEAD"></div>
+		<div class="row shipping_info card">
+			<!--  SHIPPING NAME -->
+			<div class="input_row">
+				<input ng-focus="inputFocused($event)" id="shipname_id" type="text" ng-blur="dataChanged($event)" name="name"
+					ng-model="checkoutData.shippingName" ng-pattern="validate.name" placeholder="{{'CHK_NAME_PH'|translate}}"
+					class="nameCap form-control" ng-class="{checkout_errors: checkoutData.sessionUser}" input-reset-control required/>
+			</div>
+
+			<!--  SHIPPING ADDRESS -->
+			<div class="input_row" ng-if="!shipToStoreAttr && !bopisOnlyAttr">
+				<!--  Guest User -->
+				<div ng-if="!checkoutData.sessionUser">
+					<address-entry id="guestShipId" name="address" address-model="checkoutData.shipping" address-type="shipping" ng-readonly="checkoutData.shipping.id && checkoutData.shipping.id !== ''" autocomplete="off"
+							visa-checkout="visaCheckoutMode"
+							address-count="profile.storedAddressCount"
+							has-address-data="hasShipData"
+							session-user="checkoutData.sessionUser"
+							expand="false" ng-focus="inputFocused($event)"></address-entry>
+				</div>
+
+				<!--  Registered User, not editable -->
+				<div ng-show="checkoutData.sessionUser">
+					<input id="shipaddr_id2" type="text" ng-blur="dataChanged($event)" name="address" ng-model="checkoutData.shipping.address" placeholder="{{'CHK_SHIP_ADDR_PH'|translate}}"
+						ng-class="{checkout_errors: checkoutData.sessionUser}" class="address_overflow form-control" ng-readonly="true" autocomplete="off"/>
+					<span class="more_indicator" ng-click="expand.shipAddress = !expand.shipAddress;showAddresses(1)">
+						<span id="shipAddrChevronId" ng-click="showAddresses(1)" btn-expand ng-model="expand.shipAddress"></span>
+					</span>
+				</div>
+			</div>
+
+			<!--  PROFILE ADDRESS LIST (DROPDOWN) -->
+		    <div class="animated fadeInDown" ng-if="checkoutData.sessionUser" ng-show="expand.shipAddress">
+		       <div id="PageContent">
+        			<div class="profile_row cc card">
+            			<address display="'formchkout'" id="123" editable="true" selectable="true" show-counter="false"
+                			addresses="addresses" address-count="addressCount" checkout-address-id="checkoutData.shipping.id" address-type="shipping"></address>
+        			</div>
+    			</div>
+		    </div>
+
+
+			<!--  STORE SHIPPING ADDRESS -->
+			<div class="input_row" ng-show="shipToStoreAttr">
+				<input ng-focus="inputFocused($event)" ng-readonly="true" id="shipstoreaddr_id" type="text" name="storeaddress" ng-model="checkoutData.shipping.address" ng-class="{checkout_errors: checkoutData.sessionUser}" class="form-control" />
+			</div>
+
+			<!--  SHIPPING PHONE  -->
+			<div class="input_row">
+				<input ng-focus="inputFocused($event)" id="shipphone_id" type="tel" ng-blur="dataChanged($event)" name="phone" ng-model="checkoutData.shippingPhone" maxlength=14 placeholder="{{'CHK_PHONE_PH'|translate}}"
+					ng-class="{checkout_errors: checkoutData.sessionUser}" class="form-control" phone-number input-reset-control required/>
+			</div>
+
+			<!--  SHIPPING EMAIL  -->
+			<div class="input_row">
+				<div email-address>
+					<input ng-focus="inputFocused($event)" id="shipemail_id" type="email" ng-blur="dataChanged($event)" name="email" ng-pattern="validate.email" ng-model="checkoutData.eMailAddr" placeholder="{{'CHK_EMAIL_PH'|translate}}"
+						ng-class="{checkout_errors: checkoutData.sessionUser}" class="form-control email" input-reset-control required/>
+				</div>
+			</div>
+
+			<!--  PICKUP STORES -->
+			<div class="input_row" ng-show="bopisAnyAttr && !shipToStoreAttr">
+				<input id="pickupstores_id" name="storeLabel" onclick="expand.pickupStores = !expand.pickupStores" ng-model="bopisStoresLabel" class="address_overflow form-control" readonly="readonly" />
+				<span class="more_indicator" ng-click="expand.pickupStores = !expand.pickupStores;showPickupStores()">
+					<span id="pickupStoresChevronId" ng-click="showPickupStores()" btn-expand ng-model="expand.pickupStores"></span>
+				</span>
+			</div>
+
+			<!--  PICKUP STORES LIST (DROPDOWN) -->
+			<div class="stpls_ccList animated fadeInDown" ng-show="expand.pickupStores">
+				<div class="ddStyle">
+			        <div class="store_border list_row row bopisStoresRow" ng-repeat="store in pickupStores">
+			            <div class="col-xs-8">
+			                {{store.address}}  ({{store.storeNumber}})<br>
+			                {{store.city}}, {{store.state}}  {{store.zipCode}}
+			            </div>
+			            <div class="col-xs-2">
+			                <button class="btn btn-primary btn-xs directions" ng-click="viewDirections(store)" translate="LCR_DIR"></button>
+			            </div>
+			            <div class="col-xs-2"></div>
+					</div>
+				</div>
+		    </div>
+
+			<!--  BOPIS PICKUP PERSON NAME  -->
+			<div class="input_row" ng-show="bopisAnyAttr && !shipToStoreAttr">
+				<input ng-focus="inputFocused($event)" id="pickupname_id" type="text" ng-blur="dataChanged($event)"
+					name="pickupname" ng-model="checkoutData.pickupName" ng-pattern="validate.name"
+					placeholder="{{'CHK_PICKUPNAME_PH'|translate}}" class="nameCap form-control" input-reset-control/>
+			</div>
+
+			<!--  BOPIS PICKUP PERSON PHONE  -->
+			<div class="input_row" ng-show="bopisAnyAttr && !shipToStoreAttr">
+				<input ng-focus="inputFocused($event)" id="pickupphone_id" type="tel" ng-blur="dataChanged($event)" name="pickupphone" ng-model="checkoutData.pickupPhone"  maxlength=14 placeholder="{{'CHK_PICKUPPHONE_PH'|translate}}" class="form-control" phone-number input-reset-control />
+			</div>
+		</div>
+
+		<div class="header-row" translate="CHK_PAYMENT_METHOD_HEAD"></div>
+		<div class="billing_info card">
+
+			<div ng-if="normalCheckoutMode && !existingCC" class="row input_row">
+
+				<!--  CREDIT CARD NUMBER -->
+				<div class="col-xs-8 no_padding">
+					<div class="cc_icon_container chk_cc_icon">
+						<span id="cctypeicon_id" class="glyphicon glyphicon-credit-card" ng-hide="checkoutData.ccType || stplsCCType"></span>
+						<span id="cctype_id" class="cc_Icon animated fadeInLeft" ng-class="checkoutData.ccType" ng-show="checkoutData.ccType && !stplsCCType"></span>
+						<span class="cc_Icon animated fadeInLeft" ng-class="stplsCCType" ng-show="stplsCCType"></span>
+					</div>
+					<input ng-focus="inputFocused($event)" id="credit_card_num1" type="tel" creditcard-focus creditcard-blur ng-blur="dataChanged($event)" name="cardNum" ng-model="checkoutData.card.number"
+						payments-validate="card" payments-type-model="checkoutData.ccType" payments-format="card" stpls-payments-validate="stpls" stpls-payments-type-model="stplsCCType"
+						placeholder="{{'CHK_CC_PH'|translate}}" ng-class="{checkout_errors: checkoutData.sessionUser}" class="form-control chk_num chk_cc_display" input-reset-control />
+				</div>
+				<!--  CREDIT CARD EXP DATE -->
+				<div class="col-xs-2 no_padding">
+					<input ng-focus="inputFocused($event)" id="expiry1" type="expdte" exp-date ng-blur="dataChanged($event)" name="expiry" ng-model="checkoutData.card.expiry"
+						ng-class="{checkout_errors: checkoutData.sessionUser}" class="expiry form-control additional animated" placeholder="{{'CHK_EXP_PH'|translate}}" ng-required="true" />
+				</div>
+
+				<!--  CREDIT CARD CVC  -->
+				<div class="col-xs-2 no_padding">
+					<input ng-focus="inputFocused($event)" id="cvc" type="tel" ng-blur="dataChanged($event)" name="cvc" ng-model="checkoutData.card.cvc"
+						ng-class="{checkout_errors: checkoutData.sessionUser}" class="cvc form-control additional animated"
+						placeholder="{{'CHK_CVV_PH'|translate}}" payments-validate="cvc" payments-format="cvc" payments-type-model="checkoutData.ccType" required />
+				</div>
+			</div>
+
+			<div ng-if="normalCheckoutMode && existingCC" class="input_row">
+				<!--  CREDIT CARD NUMBER  -->
+				<div class="col-xs-6 no_padding">
+					<div class="cc_icon_container chk_cc_icon">
+						<span id="cctype_id_exist" class="cc_Icon animated fadeInLeft" ng-class="checkoutData.ccType"></span>
+					</div>
+					<input ng-focus="inputFocused($event)" id="credit_card_num2" name="cardNum" ng-model="checkoutData.card.number"
+						placeholder="{{'CHK_CC_PH'|translate}}" ng-readonly="existingCC"
+						ng-class="{expand: expand, checkout_errors: checkoutData.sessionUser}" class="form-control chk_num chk_cc_display" />
+				</div>
+				<!--  CREDIT CARD EXP DATE  -->
+				<div class="col-xs-3 no_padding">
+					<input ng-focus="inputFocused($event)" disabled="disabled" id="expiry2" name="expiry" type="expdte" exp-date ng-model="checkoutData.card.expiry" ng-class="{checkout_errors: checkoutData.sessionUser}" class="expiry additional animated form-control pull-right"
+						placeholder="{{'CHK_EXP_PH'|translate}}"/>
+				</div>
+				<!--  CREDIT CARD CVC  -->
+				<div class="col-xs-2 no_padding">
+					<input ng-focus="inputFocused($event)" id="cvc2" type="tel" ng-blur="dataChanged($event)" name="cvc2" ng-model="checkoutData.card.cvc"
+						class="cvc form-control additional animated checkout_errors"
+						placeholder="{{'CHK_CVV_PH'|translate}}" payments-validate="cvc" payments-format="cvc" payments-type-model="checkoutData.ccType" required />
+				</div>
+
+				<div class="col-xs-1 no_padding">
+					<input ng-focus="inputFocused($event)" disabled class="form-control additional animated"/>
+					<span class="more_indicator" ng-click="expand.creditCard = !expand.creditCard;showCreditCards()" ng-show="checkoutData.sessionUser && profile.creditCardCount > 0">
+						<span id="creditCardsChevronId" ng-click="showCreditCards()" btn-expand ng-model="expand.creditCard"></span>
+					</span>
+				</div>
+			</div>
+
+			<div ng-if="visaCheckoutMode" class="row input_row visa_checkout_row v-button" click-visa-checkout="clickVisaCheckout">
+
+				<!--  CREDIT CARD NUMBER  -->
+				<div class="col-xs-8 no_padding">
+					<div class="cc_icon_container">
+						<span id="vme_cctypeicon_id" class="glyphicon glyphicon-credit-card" ng-hide="checkoutData.card.cardArt"></span>
+						<span id="vme_cctype_id" class="cc_Icon animated fadeInLeft vme" ng-style="{'background-image': checkoutData.card.cardArt}" ng-show="checkoutData.card.cardArt"></span>
+					</div>
+					<input disabled="disabled" id="credit_card_num3" name="cardNum" ng-model="checkoutData.card.number"
+						payments-type-model="checkoutData.ccType"
+						placeholder="{{'CHK_CC_PH'|translate}}"
+						ng-class="{expand: expand, checkout_errors: checkoutData.sessionUser}"  class="form-control chk_num" input-reset-control/>
+				</div>
+				<!--  CREDIT CARD EXP DATE  -->
+				<div class="col-xs-4 no_padding">
+					<input disabled="disabled" type="expdte" exp-date id="expiry3" name="expiry" ng-model="checkoutData.card.expiry"
+						class="expiry form-control additional animated" placeholder="{{'CHK_EXP_PH'|translate}}" />
+					<span class="more_indicator">
+						<span class="forward_btn"></span>
+					</span>
+				</div>
+			</div>
+
+			<!--  PROFILE CREDITCARDS LIST (DROPDOWN)-->
+			<div class="row"></div>
+
+		    <div class="animated fadeInDown" ng-if="checkoutData.sessionUser" ng-show="expand.creditCard">
+		       <div id="PageContent">
+        			<div class="profile_row cc">
+                  		<creditcard display="'formchkout'" id="123" editable="true" selectable="true" show-counter="false" cards="creditcards" checkout-cc-id="checkoutData.card.id"></creditcard>
+        			</div>
+    			</div>
+		    </div>
+
+			<div ng-show="normalCheckoutMode && (!shipToStoreAttr && !bopisOnlyAttr)" class="row diff_billing">
+				<span class="shipping_is_billing_text" translate="CHK_BILL_USE_AS"></span>
+
+				<div class="checkMark">
+					<switch-toggle ng-model="checkoutData.useShipAsBill" ng-click="toggleChanged()"></switch-toggle>
+				</div>
+			</div>
+
+			<div class="row billing_address" ng-show="!checkoutData.useShipAsBill || shipToStoreAttr || bopisOnlyAttr">
+
+				<!--  BILLING NAME -->
+				<div class="input_row">
+					<input ng-focus="inputFocused($event)"  ng-disabled="visaCheckoutMode" id="billname_id" type="text" ng-blur="dataChanged($event)" name="billing_name" ng-model="checkoutData.billing.name" ng-pattern="validate.name" placeholder="{{'CHK_CC_HOLDER_NAME_PH'|translate}}"
+						ng-class="{checkout_errors: checkoutData.sessionUser}" class="form-control" required input-reset-control/>
+				</div>
+
+				<!--  BILLING ADDRESS -->
+				<div class="input_row">
+					<!-- Visa Checkout -->
+					<div class="input_row" ng-show="visaCheckoutMode">
+						<input  ng-focus="inputFocused($event)" disabled="disabled" type="text" name="billing_address" ng-model="checkoutData.billing.address" ng-class="{checkout_errors: checkoutData.sessionUser}" class="form-control"  input-reset-control/>
+					</div>
+					<!--  Guest User -->
+					<div ng-if="!checkoutData.sessionUser && normalCheckoutMode">
+						<address-entry id="guestBillId" name="billing_address" address-model="checkoutData.billing" address-type="billing"
+							ng-readonly="checkoutData.billing.id && checkoutData.billing.id !== ''" autocomplete="off"
+							visa-checkout="visaCheckoutMode"
+							address-count="profile.storedAddressCount"
+							has-address-data="hasShipData"
+							session-user="checkoutData.sessionUser"></address-entry>
+					</div>
+
+				<!--  Registered User, not editable -->
+				<div ng-show="checkoutData.sessionUser && normalCheckoutMode">
+					<input ng-focus="inputFocused($event)" id="billaddr_id2" type="text" ng-blur="dataChanged($event)" name="billing_address" ng-model="checkoutData.billing.address" placeholder="{{'CHK_BILL_ADDR_PH'|translate}}"
+						ng-class="{checkout_errors: checkoutData.sessionUser}" class="address_overflow form-control" ng-readonly="true" autocomplete="off"/>
+					<span class="more_indicator" ng-click="expand.billAddress = !expand.billAddress;showAddresses(2)">
+						<span id="billAddrChevronId" ng-click="showAddresses(2)" btn-expand ng-model="expand.billAddress"></span>
+					</span>
+				</div>
+
+				<!--  PROFILE ADDRESS LIST (DROPDOWN) -->
+			    <div class="animated fadeInDown" ng-if="checkoutData.sessionUser" ng-show="expand.billAddress">
+			       <div id="PageContent">
+	        			<div class="profile_row cc">
+	            			<address display="'formchkout'" id="123" editable="true" selectable="true" show-counter="false"
+	                			addresses="addresses" address-count="addressCount" checkout-address-id="checkoutData.billing.id" address-type="billing"></address>
+	        			</div>
+	    			</div>
+			    </div>
+
+				<!--  BILLING PHONE -->
+				<div class="input_row">
+					<input ng-focus="inputFocused($event)" ng-disabled="visaCheckoutMode" id="billphone_id" type="tel" ng-blur="dataChanged($event)" name="billing_phone" ng-model="checkoutData.billing.phone" maxlength=14 placeholder="{{'CHK_PHONE_PH'|translate}}"
+						ng-class="{checkout_errors: checkoutData.sessionUser}" class="form-control" phone-number required input-reset-control/>
+				</div>
+			</div>
+		</div>
+
+		<div class="alert alert-danger" ng-show="shipError"><span>{{shipError}}</span></div>
+		<div class="alert alert-warning" ng-show="shipWarning"><p ng-bind-html="shipWarning"></p></div>
+
+	</form>
+</div>
+
+<div ng-show="canCheckout" class="checkout_actions_fixed actions_fixed  animated animated-delay-2 fadeIn">
+	<div class="expand animated fadeInUp">
+		<div id="prodtottext_id" class="totalitems">
+			{{'CHK_PROD_TOTAL'|translate}} <span id="prodtot_id" class="pull-right" ng-bind="checkoutData.subtotal | currency:'$'"></span>
+		</div>
+		<div id="shiptottaxtext_id" class="totalitems">
+			{{'CHK_EST_TAX'|translate}} <span id="shiptottax_id" class="pull-right" ng-bind="checkoutData.tax | currency:'$'"></span>
+		</div>
+		<div id="shiptottext_id" class="totalitems" ng-if="checkoutData.shippingFee == 0">
+			{{'CHK_SHIPPING_TOTAL'|translate}} <span id="shiptot_id" class="pull-right text_freeship">{{'CHK_FREE'|translate}}</span>
+		</div>
+		<div id="shiptottext_id" class="totalitems" ng-if="checkoutData.shippingFee > 0">
+			{{'CHK_SHIPPING_TOTAL'|translate}} <span id="shiptot_id" class="pull-right" ng-bind="checkoutData.shippingFee | currency:'$'"></span>
+		</div>
+		<div id="oversizeshiptottext_id" class="totalitems" ng-if="checkoutData.handling > 0">
+			{{'CHK_OVERSIZE_SHIPPING_FEE'|translate}} <span id="oversize_shiptot_id" class="pull-right" ng-bind="checkoutData.handling | currency:'$'"></span>
+		</div>
+	</div>
+
+	<div class="total">
+		<p id="ordertottext_id" class="totalitems">
+			{{'CHK_TOTAL_AMT'|translate}} <span id="ordertot_id" class="pull-right">{{checkoutData.orderTotal | currency:'$'}}
+		</p>
+	</div>
+
+	<div class="actions" ng-class="{stpls_inactive: !okToSubmitOrder}">
+		<button ng-disabled="!okToSubmitOrder" id="placeorderbtn_id" class="btn stpls_primary stpls_order animated fadeInUp" ng-class="{stpls_inactive: !okToSubmitOrder}" ng-click="submitOrder()">
+			{{'CHK_PLACE_ORDER_BTN'|translate}}
+		</button>
+	</div>
+</div>

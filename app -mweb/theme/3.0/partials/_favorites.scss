@@ -1,0 +1,62 @@
+@import "compass/css3/flexbox";
+
+.favorites_header {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.favorites_subtitle {
+  font-size: 14px;
+  color: #666;
+}
+
+.select_all {
+  height: 45px;
+  line-height:45px;
+  @include display-flex;
+  @include align-items(center);
+  @include justify-content(space-between);
+}
+
+.stpls_favoritedetails_container {
+
+  .stpls_primary {
+    width: 150px;
+  }
+
+  .product_row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+}
+
+.stpls_favorites_container {
+
+  .favoritelist_row {
+    @include display-flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    .item {
+      margin-left: 20px;
+      width: 100%;
+    }
+  }
+
+  .favoritelist_thumbs {
+    padding-top: 10px;
+    img {
+      max-height: 35px;
+      padding-left: 5px;
+    }
+  }
+
+  .favoritelist_title {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+
+}

@@ -1,0 +1,70 @@
+#{$conveyor-prefix}-banner-container {
+
+  // avoid FOUC
+  carousel { //uib has replace: true :)
+    slide + slide { //only show first banner
+      display: none;
+    }
+  }
+
+
+  .container-fluid & {
+    .row {
+      margin: 0;
+    }
+  }
+
+  #{$conveyor-prefix}-banner {
+    text-align: center;
+    img {
+      display: inline-block;
+    }
+  }
+  // animation override
+  .carousel-inner {
+    > .item {
+      -webkit-transition: none;
+      transition: none;
+      -webkit-animation-duration: $base-transition-duration;
+      animation-duration: $base-transition-duration;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      &.active {
+        left: auto;
+        -webkit-animation-name: fadeInRight;
+        animation-name: fadeInRight;
+      }
+    }
+  }
+  .carousel-control {
+    display: none;
+  }
+  .carousel-indicators {
+    display: none;
+    $dot-diameter: 8px;
+    $dot-spacing: $dot-diameter - 2;
+    text-align: center;
+    padding: 0; margin: 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 0; right: 0;
+    li {
+      display: inline-block;
+      height: $dot-diameter;
+      width: $dot-diameter;
+      border: 1px solid $palette--gray-med-light;
+      border-radius: $dot-diameter;
+      margin: ($dot-spacing / 2);
+      &.active {
+        background: $palette--white;
+      }
+    }
+  }
+
+  &.opt-indicators {
+    .carousel-indicators {
+      display: block;
+    }
+  }
+}

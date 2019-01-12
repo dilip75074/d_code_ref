@@ -1,0 +1,124 @@
+$homecards-prefix: '.homecards';
+$homecards-card-container: '.card-container';
+
+.container-fluid {
+  #{$homecards-prefix}-container {
+
+    font-size: $base-cards-font-size;
+    color: $palette--gray-dark;
+    background-color: $palette--white;
+    @include cards-border;
+    border-radius: $base-cards-radius;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    margin: 0 0 $base-cards-margin;
+    display: block;
+    width: 100%;
+
+    .card-header-row {
+      padding: $base-cards-padding $base-cards-more-padding;
+      border-bottom: $base-cards-border;
+
+      .card-type {
+        color: $palette--gray-dark;
+        font-size: $base-cards-header-title;
+      }
+      .card-help {
+        font-size: $base-font-size;
+        font-weight: $base-cards-font-weight;
+        color: $palette--stpls-light-grey;
+
+        a {
+          color: $palette--stpls-light-grey;
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+    }
+
+    .card-user-row {
+      padding: $base-cards-padding;
+      width: 100%;
+      display: inline-block;
+
+      .user-image {
+        display: inline-block;
+        width: 15%;
+        float: left;
+      }
+
+      .welcome-msg {
+        display: inline-block;
+        width: 85%;
+        float: left;
+        padding: $base-font-size;
+
+        .msg-head {
+          display: block;
+          @include font-bold;
+        }
+      }
+    }
+
+    .card-carousel-row {
+      padding: $base-cards-less-padding/2;
+    }
+
+    .card-banner-row {
+      padding: $base-cards-less-padding/2;
+      width: 100%;
+
+      &.background-gray {
+        background-color: $palette--gray-light;
+      }
+    }
+
+    .card-footer-row {
+      color: $palette--stpls-dark-sky-blue;
+      font-size: $base-font-size-headline;
+      border-top: $base-cards-border;
+      overflow: hidden;
+      width: 100%;
+
+      .card-btn {
+        text-align: center;
+        padding: $base-cards-more-padding 0;
+
+        button {
+          border: none;
+          background-color: $palette--white;
+          padding: 0;
+        }
+        &.border-right {
+          border-right: $base-cards-border;
+        }
+      }
+      .half-width {
+        width: 50%;
+        float: left;
+      }
+
+      &.no-border {
+        border: none;
+      }
+    }
+
+    &.no-border {
+      border: none;
+      box-shadow: none;
+    }
+
+    .cards-bigger-height {
+      max-height: 200px;
+    }
+  }
+}
+
+// cards
+@import 'homecards/weeklyad';
+@import 'homecards/heroproduct';
+@import 'homecards/categories';
+@import 'homecards/timeToReorder';
+@import 'homecards/orderTracking';
+@import 'homecards/storeMap';
+@import 'homecards/staplesapp';

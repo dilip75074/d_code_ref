@@ -1,0 +1,23 @@
+<div class="homecards-container">
+    <div class="card-header-row">
+        <span class="card-type">{{'LCR_NEAREST'|translate}}</span>
+        <div class="card-help pull-right scTrack scLink" sctype="scLink" scvalue="More link on nearest store">
+            <a ng-click="changeStore()">More</a>
+        </div>
+    </div>
+
+    <div ng-if="show" class="card-map-row">
+        <div class="store-info">
+            <span class="store-location">{{location}}</span>
+            <span class="store-address">{{addressline1}}</span>
+            <span class="store-phone" ng-click="callStore($event, phoneNumber)">{{phoneNumber | formatPhoneNumber}}</span>
+            <span class="store-hours-text">{{hoursText}}</span>
+            <span class="store-hours-time">{{hoursTime}}</span>
+        </div>
+        <div class="store-map">
+            <map center="{{address}}" mapTypeControl="false" zoom="13" class="map-image" draggable="false" scrollwheel="false" style="feature:all|element:labels|visibility:off" ng-click="openGoogleMaps($event, address)">
+                <marker position="{{address}}" icon="/assets/images/location-pin.png"></marker>
+            </map>
+        </div>
+    </div>
+</div>

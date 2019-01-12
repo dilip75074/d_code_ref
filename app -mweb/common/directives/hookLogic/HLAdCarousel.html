@@ -1,0 +1,35 @@
+<div ng-switch="pageType" ng-if="hookLogicProducts && hookLogicProducts.length > 0">
+
+  <div ng-switch-when="home" class="hl-banner-container homecards-container">
+    <a class="scTrack pfm row" ng-repeat="product in hookLogicProducts" sctype="pfm" sku="{{hookLogicProducts[0].sku}}" locater="{{$root.$state.current.name}}:exclusive" ui-sref="product({sku:hookLogicProducts[0].sku, seo: $root.SEO.quartz.sku(hookLogicProducts[0]).uri})" ng-click="dropBannerPageBeacon(hookLogicProducts[0], $event)">
+      <analytics-item item="product" location="home:ad" intelligence="HookLogic"></analytics-item>
+      <div class="col-xs-8">
+        <div ng-if="product.price" class="price">
+          <span ng-if="showRegPrice(product)" class="reg elements">
+            <span class="symbol">{{priceElements(product.price.listPrice).symbol}}</span>
+            <span class="major">{{priceElements(product.price.listPrice).major}}</span>
+            <span class="minor">{{priceElements(product.price.listPrice).minor}}</span>
+          </span>
+          <span class="final elements">
+            <span class="symbol">{{priceElements(product.price.finalPrice).symbol}}</span>
+            <span class="major">{{priceElements(product.price.finalPrice).major}}</span>
+            <span class="minor">{{priceElements(product.price.finalPrice).minor}}</span>
+          </span>
+        </div>
+        <div class="name" ng-bind-html="product.name"></div>
+      </div>
+      <div class="col-xs-4">
+        <img class="img-responsive" lazy-load-image="true" lazy-src="{{product.images[0] | s7Image : std}}" ng-click="$event.preventDefault()" />
+      </div>
+    </a>
+  </div>
+
+  <div class="sku_section sku_carousel" ng-switch-default>
+      <div class="carousel_header">{{'PROD_ADS_HDR'|translate}}</div>
+      <div id="similarSlider" lazy-scroller class="slider_container">
+        <div class="tile" ng-repeat="product in hookLogicProducts">
+          <product-item data="product" sku-type="hookLogic" analytics="true" loc="pd:ad" intelligence="HookLogic"></product-item>
+        </div>
+      </div>
+    </div>
+</div>

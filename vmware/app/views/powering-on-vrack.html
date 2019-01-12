@@ -1,0 +1,11 @@
+<div id="progress-bar-container" ng-init="poll('powering-on-vrack')">
+	<h2 translate="poweringvrack.view.POWERING_ON_VRACK"></h2>
+	<div id="powering-on-progress-bar" class="progress-bar">
+		<div id="progress-bar-filling" style="width:{{vrackProgressPercentage}}%"><span class="number-container"><span class="number" ng-bind="vrackProgressPercentage"></span>%</span></div>
+	</div>
+	<div style="color: #444; font-weight: 300;padding-top:20px">
+		<p translate="poweringvrack.view.POWERING_VALIDATED"></p>
+	</div>
+	<!-- <h4>Powering on vRACK can take up to <span id="progress-bar-minute">8 minutes</span></h4> -->
+	<h4 ng-bind="message" style="color:red;"><h4>
+</div>

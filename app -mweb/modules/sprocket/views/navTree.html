@@ -1,0 +1,8 @@
+<div class="navigation-tree">
+  <div ng-if="tree.length" id="tree-root" ui-tree data-drag-enabled="false">
+  	<ol ui-tree-nodes ng-model="tree" id="tree-root">
+      <li ng-repeat="node in tree" ui-tree-node ng-include="'modules/sprocket/views/navItem.html'" collapsed="node.collapsed">
+      </li>
+  	</ol>
+  </div>
+</div>

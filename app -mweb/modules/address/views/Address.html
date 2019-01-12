@@ -1,0 +1,93 @@
+<div id="address_form" name="addrForm" ng-show="display === 'form'" class="stpls_ccList">
+
+    <div class="row manage_top">
+        <div ng_show="showCounter" id="addressHeaderId" class="col-xs-12">{{addressCount}} {{'ADR_HEADER'|translate}}</div>
+
+        <div class="col-xs-12 cc_btn_row" ng-hide="!editable || display === 'inline'">
+            <button id="add_address" type="button" class="btn btn_full_width stpls_tertiary addr_enabled" ng-click="create()">{{'ADR_ADD_ADDR_BTN'|translate}}</button>
+        </div>
+    </div>
+
+    <!--  LOADING SPINNER -->
+    <div class="row animated loading" ng-show="isLoading" >
+        <div id="spinnerdiv_id" class="col-xs-12 animated loading" >
+            <span id="spinner_id" class="spinner" us-spinner="{top: 400}"></span><br>
+            <p class="center_text"><strong>Updating your profile ...</strong></p>
+        </div>
+    </div>
+
+    <div ng-repeat="address in addresses track by $index">
+        <div class="list_row">
+            <div id="address_row" class="row">
+                <div ng-show="selectable" class="col-xs-1 radio">
+                    <input id="address_radioButtonId" ng-click="addressSelected(address)" name="addressSelection" type="radio">
+                    <span class="radio_text" ng-click="addressSelected(address)"></span>
+                    </input>
+                </div>
+
+                <div class="col-xs-11 pull_right">
+                    <div id="addr_text_id">
+                        {{address.first}}&nbsp;{{address.last}}<br>
+                        {{address.addressLine1}}<br>
+                        <span ng-if="address.addressLine2">{{address.addressLine2}}<br></span>
+                        {{address.city}} {{address.state}} {{address.zip}}<br>
+                        <span ng-bind="address.phone | tel"></span>&nbsp;{{address.phoneExt}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row cc_btn_row" ng-hide="!editable">
+                <div class="col-xs-6">
+                    <button id="addr_editbtn_id" type="button" class="btn btn_full_width stpls_tertiary" ng-click="edit(address)">{{'CC_EDIT_BTN'|translate}}</button>
+                </div>
+                <div class="col-xs-6">
+                    <button id="addr_deletebtn_id" type="button" class="btn btn_full_width stpls_tertiary" ng-click="delete(address.addressId)">{{'CC_DELETE_BTN'|translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="address_form" name="addrForm" ng-show="display === 'formchkout'" class="stpls_ccList">
+	<div class="ddStyle">
+		<div class="addr_border" ng-repeat="address in addresses track by $index">
+			<div class="list_row row addr_forOverlay">
+
+				<div ng-if="address.showOverlay" class="tile-mask-container animated fadeInUp">
+					<div class="tile-message with-actions">
+						<span ng-if="!errorMsg" class="mask_info" translate="ADR_ADDRESS_DELETED"></span>
+						<span ng-if="errorMsg" class="mask_info">{{errorMsg}}</span>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="line" ng-click="addressSelectedInline(address)">
+                    <div class="name">
+                        {{address.first}}&nbsp;{{address.last}}
+                    </div>
+					{{address.addressLine1}}
+					<span ng-if="address.addressLine2">{{address.addressLine2}}</span>
+					{{address.city}} {{address.state}} {{address.zip}}<br/>
+					<span ng-bind="address.phone | tel"></span>&nbsp;{{address.phoneExt}}
+
+                    <!--Check mark -->
+                    <i ng-show="address.addressId == checkoutAddressId" class="checkmark"></i>
+				</div>
+			</div>
+		</div>
+
+        <div class="row">
+			<div class="col-xs-12 cc_btn_row" ng-hide="!editable || display === 'inline'">
+				<div id="add_address" type="button" class="addr_list" ng-click="create()" ng-switch="addressType">
+                    <span>
+                        <i class="icon-shippingaddress"></i>
+                    </span>
+                    <span ng-switch-when="shipping" translate="ADR_SHIPPING_ADDR_BTN"></span>
+                    <span ng-switch-when="billing" translate="ADR_BILLING_ADDR_BTN"></span>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

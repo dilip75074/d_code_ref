@@ -1,0 +1,297 @@
+<div>
+<div class="stpls_class_search" ng-class="{'subCat': ($root.$state.current.name == 'category' && subCategories) || sort_overlay }">
+	<div class="header-wrapper">
+		<div class="row term animated fadeIn animated-length-0" ng-show="displayTerm" ng-class="{readMoreOpen: expand}">
+			<div class="col-xs-12">
+				<button id="backButton" type="button" class="btn btn_chevron_back scTrack scLink" sctype="scLink" scvalue="Back button on header" ng-click="$root.back()"></button>
+				<button id="homeButton" type="button" class="btn btn_chevron_back" ng-click="$root.toRoute('home')"></button>
+				<h1 ng-if="!bannerurl" class="displayTerm" id="descriptionButton">
+					<span ng-bind-html="displayTerm"></span>
+				</h1>
+                <h1 ng-if="bannerurl" class="displayTerm">
+                    <span ng-bind-html="displayTerm"></span>
+                </h1>
+				<button id="search_btn" class="btn" focus-search="searchTextfield"><i class="search"></i></button>
+	            <div class="cart-white" ng-click="$root.toRoute('cart')">
+	                <i class="cart"></i>
+	                <span class="indicator animated fadeInDown" ng-show="$root.cart_count > 0" ng-bind="($root.cart_count || '')"></span>
+	            </div>
+			</div>
+
+
+
+		<div ng-show="info" class="col-xs-12 description class-description">
+			<div class="expand-text" ng-class="{shortInfo: !expand, longInfo: expand}" ng-bind-html="info"></div>
+			<a ng-click="expand=!expand" ng-model="expand">
+				<span translate="CLS_MORE_INFO" ng-show="!expand"></span>
+				<span translate="CLS_LESS_INFO" ng-show="expand"></span>
+			</a>
+		</div>
+	</div>
+
+	<div ng-if="!embedded" class="row suggest" ng-show="search.term_suggest && !subCategories" ng-if="search.term">
+		<div class="col-xs-12">
+			<strong id="searchTermPageTitle" ng-bind="search.term"></strong>
+			<span translate="CLS_NOT_FOUND_START2"></span>
+
+			<strong ng-bind="search.term_suggest"></strong>
+
+			(<span ng-bind="search.result_count | number"></span>
+			<span ng-if="!search.result_count" translate="CLS_NO_ITEMS_FOUND"></span>
+			<span ng-if="search.result_count == 1" translate="CLS_ITEM_FOUND"></span>
+			<span ng-if="search.result_count > 1" translate="CLS_ITEMS_FOUND"></span>)
+
+		</div>
+	</div>
+
+	<div class="row term" ng-if="ezReorder">
+		<div class="col-xs-12">
+            <button id="backButton" type="button" class="btn btn_chevron_back scTrack scLink" sctype="scLink" scvalue="Back button on header" ng-click="$root.back()"></button>
+            <button id="homeButton" type="button" class="btn btn_chevron_back" ng-click="$root.toRoute('home')"></button>
+            <p class="displayTerm" id="ezreorderPageTitle">
+				<span translate="SM_ORDER"></span>
+			</p>
+            <button id="search_btn" class="btn" focus-search="searchTextfield"><i class="search"></i></button>
+            <div class="cart-white" ng-click="$root.toRoute('cart')">
+                <i class="cart"></i>
+                <span class="indicator animated fadeInDown" ng-show="$root.cart_count > 0" ng-bind="($root.cart_count || '')"></span>
+            </div>
+			<p class="suggest">
+				<span ng-show="!ezReorder.error" translate="SM_ORDER_DESC"></span>
+				<span ng-show="ezReorder.error" translate="SM_ORDER_ERROR_MSG"></span>
+			</p>
+		</div>
+	</div>
+
+	<div class="cat-gallery" ng-if="subCategories">
+		<ul class="row">
+			<li class="col-xs-4" ng-repeat="c in subCategories">
+				<a ng-if="c.valid" title="{{c.desc}}" ui-sref="category({identifier:c.id, seo: $root.SEO.quartz.uri(c.id, c.desc)})" ui-sref-opts="{inherit: false}">
+					<img class="img-responsive" lazy-load-image="true" lazy-src="{{c.image | s7Image : 'tile'}}">
+					<div ng-bind-html="c.desc"></div>
+				</a>
+				<a ng-if="!c.valid" href="{{c.id}}">
+					<img class="img-responsive" lazy-load-image="true" lazy-src="{{c.image | s7Image : 'tile'}}">
+					<div ng-bind-html="c.desc"></div>
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="sort-overlay" ng-class="{active: sort_overlay == true}" ng-hide="ezReorder">
+		<div class="sort_overlay-content">
+	    <div class="sort-header">
+	      <h3>Sort</h3>
+				<h4 ng-click="sort_overlay = false;">Cancel</h4>
+				<h4 class="apply-filter-btn" ng-click="sort_overlay = false;">Apply</h4>
+			</div>
+			<ul class="sort-items-list">
+	      <li class="sort-item" ng-class="{active: search.sort_by == 'price_h'}" data-sort-value="priceHighLow" ui-sref="{sort:'price_h'}">Price (High to Low)</li>
+				<li class="sort-item" ng-class="{active: search.sort_by == 'price_l'}" data-sort-value="priceLowHigh" ui-sref="{sort:'price_l'}">Price (Low to High)</li>
+				<li class="sort-item" ng-class="{active: search.sort_by == 'name_a'}" data-sort-value="nameAZ" ui-sref="{sort:'name_a'}">Name (A-Z)</li>
+				<li class="sort-item" ng-class="{active: search.sort_by == 'name_z'}" data-sort-value="nameZA" ui-sref="{sort:'name_z'}">Name (Z-A)</li>
+				<li class="sort-item" ng-class="{active: search.sort_by == 'top_rated'}" data-sort-value="ratings" ui-sref="{sort:'top_rated'}">Top Rated</li>
+			</ul>
+		</div>
+	</div>
+
+  <div class="search-class-toolbar" ng-class="{dailydeals: dailydeals}" ng-hide="ezReorder">
+    <div class="toolbar-section section1" ng-click="toggleOneHourOnly()">
+			<div class="switch-wrap">
+	      <h3>1-hour pick up</h3>
+				<label class="switch">
+				  <input type="checkbox" ng-checked="oneHourOnly">
+				  <div class="slider round"></div>
+				</label>
+			</div>
+		</div>
+		<div class="toolbar-section section2" ng-click="sort_overlay = true;">
+			<div>
+				<div class="left-subsection">
+					<img src="/assets/images/sort.png" />
+				</div>
+				<div class="right-subsection">
+					<h4>Sort</h4>
+				</div>
+			</div>
+		</div>
+		<div class="toolbar-section section3" ng-click="showFilterOverlay('filter')">
+			<div>
+				<div class="left-subsection">
+					<img src="/assets/images/filter.png" />
+				</div>
+				<div class="right-subsection">
+					<h4>Filter</h4>
+				</div>
+			</div>
+		</div>
+		<div class="toolbar-section section4">
+			<div>
+				<img ng-click="toggleView()" ng-if="gridView" class="list-icon" data-icon-type="list" src="/assets/images/list.png" />
+				<img ng-click="toggleView()" ng-if="!gridView" class="grid-icon" data-icon-type="grid" src="/assets/images/grid.png" />
+			</div>
+		</div>
+	</div>
+</div>
+
+	<!-- NO RESULTS -->
+	<div class="no-results" ng-show="!loading_next && search.result_count === 0">
+		<span translate="CLS_NO_ITEMS_FOUND"><span>
+	</div>
+
+	<!-- RESULTS -->
+    <div id="searchResults" class="row results_container" ng-class="{true: 'grid', false: 'list'}[gridView === true]" infinite-scroll="loadNextResultsPage()" infinite-scroll-disabled="loading_next" infinite-scroll-distance="1" infinite-scroll-top-page="topPage" itemtype="http://schema.org/ItemList" ng-show="search.result_count">
+
+    <div class="repeat-wrapper result banner tophat" ng-if="$root.cvyr.widgets.tophat">
+        <conveyor-page-tophat widget="$root.cvyr.widgets.tophat"></conveyor-page-tophat>
+    </div>
+
+		<div class="repeat-wrapper" data-ad-spot="{{product === true}}" ng-class="{true: 'grid', false: 'list'}[gridView === true]" ng-repeat="product in search_results track by $index">
+
+			<div ng-if="product === true">
+				<div class="repeat-wrapper result banner triad" ng-class="{true: 'grid', false: 'list'}[gridView === true]" class="row" ng-if="$root.switchBoard.GPT_SEARCH_MAIN_SWITCH && $root.switchBoard.ENABLE_GPT_SEARCH_ADSLOT_BELOW_SEARCH_BAR && pageType === 'search' && loaded">
+					<div data-ng-dfp-ad="{{triad.search_ad_unit_1_div_id}}" data-ng-dfp-params="setDfpParams([[320,160]])" page-type="search" ad-slot="1"></div>
+				</div>
+
+				<div class="repeat-wrapper result banner triad" ng-class="{true: 'grid', false: 'list'}[gridView === true]" class="row" ng-if="$root.switchBoard.GPT_CATEGORY_MAIN_SWITCH && $root.switchBoard.ENABLE_GPT_CATEGORY_ADSLOT_BELOW_SEARCH_BAR && pageType === 'category' && loaded">
+					<div data-ng-dfp-ad="{{triad.category_ad_unit_1_div_id}}" data-ng-dfp-params="setDfpParams([[320,160]])" page-type="category" ad-slot="1"></div>
+				</div>
+
+				<div class="repeat-wrapper result banner triad" ng-class="{true: 'grid', false: 'list'}[gridView === true]" ng-if="bannerurl" class="row center_text">
+					<img class="img-responsive col-xs-12 no_padding" lazy-load-image="true" lazy-src="{{bannerurl | s7Image : 'mobileweb640x200'}}" />
+				</div>
+			</div>
+
+			<div ng-class="{hero: product.isHero, secondary: dailydeals && !product.isHero}"
+				ng-if="(product !== true) && ((oneHourOnly === true && product.bopis === 'true') || oneHourOnly === false)"
+				class="result clearfix"
+				itemprop="itemListElement"
+				itemscope=""
+				itemtype="http://schema.org/Product">
+
+				<analytics-item item="product" location="{{DLOLoc(product)}}" intelligence="{{intelligence(product)}}" slot="{{$index+1}}" page="{{search.page}}"></analytics-item>
+
+				<div id="skuTileSavings" class="savings-badge" ng-if="product.pricing[0].totalSavingsPercentage > 0">
+					<span ng-if="!product.skuSetType" translate="DD_SAVE" translate-values="{savings: product.pricing[0].totalSavingsPercentage}"></span>
+					<span ng-if="product.skuSetType" translate="DD_SAVE_UPTO" translate-values="{savings: product.pricing[0].totalSavingsPercentage}"></span>
+				</div>
+				<div class="ad-img-container" ng-if="product.skuType == 'hookLogic' ">Ad</div>
+
+				<div id="skuTileImage" class="productImg">
+					<a class="scTrack pfm" sctype="pfm" sku="{{product.sku}}" locater="{{DLOLoc(product)}}" ui-sref="product({sku: product.sku, seo: $root.SEO.quartz.sku(product).uri})" ng-click="clickProduct(product)">
+						<img class="animated fadeIn" itemprop="image" lazy-load-image="true" lazy-src="{{product.images[0] | skuListImage}}"/>
+					</a>
+				</div>
+
+				<div class="info">
+					<a itemprop="url" class="scTrack pfm" sctype="pfm" sku="{{product.sku}}" locater="{{DLOLoc(product)}}" ui-sref="product({sku: product.sku, seo:$root.SEO.quartz.sku(product).uri})" ng-click="clickProduct(product)">
+						<h2 id="productNameText" class="name" itemprop="name" ng-bind-html="product.name"></h2>
+					</a>
+					<p id="skuTileRating">
+						<star-rating star-rating="{{product.custReview.rating}}" rating-show="true" rating-count="{{product.custReview.count}}" ng-click="reviews_open = true; loadReviews(); scroll('reviews')"></star-rating>
+					</p>
+
+					<div class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+
+						<span ng-switch="product.pricing[0].promoMessage ? 1 : 0">
+							<span ng-switch-when="1" id="productPromoMessage" class="final bold" ng-bind="product.pricing[0].promoMessage"></span>
+							<span ng-switch-default>
+								<span ng-switch="(product.seePriceInCart || product.priceInCartOnly === 'true') ? 1 : 0">
+									<span ng-switch-when="1">
+										<span id="productRegPrice" class="reg price-data" ng-bind="(product.pricing[0].listPrice || product.pricing[0].price) | currency"></span>
+									</span>
+									<span ng-switch-default>
+										<span ng-if="!product.skuSetType" class="price-data">
+											<span ng-if="showRegPrice(product) && getDiscountPercent(product) != null" class="discount-percent" ng-bind="getDiscountPercent(product)"></span>
+											<span ng-if="showRegPrice(product)" class="final bold reg-price" translate="PRC_NOW"></span>
+											<span id="productFinalPrice" class="final bold">
+												<span itemprop="price" ng-bind="product.pricing[0].finalPrice | currency"></span>
+											</span>
+											<span id="productRegPrice" class="reg" ng-if="showRegPrice(product)" ng-bind="(product.pricing[0].listPrice || product.pricing[0].price) | currency"></span>
+										</span>
+										<span ng-if="product.skuSetType">
+											<span id="productFinalPrice" class="final bold" itemprop="price" translate="PRC_ASLOWAS" translate-values="{price: product.pricing[0].finalPrice}"></span>
+										</span>
+									</span>
+								</span>
+								<meta itemprop="priceCurrency" content="USD"/>
+								<span id="skuTileUom" class="uom" ng-hide="dailydeals" ng-bind="product.pricing[0].uom"></span>
+							</span>
+						</span>
+						<div ng-if="!dailydeals && getRebate(product) !== '0'" id="rebateFlag_id" class="rebate_flag price-data" type="button" name="rebateFlag">
+							<span ng-bind="getRebate(product) | currency: '$'"></span>&nbsp;rebate
+						</div>
+					</div>
+
+					<div>
+						<shipping-indicator ng-class="gridView === true && !showRegPrice(product) ? 'grid-show' : ''" ng-if="product.tag" class="shipping_flag" shipping-tag="{{product.tag}}"></shipping-indicator>
+						<p ng-if="!dailydeals && (product.seePriceInCart || product.priceInCartOnly === 'true')" class="price-in-cart" translate="CART_SEEPRICE"></p>
+					</div>
+
+					<div class="dd-meta" ng-if="dailydeals">
+ 						<ul>
+							<li ng-if="flags.countDown" id="skuTileTimer" deal-timer="{{product.period.endDate}}" timer-finish="timerFinish" timer-product="product">
+								<strong><span ng-show="days">{{days}}d </span><span ng-show="hours || days">{{hours}}h </span><span ng-show="days <= 10">{{minutes}}m </span><span ng-show="!days">{{seconds}}s</span></strong>
+								<span translate="DD_TIME_LEFT"></span>
+							</li>
+							<li ng-show="product.sold" translate="DD_SOLDCOUNT" translate-values="{count: product.sold}"></li>
+						</ul>
+
+						<div class="tile-mask-container" ng-show="product.expired">
+							<div class="tile-message">
+								<span translate="DD_EXPIRED"></span>
+							</div>
+						</div>
+					</div>
+
+					<div class="clearfix"></div>
+
+					<button class="add_to_cart_btn scTrack cta" bindtype="dom" sctype="cta" ctatype="addtocart" sku="{{product.sku}}" locater="{{DLOLoc(product)}}" ng-if="!product.skuSetType" ng-click="addToCart(product);  $event.stopPropagation();" ng-class="{loading: product.cart == 'loading', in: product.cart == 'in'}">
+						<span class="spinner" us-spinner spinner-theme="atc" spinner-on="product.cart == 'loading'"></span>
+						<div class="add-to-cart-plus"><div></div></div>
+					</button>
+					<a class="add_to_cart_btn skuset" ng-if="product.skuSetType" ui-sref="product({sku:product.sku, seo: $root.SEO.quartz.sku(product).uri})" ng-click="clickProduct(product)"><span>...</span></a>
+				</div>
+
+				<div ng-if="product.cartMask">
+					<div class="tile-mask-container animated fadeInUp" ng-show="!product.expired">
+						<div class="tile-message with-actions">
+							<span ng-switch="product.atcError ? 1 : 0">
+								<span ng-switch-default ng-switch="(!dailydeals || product.isHero ? 1 : 0)" ui-sref="cart">
+									<span ng-switch-default translate="PROD_WAS_ATC" translate-values="{name: product.name}"></span>
+									<span ng-switch-when="0" translate="PROD_ITEM_WAS_ATC"></span>
+								</span>
+								<span ng-switch-when="1">{{product.atcError}}</span>
+							</span>
+						</div>
+						<div class="tile-actions row">
+							<div class="col-xs-{{product.atcError ? '12' : '6'}}">
+								<button id="maskContinueBtn" class="btn btn_full_width stpls_secondary_half" translate="CART_CONTINUE" ng-click="product.cartMask = 0;"></button>
+							</div>
+							<div class="col-xs-6" ng-hide="product.atcError">
+								<button id="goToCartBtn" class="btn btn_full_width stpls_primary scTrack scLink" sctype="scLink" scvalue="scCheckout:tile" translate="GO_TO_CART" ui-sref="cart"></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<div id="hl_1" hook-logic-ad-carousel="setHookLogicAdCarouselParams()" hook-logic-products="hookLogic_products" page-type = "search" callback-fn = "updateSearchResult(hlProducts,url)"></div>
+
+		<div class="clearfix"></div>
+
+		<div class="row loading_spinner" ng-show="loading_next">
+			<span class="spinner" us-spinner></span>
+		</div>
+
+	</div>
+
+	<div class="backtoTop" ng-hide="topPage || search.result_count <= 0" ng-click="backToTop()"></div>
+
+</div>
+</div>
+
+<!-- filter overlay -->
+<ng-include src="'modules/class/views/filter_overlay.html'" ng-show="filter_overlay"></ng-include>

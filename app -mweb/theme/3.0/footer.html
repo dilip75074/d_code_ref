@@ -1,0 +1,11 @@
+<div class="stpls_footer_container" ng-class="{bottomPad: $root.$state.current.name == 'product'}" id="page-footer" ng-if="$root.$state.current.name != 'newsearch'">
+  <div class="footer-links">
+    <p ng-click="showAbout();" translate="FT_ABOUT_LINK"></p>
+    <p><a translate="FT_TERMS" href="/termsandConditions"></a></p>
+    <p><a translate="FT_HELP" href="/help"></a></p>
+    <p translate="FT_FEEDBACK" ng-click="feedbackPopup()"></p>
+  </div>
+    <div class="staples-inc-copyright">&copy; <span ng-bind="year"></span> Staples, Inc.</div>
+    <span class="small ng-scope" ng-show="show_about" translate="HOME_DESC"></span>
+    <p id="ft-about" ></p>
+</div>

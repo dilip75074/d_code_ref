@@ -1,0 +1,18 @@
+<div ng-if="show" class="sprkt-overlay full_overlay animated fadeInDown">
+  <div class="sprkt-container">
+    <div class="header clearfix">
+      <span class="pull-left"></span>
+      <span class="pull-right">
+        <button class="btn close_btn" ng-click="dismiss()"></button>
+      </span>
+      <p ng-bind="title" class="page_header"></p>
+    </div>
+
+    <div class="sprkt-alert alert alert-danger" ng-show="error" ng-bind="error"></div>
+    <div class="sprkt-body clearfix" ng-bind-html="body"></div>
+
+    <div class="overlay_loading animated fadeIn" ng-class="{active: !body && !error}">
+      <span class="spinner" us-spinner></span>
+    </div>
+  </div>
+</div>

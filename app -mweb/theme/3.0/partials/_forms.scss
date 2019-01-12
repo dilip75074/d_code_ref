@@ -1,0 +1,149 @@
+// Form controls
+
+.form-control {
+  font-size: $base-font-size-form;
+  height: $input--height;
+  color: $base-font-color;
+  display: inline-block;
+  border-radius: 0;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  @include border--base-top;
+  @include border--base-bottom;
+  box-shadow: none;
+  -webkit-appearance: none;
+
+  &:not(.input_qty) {
+
+    &:not(.input_finder):not(.input-sm) {
+
+      &.ng-valid:not(.ng-pristine)  {
+        border-color: $palette--green;
+      }
+
+      &.ng-invalid:not(.ng-pristine)  {
+        border-color: $palette--brightred;
+      }
+    }
+  }
+
+  &.input_single {
+    margin-top: 0;
+    &:not(:focus) {
+      border: 1px solid $palette--gray-light;
+    }
+
+    &.ng-valid:not(.ng-pristine)  {
+      border-color: $palette--green;
+    }
+
+    &.ng-invalid:not(.ng-pristine)  {
+      border-color: $palette--brightred;
+    }
+  }
+
+  &.additional:not(:focus) {
+    border-left-color: $palette--gray-light;
+
+    /*&.ng-valid:not(.ng-pristine)  {
+      border-left: 1px solid $palette--green;
+    }
+
+    &.ng-invalid:not(.ng-pristine)  {
+      border-left: 1px solid $palette--brightred;
+    }*/
+  }
+
+  input &:not(#quantityInput) {
+
+    &[disabled] {
+      cursor: not-allowed;
+      background-color: $palette--white;
+      color: $palette--gray-med-light;
+    }
+
+    &[readonly] {
+      cursor: not-allowed;
+      background-color: $palette--white;
+      color: $palette--gray-med-light;
+    }
+
+    &.additional {
+      border-left: 1px solid $palette--gray-light;
+
+      &:valid {
+        border-left: 1px solid $palette--green;
+      }
+    }
+  }
+}
+
+// Radio button replacement
+
+.radio {
+
+  padding-left: $base-gutter-width;
+
+  input[type=radio] {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px; margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  label {
+    display: block;
+    cursor: pointer;
+    padding: 3px 0px;
+  }
+
+  input[type="radio"] + span {
+    display: block;
+  }
+
+  input[type=radio] + span:before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: -6px;
+    border-radius: 10px;
+    border: 3px solid $palette--white;
+    box-shadow: 0 0 0 1px $palette--gray-med-light;
+    margin-right: 6px;
+    transition: 0.25s ease all;
+  }
+
+  input[type=radio]:checked + span:before {
+    background: $palette--stpls-red;
+    box-shadow: 0 0 0 1px $palette--gray-med-light;
+  }
+}
+
+.suggestions {
+  position: absolute;
+  background-color: $palette--white;
+  border: 1px solid $palette--gray-light;
+  width:100%;
+  opacity: 1 !important;
+  max-height:110px;
+  height: auto;
+  z-index:99999;
+  overflow-x:hidden;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+.userSuggestion {
+  focus{background-color:$palette--gray-light;cursor:pointer;}
+  margin-left: 10px;
+  margin-top: 4px;
+  font-size: 12px;
+  height: 24px;
+  background-color: $palette--white;
+  @include border--base-bottom;
+  opacity: 1 !important;
+}

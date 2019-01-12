@@ -1,0 +1,9 @@
+<div ui-tree-handle class="tree-handle tree-node-content" ng-hide="this.hidden || node.hidden">
+	<button class="btn sidenav_btn category_name" nodrag ng-click="toggleCat(this.$parent)" collapsed="node.collapsed" ng-class="{selected: !collapsed}">
+		<span ng-bind-html="getLabel(node)"></span>
+		<!-- <span btn-expand="!" ng-model="collapsed" class="pull-right"></span> -->
+	</button>
+</div>
+<div ui-tree-nodes class="tree-nodes" ng-model="node.sub" ng-class="{hidden: collapsed}">
+    <div ng-repeat="node in node.sub" ui-tree-node ng-include="'modules/browse/directives/categoryListNode.html'" collapsed="node.collapsed"></div>
+</div>

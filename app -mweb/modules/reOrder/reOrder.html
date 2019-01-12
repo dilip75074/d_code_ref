@@ -1,0 +1,18 @@
+<div class="keyword-container stpls_product_container" ng-if="search_results && search_results.length > 0">
+    <div class="card-header-row">
+        <span class="caption" translate="SRCH_RECENT_ORDER"></span>
+        <div class="card-help pull-right">
+            <span ng-click="$root.toRoute('reorders')">{{'SRCH_MORE_ORDER' | translate}}</span>
+        </div>
+        <div class="sku_section">
+            <div class="row option_row">
+                <div id="similarSlider" lazy-scroller class="slider_container">
+                    <div class="tile" ng-repeat="product in search_results">
+                        <product-item skuset="false" analytics="true" loc="search:recentlyordered" data="product"></product-item>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

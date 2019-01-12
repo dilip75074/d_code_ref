@@ -1,0 +1,19 @@
+<div class="homecards-container">
+    <div class="card-header-row">
+        <span class="card-type">{{data.title}}</span>
+        <div class="card-help pull-right scTrack scLink" sctype="scLink" scvalue="View All : Weekly ad">
+            <div ng-click="$root.toRoute('weeklyAd', {adref: 'mobile_nav'})">View All</div>
+        </div>
+    </div>
+    <div id="similarSlider" class="card-slider-row" ng-click="$root.toRoute('weeklyAd', {adref: 'mobile_nav'})">
+        <div class="card-tile" ng-repeat="page in pages">
+            <img class="img-responsive nofade scTrack scLink" sctype="scLink" scvalue="Weekly ad images" ng-src="{{page.img}}"/>
+        </div>
+    </div>
+    <div class="card-footer-row">
+        <div class="card-btn scTrack scLink" sctype="scLink" scvalue="Nearest Store link" ng-click="changeStore()">
+            <i class="location-white"></i>
+            <button ng-bind="cityAndDistance"></button>
+        </div>
+    </div>
+</div>

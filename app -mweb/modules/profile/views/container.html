@@ -1,0 +1,213 @@
+<div class="stpls_profile_container animated fadeIn">
+
+    <div class="row">
+        <div class="col-xs-12 profile_header page_header">{{'PRF_HDR'|translate}}</div>
+    </div>
+
+    <div class="row profile_info">
+        <accordion close-others="true" id="profile_accordion">
+        <div class="col-xs-12 no_padding">
+
+            <div class="profile_row nickname">
+                <accordion-group is-open="openStatus.welcomeMessage">
+                    <accordion-heading>
+                        <div class="panel-heading-container" ng-click="scroll('nickname', openStatus.welcomeMessage)" ng-class="{'selected_bg': openStatus.welcomeMessage}">
+                            <div class="profile_label">{{'PRF_NNAME'|translate}}</div><div class="profile_value"> - {{profile.welcomeMessage}}</div>
+                            <span btn-expand ng-model="openStatus.welcomeMessage"></span>
+                        </div>
+                    </accordion-heading>
+                    <form name="nicknameForm" ng-submit="save(nicknameForm, 'welcomeMessage')" novalidate>
+                        <div class="row">
+                            <div class="col-xs-12 section_sub_heading"><label>{{'PRF_NNAME_MSG'|translate}}</label></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 section_content input_row">
+                                <input name="welcomeMessage" type="text" ng-model="profile.welcomeMessage" class="form-control" placeholder="{{'PRF_NNAME'|translate}}" maxlength="25" input-reset-control required/>
+                                <div class="alert alert-danger" ng-show="nicknameForm.$submitted && !nicknameForm.$valid">
+                                    <span ng-show="nicknameForm.welcomeMessage.$error.required">{{'GEN_REQUIRED'|translate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row btn_row">
+                            <div class="col-xs-6">
+                                <button id="save_welcome" class="btn stpls_primary btn_full_width" type="submit">{{'GEN_SAVE_BTN'|translate}}</button>
+                            </div>
+                            <div class="col-xs-6 pull-right">
+                                <button id="cancel_welcome" class="btn stpls_secondary_half btn_full_width" type="button" ng-click="cancel(nicknameForm, 'welcomeMessage')">{{'GEN_CANCEL_BTN'|translate}}</button>
+                            </div>
+                        </div>
+                    </form>
+                </accordion-group>
+            </div>
+
+            <div class="profile_row username">
+                <accordion-group is-disabled="true">
+                    <accordion-heading>
+                        <div class="panel-heading-container">
+                            <div class="profile_label">{{'PRF_UNAME'|translate}}</div><div class="profile_value"> - {{profile.userName}}</div>
+                        </div>
+                    </accordion-heading>
+                </accordion-group>
+            </div>
+
+            <div class="profile_row email">
+                <accordion-group is-open="openStatus.emailAddress">
+                    <accordion-heading>
+                        <div class="panel-heading-container" ng-click="scroll('email', openStatus.emailAddress)" ng-class="{'selected_bg': openStatus.emailAddress}">
+                            <div class="profile_label">{{'ACT_EML_ADD'|translate}}</div><div class="profile_value"> - {{profile.emailAddress}}</div>
+                            <span btn-expand ng-model="openStatus.emailAddress"></span>
+                        </div>
+                    </accordion-heading>
+                    <form name="emailForm" ng-submit="save(emailForm, 'emailAddress')" novalidate>
+                        <div class="row">
+                            <div class="col-xs-12 section_sub_heading"><label>{{'PRF_EMAIL_MSG'|translate}}<label></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 section_content input_row">
+                            	<div email-address>
+                                	<input type="email" name="emailAddress" ng-model="profile.emailAddress" class="form-control email" placeholder="{{'ACT_EML_ADD'|translate}}" ng-pattern="/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/" maxlength="256" input-reset-control required/>
+								</div>
+								<div class="alert alert-danger" ng-show="emailForm.$dirty && emailForm.emailAddress.$error.maxlength">{{'GEN_MAX_LENGTH'|translate}}</div>
+								<div class="alert alert-danger" ng-show="emailForm.$dirty && emailForm.emailAddress.$error.required">{{'GEN_REQUIRED'|translate}}</div>
+								<div class="alert alert-danger" ng-show="emailForm.$dirty && emailForm.emailAddress.$error.pattern">{{'GEN_EMAIL_INVALID'|translate}}</div>
+                            </div>
+                        </div>
+                        <div class="row btn_row">
+                            <div class="col-xs-6">
+                                <button id="save_email" class="btn stpls_primary btn_full_width" type="submit">{{'GEN_SAVE_BTN'|translate}}</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button id="cancel_email" class="btn stpls_secondary_half btn_full_width" type="button" ng-click="cancel(emailForm, 'emailAddress')">{{'GEN_CANCEL_BTN'|translate}}</button>
+                            </div>
+                        </div>
+                    </form>
+                </accordion-group>
+            </div>
+
+            <div class="profile_row subscribe">
+                <accordion-group is-open="openStatus.isUserSubscribed">
+                    <accordion-heading>
+                        <div class="panel-heading-container" ng-click="scroll('subscribe', openStatus.isUserSubscribed)" ng-class="{'selected_bg': openStatus.isUserSubscribed}">
+                            <div class="profile_label" style="min-width:220px;">{{'PRF_RECV'|translate}}{{'PRF_SPC_SAVE'|translate}}</div>
+                            <div class="profile_value" ng-if="profile.isUserSubscribed"> - {{'CHK_ONLABEL'|translate}}</div><div class="profile_value" ng-if="!profile.isUserSubscribed"> - {{'CHK_OFFLABEL'|translate}}</div>
+                            <span btn-expand ng-model="openStatus.isUserSubscribed"></span>
+                        </div>
+                    </accordion-heading>
+                    <form name="subscribeForm" ng-submit="save(subscribeForm, 'isUserSubscribed', ['optOutReason'])" novalidate>
+                        <div class="row">
+                            <div class="col-xs-12 section_sub_heading"><label>{{'PRF_SPC_SAVE'|translate}}</label></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 section_content">
+                                <button class="checkbox_btn" type="button" name="isUserSubscribed" ng-click="changeSubscribeStatus()">
+                                    <span class="check" ng-class="{checked: profile.isUserSubscribed}"></span>
+                                    <span translate="ACT_NTFY_DEAL"></span>
+                                </button>
+                            </div>
+                            <div class="unsubscribe" ng-show="profile.showUnsubscribePrompt">
+                                <div class="col-xs-12"><label>{{'PRF_UNSUB_REAS'|translate}}<span class="red">*</span></label></div>
+                                <div class="col-xs-12">
+                                  <input type="text" class="form-control" name="optOutReason" ng-model="profile.optOutReason" ng-required="profile.showUnsubscribePrompt"  input-reset-control />
+                                    <div class="error-messages"
+                                        ng-if="subscribeForm.$submitted || subscribeForm.optOutReason.$dirty"
+                                        ng-messages="subscribeForm.optOutReason.$error"
+                                        ng-messages-include="common/form-messages/common.html"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row btn_row">
+                            <div class="col-xs-6">
+                                <button id="save_isUserSubscribed" class="btn stpls_primary btn_full_width" type="submit">{{'GEN_SAVE_BTN'|translate}}</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button id="cancel_isUserSubscribed" class="btn stpls_secondary_half btn_full_width" type="button" ng-click="cancel(subscribeForm, 'isUserSubscribed')">{{'GEN_CANCEL_BTN'|translate}}</button>
+                            </div>
+                        </div>
+                    </form>
+                </accordion-group>
+            </div>
+
+            <div class="profile_row password">
+                <accordion-group is-open="openStatus.password">
+                    <accordion-heading>
+                        <div class="panel-heading-container" ng-click="scroll('password', openStatus.password)"ng-class="{'selected_bg': openStatus.password}">
+                            <div class="profile_label">{{'ACT_PWD'|translate}}</div><div class="profile_value"> - {{profile.password}}</div>
+                            <span btn-expand ng-model="openStatus.password"></span>
+                        </div>
+                    </accordion-heading>
+                    <change-password logon-id="profile.userName" password-open="openStatus.password"></change-password>
+                </accordion-group>
+            </div>
+
+            <div class="profile_row cc">
+                <accordion-group is-open="openStatus.creditCards">
+                    <accordion-heading ng-class="{'selected_bg':openStatus.creditCards}">
+                        <div class="panel-heading-container" ng-click="scroll('cc', openStatus.creditCards)" ng-class="{'selected_bg': openStatus.creditCards}">
+                            <div class="profile_label">{{'PRF_CC_LBL'|translate}}</div><div class="profile_value"> - {{profile.creditCards.length}} {{'PRF_CC_HDR'|translate}}</div>
+                            <span btn-expand ng-model="openStatus.creditCards"></span>
+                        </div>
+                    </accordion-heading>
+
+                    <creditcard display="'form'" editable="true" selectable="false" showCounter="false"
+                        cards="cards" card-count="cardCount"></creditcard>
+                </accordion-group>
+            </div>
+
+            <div class="profile_row address">
+                <accordion-group is-open="openStatus.addresses">
+                  <accordion-heading ng-class="{'selected_bg':openStatus.addresses}">
+                        <div class="panel-heading-container" ng-click="scroll('address', openStatus.addresses)" ng-class="{'selected_bg': openStatus.addresses}">
+                            <div class="profile_label">{{'PRF_ADR_LBL'|translate}}</div><div class="profile_value"> - {{profile.addresses.length}} {{'PRF_ADR_HDR'|translate}}</div>
+                            <span btn-expand ng-model="openStatus.addresses"></span>
+                        </div>
+                    </accordion-heading>
+                    <address display="'form'" editable="true" selectable="false" show-counter="false"
+                        addresses="addresses" address-count="addressCount"></address>
+                </accordion-group>
+            </div>
+
+            <div class="profile_row rewards_num">
+                <accordion-group is-open="openStatus.rewardsNumber">
+                    <accordion-heading>
+                        <div class="panel-heading-container" ng-click="scroll('rewards_num', openStatus.rewardsNumber)" ng-class="{'selected_bg': openStatus.rewardsNumber}">
+                            <div class="profile_label" style="min-width:170px;">{{'ACT_STPL_RWD_NBR'|translate}}</div><div class="profile_value"> - {{profile.rewardsNumber}}</div>
+                            <span btn-expand ng-model="openStatus.rewardsNumber"></span>
+                        </div>
+                    </accordion-heading>
+
+                    <div class="row">
+                    <form name="rewardsForm" ng-submit="linkRewards(rewardsForm, rewardsForm.rewardsNumber, rewardsForm.rewardsPhoneNumber)" novalidate>
+                        <input type="hidden" name="rewardsMemberOption" ng-model="profile.rewardsMemberOption" value="alreadyRewardsMember">
+                        <div class="col-xs-12 section_sub_heading">
+                            <label>{{'PRF_RWD_HDR'|translate}}</label>
+                        </div>
+
+                        <div class="col-xs-12 section_content input_row">
+                            <input type="tel" class="form-control" name="rewardsNumber" rewards-number ng-model="profile.rewardsNumber" ng-change="clearError()" placeholder="{{'PRF_RWD_PH'|translate}}"
+                                ng-pattern="/^[0-9]+$/" minlength=2 maxlength=10 input-reset-control required autocomplete="off"/>
+                            <div class="alert alert-danger" ng-show="rewardsForm.$dirty && rewardsForm.rewardsNumber.$error.pattern">{{'RWD_NUMBER_ERR'|translate}}</div>
+                            <div class="alert alert-danger" ng-show="rewardsForm.$dirty && rewardsForm.rewardsNumber.$error.minlength">{{'RWD_NUMBERLEN_ERR'|translate}}</div>
+                            <div class="alert alert-danger" ng-show="rewardsForm.$dirty && rewardsForm.rewardsNumber.$error.required">{{'RWD_NUMBER_ERR'|translate}}</div>
+                        </div>
+                        <div class="col-xs-12 section_content input_row">
+                            <input type="tel" class="form-control" name="rewardsPhoneNumber" ng-model="profile.rewardsPhoneNumber" ng-change="clearError()" phone-number placeholder="{{'RWD_PHN_PH'|translate}}" input-reset-control required/>
+                            <div class="alert alert-danger" ng-show="rewardsForm.$dirty && rewardsForm.rewardsPhoneNumber.$error.required">{{'RWD_PHN_MISSING'|translate}}</div>
+                            <div class="alert alert-danger" ng-show="rewardsForm.$dirty && rewardsForm.rewardsPhoneNumber.$error.pattern">{{'RWD_PHN_ERR'|translate}}</div>
+                            <div class="alert alert-danger" ng-show="errorMsg"><span>{{errorMsg}}</span></div>
+                        </div>
+                        <div class="col-xs-6 btn_row">
+                          <button id="save_rewards" class="btn stpls_primary btn_full_width" type="submit">{{'GEN_SAVE_BTN'|translate}}</button>
+                        </div>
+                        <div class="col-xs-6 btn_row">
+                          <button id="cancel_rewards" class="btn stpls_secondary_half btn_full_width" type="button" ng-click="cancel(rewardsForm, 'rewardsNumber')">{{'GEN_CANCEL_BTN'|translate}}</button>
+                      </div>
+                    </form>
+                    </div>
+                </accordion-group>
+            </div>
+
+        </div>
+        </accordion>
+    </div>
+
+</div>

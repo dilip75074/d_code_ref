@@ -1,0 +1,17 @@
+"SM"    => Side menu
+
+"FT"    => Footer
+
+"LCR"   => Store locator page
+
+"SRCH"  => Search Overlay
+
+"CLS"   => Search Results (Class) page
+
+"RWD"   => Rewards Sub-System
+
+"CHK"   => Checkout Page
+
+"CC"    => Credit Card Pages (in Profile or Checkout)
+
+"ADR"   => Address Pages (in Profile or Checkout)

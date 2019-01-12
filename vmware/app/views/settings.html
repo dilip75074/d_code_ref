@@ -1,0 +1,227 @@
+<script type="text/javascript" src="app/scripts/vendor/select2.js"></script>
+
+<style>
+.logout{border-bottom: none!important;}
+.logout span {font-family: 'ProximaNova-Sbold';}
+.width18 {width:18%!important;}
+.width35 {width:35%!important;}
+.width15 {width:15%!important;}
+.tooltip {position:fixed; max-width: 215px;}
+.inputType {color: #444; display:block; 
+	width:80%;
+	background: rgba(245,248,250,1.00);
+	border:none;
+	border-bottom:3px solid #89cbdf;
+  	font-size:1.2em;
+  	margin:0 auto 25px;
+  	outline:none;
+  	-webkit-box-sizing: border-box;
+  	-moz-box-sizing: border-box;
+  	box-sizing: border-box;}
+</style>
+
+<div class="content-panel clearfix" ng-init="$parent.activeTab=4;addModeSelected=0;showdelete=0;otherModeSelected=0;selectedPage='GENERAL';">
+	<div class="settings-wrapper" style="width:1129px;max-width:1129px!important">
+		<ul class="setting-nav clearfix">
+			<li ng-class="{'active' : selectedPage=='GENERAL'}"><a ng-click="selectedPage = 'GENERAL'; getchVDIzkConstants();"><plain  translate="settings.view.GENERAL" /></a></li>
+			<li ng-class="{'active' : selectedPage=='NOTIFICATIONS'}"><a ng-click="selectedPage = 'NOTIFICATIONS';  fetchThresholdcategories();"><plain  translate="settings.view.NOTIFICATIONS" /></a></li>
+			<li translate="settings.view.ADMIN"></li>
+			<li translate="settings.view.PROFILE"></li>
+		</ul>
+		
+		<!-- Notification DIV -->
+		<div  ng-if="selectedPage=='NOTIFICATIONS'" class="notifications-block tab-content" style="min-height:0px;">
+			<div class="options clearfix">
+				<h2 class="l-float" translate="settings.view.THRESHOLDS"></h2>
+				<div class="new-user-info">
+					<span ng-show="$parent.flag == 1">
+						<span ng-apply-privilege="VRM_ADD_THRESHOLD" ng-click="$parent.addModeSelected=1;$parent.isvalidclass=1;" ng-show="$parent.addModeSelected==0&&$parent.otherModeSelected==0">
+							<span class="add-user"></span>
+							<span translate="settings.view.ADD"></span>
+						</span>
+						<span ng-show="$parent.addModeSelected==1||$parent.otherModeSelected==1" style="color:gray">
+							<span class="add-user"></span>
+							<span translate="settings.view.ADD"></span></span>
+					</span>
+				</div>
+			</div>
+			<div ng-show="showErrorMsg" style="color:red; text-align:center;">{{errorMsg}}</div>
+			<ul class="notify-list">
+				<li ng-show="$parent.addModeSelected == 1">
+					<span class="thresholds">
+						<select style="width:270px!important;" ui-select2 ng-init="newThreshold.category='MEMORY_TEMPERATURE'" ng-model="newThreshold.category">
+							<option ng-repeat="category in categoryList" value="{{category}}">{{category}}</option>
+						</select>
+					</span>
+					<select style="width:110px!important;margin-left:20px;" ui-select2 ng-init="newThreshold.dataType='integer';" ng-model="newThreshold.dataType" ng-change="setdefault(newThreshold.dataType);clearTextboxValue();">
+						<option value="integer" translate="settings.view.INTEGER"></option>
+						<option value="float" translate="settings.view.FLOAT"></option>
+						<option value="boolean" selected="selected" translate="settings.view.BOOLEAN"></option>
+					</select>
+					<input style="margin-left: 15px;" class="temperature-value" type="text" ng-model="newThreshold.value" maxlength="8" ng-change="isValidExpression(newThreshold.dataType,newThreshold.value);" ng-class="{'invalid-input':isvalidclass==0}" ngrequired />
+					<select style="width:110px!important;" ui-select2 ng-init="newThreshold.units='DegreesF';" ng-model="newThreshold.units">
+						<option value="null" ng-selected="unit=='null'" ng-hide="newThreshold.dataType=='integer' || newThreshold.dataType=='float'" translate="settings.view.DEFAULT"></option>
+						<option value="DegreesF" ng-hide="newThreshold.dataType=='boolean'">&deg;F</option>
+						<option value="DegreesC" ng-hide="newThreshold.dataType=='boolean'">&deg;C</option>
+					</select>
+					<select style="width:90px!important;" ui-select2 ng-init="newThreshold.type='MIN';" ng-model="newThreshold.type">
+						<option ng-repeat="type in typeList" value="{{type}}">{{type}}</option>
+					</select>
+					<select style="width:110px!important;" ui-select2 ng-init="newThreshold.thresholdType='ERROR';" ng-model="newThreshold.thresholdType">
+						<option value="CRITICAL" translate="settings.view.CRITICAL"></option>
+						<option value="ERROR" translate="settings.view.ERROR"></option>
+						<option value="ALARM" translate="settings.view.ALARM"></option>
+						<option value="WARNING" translate="settings.view.WARNING"></option>
+					</select>
+
+					<div class="description">
+						<input type="text" ng-if="newThreshold.description.length==0" value="--"/>
+						<input type="text" ng-if="newThreshold.description.length>0" ng-model="newThreshold.description"/>
+					</div>
+
+					<span class="delete-option r-float" style="margin-top: -40px;">
+						<span ng-click="newThreshold.enable='true'; addEditThreshold(newThreshold);" style="margin-right: 20px;">
+							<span class="done-icon malign"></span>
+							<span class="malign" translate="settings.view.DONE"></span>
+						</span>
+									
+						<span ng-click="$parent.addModeSelected=0; newThreshold.value = ''; $parent.showErrorMsg=false; resetMode()">
+							<span class="delete-icon malign"></span>
+							<span class="malign" translate="settings.view.CANCEL"></span>
+						</span>
+					</span>
+				</li>
+			</ul>
+			<ul class="notify-list" style="max-height:250px!important; overflow:auto!important;" ng-whenscroll="fetchNextThresholdList();">
+				<li ng-show="thresholdList.length == 0" style="text-align: center;" translate="settings.view.NO_THRESHOLD_FOUND"></li>
+				<li ng-repeat="item in thresholdList" ng-class="{disabled:item.enable=='false'}">
+					<div>
+						<div ng-show="(false==editThresholdFlags[$index]&&false==deleteThresholdFlags[$index]) || (editThresholdFlags[$index]==false&&deleteThresholdFlags[$index]==true)">	
+							<span class="property-name" ng-class="{'width35': deleteThresholdFlags[$index]==false}">{{item.category}}</span>
+							<span ng-show="item.units == 'DegreesC'" class="property" ng-class="{'width18': deleteThresholdFlags[$index]==false}">{{item.value}}&deg;C</span>
+							<span ng-show="item.units == 'DegreesF'" class="property" ng-class="{'width18': deleteThresholdFlags[$index]==false}">{{item.value}}&deg;F</span>
+							<span ng-show="item.units == ' ' || item.units == 'null' || item.units == null" class="property" ng-class="{'width18': deleteThresholdFlags[$index]==false}">{{item.value}}</span>
+							<span ng-if="item.units == ' '"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+							<span class="property" ng-class="{'width15': deleteThresholdFlags[$index]==false}">{{item.type}}</span>
+							<span class="property" ng-class="{'width15': deleteThresholdFlags[$index]==false}">{{item.thresholdType}}</span>
+							<span ng-apply-privilege="VRM_ADD_THRESHOLD"  ng-show="item.enable == 'true'" ng-click="onOffThreshold(item, 'false', $index);" class="on-switch"></span>
+							<span ng-apply-privilege="VRM_ADD_THRESHOLD" ng-show="item.enable == 'false'" ng-click="onOffThreshold(item, 'true', $index);" class="off-switch"></span>
+							<span ng-if="item.description!=''&&item.description!=null"><img tooltip-placement="bottom" tooltip-html-unsafe="{{item.description}}" class="tooltip-icon malign" src="app/img/permission.png"/></span>
+							<span ng-if="item.description==''||item.description==null"><img tooltip-placement="bottom" tooltip-html-unsafe="No description available" class="tooltip-icon malign" src="app/img/permission.png"/></span>
+							<div ng-if="deleteThresholdFlags[$index]==true">
+								<span class="delete-option r-float" style="margin-top: -24px!important;">
+									<span ng-click="deleteThreshold(item.id, $index);" style="margin-right: 3px;">
+										<span class="done-icon malign"></span>
+										<span class="malign" translate="settings.view.CONFIRM"></span>
+									</span>
+									<span ng-click="deleteThresholdFlags[$index]=false;resetMode()">
+										<span class="delete-icon malign"></span>
+										<span class="malign" translate="settings.view.CANCEL"></span>
+									</span>
+								</span>
+							</div>
+						</div>
+
+						<div ng-show="editThresholdFlags[$index]==true">
+							<div ng-show="item.enable=='true'">
+								<span class="thresholds">
+									<select style="width:270px!important;" ui-select2 ng-model="item.category" ng-change="editThreshold(item.id, 'category', item.category);">
+										<option ng-repeat="category in categoryList" value="{{category}}">{{category}}</option>
+									</select>
+								</span>
+								<select style="width:110px!important;margin-left:20px;" ui-select2 ng-model="item.dataType" ng-change="editThreshold(item.id, 'dataType', item.dataType, $index);item.value='';">
+									<option value="integer" translate="settings.view.INTEGER"></option>
+									<option value="float" translate="settings.view.FLOAT"></option>
+									<option value="boolean" translate="settings.view.BOOLEAN"></option>
+								</select>
+								<input style="margin-left: 31px;" class="temperature-value" type="text" maxlength="8" ng-model="item.value" ng-change="editThreshold(item.id, 'value', item.value);isValidExpression(item.dataType,item.value);" ng-class="{'invalid-input':isvalidclass==0}" ngrequired/>
+
+								<select style="width:110px!important;" ui-select2 ng-model="item.units" ng-change="editThreshold(item.id, 'units', item.units);">
+									<option value="null" ng-selected="(item.units!='DegreesF'&&item.units!='DegreesC'&&item.dataType=='boolean')" ng-hide="item.dataType=='integer' || item.dataType=='float'" translate="settings.view.DEFAULT"></option>
+									<option value="DegreesF" ng-selected="item.units=='DegreesF'||item.dataType!='boolean'" ng-hide="item.dataType=='boolean'">&deg;F</option>
+									<option value="DegreesC" ng-selected="item.units=='DegreesC'" ng-hide="item.dataType=='boolean'">&deg;C</option>
+								</select>
+								<select style="width:90px!important;" ui-select2 ng-model="item.type" ng-change="editThreshold(item.id, 'type', item.type);">
+									<option ng-repeat="type in typeList" value="{{type}}">{{type}}</option>
+								</select>
+								<select style="width:110px!important;" ui-select2 ng-model="item.thresholdType" ng-change="editThreshold(item.id, 'thresholdType', item.thresholdType);">
+									<option value="CRITICAL" translate="settings.view.CRITICAL"></option>
+									<option value="ERROR" translate="settings.view.ERROR"></option>
+									<option value="ALARM" trasnlate="settings.view.ALARM"></option>
+									<option value="WARNING" translate="settings.view.WARNING"></option>
+								</select>
+								<span class="delete-option r-float">
+									<span ng-click="addEditThreshold(thresholdList, $index)" style="margin-right: 20px;">
+										<span class="done-icon malign"></span>
+										<span class="malign" translate="settings.view.DONE"></span>
+									</span>
+									
+									<span ng-click="resetThresholdList();editThresholdFlags[$index]=false;resetMode()">
+										<span class="delete-icon malign"></span>
+										<span class="malign" translate="settings.view.CANCEL"></span>
+									</span>
+								</span>
+								<div class="description">
+									<input type="text" ng-model="item.description" ng-change="editThreshold(item.id, 'description', item.description);" placeholder="Description"/>
+								</div>
+							</div>
+						
+							<div ng-show="item.enable=='false'">
+								<span class="property-name"  style="width:340px!important;">{{item.category}}</span>
+								<span ng-show="item.units == 'DegreesC'" class="property">{{item.value}}&deg;C</span>
+								<span ng-show="item.units == 'DegreesF'" class="property">{{item.value}}&deg;F</span>
+								<span class="property">{{item.type}}</span>
+								<span class="property">{{item.thresholdType}}</span>
+								<span ng-show="item.enable == 'true'" ng-click="item.enable='false'; addEditThreshold(item);" class="on-switch"></span>
+								<span ng-show="item.enable == 'false'" ng-click="item.enable='true'; addEditThreshold(item);" class="off-switch"></span>
+								<span ng-if="item.description!=''&&item.description!=null"><img tooltip-placement="bottom" tooltip-html-unsafe="{{item.description}}" class="tooltip-icon malign" src="app/img/permission.png"/></span>
+								<span ng-if="item.description==''||item.description==null"><img tooltip-placement="bottom" tooltip-html-unsafe="No description available" class="tooltip-icon malign" src="app/img/permission.png"/></span>
+							</div>
+						</div>
+
+						<div ng-init="hideTooltip[$index]=1" ng-click="toggleTooltip($index, $event);" class="menu-toggle-black" style="float:right;margin-top: -14px;" ng-hide="deleteThresholdFlags[$index]==true||editThresholdFlags[$index]==true||$parent.addModeSelected==1 || item.enable=='false'">
+							<ul class="menu-tooltip margin-left-140px" ng-show="showTooltip[$index] == 1">
+								<li ng-apply-privilege="VRM_ADD_THRESHOLD" class="logout" ng-click="editButton($index);"><span><a translate="settings.view.EDIT"></a></span></li>
+								<li ng-apply-privilege="VRM_DELETE_THRESHOLD" class="logout" ng-click="deleteButton($index);"><span><a translate="settings.view.DELETE"></a></span></li>
+						    </ul>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>		
+		
+		<!-- General DIV -->
+		<div ng-if="selectedPage=='GENERAL'" class="notifications-block tab-content" style="min-height:0px;">
+			<div class="options clearfix">
+				<h2 class="l-float">VDI Infrastructure</h2>
+				<div class="new-user-info">
+					<span ng-show="$parent.editModeSelected==0" ng-click="$parent.editModeSelected=1;">
+						<span class="edit-user"></span>
+						<span translate="settings.view.EDIT"></span>
+					</span>
+					<span ng-show="$parent.editModeSelected==1" ng-click="$parent.editModeSelected=0; saveConstantList();">
+						<span class="done-icon"></span>
+						<span>Save</span>
+					</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span ng-click="$parent.editModeSelected=0; restoreDefaults();">
+						<span class="refresh"></span>
+						<span>Restore Defaults</span>
+					</span>
+				</div>
+			</div>
+			<ul class="notify-list" style="max-height: 250px!important; overflow: auto!important;">
+				<li ng-repeat="constant in constantList" ng-class="{disabled:item.enable=='false'}">
+					<div>
+						{{constant.displayName}} <img tooltip-placement="bottom" tooltip-html-unsafe="{{constant.description}}" class="tooltip-icon malign" src="app/img/permission.png"/>
+					</div>
+					<div style="float:right; margin-top:-23px;">
+						<span ng-if="editModeSelected==0">{{constant.zkValue}}</span>
+						<span ng-if="editModeSelected==1">
+							<input class="inputType" type="text" ng-model="constant.zkValue" ng-change="editConstant(constant.zkValue, constant.zkPath);"/>
+						</span>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

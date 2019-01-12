@@ -1,0 +1,107 @@
+<div class="overlay_view bopis_overlay_view animated store-locate bopis-check">
+
+	<div class="header clearfix">
+		<div class="pull-left">
+			<button id="backButton" class="btn btn_chevron_back scTrack scLink" sctype="scLink" scvalue="Back button on header" ng-click="$root.back()"></button>
+		</div>
+		<div class="pull-right"></div>
+		<p class="page_header" translate="INV_PU_INSTRUCT"></p>
+	</div>
+
+	<div id="id_SearchContainer" class="SearchContainer">
+		<div id="id_SearchContent" class="row SearchContent">
+			<div class="SearchInputDiv col-xs-8">
+				<form name="searchByZipForm" action ng-submit="searchByZip($event)">
+					<input id="id_searchInput" name="zipsearch" class="SearchInput form-control" ng-model="zipsearch.input" type="search" placeholder="Type zip code" value="" input-reset-control style="color: rgb(77, 77, 77);"/>
+				</form>
+			</div>
+			<div id="id_SearchIcon" class="col-xs-2">
+				<button id="id_SearchIcon" ng-click="searchByZip($event)" class="btn stpls_secondary_half SearchIcon">
+					<span class="search"></span>
+				</button>
+			</div>
+			<div id="id_GEOSearchIcon" class="col-xs-2">
+				<button id="id_GEOSearchIcon" ng-click="searchByGeo()" class="GEOIcon"><span class="geo_icon"></span></button>
+			</div>
+		</div>
+
+		<div ng-show="geoMsg" class="row">
+			<div class="GeoMsg col-xs-12">{{geoMsg}}</div>
+		</div>
+	</div>
+	<div ng-show="searchByZipForm.zipsearch.$invalid || searchByZipForm.zipsearch.$required" class="ErrorSearchContainer">
+		{{'INV_ZIP_INSTRUCT'|translate}}
+	</div>
+
+	<!-- Loading Spinner, put here for positioning -->
+	<div ng-show="loading" class="row inv_loading">
+		<span id="spinnerId" class="spinner" us-spinner></span>
+		<div  class="inv_loading" translate="LCR_WAIT_STORES"></div>
+	</div>
+
+	<div class="animated">
+		<div class="row">
+			<div id="id_BopisDetailsPanel" ng-show="!showError" class="BopisDetailsPanel">
+				<div class="SearchMsg"></div>
+				<div class="ScrollWrapper">
+					<div class="StoreDetailCont store" ng-repeat="store in stores | isCurrentStore: currentStoreNo" ng-click="storeSelected(store)">
+						<div class="store-selector active">	&#x2713;</div>
+						<div class="BopisStoreDetail">
+							<div class="BopisStoreAddress">
+								<div class="StoreTitle">
+									{{store.city}}, {{store.state}}
+								</div>
+								<div class="StoreAddr">
+									{{store.address}}
+								</div>
+								<div class="StoreNum">
+										<a class="storeNumLink" ng-click="callStore($event, store.phoneNumber)">{{store.phoneNumber}}</a>
+								</div>
+							</div>
+							<div class="StoreStock pull-right">
+								<div class="StoreDist">
+									<span class="StoreDistVal">{{store.distance}} mi</span>
+								</div>
+								<span class="StoreInvLevel">{{store.inventory[0].stockLevelMessage.split(' ')[0]}} available</span>
+							</div>
+						</div>
+					</div>
+					<div ng-show="!showError" class="store" ng-repeat="store in searchStores | notCurrentStore: currentStoreNo" ng-click="storeSelected(store)">
+						<div class="store-selector"></div>
+						<div id="id_StoreDetailCont" class="StoreDetailCont">
+							<div id="id_BopisStoreDetail_1" class="BopisStoreDetail">
+								<div class="BopisStoreAddress">
+									<div class="StoreTitle">
+										{{store.city}}, {{store.state}}
+									</div>
+									<div class="StoreAddr">
+										{{store.address}}
+									</div>
+									<div class="StoreNum">
+											<a class="storeNumLink" ng-click="callStore($event, store.phoneNumber)">{{store.phoneNumber}}</a>
+									</div>
+
+								</div>
+								<div class="StoreDist pull-right">
+									<div class="StoreDist">
+										<span class="StoreDistVal">{{store.distance}} mi</span>
+									</div>
+									<span class="StoreInvLevel">{{store.inventory[0].stockLevelMessage.split(' ')[0]}} available</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row storeDisclaimer">
+						<p class="storeDisclaimerText" translate="INV_QTY_DISCLAIMER"></p>
+					</div>
+				</div>
+			</div>
+			<div ng-show="showError">
+				<p class="ErrorSearchContainer" translate="INV_NOTHING_FOUND"></p>
+			</div>
+			<div ng-show="showUpdateError">
+				<p class="ErrorSearchContainer" translate="INV_BOPIS_UPDATE_ERROR"></p>
+			</div>
+		</div>
+	</div>
+</div>

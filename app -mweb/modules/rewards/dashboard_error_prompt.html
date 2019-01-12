@@ -1,0 +1,22 @@
+<div class="rewards_prompt">
+
+    <div class="modal-body">
+
+        <div class="row">
+
+             <p class="atc-name">
+                 We experienced an error retrieving your rewards.<br><br>Please try again later.
+            </p>
+
+        </div>
+    </div>
+
+    <div class="modal-footer" ng-if="p.actions">
+
+        <div class="col-xs-{{action_col}}"  ng-if="p.actions.primary">
+            <button class="btn continue_btn stpls_primary btn_full_width" ng-bind="p.actions.primary.title" ng-click="path(p.actions.primary)"></button>
+        </div>
+
+    </div>
+
+</div>

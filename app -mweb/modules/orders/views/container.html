@@ -1,0 +1,92 @@
+<div class="stpls_order_history_container animated fadeIn">
+	<div class="row">
+		<div class="col-xs-12">
+			<h1 id="ordHeadId" class="orders_header">{{'ORD_HEADER'|translate}}</h1>
+		</div>
+	</div>
+
+	<div class="row sort_filter animated fadeIn animated-delay-1 animated-length-0">
+		<div class="col-xs-12 filters">
+			<button id="sortByDateButton" class="btn filter_btn" ng-class="{active: sortBy.indexOf('orderDate') >= 0}"
+				ng-init="sParam = (sortBy != 'orderDate_ASC' ? 'orderDate_ASC' : 'orderDate_DESC')"
+				ui-sref="{sortBy: sParam}"
+				ng-click="updateSort('orderDate')">
+				<span class="filter_text" translate="ORD_DATE_HEAD"></span>
+				<div class="filter_sort_arrows pull-right">
+					<span class="sort_up_btn" ng-class="{active: sortBy == 'orderDate_ASC'}"></span>
+					<span class="sort_down_btn" ng-class="{active: sortBy == 'orderDate_DESC'}"></span>
+				</div>
+			</button>
+
+			<button id="sortByOrderButton" class="btn filter_btn" ng-class="{active: sortBy.indexOf('orderNumber') >= 0}"
+				ng-init="sParam = (sortBy != 'orderNumber_ASC' ? 'orderNumber_ASC' : 'orderNumber_DESC')" ui-sref="{sortBy: sParam}"
+				ng-click="updateSort('orderNumber')">
+				<span class="filter_text" translate="ORD_NUM_HEAD"></span>
+				<div class="filter_sort_arrows pull-right">
+					<span class="sort_up_btn" ng-class="{active: sortBy == 'orderNumber_ASC'}"></span>
+					<span class="sort_down_btn" ng-class="{active: sortBy == 'orderNumber_DESC'}"></span>
+				</div>
+			</button>
+
+			<button id="sortByTotalButton" class="btn filter_btn" ng-class="{active: sortBy.indexOf('orderTotal') >= 0}"
+				ng-init="sParam = (sortBy != 'orderTotal_ASC' ? 'orderTotal_ASC' : 'orderTotal_DESC')" ui-sref="{sortBy: sParam}"
+				ng-click="updateSort('orderTotal')">
+				<span class="filter_text" translate="ORD_TOT_HEAD"></span>
+				<div class="filter_sort_arrows pull-right">
+					<span class="sort_up_btn" ng-class="{active: sortBy == 'orderTotal_ASC'}"></span>
+					<span class="sort_down_btn" ng-class="{active: sortBy == 'orderTotal_DESC'}"></span>
+				</div>
+			</button>
+		</div>
+	</div>
+
+	<!-- Loading Spinner, put here for positioning -->
+	<div ng-show="loading" class="row loading">
+		<div class="col-xs-12">
+			<span id="spinnerId" class="spinner" us-spinner></span>
+			<p class="text_spacer" translate="ORD_WAIT_LBL"></p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12 order_row" ng-repeat="order in orders" ng-click="openOrder(order.orderNumber)">
+			<div class="row" ng-click="openOrder(order.orderNumber)">
+				<div id="ordListDateId" class="col-xs-8">
+					{{'ORD_DATE_LBL'|translate}}<strong>{{order.orderDate | date:'yyyy-MM-dd'}}</strong>
+				</div>
+				<div id="ordListTotId" class="col-xs-3 order_amount">
+					${{order.orderTotal | currency:''}}
+				</div>
+				<div id="ordListChevronId" class="col-xs-1">
+					<span class="pull-right forward_btn"></span>
+				</div>
+			</div>
+			<div class="row" ng-click="openOrder(order.orderNumber)">
+				<div id="ordListNumId" class="col-xs-12">
+					{{'ORD_NUM_LBL'|translate}}{{order.orderNumber}}
+				</div>
+				<div class="col-xs-12"><hr /></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row" ng-show="!loading && resultsTotal === 0">
+		<div class="col-xs-12">
+			<label class="info_lbl" id="noOrdersMsg">{{'ORD_NO_ORDERS'|translate}}</label>
+		</div>
+	</div>
+
+	<div class="row" ng-show="!loading && resultsTotal > 0">
+		<div class="col-xs-12">
+			<label class="info_lbl" id="ordStatsId">Showing <strong>{{currentCount}}</strong> of <strong>{{resultsTotal}}</strong> total orders.</label>
+		</div>
+	</div>
+
+	<div ng-show="!resultsComplete && resultsTotal > 0" class="row">
+		<div class="col-xs-12">
+			<button id="ordShowMoreBtnId" class="btn btn_full_width stpls_tertiary" type="button" ng-click="showMoreResults()">
+				{{'ORD_SHOW_LBL'|translate}}
+			</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,52 @@
+<div class="modal-header" ng-if="p.header">
+
+    <button class="button close" ng-if="p.header.close" ng-click="close()"><span class="glyphicon glyphicon-remove"></span></button>
+
+    <p class="modal-title" ng-bind="p.header.title"></p>
+
+</div>
+<div class="modal-body">
+
+    <div class="row">
+
+        <div class="product" ng-if="p.product">
+
+            <div class="col-xs-5">
+                <img class="animated fadeIn" lazy-load-image="true" lazy-src="{{p.product.images[0]}}?$std$" />
+            </div>
+
+            <div class="col-xs-7">
+
+                <div>
+
+                    <p class="name" ng-bind-html="p.product.name"></p>
+
+                    <p class="price">
+                        <span class="reg" ng-if="p.product.pricing[0].showRegPrice == 'true'" ng-bind="p.product.pricing[0].listPrice | currency"></span>
+                        <span class="final" ng-bind="p.product.pricing[0].finalPrice | currency:'$'"></span>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p class="message" ng-if="p.message" ng-bind="p.message"></p>
+
+    </div>
+
+
+</div>
+<div class="modal-footer" ng-if="p.actions">
+
+    <div class="col-xs-{{action_col}}"  ng-if="p.actions.primary">
+        <button class="btn stpls_primary" ng-bind="p.actions.primary.title" ng-click="path(p.actions.primary)"></button>
+    </div>
+
+    <div class="col-xs-{{action_col}}" ng-if="p.actions.secondary">
+        <button class="btn stpls_secondary" ng-bind="p.actions.secondary.title" ng-click="path(p.actions.secondary)"></button>
+    </div>
+
+</div>

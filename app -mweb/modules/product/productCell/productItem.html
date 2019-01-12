@@ -1,0 +1,73 @@
+<div class="results_container">
+
+	<analytics-item ng-if="isAnalytics" item="data" location="{{location}}" intelligence="{{intelligence}}" slot="1" page="1"></analytics-item>
+
+	<div class="product_tile scTrack pfm" sctype="pfm" sku="{{data.sku}}" locater="{{location}}" ng-click="clickProduct(data, $event)" ng-if="!isSkuset">
+
+		<span ng-if="data.price.totalSavingsPercentage > 0 && data.priceInCartOnly !== 'true'" class="savings-badge" translate="DD_SAVE" translate-values="{savings: data.price.totalSavingsPercentage}"></span>
+
+		<a class="tile_image scTrack pfm" sctype="pfm" sku="{{data.sku}}" locater="{{location}}" ui-sref="product({sku:data.sku, seo: $root.SEO.quartz.sku(data).uri})">
+			<img class="img-responsive" lazy-load-image="true" lazy-src="{{data.images[0] | skuListImage}}" ng-click="$event.preventDefault()" />
+		</a>
+
+		<div class="row option_row">
+			<div class="col-xs-12 slider_title">
+				<p class="name" ng-bind-html="data.name"></p>
+			</div>
+		</div>
+		<div class="row option_row">
+			<div class="col-xs-12 slider_price">
+				<p ng-if="data.priceInCartOnly !== 'true'" class="price bold">
+					<span ng-bind="data.price.finalPrice | currency"></span>
+					<span ng-switch="data.price.showWasPrice ? 1 : 0">
+						<span ng-switch-when="1" class="reg normal">
+							<span ng-if="data.price.showWasPrice === 'true'" ng-bind="data.price.wasPrice | currency"></span>
+						</span>
+						<span ng-switch-default>
+							<span ng-if="data.price.listPrice && showRegPrice(data)" class="reg normal">
+								<span ng-bind="data.price.listPrice | currency"></span>
+							</span>
+						</span>
+					</span>
+				</p>
+				<p ng-if="data.priceInCartOnly === 'true'">
+					<span class="price bold price-in-cart">{{'CART_SEEPRICE'|translate}}</span>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="product_tile scTrack pfm" sctype="pfm" sku="{{data.sku}}" locater="{{location}}" ng-click="clickProduct(data, $event)" ng-if="isSkuset">
+
+		<div class="row option_row skuset_tile">
+
+			<div class="col-xs-3">
+				<a class="tile_image scTrack pfm" sctype="pfm" sku="{{data.sku}}" locater="{{location}}" ui-sref="product({sku:data.sku, seo: $root.SEO.quartz.sku(data).uri})">
+					<img class="img-responsive" lazy-load-image="true" lazy-src="{{data.images[0] | skuSmall}}" ng-click="$event.preventDefault()"/>
+				</a>
+			</div>
+
+			<div class="col-xs-5 name">
+				<p ng-bind-html="data.name"></p>
+				<p id="ssItemRatingId">
+					<star-rating star-rating="{{data.custReview.rating}}" rating-show="true" rating-count="{{data.custReview.count}}" ng-click="reviews_open = true; loadReviews(); scroll('reviews')"></star-rating>
+				</p>
+			</div>
+
+			<div class="col-xs-4 price">
+				<div ng-if="data.priceInCartOnly === 'true'">
+					<span id="productRegPrice" class="reg" ng-bind="data.price.listPrice | currency"></span>
+					<span class="price-in-cart">{{'CART_SEEPRICE'|translate}}</span>
+				</div>
+
+				<div class="price" ng-if="data.priceInCartOnly !== 'true'">
+					<span ng-if="data.price" class="product_price" ng-bind="data.price.finalPrice | currency: '$'"></span>
+					<span ng-if="data.price && showRegPrice(data)" class="product_price_strike" ng-bind="data.price.listPrice | currency: '$'"></span>
+					<span ng-if="data.price" class="product_price_uom" ng-bind="data.price.uom"></span>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>

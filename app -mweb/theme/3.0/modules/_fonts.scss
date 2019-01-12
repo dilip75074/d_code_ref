@@ -1,0 +1,19 @@
+@mixin font-thin {
+  font-family: 'HelveticaNeue-Thin', $base-font-stack;
+}
+
+@mixin font-light {
+  font-family: 'HelveticaNeue-Light', $base-font-stack;
+}
+
+@mixin font-normal {
+  font-family: 'Helvetica Neue', 'HelveticaNeue-Roman', $base-font-stack;
+}
+
+@mixin font-medium {
+  font-family: 'HelveticaNeue-Medium', $base-font-stack;
+}
+
+@mixin font-bold {
+  font-family: 'HelveticaNeue-Bold', $base-font-stack;
+}

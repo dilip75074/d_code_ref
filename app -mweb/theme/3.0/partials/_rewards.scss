@@ -1,0 +1,283 @@
+// Rewards page
+
+.rewards {
+
+  .rewards-name, .rewards-tier, .rewards-amount, .message-text {
+    float: left;
+    clear: left;
+    padding: 2px 18px 2px 0px;
+    word-break: break-word;
+
+  }
+
+  span.rewards-amount {
+    color: red;
+    margin-bottom: -5px;
+    font-size: 18px;
+  }
+}
+
+.stpls_rewards_container {
+
+  .rewards_panel {
+    width: 90%;
+    height: 130px;
+    margin: 20px auto;
+    padding: 9px 11px;
+    font-size: 11px;
+    position: relative;
+    background: #f7f7f7;
+    border: 1px solid $palette--gray-med-light;
+    border-radius: $base-radius;
+  }
+
+  .rewards_code {
+    display: block;
+    margin:0 auto 0px auto;
+  }
+
+  .errorMessage {
+    margin-top: 3px;
+    font-size: 12px;
+    font-weight: normal;
+    color: $palette--stpls-red;
+  }
+
+  .no_rewards {
+    font-size: $base-font-size-page-header;
+    font-weight: normal;
+    width: 200px;
+    height: 100px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  .space_rewards_label_intro {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: -5px;
+    font-size: 22px;
+    color: #3399cc;
+    text-align: center;
+  }
+
+  .space_rewards_label {
+    margin-left: 20px;
+    margin-right: 30px;
+    margin-top: 20px;
+    margin-bottom: -5px;
+    text-align: center;
+  }
+
+  .button-panel {
+    display: table;
+    margin: 0 auto;
+  }
+
+  .wait_text {
+    font-size: 18px;
+    font-weight: normal;
+    width: 200px;
+    height: 100px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  .text_spacer {
+    padding-top: 20px;
+  }
+
+  .email_address {
+    margin-bottom: 0px;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    text-align: center;
+    font-size: 135%;
+    height: 35px;
+  }
+
+  .rewards_number {
+    margin-bottom: 0px;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    text-align: center;
+    font-size: 135%;
+    height: 35px;
+  }
+
+  .barcode {
+    margin:0 auto 0px auto;      //  top, right, bottom, left
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height: 44px;
+  }
+
+  .reward_accord {
+    .margin-top: -8px;
+  }
+
+  .dollar_amount {
+    @include font-bold;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .dollar_text {
+    font-size: 12px;
+    text-align: center;
+    line-height: normal;
+    padding-bottom: 12px;
+  }
+
+  .rewards_details_header_panel {
+    margin-bottom: -1px;
+    margin-top: 24px;
+    background-color: #f7f7f7;
+    border-radius: 0;
+  }
+
+  .rewards_details_header {
+    margin-bottom: 0px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 14px;
+    color: #888888;
+  }
+
+  .earnedReward_type {
+    padding-top: 4px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .earnedReward_expires {
+    margin-top: 2px;
+    float: left;
+    color: #888888;
+    font-size: 13px;
+    font-weight: normal;
+  }
+
+  .earnedReward_amount {
+    vertical-align: middle;
+    text-align: right;
+    display: inline;
+    padding-top: 10px;
+    float: right;
+    height: 32px;
+    color: #6aa600;
+    font-size: 24px;
+    font-weight: normal;
+
+    .btn_chevron_expand, .btn_chevron_collapse {
+      margin: 5px 0 0 5px;
+    }
+  }
+
+ .reward_infoRow {
+   padding: 8px 0px;
+   border-top: 1px solid $palette--gray-med-light;
+   border-bottom: 1px solid $palette--gray-med-light;
+   margin-bottom: -1px;
+
+    .reward_infoLink {
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .forward_btn {
+      margin-top: 3px;
+    }
+  }
+
+  .reward_row {
+    font-size: 14px;
+    margin-bottom: -6px;
+    border-radius: 0;
+
+    .panel-title {
+      font-size: 14px;
+    }
+
+    .panel-body {
+      padding: 0;
+    }
+    .panel-content {
+      clear: both;
+      margin: 5px 0;
+      width: 100%;
+    }
+
+    .panel-heading {
+      background-color: $palette--white;
+      padding: 0;
+    }
+  }
+
+  .enrollForm_oneline {
+    margin:0 30px 5px 30px;       //  top, right, bottom, left
+  }
+
+  .enrollForm_twoline {
+    margin:0 17px 5px 17px;       //  top, right, bottom, left
+  }
+
+  .enrollForm_buttons {
+    width: 150px;
+    margin:10px auto 0px auto;    //  top, right, bottom, left
+  }
+
+  .enrollSpinner {
+     background-color: $palette--white;
+  }
+ }
+
+.help_bkgrnd {
+  background-color: $palette--white;
+
+  .help_content {
+    background-color: $palette--white;
+
+    p.h3 {
+       @include font-bold;
+       font-size: $base-font-size-headline;
+    }
+
+    p.h5 {
+       @include font-bold;
+       font-size: $base-font-size;
+       margin-bottom: 2px;
+    }
+
+    p.p4 {
+      font-size: $base-font-size;
+    }
+
+    p.p4_border {
+      font-size: $base-font-size;
+      padding-bottom: 10px;
+      border-bottom: 1px solid $palette--gray-med-light;
+    }
+
+    img.aboutimg1 {
+      padding-bottom: 6px;
+      border-bottom: 2px solid $palette--gray-med-light;
+
+    }
+  }
+
+}
+.aboutHeader {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}

@@ -1,0 +1,69 @@
+<div id="stpls_side_menu" class="sidebar-offcanvas stpls_side_menu">
+
+    <div class="side_nav_header">
+        <div ng-if="session_user">
+            <button id="user_logout" class="signin_btn pull-right" translate="SM_LOGOUT" ng-click="$root.toRoute('logout')"></button>
+            <p class="hello_message"><strong translate="SM_HELLO"></strong>, <span ng-bind="session_user"></span></p>
+        </div>
+
+        <div ng-if="!session_user">
+            <i class="make_more"></i>
+            <button id="user_login" class="signin_btn pull-right" translate="SM_LOGIN" ng-click="$root.toRoute('login', 'home')"></button>
+        </div>
+    </div>
+
+    <div id="side_nav_main" class="side_nav_main">
+        <div class="section">
+            <a class="btn sidenav_btn" id="business_btn" translate="SM_BUSINESS" href="https://go.staplesadvantage.com/program-signup.html?cid=AF:Learn:dotcom_corporate_header:leadgen"></a>
+
+            <!--  Find a Store -->
+            <a id="store_btn" class="btn sidenav_btn l0" ui-sref="locator">
+              <span translate="SM_STORE"></span>
+            </a>
+
+            <!--  Weekly Ad -->
+            <a id="ad_btn" class="btn sidenav_btn l0" ng-click="$root.toRoute('weeklyAd', {adref: 'mobile_nav'})">
+              <span translate="SM_AD"></span>
+            </a>
+
+            <!--  Shop by Deals -->
+            <navigation-tree nav-item="deals"></navigation-tree>
+
+            <!--  Deals & Coupons -->
+            <!-- <a id="cp_btn" class="btn sidenav_btn l0" ui-sref="studio({slug: 'deals-center'})">
+              <span translate="SM_COUPONCENTER"></span>
+            </a> -->
+
+            <!--  Marketing Optin -->
+            <a id="optin_btn" class="btn sidenav_btn l0" ui-sref="optin({code:'MOP'})">
+              <span translate="SM_OPTIN"></span>
+            </a>
+
+            <!--  Ink & Toner Finder -->
+            <a id="ink_btn" class="btn sidenav_btn l0" ui-sref="inkToner({style: 'main'})">
+              <span translate="SM_INK"></span>
+            </a>
+
+            <!--  Shop by Category, Electronics, Clearance -->
+            <navigation-tree nav-item="category"></navigation-tree>
+
+            <!--  My Account -->
+            <a class="btn sidenav_btn blue_txt" id="my_acct_btn" translate="SM_ACCT" ui-sref="account"></a>
+
+            <!--  Rewards -->
+            <a class="btn sidenav_btn blue_txt" id="rewards_btn" translate="SM_REWARDS" ui-sref="rewards"></a>
+
+            <!--  Rebate Center -->
+            <a class="btn sidenav_btn blue_txt" id="rebates_btn" translate="SM_REBATES" href="https://rebate.staples.com/staples/home.action"></a>
+
+            <!--  Print & Marketing Services -->
+            <a class="btn sidenav_btn" id="print_btn" translate="SM_PRINT_SERVICES" href="https://design.staples.com"></a>
+
+			<div ng-if="FBMessengerEnabled" id="inside_facebook_messageus">
+				<a href="{{FBMessengerUrl}}" target="_blank">
+					<i class="fb_messenger_chat"></i>
+				</a>
+			</div>
+       </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="homecards-container" ng-show="enabled">
+    <div class="card-header-row">
+        <span class="card-type">Order Status</span>
+        <div class="card-help pull-right scTrack scLink" sctype="scLink" scvalue="Order Status:View All">
+            <a ui-sref="orders">View All</a>
+        </div>
+    </div>
+
+    <analytics-item item="order.product" location="home:orderstatus" slot="1" page="1"></analytics-item>
+
+    <div class="card-order-tracking-row">
+        <div class="order-image">
+			<img class="animated fadeIn" src="{{order.image}}"/>
+        </div>
+
+        <div class="order-content">
+            <span class="order-title">{{order.title}}</span>
+            <span class="order-subtitle">{{order.subtitle}}</span>
+
+            <span class="order-status-block">
+                <span ng-switch="order.statusTag">
+                    <div ng-switch-when="processing">
+                        <i class="processing"></i>
+                        <span class="order-status font-blue">{{order.status}}</span>
+                    </div>
+
+                    <div ng-switch-when="inTransit">
+                        <i class="in-transit"></i>
+                        <span class="order-status font-green">{{order.status}}</span>
+                    </div>
+
+                    <div ng-switch-when="delivered">
+                        <i class="delivered"></i>
+                        <span class="order-status font-green">{{order.status}}</span>
+                    </div>
+
+                    <div ng-switch-when="readyPickup">
+                        <i class="ready-for-pickup"></i>
+                        <span class="order-status font-green">{{order.status}}</span>
+                    </div>
+
+                    <div ng-switch-when="didNotPickup">
+                        <i class="did-not-pickup"></i>
+                        <span class="order-status font-gray">{{order.status}}</span>
+                    </div>
+                </span>
+            </span>
+
+            <span class="order-subtitle">{{'EST_DELIVERY'|translate}}</span>
+            <span class="order-delivery-date">{{ order.deliveryDate }}</span>
+        </div>
+    </div>
+
+    <div class="card-footer-row order-tracking">
+        <div class="card-btn scTrack scLink" sctype="scLink" scvalue="Order Status:Track Shipment" ng-click="openOrder(order.number)">
+            <i class="location-white"></i>
+            Track Shipment
+        </div>
+    </div>
+</div>

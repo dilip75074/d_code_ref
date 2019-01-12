@@ -1,0 +1,43 @@
+<div class="row stpls-search-container">
+	<div class="header">
+		<div id="backbtn_id2" class="btn-left scTrack scLink" sctype="scLink" scvalue="Back button on header" ng-click="$root.back()">
+			<i class="icon-back"></i>
+		</div>
+		<div id="cart_btn" class="stpls_cart_btn  animated" ng-class="{'indicate fadeInDown': $root.cart_indicate}" ng-click="$root.toRoute('cart')">
+			<i class="cart">
+				<span class="indicator animated fadeInDown" ng-show="$root.cart_count > 0" ng-bind="($root.cart_count || '')">1</span>
+			</i>
+		</div>
+		<p class="desc" id="header_id2" translate="SRCH_HEADER"></p>
+	</div>
+
+	<div class="search-row-cards">
+		<form ng-submit="searchSubmit($event)">
+			<div class="search-row">
+				<input id="searchTextfield" class="needsFocus search scTrack scSearchBox newSearchBox" sctype="scSearchBox" scsearch="product" scinput="input" ng-model="keyword_search.input" type="search" autocapitalize="off" autocomplete="off" ng-keyup="inputKeyPress($event)" data-ng-init="focusField()" ng-attr-placeholder="{{'SRCH_PLACEHOLDER' | translate}}" input-reset-control/>
+			</div>
+		</form>
+
+		<div ng-if="showAutocomplete()" class="autocomplete">
+			<p class="keyword highlight scTrack autocomplete" sctype="autocomplete" scvalue="{{keyword}}" scsearch="product" locater="ac:keyword" ng-repeat="keyword in keyword_search.tagResult track by $index" ng-click="directToClassWithTerm(keyword[1])" ng-bind-html="keyword[0]"></p>
+		</div>
+
+		<div ng-show="!showAutocomplete()" class="browse-contatiner">
+			<!--  Shop by Category, Electronics, Clearance -->
+			<navigation-tree nav-item="category"></navigation-tree>
+			<div class="line"></div>
+			<!-- Shop by Deals -->
+			<navigation-tree nav-item="deals"></navigation-tree>
+		</div>
+
+		<div ng-if="showRecent()" class="keyword-container">
+			<div class="caption" translate="SRCH_RECENT_SEARCHES"></div>
+			<div>
+				<span class="keyword highlight scTrack pfm" sctype="pfm" scvalue="{{keyword}}" locater="search:recentlysearched" ng-repeat="keyword in keyword_search.recent" ng-click="directToClassWithTerm(keyword)" ng-bind="keyword"></span>
+			</div>
+		</div>
+
+		<re-order></re-order>
+	</div>
+
+</div>

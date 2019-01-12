@@ -1,0 +1,39 @@
+<div ng-model="template" class="notification-activities-wrapper" ng-controller="ActivityController" ng-init="activityType='notifications';fetchList(0);">
+	<div class="notification-header">
+		<span class="notification-head" translate="notification.view.notification"></span>
+		<span class="notification-close"><img ng-click="close()" src="app/img/close-icon.png"></span>
+	</div>
+	<div ng-hide="showList" style="color:red; text-align:center; padding-top:20px;">{{errorMsg}}</div>
+	<ul>
+		<li ng-show="showList">
+			<ul class="notification-alert clearfix">
+				<li ng-class="{'active' : filterType=='ALL'}"><a ng-click="pageNumber=1; filterType = 'ALL'; fetchList(0);"><plain translate="notification.view.EVERYTHING" /></a></li>
+				<li ng-class="{'active' : filterType=='CRITICAL'}"><a ng-click="pageNumber=1; filterType = 'CRITICAL'; fetchList(0);">CRITICAL</a></li>
+				<li ng-class="{'active' : filterType=='ERROR'}"><a ng-click="pageNumber=1; filterType = 'ERROR'; fetchList(0);"><plain  translate="notification.view.ERRORS_U" /></a></li>
+				<li ng-class="{'active' : filterType=='WARNING'}"><a ng-click="pageNumber=1; filterType = 'WARNING'; fetchList(0);"><plain  translate="notification.view.WARNINGS_L" /></a></li>
+				<li ng-class="{'active' : filterType=='INFORMATIONAL'}" style="margin-left:25px;"><a ng-click="pageNumber=1; filterType = 'INFORMATIONAL'; fetchList(0);">INFORMATIONAL</a></li>
+				<li ng-class="{'active' : filterType=='DEBUG'}" style="margin-left:20px;"><a ng-click="pageNumber=1; filterType = 'DEBUG'; fetchList(0);">DEBUG</a></li>
+				
+				<!-- <li><a ng-click="filterType = 'system'">SYSTEM</a></li>
+				<li class="alert-right">SORT BY: TYPE<span><img
+						src="app/img/dropdown.png"></span></li> -->
+			</ul>
+		</li>
+		<li>
+			<ul class="detail-info" style="max-height: 400px!important;" ng-whenscroll="fetchListonScroll();">
+				<li ng-show="list.length == 0" style="text-align: center;" translate="notification.view.NO_EVENTS_FOUND"></li>
+				<li class="clearfix white-border-bottom" ng-repeat="item in list">
+					<div class="detail-content">
+						<p>{{item.body.description}}</p>
+					</div>
+					<div class="detail-alerts">
+						<p>{{item.header.severity}}</p>
+					</div>
+					<div class="detail-count">
+						<p am-time-ago="item.header.eventTimeStamp"></p>
+					</div>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,66 @@
+
+<div id="stpls_side_menu" class="col-xs-6 sidebar-offcanvas stpls_side_menu">
+
+    <div class="side_nav_header">
+
+        <div ng-if="session_user">
+
+            <button id="user_logout" translate="SM_LOGOUT" ng-click="$root.toRoute('logout')"></button>
+
+            <p><strong translate="SM_HELLO"></strong>, <span ng-bind="session_user"></span></p>
+
+        </div>
+
+        <div ng-if="!session_user">
+
+            <i class="make_more"></i>
+
+            <button id="user_login" translate="SM_LOGIN" ng-click="$root.toRoute('login', 'home')"></button>
+
+        </div>
+
+
+
+    </div>
+
+    <div id="side_nav_main" class="side_nav_main">
+
+        <div class="section category_list">
+
+            <button id="ink_btn" ng-click="$root.toRoute('inkToner', {style: 'main'})" translate="SM_INK"></button>
+
+            <category-list-tree top-level-src="'config'"></category-list-tree>
+
+            <button id="ad_btn" translate="SM_AD" ng-click="$root.toRoute('weeklyAd')"></button>
+
+            <button id="cp_btn" translate="SM_COUPONCENTER" ng-click="$root.toRoute('coupons')"></button>
+
+
+        </div>
+
+        <div class="section">
+
+
+            <button id="reorder_btn" translate="SM_ORDER" ng-click="$root.toRoute('reorders')"></button>
+
+            <button id="my_order_btn" translate="SM_MY_ORDER" ng-click="$root.toRoute('orders')"></button>
+
+            <button id="my_acct_btn" translate="SM_ACCT" ng-click="$root.toRoute('account')"></button>
+
+        </div>
+
+
+        <div class="section">
+
+            <button id="rewards_btn" ng-click="$root.toRoute('rewards')" translate="SM_REWARDS"></button>
+
+            <button id="store_btn" ng-click="$root.toRoute('locator')" translate="SM_STORE"></button>
+
+            <button id="help_btn" translate="SM_HELP" ng-click="$root.toRoute('helpCenter')"></button>
+
+        </div>
+
+    </div>
+
+
+</div>

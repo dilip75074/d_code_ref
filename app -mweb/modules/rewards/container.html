@@ -1,0 +1,182 @@
+<div class="stpls_rewards_container" id="rewardsContainer">
+   	<!-- Loading Spinner -->
+	<div ng-show="isLoading" class="row loading">
+    	<div class="wait_text">
+        	<span class="spinner" us-spinner></span>
+            <p class="text_spacer">
+                {{'RWD_WAIT_MSG'|translate}}
+            </p>
+    	</div>
+	</div>
+
+	<div ng-show="isLogged && hasRewardsNum && noDashboardError">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="errorMessage">
+					<p>{{noDashboardError}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div ng-show="isLogged && hasRewardsNum && rewardsDashboard && !isLoading" id="rewardsDashboard">
+
+		<div class="rewards_header page_header" id="rewardsHeader">{{'SM_REWARDS'|translate}}</div>
+
+		<!--  Show Bar Code Panel -->
+		<div class="panel panel-default rewards_panel panel_effect" id="rewardsPanel">
+				<div id="emailAddress" class="email_address">{{profile.emailAddress}}</div>
+				<div id="rewardsNumBarCode" class="barcode" barcode-generator="{{rewardsDashboard.rewardsNumber}}" style="text-align:center; height:44px; width:190px;"></div>
+				<div id="rewardsNumber" class="rewards_number">{{formattedRewardsNumber}}</div>
+			</div>
+
+			<form name="rewardSummaryForm" role="form" class="form-horizontal">
+				<!--  Show Rewards Summary Data Panel -->
+				<div id="rewardsSummaryDollars" class="row rewardSummary">
+					<div id="rewardsYTDSpend" class="col-xs-4 dollar_amount">
+						${{rewardsDashboard.yearToDateSpend[0].ytdSpendAmount}}
+					</div>
+					<div id="rewardsInkRewardsTot" class="col-xs-4 dollar_amount">
+						${{rewardsDashboard.inkRecyclingDetails[0].inkRewardAmount}}
+					</div>
+					<div id="rewardsTotal" class="col-xs-4 dollar_amount">
+						${{rewardsDashboard.rewardDetails[0].rewardsTotalAmount}}
+					</div>
+				</div>
+
+				<div id="rewardsSummaryHeaders" class="row rewardSummary">
+					<div id="rewardsYTDSpendHeader" class="col-xs-4 dollar_text">
+						{{'RWD_TOT_SPEND'|translate}}<br>
+						{{'RWD_TOT_YTD'|translate}}
+					</div>
+					<div id="rewardsInkRewardsTotHeader"class="col-xs-4 dollar_text">
+						{{'RWD_INK_RECYCLE'|translate}}<br>
+						<span>{{rewardsDashboard.inkRecyclingDetails[0].inkCatridgesRecycled}}</span>/<span>{{rewardsDashboard.inkRecyclingDetails[0].inkCatridgesRemaining}}</span>
+					</div>
+					<div id="rewardsTotalHeader" class="col-xs-4 dollar_text">
+						{{'RWD_TOT_EARN'|translate}}<br>
+						{{'RWD_LAST_12'|translate}}
+					</div>
+				</div>
+				<div class="row reward_infoRow" >
+					<div class="col-xs-10">
+						<a class="earnedReward_type" ng-click="$root.toRoute('rewardsAbout', {tier: customerTier})">{{'RWD_LINK_ABOUT'|translate}}</a>
+					</div>
+					<div class="col-xs-2">
+						<span class="forward_btn pull-right" ng-click="$root.toRoute('rewardsAbout', {tier: customerTier})"></span>
+					</div>
+				</div>
+				<div class="row reward_infoRow" >
+					<div class="col-xs-10">
+						<a class="earnedReward_type" ng-click="$root.toRoute('rewardsTerms')">{{'RWD_LINK_TERMS'|translate}}</a>
+					</div>
+					<div class="col-xs-2">
+						<span class="forward_btn pull-right" ng-click="$root.toRoute('rewardsTerms')"></span>
+					</div>
+				</div>
+
+				<!--  Show Rewards Earned -->
+				<div class="row">
+					<div class="col-xs-12 well well-sm rewards_details_header_panel">
+						<div class="rewards_details_header">{{'RWD_EARNED'|translate}}</div>
+					</div>
+				</div>
+
+				<accordion class="reward_accord" close-others="true" id="reward_accordion">
+
+					<!--  Regular Reward Checks -->
+					<accordion-group class="row reward_row" ng-repeat="rewardObj in rewards | filter: {isApplied: false}" is-open="open">
+
+						<accordion-heading class="panel-heading">
+							<div class="panel-heading-container">
+								<div class="col-xs-6">
+									<p class="earnedReward_type" translate="RWD_EARNED_REWARD"></p>
+									<p id="indivRewardExpireDate" class="earnedReward_expires">{{'RWD_EXPIRES'|translate}}{{rewardObj.expiryDate}}</p>
+								</div>
+								<div class="col-xs-6">
+									<p id="indivRewardAmt" class="pull-right earnedReward_amount">
+										{{rewardObj.amount}} <span class="pull-right" btn-expand ng-model="open"></span>
+									</p>
+								</div>
+							</div>
+						</accordion-heading>
+
+						<div class="row panel-content clearfix">
+							<div class="col-xs-6">
+								<button id="indivRewardAddToCartAction" class="btn stpls_primary btn_full_width" type="submit" ng-click="addCouponToCart(rewardObj)">
+									{{'RWD_ADDTO_CART'|translate}}
+								</button>
+							</div>
+							<div class="col-xs-6">
+								<button id="indivRewardInStoreAction" class="btn stpls_secondary_half btn_full_width" ng-click="showRewardsCoupon(rewardObj)" type="submit">
+									{{'RWD_USEIN_STORE'|translate}}
+								</button>
+							</div>
+						</div>
+						<div ng_show="rewardObj.hasError" class="row panel-content">
+							<div class="col-xs-12">
+								<label class="errorMessage">{{rewardObj.error}}</label>
+							</div>
+						</div>
+					</accordion-group>
+
+					<!--  Ink Reward Checks -->
+					<accordion-group class="row reward_row" ng-repeat="rewardObj in inkRewards | filter: {isApplied: false}" is-open="open">
+
+						<accordion-heading class="panel-heading">
+							<div class="panel-heading-container">
+								<div class="col-xs-7">
+									<p class="earnedReward_type" translate="RWD_EARNED_INK_REWARD"></p>
+									<p id="indivRewardExpireDate" class="earnedReward_expires">{{'RWD_EXPIRES'|translate}}{{rewardObj.expiryDate}}</p>
+								</div>
+								<div class="col-xs-5">
+									<p id="indivRewardAmt" class="pull-right earnedReward_amount">
+										{{rewardObj.amount}} <span class="pull-right" btn-expand ng-model="open"></span>
+									</p>
+								</div>
+							</div>
+						</accordion-heading>
+
+						<div class="row panel-content clearfix">
+							<div class="col-xs-6">
+								<button id="indivRewardAddToCartAction" class="btn stpls_primary btn_full_width" type="submit" ng-click="addCouponToCart(rewardObj)">
+									{{'RWD_ADDTO_CART'|translate}}
+								</button>
+							</div>
+							<div class="col-xs-6">
+								<button id="indivRewardInStoreAction" class="btn stpls_secondary_half btn_full_width" ng-click="showRewardsCoupon(rewardObj)" type="submit">
+									{{'RWD_USEIN_STORE'|translate}}
+								</button>
+							</div>
+						</div>
+					</accordion-group>
+				</accordion>
+			</form>
+		</div>
+	</div>
+
+	<!-- Logged-in, NO Rewards Number -->
+	<div ng-show="!isLoading && isLogged && !hasRewardsNum">
+
+		<!--<div class="row">
+			<div class="col-xs-12 space_rewards_label_intro">
+				<p translate="RWD_DASHBOARD_ERROR"></p><br>
+			</div>
+		</div>-->
+
+		<div class="row ">
+			<div class="col-xs-12 space_rewards_label">
+				<p translate="RWD_SIGNUP"></p>
+				<button id="enrollRewardsActionBtn" class="btn stpls_primary" ng-click="enrollRewards()" type="button">{{'RWD_ENROLL'|translate}}</button>
+			</div>
+		</div<br>
+
+		<div class="row ">
+			<div class="col-xs-12 space_rewards_label">
+				<p translate="RWD_ACCT_ALREADY"></p>
+				<button id="linkRewardsActionBtn" class="btn stpls_primary" ng-click="linkRewards()" type="button">{{'RWD_LINKEXISTING'|translate}}</button>
+			</div>
+		</div>
+	</div>
+
+</div>

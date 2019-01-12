@@ -1,0 +1,37 @@
+<div class="card-hero-row" ng-if="product">
+    <analytics-item item="product" location={{location}} slot="1" page="1"></analytics-item>
+    <div class="tile_image hero-image">
+        <img class="animated fadeIn scTrack pfm" sctype="pfm" sku="{{product.sku}}" locater="{{location}}" ng-click="clickProduct(product, $event)" lazy-load-image="true" lazy-src="{{product.images[0] | skuListImage}}"/>
+    </div>
+
+    <div class="hero-content">
+        <span ng-bind-html="product.name" class="hero-title scTrack pfm" sctype="pfm" sku="{{product.sku}}" locater="{{location}}" ng-click="clickProduct(product, $event)"></span>
+        <star-rating star-rating="{{product.custReview.rating}}" rating-show="false" rating-count="{{product.custReview.count}}"></star-rating>
+        <div ng-switch="product.pricing[0].promoMessage ? 1 : 0">
+            <span ng-switch-when="1" id="productPromoMessage" class="hero-final-price" ng-bind="product.pricing[0].promoMessage"></span>
+            <div ng-switch-default>
+                <div ng-switch="(product.seePriceInCart || product.priceInCartOnly === 'true') ? 1 : 0">
+                    <span ng-switch-when="1">
+                        <span id="productRegPrice" class="hero-original-price" ng-bind="(product.pricing[0].listPrice || product.pricing[0].price) | currency"></span>
+                    </span>
+                    <div ng-switch-default>
+                        <div ng-if="!product.skuSetType">
+                            <div class="savings-badge" ng-if="product.pricing[0].totalSavingsPercentage > 20">
+                                <span ng-if="!product.skuSetType" translate="DD_SAVE" translate-values="{savings: product.pricing[0].totalSavingsPercentage}"></span>
+                            </div>
+
+                            <div id="productFinalPrice" class="hero-final-price">
+                                <span itemprop="price" ng-bind="product.pricing[0].finalPrice | currency"></span>
+                            </div>
+                            <span id="productRegPrice" class="hero-original-price" ng-if="showRegPrice(product)" ng-bind="(product.pricing[0].listPrice || product.pricing[0].price) | currency"></span>
+                        </div>
+                        <div ng-if="product.skuSetType">
+                            <span id="productFinalPrice" class="hero-final-price" itemprop="price" translate="PRC_ASLOWAS" translate-values="{price: product.pricing[0].finalPrice}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <shipping-indicator ng-if="product.tag" class="shipping_flag" shipping-tag="{{product.tag}}"></shipping-indicator>
+    </div>
+</div>

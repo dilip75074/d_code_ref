@@ -1,0 +1,105 @@
+/* Side Menu */
+#stpls_side_menu {
+
+  .side_nav_header {
+    margin: 0;
+    padding: 0 $base-gutter-width;
+    background: $palette--stpls-red;
+    height: $header--height;
+    line-height: $header--height;
+
+    .hello_message {
+      overflow: hidden;
+      display: block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 65%;
+      font-size: 14px;
+      color: $palette--white;
+      margin: 0;
+    }
+
+    i {
+      display: inline-block;
+      @include retina-sprite($mmh-group);
+      margin-top: 4px;
+    }
+  }
+
+  .side_nav_main {
+    padding: 0px;
+    .btn {
+      color: $palette--gray-dark;
+      &:active,
+      &:hover {
+        color: $palette--gray-dark-1;
+      }
+    }
+
+    .sidenav_btn {
+        &.red_bg {
+          background-color: $palette--stpls-red;
+          border-bottom: 1px solid $palette--gray-med-light;
+          color: $palette--white !important;
+          [btn-expand] {
+            display: none;
+          }
+        }
+        &.blue_txt {
+          color: $palette--blue !important;
+        }
+
+        &.xtra_margin {
+          padding-top: 25px;
+        }
+   }
+
+   .fb_messenger_chat {
+      margin: $base-gutter-width auto 0;
+      display: none; //hidden by default
+      .row-offcanvas.active & {
+        display: block; //visible when sidemenu opens.
+        @include retina-sprite($chat-button-group);
+      }
+   }
+
+  } //end side_nav_main
+
+}
+
+
+.row-offcanvas {
+  padding-top: 0;
+  min-height: 100%;
+  position: relative;
+  margin: 0;
+  top: 0;
+  left: 0;
+  @include transition-config($menu-transition-config);
+
+  .sidebar-offcanvas {
+    height: 100%;
+    left: -$menu-width-percentage;
+    overflow: scroll;
+    position: absolute;
+    top: 0;
+    width: $menu-width-percentage;
+    background-color: $palette--sidenav-background;
+    padding: 0;
+  }
+
+  &.active {
+    left: $menu-width-percentage;
+    .stpls_main {
+      overflow: hidden;
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 0; right: 0;
+      height: 100%;
+    }
+  }
+
+  &.animating {
+
+  }
+}

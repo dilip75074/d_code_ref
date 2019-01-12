@@ -1,0 +1,93 @@
+/* Address and Credit Card forms for User Profile*/
+@import "compass/css3/opacity";
+.stpls_ccForm {
+  .cc_cvc {
+  -webkit-text-security:disc;
+ }
+}
+#checkout_form {
+
+ .active {
+  opacity: 1;
+   background-color: $palette--white;
+ }
+
+ .inactive {
+  background: $palette--black;
+  opacity: .5;
+ }
+
+ .stpls_ccList {
+
+  .instruct {
+    margin-top: 10px;
+    margin-bottom: -20px;
+  }
+ }
+
+ .visa_checkout_row {
+    input:disabled {
+      cursor: pointer;
+      background-color: #ffffff;
+    }
+ }
+
+ .cc_header {
+  margin-bottom: 10px;
+ }
+
+ .stpls_form_container {
+  padding-left: 5px;
+  padding-right: 5px;
+ }
+}
+
+.cc_icon_container {
+  position: absolute;
+  top: 8px;
+  left: $base-gutter-width;
+
+  .glyphicon-credit-card {
+    font-size: 19px;
+  }
+}
+
+.cc_Icon {
+ display: inline-block;
+
+  &.mastercard,&.Mastercard {
+     @include retina-sprite($mc-group);
+   }
+  &.visa,&.Visa {
+     @include retina-sprite($visa-group);
+   }
+  &.discover,&.Discover {
+    @include retina-sprite($discover-group);
+ }
+  &.amex,&.AMEX {
+     @include retina-sprite($amex-group);
+   }
+  &.staples,&.Staples{
+    @include retina-sprite($stpls-cc-group);
+  }
+  &.vme {
+    width: 28px;
+    height: 19px;
+    background-size: 28px 18.5px;
+  }
+}
+
+.btn_creditcard {
+    width: 54px;
+    height: 26px;
+    font-size: $base-font-size-btn-med;
+    margin-bottom: 2px;
+}
+
+ .shortNotes {
+    text-overflow: ellipsis;
+
+  overflow:hidden;
+  white-space:nowrap;
+}
+

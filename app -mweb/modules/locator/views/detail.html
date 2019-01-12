@@ -1,0 +1,90 @@
+<!-- Locator heading child view -->
+<div class="store_detail_locator" ui-view="locator"></div>
+<div class="locator_results_view">
+<div class="row store_detail" ng-show="loaded">
+
+	<p ng-if="!store_detail" class="col-xs-12 error font-bold" translate="LCR_ERROR_STORE" translate-values="{store: storeId}"></p>
+
+	<div ng-if="store_detail" class="panel panel-default animated fadeInRight">
+
+		<div>
+			<button class="pull-right btn remembered_store" ng-click="toogleRememberedStore()">
+				<span class="check right" ng-class="{checked: remembered_store}"></span>
+				<p class="pull-left" ng-if="!remembered_store" translate="LCR_SET_STORE"></p>
+				<p class="pull-left" ng-if="remembered_store" translate="LCR_MY_STORE"></p>
+			</button>
+
+	   		<button id="backButton" class="btn btn_chevron_back" ng-click="$root.back()">
+	          <span class="pull-right back_text">{{(fromResults ? 'LCR_BACK' : 'GEN_SEE_MORE') | translate}}</span>
+	          <i class="icon_chevron_back"></i>
+
+	        </button>
+
+		</div>
+
+
+		<h4>{{store_detail.store_address.city}} <small>{{'LCR_STORE' | translate}} {{store_detail.store_number}}</small></h4>
+
+		<p class="addr_first">{{store_detail.store_address.address_line1}}</p>
+		<p class="addr_last">
+			{{store_detail.store_address.city}}, {{store_detail.store_address.state}}, {{store_detail.store_address.zip}}
+			<button class="btn stpls_tertiary directions pull-right" ng-click="viewDirections(store_detail)" translate="LCR_DIR"></button>
+		</p>
+
+		<div class="store_attribute_container" ng-repeat="feature in store_detail.storeFeatures">
+			<span class="store_icon" ng-class="featureImageForCode(feature.code)"></span>
+		</div>
+
+		<div class="hours">
+			<h6 class="font-bold" translate="LCR_STR_HR"></h6>
+
+			<div ng-if="$root.locale === 'en_US'">
+				<p><strong>{{'LCR_MON_FRI' | translate}}</strong> {{store_detail.storeHours[1].hours}}</p>
+				<p><strong>{{'LCR_SAT' | translate}}</strong> {{store_detail.storeHours[6].hours}}</p>
+				<p><strong>{{'LCR_SUN' | translate}}</strong> {{store_detail.storeHours[0].hours}}</p>
+			</div>
+
+			<div ng-if="$root.locale !== 'en_US'">
+				<p><strong>{{'LCR_MON' | translate}}</strong> {{store_detail.storeHours[1].hours}}</p>
+				<p><strong>{{'LCR_TUE' | translate}}</strong> {{store_detail.storeHours[2].hours}}</p>
+				<p><strong>{{'LCR_WED' | translate}}</strong> {{store_detail.storeHours[3].hours}}</p>
+				<p><strong>{{'LCR_THU' | translate}}</strong> {{store_detail.storeHours[4].hours}}</p>
+				<p><strong>{{'LCR_FRI' | translate}}</strong> {{store_detail.storeHours[5].hours}}</p>
+				<p><strong>{{'LCR_SAT' | translate}}</strong> {{store_detail.storeHours[6].hours}}</p>
+				<p><strong>{{'LCR_SUN' | translate}}</strong> {{store_detail.storeHours[0].hours}}</p>
+			</div>
+		</div>
+
+		<div class="special_hours" ng-if="$root.locale != 'en_US'">
+			<a ng-href="http://www.staples.ca/sbdca/{{$root.locale}}/cre/programs/store-holiday-hours/storehours.html#{{store_detail.store_number}}" translate="LCR_SPECIAL">View Special Hours</a>
+		</div>
+
+		<div class="phone">
+			<h5 class="font-bold">
+                {{'LCR_PH'|translate}}
+                <a ng-href="tel:{{store_detail.store_address.phone_number}}">
+                    <span ng-if="$root.locale == 'en_US'" ng-bind="store_detail.store_address.phone_number | tel"></span>
+                    <span ng-if="$root.locale != 'en_US'" ng-bind="store_detail.store_address.phone_number | telCA"></span>
+                </a>
+            </h5>
+		</div>
+
+		<div class="stacked">
+			<!--<a ng-if="$root.locale == 'en_US'" class="search_store"><span class="forward_btn pull-right"></span> {{'LCR_STR_SRCH'|translate}}</a>-->
+			<!--<a ng-if="$root.locale == 'en_US'" href="couponwallet.html"><span class="forward_btn pull-right"></span> {{'LCR_STR_CPN'|translate}}</a>-->
+
+			<a ng-if="$root.locale == 'en_US'" ng-click="directToWeeklyAd(store_detail)"><span class="forward_btn pull-right"></span> {{'LCR_STR_AD'|translate}}</a>
+			<a ng-if="$root.locale != 'en_US'" href="http://www.staples.ca/sbdca/en_CA/cre/marketing/flyers/index.html" target="_new"><span class="forward_btn pull-right"></span> {{'LCR_STR_AD'|translate}}</a>
+
+			<a ng-click="toggleStoreEvents()"><span btn-expand ng-model="show_store_events" class="pull-right forward_btn"></span> {{'LCR_STR_EV'|translate}}</a>
+
+			<div class="store_events_container animated fadeInDown" ng-if="show_store_events">
+				<p ng-if="!store_events" translate="LCR_STR_NO_EV">No store events.</p>
+				<p ng-repeat="event in store_events">{{event}}</p>
+			</div>
+
+			<a ng-if="$root.locale == 'en_US'" ng-href="mailto:storefeedback@staples.com?subject=Feedback for Store {{store_detail.store_number}}"><span class="forward_btn pull-right"></span> {{'LCR_STR_MAIL'|translate}}</a>
+		</div>
+	</div>
+</div>
+</div>

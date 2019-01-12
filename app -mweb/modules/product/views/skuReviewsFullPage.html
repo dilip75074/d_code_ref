@@ -1,0 +1,92 @@
+<div class="overlay_view stpls_product_container animated" ng-show="reviewsData">
+
+	<div class="header clearfix review-page-header">
+		<button id="backButton" type="button" class="btn btn_chevron_back" ng-click="backFromReviews()">
+			<i class="icon-back"></i>
+		</button>
+		<p class="desc" id="header_id2" translate="SKU_REVIEWS_HEADER"></p>
+	</div>
+
+	<div class="sku_section" ng-show="totalReviews === 0" id="noProdReviewsId">
+		<p class="red details_header noReviewsMsg" translate="SKU_NO_REVIEWS_LABEL"></p>
+	</div>
+
+	<div class="review_info" ng-show="totalReviews > 0" id="prodReviews_ContentId">
+		<div class="row product">
+				<div class="col-xs-5">
+					<img ng-src="{{product_data.images[0] | skuSmall}}" />
+				</div>
+				<div class="col-xs-7">
+					<p ng-bind-html="product_data.name" class="product_name"></p>
+					<div class="review_info">
+						<div ng-if="yotpoRating > 0">
+							<star-rating star-rating="{{yotpoRating}}" rating-show="true" rating-count="{{totalReviews}}"></star-rating>
+							<span>{{totalReviews}} {{'SKU_REVIEWS_LABEL'|translate}}</span>
+						</div>
+						<div class="no_reviews" ng-if="yotpoRating === 0">
+							<star-rating star-rating="{{yotpoRating}}" rating-show="true" rating-count="{{totalReviews}}"></star-rating>
+						</div>
+					</div>
+				</div>
+		</div>
+
+
+
+		<div class="row">
+			<div class="col-xs-8 page_headline">
+				<p translate="SKU_REVIEWS_DISPLAY" translate-values="{pageStart: '{{reviewCountStart}}', pageEnd: '{{reviewCountEnd}}'}"></p>
+			</div>
+
+			<div class="col-xs-4 btn-group reviews_buttons">
+				<button type="button" ng-disabled="reviewCountStart <= 1" ng-click="getReviewData(-1)" class="btn btn-default review_paging">
+					<i class="previous_btn center"></i>
+				</button>
+				<button type="button" ng-disabled="reviewCountEnd >= totalReviews" ng-click="getReviewData(1)" class="btn btn-default review_paging">
+					<i class="forward_btn center"></i>
+				</button>
+			</div>
+		</div>
+
+		<div ng-repeat="review in reviews">
+			<div class="row review_score">
+				<div class="col-xs-12">
+					<star-rating star-rating="{{review.score}}" rating-show="true"></star-rating>
+				</div>
+			</div>
+			<div class="row review_title">
+				<div class="col-xs-12">
+					<p ng-bind-html="review.title"></p>
+				</div>
+			</div>
+
+			<div class="row review_user_info">
+				<div class="col-xs-12">
+					{{'SKU_REVIEWS_BY'|translate}}&nbsp;<span class="review_username">{{review.user.display_name}}</span>&nbsp;-&nbsp;{{review.created_at | date:'MM-dd-yyyy'}}
+					&nbsp;&nbsp;<span ng_if="review.verified_buyer" class="verified"><label>{{'SKU_REVIEWS_VBUYER'|translate}}</label></span>
+				</div>
+			</div>
+
+			<div class="row review_content">
+				<div class="col-xs-12" ng-if="reviews.length > 0">
+					<p ng-bind-html="review.content"></p>
+				</div>
+			</div>
+			<hr>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-8 page_headline">
+				<p translate="SKU_REVIEWS_DISPLAY" translate-values="{pageStart: '{{reviewCountStart}}', pageEnd: '{{reviewCountEnd}}'}"></p>
+			</div>
+
+			<div class="col-xs-4 btn-group reviews_buttons">
+				<button type="button" ng-disabled="reviewCountStart <= 1" ng-click="getReviewData(-1)" class="btn btn-default review_paging">
+					<i class="previous_btn center"></i>
+				</button>
+				<button type="button" ng-disabled="reviewCountEnd >= totalReviews" ng-click="getReviewData(1)" class="btn btn-default review_paging">
+					<i class="forward_btn center"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

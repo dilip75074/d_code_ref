@@ -1,0 +1,35 @@
+<div id="stpls_header" class="navbar">
+
+    <!-- sidebar toggle -->
+    <div class="pull-left">
+
+        <button id="side_menu_toggle_btn" class="btn" ng-click="$root.toExternalLink('legacyHome')">
+            <i class="stpls_1_5_sprite"></i>
+        </button>
+
+
+        <div id="search_btn" class="hidden"></div>
+
+        <!--<button id="header_search_btn" class="btn" ng-class="{home: state.current.name == 'home'}" ng-click="$root.toExternalLink('legacyHome')">
+            <i class="stpls_1_5_sprite"></i>
+        </button>-->
+
+    </div>
+
+    <!-- cart button -->
+    <div class="pull-right">
+
+        <button id="cart_btn" class="stpls_cart_btn btn animated" ng-class="{'indicate fadeInDown': $root.cart_indicate}" ng-click="$root.toExternalLink('legacyCart')">
+            <i class="stpls_1_5_sprite"></i>
+            <strong ng-show="$root.cart_count != false" class="animated" ng-class="{fadeInDown: $root.cart_count > 0}" ng-bind="($root.cart_count ? $root.cart_count : '')"></strong>
+        </button>
+
+    </div>
+
+    <div class="logo_container {{$root.locale}}" ng-class="{home: state.current.name == 'home'}" ng-click="$root.toExternalLink('legacyHome')">
+
+        <button id="logo_btn" class="stpls_1_5_sprite"></button>
+
+    </div>
+
+</div>

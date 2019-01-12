@@ -1,0 +1,8 @@
+#{$conveyor-prefix}-bundle-container {
+  padding: 0 $base-gutter-width;
+  .row.term {
+    p {
+      margin: $base-gutter-width 0 0;
+    }
+  }
+}

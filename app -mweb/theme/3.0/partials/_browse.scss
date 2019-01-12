@@ -1,0 +1,65 @@
+/* Browse */
+
+.navigation-tree {
+  position: relative;
+  ol {
+    @include font-light;
+    margin: 0;
+    padding: 0;
+    li {
+      list-style: none;
+      a {
+        display: block;
+        @include ellipsis;
+        &:hover,
+        &:active {
+          color: $palette--offblack;
+        }
+        &.selected {
+          color: $palette--blue-browser;
+          &:active {
+            color: $palette--white;
+          }
+        }
+        &.root {
+          padding-left: $base-gutter-width * 3;
+          color: $palette--blue-browser;
+          border: none;
+
+          &.selected {
+            border-bottom: 1px solid $palette--sidenav-border;
+          }
+        }
+      }
+      li:last-child {
+        a {
+          border: none;
+        }
+      }
+    }
+  }
+
+  .icon-browse, .icon-deals {
+    position: absolute;
+    top: $base-gutter-width + 2;
+    left: $base-gutter-width/2;
+  }
+}
+
+.browse-contatiner {
+  @include cart-border;
+  background: $palette--white;
+  margin: $base-gutter-width $base-gutter-width;
+  padding: 2px $base-gutter-width;
+
+  .line {
+    margin: 0  (-$base-gutter-width);
+    border-bottom: 1px solid $palette--sidenav-border;
+  }
+}
+
+.stpls_browse_container {
+
+  margin: 0 (- $base-gutter-width);
+
+}

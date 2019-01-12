@@ -1,0 +1,139 @@
+#{$homecards-prefix}-container {
+
+  .details {
+    position: relative;
+    .item_added_overlay_pending {
+      position: absolute;
+    }
+  }
+
+  .card-hero-row {
+    display: inline-block;
+    width: 100%;
+    padding: $base-cards-more-padding;
+    position: relative;
+
+    .hero-image {
+      width: 50%;
+      float: left;
+
+      img {
+        display: block;
+        margin: 0 auto;
+        width: 110px;
+        height: 110px;
+      }
+
+    }
+
+    .hero-content {
+      width: 50%;
+      float: left;
+      display: block;
+      margin: 0 auto;
+
+      .hero-title {
+        font-size: $base-cards-font-size;
+        font-weight: 300;
+        line-height: $base-cards-font-size + 1;
+        height: 2 * ($base-cards-font-size + 1);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        color: $palette--black;
+
+        &.very-big-title {
+          font-size: $base-cards-font-size-huge;
+          color: $palette--stpls-red;
+          line-height: $base-cards-font-size-huge+1;
+          height: 2 * ($base-cards-font-size + 1);
+        }
+        &.big-title {
+          font-size: $base-font-size-page-header;
+          line-height: $base-font-size-page-header+1;
+          height: 2 * ($base-font-size-page-header + 1);
+          color: $palette--gray-dark;
+        }
+      }
+      .hero-final-price {
+        font-size: $base-cards-font-size-little-huge;
+        display: inline-block;
+        @include font-medium;
+        color: $palette--gray-dark;
+      }
+
+      .hero-units {
+        font-size: $base-cards-font-size-smaller;
+        color: $palette--gray-light;
+      }
+
+      .hero-original-price {
+        font-size: $base-cards-font-size-smaller;
+        text-decoration: line-through;
+        color: $palette--stpls-gray-light-3;
+      }
+
+      .hero-save-price {
+        font-size: $base-cards-font-size-smaller;
+        color: $palette--stpls-red;
+      }
+
+      .hero-barcode {
+        display: block;
+      }
+
+      &.full-width {
+        width: 100%;
+      }
+
+      //Modifications for star rating
+      .star-rating {
+        line-height: $star-solid-height;
+        white-space: nowrap;
+        padding: $base-cards-padding 0;
+
+        &.lg {
+          line-height: $star-solid-lg-height;
+        }
+        .icon-star {
+          vertical-align: bottom;
+        }
+        .star-rating-count {
+          color: $palette--stpls-warm-grey;
+        }
+      }
+
+      .message-text {
+        font-size: $base-cards-font-size-small;
+        color: $palette--stpls-warm-grey;
+      }
+
+      .shipping_flag {
+        padding: $base-cards-padding/2 0;
+        position: absolute;
+      }
+    }
+
+
+    &.rewards {
+      .hero-image {
+        text-align: left;
+
+        .barcode {
+          height: 75px;
+          width: 180px;
+          margin-left: -5px;
+        }
+
+        .rewards-number {
+          font-size: $base-cards-font-rewards;
+          color: $palette--gray-dark;
+          margin-left: 10%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+<div class="stpls_account_container animated fadeIn">
+
+    <div class="row">
+        <div class="col-xs-12 account-row rewards-row" ng-click="$root.toRoute('rewards')">
+          <div><i class="icon"></i></div>
+          <span translate="ACT_RWDS"></span>
+          <i class="forward_btn"></i>
+        </div>
+        <div class="col-xs-12 account-row profile-row" ng-click="$root.toRoute('profile')">
+            <div><i class="icon"></i></div>
+            <span translate="ACT_PRF"></span>
+            <i class="forward_btn"></i>
+        </div>
+        <div class="col-xs-12 account-row orders-row" ng-click="$root.toRoute('orders')">
+            <div><i class="icon"></i></div>
+            <span translate="ACT_ORDS"></span>
+            <i class="forward_btn"></i>
+        </div>
+        <div class="col-xs-12 account-row reorder-row" ng-click="$root.toRoute('reorders')">
+            <div><i class="icon"></i></div>
+            <span translate="ACT_ES_RORD"></span>
+            <i class="forward_btn"></i>
+        </div>
+        <div class="col-xs-12 account-row">
+          <button id="user_logout" class="signin_btn pull-right" translate="SM_LOGOUT" ng-click="$root.toRoute('logout')">Logout</button>
+        </div>
+       <!-- Favorites not in this release
+           <div class="col-xs-12 account-row favorites-row" ng-click="$root.toRoute('favorites')">
+            <div><i class="icon"></i></div>
+            <span translate="ACT_FAV_LIST"></span>
+        </div> -->
+    </div>
+
+</div>

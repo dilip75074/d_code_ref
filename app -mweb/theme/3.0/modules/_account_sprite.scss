@@ -1,0 +1,75 @@
+/*
+SCSS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: $icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+$icon-home: x y offset_x offset_y width height total_width total_height image_path;
+
+At the bottom of this section, we provide information about the spritesheet itself
+$spritesheet: width height image $spritesheet-sprites;
+*/
+$account-favorites-name: 'account_favorites';
+$account-favorites-x: 0px;
+$account-favorites-y: 20px;
+$account-favorites-offset-x: 0px;
+$account-favorites-offset-y: -20px;
+$account-favorites-width: 23px;
+$account-favorites-height: 29px;
+$account-favorites-total-width: 79px;
+$account-favorites-total-height: 68px;
+$account-favorites-image: '../../../assets/images/account_sprite_86e589a4.png';
+$account-favorites: (0px, 20px, 0px, -20px, 23px, 29px, 79px, 68px, '../../../assets/images/account_sprite_86e589a4.png', 'account_favorites', );
+$account-orders-name: 'account_orders';
+$account-orders-x: 0px;
+$account-orders-y: 0px;
+$account-orders-offset-x: 0px;
+$account-orders-offset-y: 0px;
+$account-orders-width: 35px;
+$account-orders-height: 20px;
+$account-orders-total-width: 79px;
+$account-orders-total-height: 68px;
+$account-orders-image: '../../../assets/images/account_sprite_86e589a4.png';
+$account-orders: (0px, 0px, 0px, 0px, 35px, 20px, 79px, 68px, '../../../assets/images/account_sprite_86e589a4.png', 'account_orders', );
+$account-profile-name: 'account_profile';
+$account-profile-x: 57px;
+$account-profile-y: 0px;
+$account-profile-offset-x: -57px;
+$account-profile-offset-y: 0px;
+$account-profile-width: 22px;
+$account-profile-height: 26px;
+$account-profile-total-width: 79px;
+$account-profile-total-height: 68px;
+$account-profile-image: '../../../assets/images/account_sprite_86e589a4.png';
+$account-profile: (57px, 0px, -57px, 0px, 22px, 26px, 79px, 68px, '../../../assets/images/account_sprite_86e589a4.png', 'account_profile', );
+$account-reorder-name: 'account_reorder';
+$account-reorder-x: 35px;
+$account-reorder-y: 0px;
+$account-reorder-offset-x: -35px;
+$account-reorder-offset-y: 0px;
+$account-reorder-width: 22px;
+$account-reorder-height: 29px;
+$account-reorder-total-width: 79px;
+$account-reorder-total-height: 68px;
+$account-reorder-image: '../../../assets/images/account_sprite_86e589a4.png';
+$account-reorder: (35px, 0px, -35px, 0px, 22px, 29px, 79px, 68px, '../../../assets/images/account_sprite_86e589a4.png', 'account_reorder', );
+$account-reservations-name: 'account_reservations';
+$account-reservations-x: 0px;
+$account-reservations-y: 49px;
+$account-reservations-offset-x: 0px;
+$account-reservations-offset-y: -49px;
+$account-reservations-width: 27px;
+$account-reservations-height: 19px;
+$account-reservations-total-width: 79px;
+$account-reservations-total-height: 68px;
+$account-reservations-image: '../../../assets/images/account_sprite_86e589a4.png';
+$account-reservations: (0px, 49px, 0px, -49px, 27px, 19px, 79px, 68px, '../../../assets/images/account_sprite_86e589a4.png', 'account_reservations', );
+$spritesheet-width: 79px;
+$spritesheet-height: 68px;
+$spritesheet-image: '../../../assets/images/account_sprite_86e589a4.png';
+$spritesheet-sprites: ($account-favorites, $account-orders, $account-profile, $account-reorder, $account-reservations, );
+$spritesheet: (79px, 68px, '../../../assets/images/account_sprite_86e589a4.png', $spritesheet-sprites, );
+
+

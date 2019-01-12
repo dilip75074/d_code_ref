@@ -1,0 +1,52 @@
+#{$homecards-prefix}-container {
+    .card-staplesapp-row {
+        display: inline-flex;
+        width: 100%;
+        padding: $base-cards-padding;
+        vertical-align: middle;
+
+        .staplesapp-image {
+            width: 45%;
+            float: left;
+            display: inline-block;
+
+            img {
+                display: block;
+                margin: 4px auto;
+                max-width: 120px;
+                max-height: 120px;
+            }
+        }
+
+        .staplesapp-content {
+            width: 55%;
+            float: left;
+            margin: 0 auto;
+            padding: 5px;
+            display: inline-block;
+            font-size: 22px;
+            color: $palette--stpls-red;
+            text-align: center;
+
+            .bold {
+                @include font-bold;
+            }
+            .normal {
+                @include font-normal;
+            }
+          }
+    }
+      .card-footer-row{
+          .app-card {
+            width: 50%;
+            float: left;
+          }
+          img {
+              margin: 0 auto;
+              padding-left: 10px;
+            }
+        .card-icon-border{
+          border-left: 1px solid #dfdfdf;
+        }
+  }
+}

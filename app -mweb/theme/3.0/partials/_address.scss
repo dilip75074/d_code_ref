@@ -1,0 +1,154 @@
+/* Address Directive */
+@import "compass/css3/opacity";
+@import "compass/css3/flexbox";
+
+
+/*  Life-saver!  Do not remove.
+*  Needed to put google places
+*  dropdown where it belongs
+*  in modal dialog. */
+.pac-container {
+   z-index: 1051 !important;
+}
+
+.register {
+ .address-control {
+   margin: 0;
+  }
+}
+
+.addr_instruct {
+ font-size: 11px;
+}
+
+.addr_required {
+ font-size: 12px;
+ margin: 0px 10px 0px 10px;
+}
+
+.addr_closebtn {
+ margin-top: -8px;
+ font-size: 16px;
+}
+
+.addr_enabled {
+   color: $palette--black;
+   padding-right: 30px;
+   &:hover,
+    &:focus {
+        color: $palette--black;
+    }
+}
+
+.addr_list {
+   @include font-normal;
+   color: $palette--stpls-dark-sky-blue;
+   text-align: center;
+   width: 100%;
+   span {
+       display: inline-block;
+       margin-right: $base-gutter-width;
+       vertical-align: middle;
+   }
+   &:hover,
+    &:focus {
+        color: $palette--gray-med-light;
+    }
+}
+
+.addr_disabled {
+ color: #888888;
+}
+
+.req_spacer {
+ margin-bottom: 5px;
+ color: #606060;
+}
+
+.addr_dropdown {
+   background-color: $palette--white;
+   &:not(:focus) {
+     border-color: darken($palette--gray-light, 5%);
+     border-top-color: transparent;
+   }
+}
+
+.select1, .select2 {
+ select {
+   display: block;
+  /*-webkit-appearance: textfield;*/
+   width: 100%;
+   border-radius: 0;
+ }
+}
+
+.address_modal {
+  padding-right: 35px;
+  text-overflow: ellipsis;
+}
+
+.shortFormControl {
+  position:absolute;
+  right: 0;
+  top: 5px;
+
+  .btn_chevron_expand {
+    background-color: transparent;
+    border: none;
+    margin: 9px 12px;
+    padding: 0;
+  }
+}
+
+.btn_checkout {
+    width: 72px;
+    height: 36px;
+    margin-bottom: 8px;
+    border: none;
+}
+
+.shortFormControlNoBorder {
+
+ .form-control {
+   width: 90%;
+ }
+}
+
+.address_overflow {
+  text-overflow: ellipsis;
+  width: 89%;
+}
+
+.stpls_ccList {
+  position: relative;
+  .ddStyle {
+        div {
+          font-size: 15px;
+          font-weight: 300;
+        }
+        .line {
+            margin-left: $base-gutter-width;
+        }
+        .name {
+            @include font-light;
+            font-weight: 600;
+            font-size: 17px;
+            color: $palette--gray-dark;
+        }
+        .checkmark {
+            position: absolute;
+            right: $base-gutter-width * 2;
+            top: $base-gutter-width * 2;
+        }
+  }
+  .addr_border {
+      border-bottom: 1px solid $palette--gray-light-4;
+  }
+  .store_border {
+     border-bottom: 1px solid $palette--gray-light-4;
+  }
+}
+
+.addr_forOverlay {
+  position: relative;
+}

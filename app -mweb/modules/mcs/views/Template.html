@@ -1,0 +1,27 @@
+<div>
+    <div class="homecards-layout">
+        <!--<mcs-user></mcs-user>-->
+        <div id="widget-container" class="widget-container cleafix" ng-repeat="c in cards track by $index" ng-switch="c.categoryType">
+            <!--<div>{{c.position + ' + ' + c.categoryType}}</div>-->
+
+            <mcs-tophat ng-switch-when="tophat" data="c"></mcs-tophat>
+            <mcs-carousel ng-switch-when="carousel" data="c"></mcs-carousel>
+            <mcs-coupons ng-switch-when="coupons" data="c"></mcs-coupons>
+            <mcs-deals ng-switch-when="dailyDeals" data="c"></mcs-deals>
+            <!-- <mcs-ink-toner ng-switch-when="inkAndToner" data="c"></mcs-ink-toner> -->
+            <mcs-rewards ng-switch-when="rewards" rewards="c"></mcs-rewards>
+            <mcs-store ng-switch-when="myStore" data="c" store="store"></mcs-store>
+            <mcs-trending ng-switch-when="trendingNow" data="c"></mcs-trending>
+            <mcs-weekly-ad ng-switch-when="weeklyAd" data="c" store="store"></mcs-weekly-ad>
+            <div ng-switch-when="marketing1" >
+                <conveyor-ads widget="adWidget"></conveyor-ads>
+            </div>
+            <!--<mcs-value-prop ng-switch-when="marketing2"></mcs-value-prop>-->
+            <mcs-services ng-switch-when="services" data="c"></mcs-services>
+            <mcs-deals-center ng-switch-when="dealsCenter" data="c"></mcs-deals-center>
+             <mcs-time-to-reorder ng-switch-when="timeToReorder" data="c"></mcs-time-to-reorder>
+            <mcs-order-tracking ng-switch-when="orderHistory" data="c"></mcs-order-tracking>
+            <mcs-staples-app ng-switch-when="staplesApp" data="c"></mcs-staples-app>
+        </div>
+    </div>
+</div>

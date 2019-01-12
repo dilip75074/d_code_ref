@@ -1,0 +1,36 @@
+<!-- <link rel="stylesheet" href="app/styles/main.css"> -->
+<style>
+    .private-ip-list{margin-left: 16px;}
+    .public-ip-list{height:100px; width: 155px; overflow-y: auto;overflow-x: hidden;padding-left: 10px!important;}
+</style>
+<div class="form-modal">
+    <form>
+        <div class="physical-review">
+            <h2 translate="iaasconfiguration.view.IP_REALLOCATION_PLAN"></h2>
+            <br/>
+            <div class="clearfix review-config" style="margin-left: 30px;">
+                <div class="configuration-section">
+                    <div class="content-general availability" ng-repeat="(component, ipList) in publicIpComponents">
+                        <p class="title bold" style="padding-left:10px;">{{ component}}</p>
+                        <ul class="general-list public-ip-list">
+                            <li ng-repeat="ip in ipList"><span>{{ip}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="configuration-section" style="margin-top:35px;">
+                    <h3 style="margin: 0 0 20px 10px;">{{'iaasconfiguration.view.PRIVATE_IP_ADDRESS'|translate}}</h3>
+                    <ul class="private-ip-list">
+                        <li ng-repeat="($index, component) in privateIpComponents" style="margin-left: 10px;">
+                            <p class="title">{{$index+1}}. {{ component}}</p>
+                        </li>
+                    </ul>
+                </div> -->
+            </div>
+            <div style="text-align:center; color:red;">{{ipReallocationErrorMessage}}</div>
+            <div class="submit-container center-align">
+                <input type="submit" value="Confirm" class="review-connect" ng-click="confirmIpReallocationPlan()">
+                <input type="submit" value="Cancel" class="review-connect" ng-click="cancelIpReallocationPlan()">
+            </div>
+        </div>
+    </form>
+</div>

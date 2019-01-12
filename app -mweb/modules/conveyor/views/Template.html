@@ -1,0 +1,16 @@
+<div class="conveyor-template">
+  <div class="conveyor-layout">
+    <div id="widget-container" class="widget-container cleafix" ng-repeat="widget in layout" ng-switch="widget.widget">
+      <conveyor-tophat ng-switch-when="tophat" widget="widget"></conveyor-tophat>
+      <conveyor-footer ng-switch-when="templateFooter" widget="widget"></conveyor-footer>
+      <conveyor-search ng-switch-when="search" widget="widget"></conveyor-search>
+      <conveyor-nav ng-switch-when="nav" widget="widget"></conveyor-nav>
+      <conveyor-hero ng-switch-when="hero" widget="widget"></conveyor-hero>
+      <conveyor-banner ng-switch-when="banner" widget="widget"></conveyor-banner>
+      <conveyor-ads ng-switch-when="adplacement" widget="widget"></conveyor-ads>
+      <conveyor-text ng-switch-when="text" widget="widget"></conveyor-text>
+      <conveyor-bundle ng-switch-when="products" widget="widget"></conveyor-bundle>
+      <div class="invalid-widget" ng-switch-when="invalid"></div>
+    </div>
+  </div>
+</div>

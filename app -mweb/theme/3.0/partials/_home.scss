@@ -1,0 +1,113 @@
+/* Home */
+
+.stpls_home_container {
+
+}
+
+.row-offcanvas .sidebar-offcanvas {
+  position: absolute;
+  z-index: 3;
+}
+
+/* Guest Home */
+.guest-home-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url('../../assets/images/background.png');
+    background-size: cover;
+    z-index: 2;
+
+    .guest-home-content-container {
+        width: 100%;
+        max-width: 500px;
+        padding: 0px 15px;
+        top: 45%;
+        position: relative;
+        margin: -65px auto 0;
+
+        .logo-image-container {
+          width: 60%;
+          margin: 0 auto 20px;
+
+          img {
+            width: 100%;
+            display: block;
+          }
+        }
+
+        .guest-search-container {
+
+          input.search {
+            width: 100%;
+            height: 45px;
+            border-radius: 4px;
+            background-color: $palette--white;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+            border: none;
+            padding: 3px 35px 0px;
+            font-size: 17px;
+            font-weight: 200;
+          }
+
+          img.search-img-mag {
+            margin-top: -30px;
+            position: relative;
+            width: 15px;
+            margin-left: 10px;
+            float: left;
+          }
+
+          img.search-img-barcode {
+            float: right;
+            margin: -30px 10px 0px 0px;
+            position: relative;
+            width: 20px;
+          }
+        }
+      }
+
+      .guest-home-footer-container {
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        padding: 0px 15px;
+        display: block;
+
+        .up-arrow {
+          width: 36px;
+          margin: 0 auto 8px;
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .guest-home-footer-content {
+          background-color: $palette--white;
+          border-radius: 4px;
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+          border: solid 1px $palette--gray-med-light;
+          text-align: center;
+          height: 60px;
+          max-width: 500px;
+          margin: 0 auto -3px;
+
+          img {
+            position: absolute;
+            width: 13px;
+            margin-left: -80px;
+            margin-top: 13px;
+          }
+
+          h4 {
+            font-size: 14px;
+            font-weight: 200;
+            color: $palette--gray-dark;
+            padding-top: 12px;
+          }
+        }
+      }
+}

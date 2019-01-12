@@ -1,0 +1,65 @@
+
+<form id="edit_overlay" name="cardEditForm" role="form" class="stpls_ccForm form-horizontal" novalidate>
+    <div class="modal-header">
+        <!--<button id="close_btn_id" class="button close addr_closebtn" ng-click="close()"><span class="glyphicon glyphicon-remove"></span></button>-->
+        <p ng-show="p.editMode" class="page_header">{{'CC_EDIT_HEADER'|translate}}</p>
+        <p ng-show="p.addMode"  class="page_header">{{'CC_ADD_HEADER'|translate}}</p>
+    </div>
+
+    <div class="modal-body edit-modal-body">
+        <div>
+            <div class="row input-row">
+                <!--  CREDIT CARD NUMBER-->
+                <div class="col-xs-12">
+                  <div class="cc_icon_container chk_cc_icon">
+                      <span id="cctypeicon_id" class="glyphicon glyphicon-credit-card" ng-show="!p.cardIn.type && !p.stplsCCType && !p.ccType"></span>
+                      <span id="cctype_id1" class="cc_numInline cc_Icon animated fadeInLeft" ng-class="p.ccType" ng-show="p.ccType && !p.stplsCCType"></span>
+                      <span id="cctype_id2" class="cc_numInline cc_Icon animated fadeInLeft" ng-class="p.cardIn.type" ng-show="p.cardIn.type && (!p.stplsCCType && !p.ccType)"></span>
+                      <span id="cctype_id3" class="cc_numInline cc_Icon canimated fadeInLeft" ng-class="p.stplsCCType" ng-show="p.stplsCCType"></span>
+                  </div>
+                  <input id="credit_card_num1" type="tel" name="cardNum" class="form-control chk_num" onclick="this.focus();this.select()" ng-class="{expand: expand}" ng-focus="expandCC()" ng-blur="dataChanged()"
+                    ng-model="p.cardIn.number" creditcard-focus="" creditcard-blur=""
+                    payments-validate="card" payments-type-model="p.ccType" payments-format="card" stpls-payments-validate="stpls" stpls-payments-type-model="p.stplsCCType"
+                    placeholder="{{p.editMode && p.cardIn.number || 'Credit Card Details*' }}" input-reset-control/>
+                </div>
+            </div>
+
+            <div class="row input-row">
+                <!--  CREDIT CARD EXP DATE-->
+                <div class="col-xs-9">
+                  <input id="expiry1" type="expdte" name="expiry" class="cc_numInline form-control additional" onclick="this.focus();this.select()" ng-blur="dataChanged()" ng-model="p.cardIn.expiry"
+                    payments-validate="expiry" exp-date placeholder="{{'CHK_EXP_PH'|translate}}" input-reset-control ng-pattern="/^(0[1-9]|1[0-2])\/(1[6-9]|2[0-9])$/"/>
+                </div>
+                <!--  CREDIT CARD CVC  -->
+                <div class="col-xs-3">
+                  <input id="cvc" type="tel" name="cvc" class="cc_cvc cc_numInline form-control additional" onclick="this.focus();this.select()" ng-blur="dataChanged()" ng-model="p.cardIn.cvc"
+                    payments-validate="cvc" payments-format="cvc" payments-type-model="p.ccType" placeholder="{{'CHK_CVV_PH'|translate}}" required />
+                </div>
+            </div>
+
+            <div class="row input-row">
+              <div class="col-xs-12">
+                <div>
+                  <input id="cc_edit_notes" type="text" name="notes" class="cc_numInline additional form-control" onclick="this.focus();this.select()"
+                    ng-model="p.cardIn.notes" placeholder="{{'CC_NOTE_PH'|translate}}" maxlength="32" input-reset-control></div>
+                </div>
+            </div>
+
+            <div class="row input-row">
+                <div class="cc_numInline col-xs-12 alert alert-danger" ng-show="errorMsg"><span id="cc_edit_error">{{errorMsg}}</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+       <div class="row">
+            <div class="col-xs-6">
+                <button id="save_credit_card" type="button" class="btn btn_full_width stpls_primary" ng-click="save(p.cardIn)">{{'CC_SAVE_BTN'|translate}}</button>
+            </div>
+            <div class="col-xs-6">
+                <button id="cancel_credit_card" type="button" class="btn btn_full_width stpls_secondary_half" ng-click="cancel(cardEditForm)">{{'CC_CANCEL_BTN'|translate}}</button>
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,5 @@
+<div ui-tree id="tree-root">
+	<div ui-tree-nodes ng-model="map" id="tree-root">
+    <div ng-repeat="node in map" ui-tree-node ng-include="'modules/browse/directives/categoryListNode.html'" collapsed="node.collapsed"></div>
+	</div>
+</div>

@@ -1,0 +1,32 @@
+<div class="row list_product_container" ng-click="directToProduct(data)">
+
+	<analytics-item item="data" location={{location}} slot="1" page="1"></analytics-item>
+
+	<div class="col-xs-4">
+
+		<img class="animated fadeIn" lazy-load-image="true" lazy-src="{{data.images[0] | skuSmall }}" />
+
+	</div>
+
+	<div class="col-xs-8">
+
+		<p class="name" ng-bind-html="data.name"></p>
+
+		<p ng-if="reviews"><rating max="5" ng-model="data.custReview.rating" readonly="true"></rating> <span class="rating_link" ng-bind="data.custReview.count"></span></p>
+
+		<p ng-if="data.pricing[0].showRegPrice == 'true' && regPricing" class="reg_savings">Save
+			<span ng-bind="data.pricing[0].finalPriceDeduction | currency: '$'"></span>
+		</p>
+
+		<p ng-if="data.pricing[0].showRegPrice == 'true' && regPricing" class="reg" >Reg
+			<span ng-bind="data.pricing[0].listPrice | currency: '$'"></span>
+		</p>
+
+		<p class="price" ng-bind="data.pricing[0].totalOrderItemPrice | currency: '$'"></p>
+
+		<!--<button class="btn stpls_primary buy_now" ng-if="buy">BUY NOW</button>-->
+
+	</div>
+
+
+</div>

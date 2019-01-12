@@ -1,0 +1,29 @@
+.error-container {
+  $base-size: $base-font-size-headline;
+  $link-icon-dims: 36.5px 45px;
+  $whoops-size: 35px;
+  $wrap-bounds: 275px;
+
+  font-size: $base-size;
+  line-height: 1.25;
+  text-align: center;
+  max-width: $wrap-bounds;
+  margin: 0 auto;
+  h1 {
+    @include font-bold;
+    font-size: $whoops-size;
+    line-height: 0.9;
+    margin: 4 * $base-gutter-width 0 $base-gutter-width;
+    i {
+      // uses dedicated broken link asset (intentionally not part of sprite)
+      background: url(/assets/images/broken_link.svg) no-repeat center center;
+      background-size: contain;
+      display: inline-block;
+      width: nth($link-icon-dims, 1);
+      height: nth($link-icon-dims, 2);
+    }
+  }
+  p {
+    margin: 0 0 4 * $base-gutter-width;
+  }
+}

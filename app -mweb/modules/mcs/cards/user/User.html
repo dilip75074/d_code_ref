@@ -1,0 +1,26 @@
+<div class="homecards-container">
+    <div ng-if="session_user">
+        <div class="card-user-row">
+            <div class="user-image"></div>
+            <div class="welcome-msg">
+                <span>Welcome Back</span>
+                <span class="msg-head">{{session_user}}</span>
+            </div>
+        </div>
+    </div>
+    <div ng-if="!session_user">
+        <div class="card-user-row">
+            <div class="user-image"></div>
+            <div class="welcome-msg">
+                <span class="msg-head">Hi there!</span>
+                <span>Log in to see your personalized homepage</span>
+            </div>
+        </div>
+        <div class="card-footer-row">
+            <div class="card-btn">
+                <button ng-click="$root.toRoute('login', 'home')">Sign In / Sign Up</button>
+            </div>
+        </div>
+    </div>
+</div>
+

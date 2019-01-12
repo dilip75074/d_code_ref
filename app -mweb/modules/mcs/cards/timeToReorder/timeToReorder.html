@@ -1,0 +1,36 @@
+<div class="homecards-container" ng-show="reorderProducts">
+    <div class="card-header-row">
+        <span class="card-type">Time To Reorder</span>
+        <div class="card-help pull-right scTrack scLink" sctype="scLink" scvalue="Time To Reorder:View All">
+            <a ui-sref="reorders">View All</a>
+        </div>
+    </div>
+
+    <div ng-repeat="product in reorderProducts | limitTo: 2" class="card-reorder-row">
+        <add-cart-overlay item="product"></add-cart-overlay>
+
+        <analytics-item item="product" location="home:timetoreorder" slot="1" page="1"></analytics-item>
+        <div class="product-image">
+            <img class="animated fadeIn scTrack pfm" sctype="pfm" sku="{{product.sku}}" locater="home:timetoreorder" ng-click="clickProduct(product, $event)" lazy-load-image="true" lazy-src="{{product.images[0] | skuSmall}}"/>
+        </div>
+
+        <div class="product-content">
+            <span class="product-name scTrack pfm" sctype="pfm" sku="{{product.sku}}" locater="home:timetoreorder" ng-bind-html="product.name" ng-click="clickProduct(product, $event)"></span>
+                <div ng-if="product.priceInCartOnly === 'true'" class="product-final-price">
+                    <span id="productRegPrice" class="reg" ng-bind="product.price.listPrice | currency"></span>
+                    <span class="price-in-cart">{{'CART_SEEPRICE'|translate}}</span>
+                </div>
+
+				<div class="price" ng-if="product.priceInCartOnly !== 'true'">
+                    <span ng-if="product.price" class="product-final-price" ng-bind="product.price.finalPrice | currency: '$'"></span>
+                    <span ng-if="product.price && showRegPrice(product)" class="product_price_strike" ng-bind="product.price.listPrice | currency: '$'"></span>
+                    <span ng-if="product.price" class="product_price_uom" ng-bind="product.price.uom"></span>
+                </div>
+
+            </span>
+        </div>
+        <div class="product-action">
+            <i class="add-to-cart-line scTrack cta" sctype="cta" ctatype="addtocart" sku="{{product.sku}}" bindtype="dom" locater="home:timetoreorder" ng-click="addToCart(product); $event.stopPropagation();"></i>
+        </div>
+    </div>
+</div>

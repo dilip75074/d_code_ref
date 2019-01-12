@@ -1,0 +1,123 @@
+<div ng-model="template"  ng-controller="detailswitchController"
+	ng-init="getSwitchDetails()">
+	<div id="div1" ng-if="switchType" style="height: 600px" class="physical-container">
+		<header>
+			<span id="edit-configuration" title="Workload Configuration">{{switchDetail.nodeId}}</span>
+			<span class="dialog-close" ng-click="cancel()"> <img
+				src="app/img/close-icon.png">
+			</span>
+		</header>
+		<div id="div3" 
+			class="physical-container host-details-wrapper clearfix">
+			<h3>{{selectedHost}}</h3>
+			<div class="system-data-container width850 clearfix">
+				<div class="system-data-image" style="margin-left: 70px !important;">
+					<img src="app/img/physical-switch-big.png">
+				</div>
+				<div class="hosts-data-details"
+					style="width: 362px !important; padding-left: 50px !important;">
+					<ul>
+						<li style="width: 470px !important;"><label>MANUFACTURE
+								& MODEL</label> <span>{{switchDetail.manufacturer}}</span></li>
+						<li style="width: 470px !important;"><label>MANAGEMENT
+								IP ADDRESS</label> <span>{{switchDetail.managementIpAddress}}</span></li>
+						<li style="width: 470px !important;"><label>MANAGEMENT
+								MAC ADDRESS</label> <span>{{switchDetail.managementMacAddress}}</span><br />
+						<br /></li>
+
+						<li style="width: 470px !important;"><label>FIRMWARE
+								INFO</label> <span>{{switchDetail.firmwareInfo}}</span></li>
+						<li style="width: 470px !important;"><label>MODEL</label> <span>{{switchDetail.model}}</span></li>
+
+						<li style="width: 470px !important;"><label>POWERED</label> <span>{{switchDetail.powered}}</span></li>
+						<li style="width: 470px !important;"><label>DISCOVERABLE</label>
+							<span>{{switchDetail.discoverable}}</span></li>
+						<li style="width: 470px !important;"><label>OS NAME</label> <span>{{switchDetail.osName}}</span></li>
+						<li style="width: 470px !important;"><label>OS
+								VERSION</label> <span>{{switchDetail.osVersion}}</span><br />
+						<br /></li>
+
+						<li style="width: 470px !important;"><label>PORTS</label> <span>
+								<select style="width: 170px !important;" ui-select2
+								ng-model="interface.name"
+								ng-change="showInterfaceDetails(interface.name);">
+									<option ng-repeat="interface in interfaces"
+										value="{{interface.name}}">{{interface.name}}</option>
+							</select>
+						</span><br />
+						<br /></li>
+						<li style="width: 470px !important;"><label></label> <span></span>
+						</li>
+						<li style="width: 470px !important;"><label>SPEED</label> <span>{{interfDetails.speed}}</span></li>
+						<li style="width: 470px !important;"><label>FLAGS</label> <span>{{interfDetails.flags}}</span></li>
+						<li style="width: 470px !important;"><label>MTU</label> <span>{{interfDetails.mtu}}</span></li>
+						<li style="width: 470px !important;"><label>STATUS</label> <span>{{interfDetails.status}}</span></li>
+						<li style="width: 470px !important;"><label>TYPE</label> <span>{{interfDetails.type}}</span></li>
+						<li style="width: 470px !important;"><label>MAC ADDRESS</label> <span>{{interfDetails.interfaceMacAddress}}</span></li>
+						<li style="width: 470px !important;"><label>ERROR STATUS</label> <span>{{interfDetails.errstatus}}</span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="div2" ng-if="hostType" style="height: 600px" class="physical-container">
+		<header>
+			<span id="edit-configuration" title="Workload Configuration">{{hostDetails.node}}</span>
+			<span class="dialog-close" ng-click="cancel()"> <img
+				src="app/img/close-icon.png">
+			</span>
+		</header>
+		<div id="div3" 
+			class="physical-container host-details-wrapper clearfix">
+			<h3>{{selectedHost}}</h3>
+			<div class="system-data-container width850 clearfix">
+				<div class="system-data-image" style="margin-left: 70px !important;">
+					<img src="app/img/physical-host-big.png">
+				</div>
+				<div class="hosts-data-details"
+					style="width: 362px !important; padding-left: 50px !important;">
+					<ul>
+						<li style="width: 470px !important;"><label>MANAGEMENT IP ADDRESS</label> <span>{{hostDetails.ipAddressMgmt}}</span></li>
+						<li style="width: 470px !important;"><label>MANAGEMENT
+								MAC ADDRESS</label> <span>{{hostDetails.managementMacAddress}}</span><br />
+						<br /></li>
+
+						<li style="width: 470px !important;"><label>DISK UTILIZATION</label> <span>{{hostDetails.diskUtilization}}</span></li>
+						<li style="width: 470px !important;"><label>STORAGE</label>
+							<span>{{hostDetails.storage}}</span></li>
+						<li style="width: 470px !important;"><label>CPU</label> <span>{{hostDetails.cpu}}</span></li>
+
+						<li style="width: 470px !important;"><label>POWERED</label> <span>{{hostDetails.powered}}</span></li>
+						<li style="width: 470px !important;"><label>DISCOVERABLE</label>
+							<span>{{hostDetails.discoverable}}</span></li>
+						<li style="width: 470px !important;"><label>LOCATION</label> <span>{{hostDetails.location}}</span></li>
+
+						<li style="width: 470px !important;"><label>INTERFACES</label> <span>
+								<select style="width: 170px !important;" ui-select2
+								ng-model="nic.nicName"
+								ng-change="showHostInterfaceDetails(nic.nicName);">
+							<option ng-repeat="nic in nics"
+										value="{{nic.nicName}}">{{nic.nicName}}</option>
+							</select>
+						</span><br />
+						<br /></li>
+						<li style="width: 470px !important;"><label>MANUFACTURER</label> <span>{{nicDetails.manufacturer}}</span>
+						</li>
+						<li style="width: 470px !important;"><label>PRODUCT NAME</label> <span>{{nicDetails.productName}}</span>
+						</li>
+						<li style="width: 470px !important;"><label>DRIVER</label> <span>{{nicDetails.driver}}</span>
+						</li>
+						<li style="width: 470px !important;"><label>CURRENT LINK SPEED</label> <span>{{nicDetails.currentLinkSpeed}}</span>
+						</li>
+						<li style="width: 470px !important;"><label>MAX LINK SPEED</label> <span>{{nicDetails.maxLinkSpeed}}</span>
+						</li>
+						<li style="width: 470px !important;"><label>MAC ADDRESS</label> <span>{{nicDetails.macAddress}}</span>
+						</li>
+						<li style="width: 470px !important;"><label>LINK STATUS</label> <span>{{nicDetails.linkStatus}}</span>
+						</li>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

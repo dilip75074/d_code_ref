@@ -1,0 +1,145 @@
+<div class="stpls_order_detail_container stpls_class_search animated fadeIn">
+
+    <div class="row">
+        <div id="detailHeadId" class="col-xs-12"><h1 class="orders_header">{{'ORD_NUM_LBL'|translate}}{{order.orderNumber}}</h1></div>
+    </div>
+
+    <div class="row order_panel">
+        <div id="dateId" class="col-xs-12 order_status_fields">{{'ORD_DATE_LBL2'|translate}}<strong>{{order.orderDate | date:'yyyy-MM-dd'}}</strong></div>
+        <div id="totalId" class="col-xs-12 order_status_fields">{{'ORD_TOT_LBL'|translate}}<span class="red"><strong>{{order.grandTotal | currency:'$'}}</strong></span></div><br>
+        <div id="statusId" class="col-xs-12 order_status_fields">{{'ORD_STAT_LBL'|translate}}<strong>{{order.orderStatus}}</strong></div>
+        <div id="errorId" ng-show="errorMsg" class="col-xs-12 order_status_fields"><strong>{{errorMsg}}</strong></div>
+    </div>
+
+    <!-- Loading Spinner, put here for positioning -->
+    <div ng-show="loading" class="row loading">
+        <div>
+            <span id="spinnerId" class="spinner" us-spinner></span>
+            <p class="text_spacer" translate="ORD_DETWAIT_LBL"></p>
+        </div>
+    </div>
+
+    <!--  DISPLAY PAYMENT HISTORY SECTION -->
+    <div class="row">
+        <div class="col-xs-12 no_padding">
+            <button id="expandPayHistBtnId" class="btn stpls_secondary_half btn_full_width banner_expand" ng-init="expandPH = false" ng-click="expandPH = !expandPH;expandDA = false;expandIT = false">
+                <span id="PayHistLabelId">{{'ORD_PAYHIST_LBL'|translate}}</span>
+                <span><span id="PayHistBtnId" class="pull-right" btn-expand ng-model="expandPH"></span></span>
+            </button>
+        </div>
+    </div>
+
+    <div ng-show="expandPH" class="row order_panel animated fadeInDown">
+        <div id="sublblId" class="col-xs-6">{{'ORD_PAY_SUB_LBL'|translate}}</div>
+        <div id="subvalId" class="col-xs-6 order_amount">{{order.shipmentSkuSubtotal | currency}}</div>
+
+        <div id="taxlblId" class="col-xs-6">{{'ORD_PAY_TAX_LBL'|translate}}</div>
+        <div id="taxvalId" class="col-xs-6 red order_amount">{{order.salesTaxTotal | currency}}</div>
+
+        <div id="dellblId" class="col-xs-6">{{'ORD_PAY_DEL_LBL'|translate}}</div>
+        <div id="delvalId" class="col-xs-6 red order_amount">{{order.shippingAndHandlingTotal | currency}}</div>
+
+        <div id="totlblId" class="col-xs-6">{{'ORD_PAY_TOT_LBL'|translate}}</div>
+        <div id="totvalId" class="col-xs-6 order_amount">{{order.grandTotal | currency}}</div>
+
+        <div id="couplblId" class="col-xs-6">{{'ORD_PAY_COUPON_LBL'|translate}}</div>
+        <div id="coupvalId" class="col-xs-6 red order_amount">- {{order.couponTotal | currency}}
+        </div>
+    </div>
+    <!--  END DISPLAY PAYMENT HISTORY SECTION -->
+
+    <!--  DISPLAY DELIVERY ADDRESS SECTION -->
+    <div class="row">
+        <div class="col-xs-12 no_padding">
+            <button id="expandDelAddressBtnId" class="btn stpls_secondary_half btn_full_width banner_expand" ng-init="expandDA = false" ng-click="expandDA = !expandDA;expandPH = false;expandIT = false">
+                <span id="DelAddressLabelId">{{'ORD_DELADDR_LBL'|translate}}</span>
+                <span><span id="DelAddressBtnId" class="pull-right" btn-expand ng-model="expandDA"></span></span>
+            </button>
+        </div>
+    </div>
+
+    <div ng-show="expandDA" class="row order_panel animated fadeInDown">
+        <div id="DelAddressId" class="col-xs-12">
+            <span>{{order.shiptoFirstName}} {{order.shiptoLastName}}<br></span>
+            <span>{{order.shiptoAddress1}}<br></span>
+            <span ng-if="order.shiptoAddress2">{{order.shiptoAddress2}}<br></span>
+            <span>{{order.shiptoCity}}, {{order.shiptoState}} {{order.shiptoZip}}</span>
+        </div>
+    </div>
+    <!--  END DISPLAY DELIVERY ADDRESS SECTION -->
+
+    <!--  DISPLAY ORDER ITEMS SECTION -->
+    <div class="row">
+        <div class="col-xs-12 no_padding">
+            <button id="expandItemsBtnId" class="btn stpls_secondary_half btn_full_width banner_expand" ng-init="expandIT = true" ng-click="expandIT = !expandIT;expandDA = false;expandPH=false">
+                <span id="ItemsLabelId">{{'ORD_ITEMS_LBL'|translate}}</span>
+                <span><span id="ItemsBtnId" class="glyphicon pull-right"  btn-expand ng-model="expandIT"></span></span>
+            </button>
+        </div>
+    </div>
+
+    <div ng-show="expandIT" class="results_container animated fadeInDown">
+        <div class="row result clearfix" ng-repeat="product in order.products track by $index">
+
+			<analytics-item item="product" slot="{{$index+1}}" page="1"></analytics-item>
+
+			<div id="skuTileSavings" class="savings-badge" ng-if="product.pricing[0].totalSavingsPercentage > 0">
+				<span ng-if="!product.skuSetType" translate="DD_SAVE" translate-values="{savings: product.pricing[0].totalSavingsPercentage}"></span>
+				<span ng-if="product.skuSetType" translate="DD_SAVE_UPTO" translate-values="{savings: product.pricing[0].totalSavingsPercentage}"></span>
+			</div>
+	        <div class="productImg" ng-click="directToProduct(product)">
+                <img id="prodImgId" class="animated fadeIn" lazy-load-image="true" lazy-src="{{product.images[0] | skuSmall}}" />
+            </div>
+
+			<!--  ADD-TO-CART SUCCESS OVERLAY-->
+			<add-cart-overlay item="product"></add-cart-overlay>
+
+       		<div class="info">
+				<a itemprop="url" class="scTrack pfm" sctype="pfm" sku="{{product.sku}}" ui-sref="product({sku: product.sku, seo:$root.SEO.quartz.sku(product).uri})" ng-click="directToProduct(product)">
+					<h2 id="productNameText" class="name" itemprop="name" ng-bind-html="product.name"></h2>
+				</a>
+				<p id="skuTileRating">
+					<star-rating star-rating="{{product.custReview.rating}}" rating-show="true" rating-count="{{product.custReview.count}}" ng-click="reviews_open = true; loadReviews(); scroll('reviews')"></star-rating>
+				</p>
+				<div ng-class="{shipping_tag_container: product.tag || product.pad}">
+					<shipping-indicator ng-if="product.tag" class="shipping_flag" shipping-tag="{{product.tag}}"></shipping-indicator>
+					<p ng-if="(product.seePriceInCart || product.priceInCartOnly === 'true')" class="price-in-cart" translate="CART_SEEPRICE"></p>
+				</div>
+
+				<p class="price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+					<span ng-switch="product.pricing[0].promoMessage ? 1 : 0">
+						<span ng-switch-when="1" id="productPromoMessage" class="final bold" ng-bind="product.pricing[0].promoMessage"></span>
+						<span ng-switch-default>
+							<span ng-switch="(product.seePriceInCart || product.priceInCartOnly === 'true') ? 1 : 0">
+								<span ng-switch-when="1">
+									<span id="productRegPrice" class="reg" ng-bind="(product.pricing[0].listPrice || product.pricing[0].price) | currency"></span>
+								</span>
+								<span ng-switch-default>
+									<span ng-if="!product.skuSetType">
+										<span ng-if="showRegPrice(product)" class="final bold" translate="PRC_NOW"></span>
+										<span id="productFinalPrice" class="final bold">
+											<span itemprop="price" ng-bind="product.pricing[0].finalPrice | currency"></span>
+											<!-- Per Alex L, remove. <span ng-if="includesRebate(product)">*</span>-->
+										</span>
+										<span id="productRegPrice" class="reg" ng-if="showRegPrice(product)" ng-bind="(product.pricing[0].listPrice || product.pricing[0].price) | currency"></span>
+									</span>
+									<span ng-if="product.skuSetType">
+										<span id="productFinalPrice" class="final bold" itemprop="price" translate="PRC_ASLOWAS" translate-values="{price: product.pricing[0].finalPrice}"></span>
+									</span>
+								</span>
+							</span>
+							<meta itemprop="priceCurrency" content="USD"/>
+							<span id="skuTileUom" class="uom" ng-hide="dailydeals" ng-bind="product.pricing[0].uom"></span>
+						</span>
+					</span>
+				</p>
+				<div class="clearfix"></div>
+
+				<button class="add_to_cart_btn scTrack cta" bindtype="dom" sctype="cta" ctatype="addtocart" sku="{{product.sku}}" locater="{{DLOLoc(product)}}" ng-if="!product.skuSetType" ng-click="addToCart(product);  $event.stopPropagation();" ng-class="{loading: product.cart == 'loading', in: product.cart == 'in'}">
+					<span us-spinner spinner-theme="atc" spinner-on="product.cart == 'loading'"></span>
+				</button>
+				<a class="add_to_cart_btn skuset" ng-if="product.skuSetType" ui-sref="product({sku:product.sku, seo: $root.SEO.quartz.sku(product).uri})" ng-click="directToProduct(product)"></a>
+			</div>
+        </div>
+    </div>
+</div>

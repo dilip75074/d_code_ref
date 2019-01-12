@@ -1,0 +1,10 @@
+<div class="star-rating {{bem}}" aria-valuemin="0" aria-valuemax="{{max}}" aria-valuenow="{{val}}">
+  <i ng-repeat="r in range" class="icon-star {{bem}}" ng-class="{'star-empty': final <= r - 1, 'star-half': final > r - 1 && final < r}"></i>
+  <span ng-if="count">
+    <span class="star-rating-value" ng-if="ratingShow">{{val}}</span>
+    <span class="star-rating-count" ng-if="c && countShow">({{count}})</span>
+  </span>
+  <span class="star-rating-count" ng-if="!val && !count && ratingShow && countShow">{{count}}</span>
+  <span class="star-rating-value" ng-if="val && !count && ratingShow">{{val}}</span>
+  
+</div>

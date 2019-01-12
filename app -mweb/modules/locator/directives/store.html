@@ -1,0 +1,11 @@
+<h6>{{store.store_address.city}}</h6>
+
+<p ng-if="hide_distance == undefined" class="pull-right">{{store.dis | number: 1}} {{$root.locale == 'en_US' ? 'mi' : 'km'}} <span class="forward_btn pull-right"></span></p>
+<p ng-if="hide_distance != undefined" class="pull-right"><span class="forward_btn pull-right"></span></p>
+
+<p class="addr_first">{{store.store_address.address_line1}}</p>
+<p>{{store.store_address.city}}, {{store.store_address.state}}, {{store.store_address.zip}}</p>
+
+<div class="store_attribute_container" ng-repeat="feature in store.storeFeatures">
+	<span class="store_icon" ng-class="featureImageForCode(feature.code)" ng-click="toggleLegend();$event.stopPropagation();" ></span>
+</div>

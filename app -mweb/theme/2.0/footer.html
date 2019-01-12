@@ -1,0 +1,75 @@
+<div class="stpls_footer footer_valprop" ng-show="!$root.hide_footer">
+  <div class="row">
+    <div class="col-xs-4 valprop_icon">
+      <i class="valprop_sprite ico_shipping">&nbsp;</i>
+    </div>
+    <div class="col-xs-4 valprop_icon">
+      <i class="valprop_sprite ico_pricematch">&nbsp;</i>
+    </div>
+    <div class="col-xs-4 valprop_icon">
+      <i class="valprop_sprite ico_returns">&nbsp;</i>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4 valprop_col">
+      <p class="valprop_headline">Free<br/>Shipping</p>
+      <p class="valprop_subhead">Every Day*</p>
+    </div>
+    <div class="col-xs-4 valprop_col">
+      <p class="valprop_headline">Price<br/>Match</p>
+      <p class="valprop_subhead">Guarantee</p>
+    </div>
+    <div class="col-xs-4 valprop_col">
+      <p class="valprop_headline">Easy</p>
+      <p class="valprop_subhead">Returns</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4 valprop_col">
+      <p class="valprop_body">Only for Staples Rewards members.</p>
+      <p class="valprop_footnote">*Excludes oversized and $25 minimum items</p>
+    </div>
+    <div class="col-xs-4 valprop_col">
+      <p class="valprop_body">We'll match any competitor with an online and retail store — plus Amazon.</p>
+    </div>
+    <div class="col-xs-4 valprop_col">
+      <p class="valprop_body">Online. In store. Always free.</p>
+    </div>
+  </div>
+</div>
+
+<div class="stpls_footer" ng-show="!$root.hide_footer">
+
+    <button class="btn translate" ng-if="$root.locale != 'en_US'" ng-click="toggleLocale($root.locale == 'fr_CA' ? 'en_CA' : 'fr_CA')">{{($root.locale == 'fr_CA' ? 'English' : 'FranÃ§ais')}}</button>
+
+    <button class="btn" ng-click="$root.toRoute('locator')" translate="FT_FIND_STORE"></button>
+
+    <button class="btn"  ng-click="$root.locale == 'en_US' ? $root.path('/skmobwidget/sbd/content/help-center/policies-and-legal.html#terms_conditions?desktopSiteActive=true') : $root.path('http://m.staples.ca/sbdca/CA/content/help-centre/policies-and-legal.html?desktopSiteActive=true')" translate="FT_TERMS"></button>
+
+    <button class="btn" ng-click="$root.toRoute('helpCenter')" translate="FT_HELP"></button>
+
+    <button class="btn" ng-click="$root.showDesktop()" translate="FT_DESKTOP"></button>
+
+    <div class="download">
+
+	<span ng-switch="$root.deviceIsIOS">
+
+			<a ng-switch-when="true" target="_new" href="https://itunes.apple.com/us/app/staples/id376393873?mt=8&uo=4" translate="STPLS_APP"></a>
+
+			<a ng-switch-when="false" target="_new" href="https://play.google.com/store/apps/details?id=app.staples&amp;hl=en" translate="STPLS_APP"></a>
+
+	</span>
+
+    </div>
+
+
+    <p ng-init="show_env = false" ng-click="show_env = !show_env">© <span ng-bind="year"></span> Staples, Inc.</p>
+
+    <div ng-show="show_env" class="dev_info animated fadeInDown">
+
+        <p>Current environment: <strong ng-bind="$root.environment"></strong></p>
+
+    </div>
+
+
+</div>

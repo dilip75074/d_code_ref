@@ -1,0 +1,25 @@
+<div class="guest-home-container">
+  <div class="guest-home-content-container">
+    <div class="logo-image-container">
+      <img src="../../assets/images/white-logo.png" />
+    </div>
+    <div class="guest-search-container">
+      <form>
+        <input class="search scTrack scSearchBox" sctype="scSearchBox" scsearch="product" type="text" ng-attr-placeholder="{{'SRCH_PLACEHOLDER' | translate}}" ng-click="$root.toRoute('newsearch')" />
+      </form>
+      <img class="search-img-mag" src="../../assets/images/search.png" />
+      <!-- <img class="search-img-barcode" src="../../assets/images/barcode.png" /> -->
+    </div>
+  </div>
+
+  <div class="guest-home-footer-container" ng-click="$root.toRoute('newsearch')">
+    <div class="up-arrow">
+      <img src="../../assets/images/arrow.png" />
+    </div>
+    <div class="guest-home-footer-content">
+      <div>
+        <img src="../../assets/images/categories.png" />
+        <h4>Shop By Category</h4>
+    </div>
+  </div>
+</div>

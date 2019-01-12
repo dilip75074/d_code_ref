@@ -1,0 +1,520 @@
+<div ng-init="getRackList()" ng-model="template" ng-controller="PhysicalResourcesController">
+	<div id="div1" ng-show="div1Flag" class="physical-container">
+		<header>
+			<span id="edit-configuration" title="Workload Configuration" translate="physicalresource.view.PHYSICAL_RESOURCES"></span> <span class="dialog-close" ng-click="cancel()"> <img
+				src="app/img/close-icon.png">
+			</span>
+		</header>
+		<div id="physical-tabs" class="edit-tabs clearfix">
+			<div class="graph-loading" ng-hide="showRacks" style="color:red; text-align:center; font-weight: normal!important;">
+				{{waitAndErrorMsg}}</div>
+			<div ng-show="showRacks">
+				<!-- tabs selectors -->
+				<div class="clearfix">
+					<ul class="view-tabs">
+						<li class="listview"><a ng-init="selected = 1"
+							ng:click="selected = 1;
+	                            shoWDiv('div1');
+	                            shoWDiv('listview');"
+							ng:class="{'active' : selected == 2}"><plain translate="physicalresource.view.LIST_VIEW"/></a></li>
+						<li class="mapview"><a
+							ng:click="selected = 2;
+	                            shoWDiv('div1');
+	                            shoWDiv('mapview');"
+							ng:class="{'active' : selected == 1}"><plain translate="physicalresource.view.MAP_VIEW"/></a></li>
+					</ul>
+
+					<!-- content for list view -->
+					<div id="tab1"
+						class="physical-resource-block tabContent switch-toggle switch1 clearfix"
+						id="listview" ng-show="listViewFlag">
+						<h3 translate="physicalresource.view.AVALIABLE_RACKS"></h3>
+						<div ng-if="rackList == null || rackList.length == 0" style="text-align: center; color: red">{{rackListError}}</div>
+						<center ng-if="rackList.length > 0">
+							<table>
+								<thead>
+									<tr>
+										<th translate="physicalresource.view.RACK"></th>
+										<th translate="physicalresource.view.HOSTS"></th>
+										<th translate="physicalresource.view.CPU_GHZ"></th>
+										<th translate="physicalresource.view.MEMORY_GB"></th>
+										<th translate="physicalresource.view.STORAGE_TB"></th>
+										<th translate="physicalresource.view.STATUS"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="item in rackList">
+										<td ng-click="loadRackDetails(item.name, item.uuid, item.id)"><a
+											class="list-content-title">{{ item.name || "vrack" }}</a></td>
+										<td ng-bind="item.numberOfHosts"></td>
+										<td ng-bind="item.totalCpu.toFixed(2)"></td>
+										<td ng-bind="item.totalMemory.toFixed(2)"></td>
+										<td ng-bind="item.totalStorage.toFixed(2)"></td>
+										<td>
+											<!-- <div>
+		                                        <img class="middle-align" src="img/successfull-icon.png"><span>99</span>
+		                                    </div>
+		                                    <div>
+		                                        <img class="middle-align" src="img/warning-icon.png"><span>22</span>
+		                                    </div>
+		                                    <div>
+		                                        <img class="middle-align" src="img/unsuccessfull-icon.png"><span>77</span>
+		                                    </div> -->
+											<div>
+												<!-- <img class="middle-align" src="img/successfull-icon.png"><span>99</span> -->
+												<img class="middle-align" src="app/img/successfull-icon.png"
+													ng-if="item.statusMap.warningCount && item.statusMap.warningCount>0" />
+												<img class="middle-align"
+													src="app/img/successfull_inactive.png"
+													ng-if="null == item.statusMap.warningCount || item.statusMap.warningCount == 0" />
+												<span ng-bind="{{ item.statusMap.warningCount || 0 }}"></span>
+											</div>
+											<div>
+												<!-- <img class="middle-align" src="img/warning-icon.png"><span>22</span> -->
+												<img class="middle-align" src="app/img/warning-icon.png"
+													ng-if="item.statusMap.alarmCount && item.statusMap.alarmCount>0" />
+												<img class="middle-align" src="app/img/warning-disable.png"
+													ng-if="null == item.statusMap.alarmCount || item.statusMap.alarmCount == 0" />
+												<span ng-bind="{{ item.statusMap.alarmCount || 0 }}"></span>
+											</div>
+											<div>
+												<!-- <img class="middle-align" src="img/unsuccessfull-icon.png"><span>77</span> -->
+												<img class="middle-align" src="app/img/error-icon.png"
+													ng-if="item.statusMap.errorCount && item.statusMap.errorCount>0" />
+												<img class="middle-align"
+													src="app/img/unsuccessfull-disable.png"
+													ng-if="null == item.statusMap.errorCount || item.statusMap.errorCount == 0" />
+												<span ng-bind="{{ item.statusMap.errorCount || 0 }}"></span>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</center>
+					</div>
+
+					<div id="mapview" ng-show="mapViewFlag">
+						<div class="physical-data-mapview switch-toggle switch1 clearfix">
+							<h3 translate="physicalresource.view.AVAILABLE_RACKS"></h3>
+							<div style="text-align: center; color: red">{{rackListError}}</div>
+							<div class="rack-data-section-wrapper">
+								<div class="rack-data-section" ng-repeat="item in rackList">
+									<div class="logical-data-center"
+										ng-click="loadRackDetails(item.name, item.uuid)">
+										<div>
+											<img src="app/img/physical-big-icon.png"
+												alt="PHYSICAL RESOURCES">
+										</div>
+										<p class="data-numbers">{{item.name|| "vrack" }}&nbsp;</p>
+										<p>{{item.numberOfHosts}} hosts</p>
+									</div>
+									<div class="rack-content-wrapper">
+										<div class="rack-progressbar">
+											<div class="rack-progressbar-wrapper">
+												<div class="progressbar-value"
+													style="width: {{(item.statusMap.warningCount/item.numberOfHosts)* 100}}%"></div>
+											</div>
+										</div>
+										<div class="hosts-status clearfix">
+											<span class="unsuccessfull-disable"
+												ng-if="item.statusMap.errorCount == 0"> <img
+												src="app/img/unsuccessfull-disable.png" />{{item.statusMap.errorCount}}
+											</span> <span ng-if="item.statusMap.errorCount > 0"> <img
+												src="app/img/error-icon.png" />{{item.statusMap.errorCount}}
+											</span> <span class="warning-status-disable"
+												ng-if="item.statusMap.alarmCount == 0"> <img
+												src="app/img/warning-disable.png">{{item.statusMap.alarmCount}}
+											</span> <span ng-if="item.statusMap.alarmCount > 0"> <img
+												src="app/img/warning-icon.png">{{item.statusMap.alarmCount}}
+											</span> <span class="successfull-status-disable"
+												ng-if="item.statusMap.warningCount == 0"> <img
+												src="app/img/successfull_inactive.png" />{{item.statusMap.warningCount}}
+											</span> <span class="successfull-status"
+												ng-if="item.statusMap.warningCount > 0"> <img
+												src="app/img/successfull-icon.png" />{{item.statusMap.warningCount}}
+											</span>
+										</div>
+										<div class="hosts-data-details clearfix">
+											<ul>
+												<li><label translate="physicalresource.view.CPU"></label> <span>{{item.totalCpu.toFixed(2)}}
+														GHz</span></li>
+												<li><label translate="physicalresource.view.MEMORY"></label> <span>{{item.totalMemory.toFixed(2)}}
+														GB</span></li>
+												<li><label translate="physicalresource.view.STORAGE"></label> <span>{{item.totalStorage.toFixed(2)}}
+														TB</span></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="div2" ng-show="div2Flag" class="physical-container"
+		ng-click="closeTooltip()">
+		<header>
+			<a id="back-btn"
+				ng-click="shoWDiv('div1');
+                    shoWDiv('listview');"><img
+				src="app/img/header-back-btn.png"> <plain translate="physicalresource.view.BACK"/></a> <span
+				id="edit-configuration" title="Workload Configuration" translate="physicalresource.view.PHYSICAL_RESOURCES"></span> <span class="dialog-close" ng-click="cancel()"> <img
+				src="app/img/close-icon.png">
+			</span>
+		</header>
+		<div class="view-rack-container clearfix">
+			<h3>
+				{{selectedRack|| "vrack"}}
+				<a class="tooltip" ng-click="toggleTooltip($event)"><img src="app/img/tooltip-icon.png"></a>
+			</h3>
+			<div style="text-align: center; color: red">{{rackHostsError}}</div>
+			<div style="text-align: center; color: green">{{rackHostsSuccess}}</div>
+			<div class="tooltip-network-info clearfix" style="padding: 25px 17px 0 17px!important;" ng-click="$event.stopPropagation()" ng-show="showtooltip">
+			
+                <div class="tooltip-content-rack">
+                    <div class="tooltip-network-info clearfix">
+                        <a class="tooltip-close" ng-click="closeTooltip()"><img src="app/img/tooltip-close-btn.png"></a>
+                        <div class="tooltip-network-data-wrapper clearfix" ng-show="$parent.isSDNPresent">
+                            <div class="tooltip-network-data tooltip-network-data-first" style="width:auto!important;border-right:0!Important">
+                                <p class="tooltip-title" translate="physicalresource.view.VRACK"></p>
+                                <ul class="tooltip-data">
+                                    <li style="width:84%!important"><span class="network-title"><plain translate="physicalresource.view.VRACK_NAME"/>:</span><span>{{vrackConfigdata.vrackName}}</span></li>
+                                    <li style="width:84%!important"><span class="network-title"><plain translate="physicalresource.view.COMPANY_NAME"/>:</span><span>{{vrackConfigdata.companyName}}</span></li>
+                                    <li style="width:84%!important"><span class="network-title"><plain translate="physicalresource.view.COMPANY_DEPARTEMENT"/>:</span><span>{{vrackConfigdata.companyDepartment}}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tooltip-network-data-wrapper tooltip-wrapper-bdr-none" ng-show="$parent.isSDNPresent">
+                            <div class="tooltip-network-data tooltip-network-data-first vcenter" style="width:auto!important;border-right:0!Important">
+                                <p class="tooltip-title" translate="physicalresource.view.NETWORK"></p>
+                                <ul class="tooltip-data">
+                                    <li style="width:84%!important"><span class="network-title"><plain translate="physicalresource.view.SUBNET">:</span><span>{{networkConfigdata.subnet.part1}}.{{networkConfigdata.subnet.part2}}.{{networkConfigdata.subnet.part3}}.{{networkConfigdata.subnet.part4}}</span></li>
+                                    <li style="width:84%!important"><span class="network-title"><plain translate="physicalresource.view.SUBNET_MASK"/>:</span><span>{{networkConfigdata.subnetMask.part1}}.{{networkConfigdata.subnetMask.part2}}.{{networkConfigdata.subnetMask.part3}}.{{networkConfigdata.subnetMask.part4}}</span></li>
+									<li style="width:84%!important"><span class="network-title"><plain translate="physicalresource.view.GATEWAY"/>:</span><span>{{networkConfigdata.gateway.part1}}.{{networkConfigdata.gateway.part2}}.{{networkConfigdata.gateway.part3}}.{{networkConfigdata.gateway.part4}}</span></li>
+									<li style="width:84%!important"><span class="network-title"><plain translate="physicalresource.view.VLAN_ID"/>:</span><span>{{networkConfigdata.vlanId}}</span></li>
+									<li style="width:84%!important"><span class="network-title"><plain translate="physicalresource.view.DNS"/>:</span><span>{{networkConfigdata.dns}}</span></li>
+									<li style="width:84%!important"><span class="network-title"><plain translate="physicalresource.view.NTP"/>:</span><span>{{networkConfigdata.ntp}}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+						<div ng-hide="$parent.isSDNPresent" style="margin-right: -38px;">
+	                        	<div ng-repeat="item in connectionDetail">
+		                        	<div class="connectionDetailTooltip">
+										<p class="tooltip-title">{{item.networkType}}</p>
+										<ul class="tooltip-data" style="margin:0!important;width:100px">
+											<li style="height:10px;background:#2B2B2B;border:none!important;width:60px;border:none!important;padding:0px!important"><span class="network-title">VLAN ID:</span><span>{{item.vlanId}}</span></li>
+											<li style="height:10px;background:#2B2B2B;border:none!important;width:60px;border:none!important;padding:0px!important"><span class="network-title">NETWORK:</span><span>{{item.network}}</span></li>
+											<li style="height:10px;background:#2B2B2B;width:60px;border:none!important;padding:0px!important"><span class="network-title">SUBNET:</span><span>{{item.subnet}}</span></li>
+											<li style="height:10px;background:#2B2B2B;width:60px;border:none!important;padding:0px!important"><span class="network-title">GATEWAY:</span><span>{{item.gateway}}</span></li>
+										</ul>
+									</div>
+								</div>
+								<div ng-repeat="item in extConnection">
+									<div class="extConnectionTooltip">
+										<p class="tooltip-title">{{item.networkName}}</p>
+										<ul class="tooltip-data" style="margin:0!important;width:100px">
+											<li style="height:10px;background:#2B2B2B;width:60px;border:none!important;padding:0px!important"><span class="network-title">VLAN ID:</span><span>{{item.vlanId}}</span></li>
+											<li style="height:10px;background:#2B2B2B;width:60px;border:none!important;padding:0px!important"><span class="network-title">NETWORK:</span><span>{{item.network}}</span></li>
+											<li style="height:10px;background:#2B2B2B;width:60px;border:none!important;padding:0px!important"><span class="network-title">SUBNET:</span><span>{{item.subnet}}</span></li>
+											<li style="height:10px;background:#2B2B2B;width:60px;border:none!important;padding:0px!important"><span class="network-title">GATEWAY:</span><span>{{item.gateway}}</span></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+                    </div>
+                </div>
+            </div>
+			<!--  <a class="tooltip" ng-click="toggleTooltip($event)"><img src="app/img/tooltip-icon.png"></a> -->
+
+			<ul style="margin-bottom:0px!important">
+				<li ng-mouseover="showSwitchActionToolTip=true;"
+					ng-mouseleave="showSwitchActionToolTip=false;"
+					ng-init="showSwitchHostAction = 0;showSwitchActionToolTip=false;"
+					ng-repeat="item in hostList.switches"><a>
+						<div class="host-image">
+							<img src="app/img/hdd-switch.png" alt="Downloading">
+						</div>
+						<div class="host-data">
+							<span class="host-title">{{item.nodeId|| "Switch"
+								|truncate:8}}</span>
+						</div>
+				</a>
+				<div class="tooltip-host-actions tooltip-host-content"
+						ng-if="showSwitchActionToolTip==true" style="width:266px!important;z-index: 200;">
+						<ul>
+							<li style="border-bottom: 1px solid gray"><a ng-click="loadSwitchDetails(item.nodeId, item)"><plain translate="physicalresource.view.VIEW_SWITCH_DETAILS" /></a></li>
+						</ul>
+						<p style="margin-top: -12px"></p>
+						<ul>
+							<li><a ng-apply-privilege="VRM_ADD_PRM" ng-click="hostManagement(item.nodeId, 'cycleHost', 'false')"><plain  translate="physicalresource.view.POWER_CYCLE" /></a></li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+			
+			<div ng-if="null != hostList.switches"
+				class="separator margin-bottom22"></div>
+			
+			<ul style="max-height: 300px; overflow-y: auto;position: relative;z-index: 100;">
+				<li ng-mouseover="showActionToolTip=true;"
+					ng-mouseleave="showActionToolTip=false;"
+					ng-init="showHostAction = 0;showActionToolTip=false;"
+					ng-repeat="item in hostList.hosts"><a
+					ng-if="null == item.errors && null == item.warnings">
+						<div class="host-image">
+							<img src="app/img/physical-host-medium.png" alt="Downloading">
+						</div>
+						<div class="host-data">
+							<span class="host-title">{{item.name}}</span> <span>{{item.node}}</span>
+						</div>
+				</a> <a ng-if="null != item.errors" class="selected">
+						<div class="host-image">
+							<img src="app/img/hdd-error.png" alt="Downloading">
+						</div>
+						<div class="host-data">
+							<span class="host-title host-title-error">{{item.name}}</span> <span>{{item.node}}</span>
+						</div>
+				</a> <a ng-if="null != item.warnings && null == item.errors"
+					class="selected">
+						<div class="host-image">
+							<img src="app/img/hdd-warning.png" alt="Downloading">
+						</div>
+						<div class="host-data">
+							<span class="host-title host-title-warning">{{item.name}}</span>
+							<span>{{item.node}}</span>
+						</div>
+				</a>
+					<div class="tooltip-host-actions tooltip-host-content"
+						ng-if="showActionToolTip==true"
+						ng-init="isRemoteConsoleAvailable(item.node)">
+						<ul>
+							<li style="border-bottom: 1px solid gray"><a
+								ng-click="loadHostDetails(item.name, rackUUID, item.id, item.node)">View
+									<plain translate="physicalresource.view.HOST_DETAILS"/></a></li>
+						</ul>
+						<p style="margin-top: -12px"></p>
+						<ul>
+							<li><a class="grayDisable"><plain translate="physicalresource.view.QUICK_MAINTENANCE" /></a></li>
+							<li><a class="grayDisable"><plain translate="physicalresource.view.MAINTENANCE_L" /></a></li>
+							<li><a class="grayDisable"><plain translate="physicalresource.view.RETIRE" /></a></li>
+							
+							<li><a ng-apply-privilege="VRM_ADD_PRM" ng-if="remoteConsoleType[item.node]=='jnlpConsole'" ng-click="jnlpRemoteConsoleDisplay('viewer.jnlp',item.node)">Remote Console</a></li>
+							<li><a ng-apply-privilege="VRM_ADD_PRM" ng-if="remoteConsoleType[item.node]=='not available'" class="grayDisable">Remote Console</a></li>
+							<li><a ng-apply-privilege="VRM_ADD_PRM" ng-click="hostManagement(item.node, 'cycleHost', true)"><plain  translate="physicalresource.view.POWER_CYCLE" /></a></li>
+							<li ng-if="item.powered=='false'"><a ng-apply-privilege="VRM_ADD_PRM" ng-click="hostManagement(item.node, 'on', true)"><plain translate="physicalresource.view.POWER_ON_L" /></a></li>
+							<li ng-if="item.powered=='true'"><a ng-apply-privilege="VRM_ADD_PRM" ng-click="hostManagement(item.node, 'off', true)"><plain translate="physicalresource.view.POWER_OFF_L" /></a></li>
+						</ul>
+					</div></li>
+			</ul>
+		</div>
+
+	</div>
+
+	<div id="div3" style="height:700px!important;" ng-show="div3Flag" class="physical-container host-details-wrapper clearfix">
+		<header>
+			<a id="back-btn" ng-click="shoWDiv('div2')"><img
+				src="app/img/header-back-btn.png"> <plain translate="physicalresource.view.BACK"/></a> <span
+				id="edit-configuration" title="Workload Configuration" translate="physicalresource.view.PHYSICAL_RESOURCES"></span> <span class="dialog-close" ng-click="cancel()"> <img
+				src="app/img/close-icon.png">
+			</span>
+		</header>
+		<div class="menubar clearfix">
+			<ul class="edit-buttons">
+				<li><a class="disableGray lightgrayDisable"> <img class="malign"
+						src="app/img/quick-maintenance.png" alt="" width="11"> <span
+						class="malign" translate="physicalresource.view.QUICK_MAINTENANCE_U"></span>
+				</a></li>
+				<li><a class="disableGray lightgrayDisable"> <img class="malign"
+						src="app/img/maintenance-icon.png" alt="" width="13"> <span
+						class="malign" translate="physicalresource.view.MAINTENANCE"></span>
+				</a></li>
+				<li><a class="disableGray lightgrayDisable"> <img class="malign"
+						src="app/img/retire-icon.png" alt="" width="12"> <span
+						class="malign" translate="physicalresource.view.RETIRE"></span>
+				</a></li>
+				<li ng-if="isHostSelected && hostDetail.powered=='false'"><a ng-click="hostManagement(hostDetail.node, 'on', isHostSelected)"> <img class="malign"
+						src="app/img/default-icon.png" alt="" width="13"> <span
+						class="malign" translate="physicalresource.view.POWER_ON"></span>
+				</a></li>
+				<li ng-if="isHostSelected && hostDetail.powered=='true'"><a ng-click="hostManagement(hostDetail.node, 'off', isHostSelected)"> <img class="malign"
+						src="app/img/default-icon.png" alt="" width="13"> <span
+						class="malign" translate="physicalresource.view.POWER_OFF_U"></span>
+				</a></li>
+				<li>
+				<a ng-click="hostManagement(hostDetail.node, 'cycleHost', isHostSelected)"> <img class="malign"
+						src="app/img/default-icon.png" alt="" width="13"> <span
+						class="malign" translate="physicalresource.view.POWER_CYCLE_U"></span>
+				</a>
+				<!-- <a ng-if="isHostSelected" ng-click="hostManagement(selectedHostId, 'cycleHost', isHostSelected)"> <img class="malign"
+						src="app/img/default-icon.png" alt="" width="13"> <span
+						class="malign">POWER CYCLE</span>
+				</a> -->
+				</li>
+			</ul>
+		</div>
+
+		<div class="error-message-container" ng-if="null != hostDetail.warnings && null == hostDetail.errors">
+			<div class="error-message-content">
+				<img src="app/img/error-warning-icon.png">
+				<p>
+					<span>System Error:</span> Lorem ipsum dolor sit amet, consectetur
+					adipisicing elit, sed do eiusmod tempor incididunt.
+				</p>
+			</div>
+		</div>
+
+		<div class="error-message-container host-error" ng-if="null != hostDetail.errors">
+			<div class="error-message-content">
+				<img src="app/img/VMW-State-Icon-Error_Active_med.png" />
+				<p>
+					<span><plain translate="physicalresource.view.SYSTEM_ERROR"/>:</span> Lorem ipsum dolor sit amet, consectetur
+					adipisicing elit, sed do eiusmod tempor incididunt.
+				</p>
+			</div>
+		</div>
+
+		<h3>{{selectedHost}}</h3>
+		<div style="text-align: center; color: red; padding-bottom: 30px" ng-if="rackHostDetailError.length>0">{{rackHostDetailError}}</div>
+		<div style="text-align: center; color: green; padding-bottom: 30px" ng-if="rackHostDetailSuccess.length>0">{{rackHostDetailSuccess}}</div>
+		<div class="system-data-container width850 clearfix" ng-show="showSwitch">
+			<div class="system-data-image" style="margin-left:70px!important;">
+				<img src="app/img/physical-switch-big.png">
+			</div>
+			<div class="hosts-data-details" style="width:362px !important; padding-left: 50px!important;">
+				<ul>
+					<li style="width:430px !important;"><label translate="physicalresource.view.MANUFACTURE_MODEL"></label> <span>{{switchDetail.manufacturer}}</span></li>
+					<!-- li>
+                        <label>USAGE</label>
+                        <span>{{switchDetail.usage}}</span>
+                    </li-->
+					<li style="width:430px !important;"><label translate="physicalresource.view.MANAGEMENT_IP_ADDRESS"></label> <span>{{switchDetail.managementIpAddress}}</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.MANAGEMENT_MAC_ADDRESS"></label> <span>{{switchDetail.managementMacAddress}}</span></li>
+					<!-- li>
+                        <label>MEMORY</label>
+                        <span>{{switchDetail.memory}}</span>
+                    </li-->
+				</ul>
+				
+				<ul>
+					<li style="width:430px !important;"><label translate="physicalresource.view.FIRMWARE_INFO"></label> <span>{{switchDetail.firmwareInfo}}</span>
+					</li>
+					<li style="width:430px !important;">
+                        <label translate="physicalresource.view.BOOT_TYPE"></label>
+                        <span>{{switchDetail.bootType}}</span>
+                    </li>
+                    <li style="width:430px !important;">
+                        <label translate="physicalresource.view.MODEL"></label>
+                        <span>{{switchDetail.model}}</span>
+                    </li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.POWERED"></label> <span>{{switchDetail.powered}}</span>
+					</li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.DISCOVERABLE"></label> <span>{{switchDetail.discoverable}}</span>
+					</li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.OS_NAME"></label> <span>{{switchDetail.osName}}</span>
+					</li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.OS_VERSION"></label> <span>{{switchDetail.osVersion}}</span>
+					<br /><br /></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.PORTS"></label> <span>
+								<select style="width: 170px !important;" ui-select2
+								ng-model="interface.name"
+								ng-change="showInterfaceDetails(interface.name);">
+									<option ng-repeat="interface in interfaces"
+										value="{{interface.name}}">{{interface.name}}</option>
+							</select>
+						</span><br />
+					<br /></li>
+					
+					<li style="width:430px!important;"><label translate="physicalresource.view.SPEED"></label> <span>{{interfDetails.speed}}</span></li>
+					<li style="width:430px!important;"><label translate="physicalresource.view.FLAGS"></label> <span>{{interfDetails.flags}}</span></li>
+					<li style="width:430px!important;"><label translate="physicalresource.view.MTU"></label> <span>{{interfDetails.mtu}}</span></li>
+					<li style="width:430px!important;"><label translate="physicalresource.view.STATUS"></label> <span>{{interfDetails.status}}</span></li>
+					<li style="width:430px!important;"><label translate="physicalresource.view.TYPE"></label> <span>{{interfDetails.type}}</span></li>
+					<li style="width:430px!important;"><label translate="physicalresource.view.MAC_ADDRESS"></label> <span>{{interfDetails.interfaceMacAddress}}</span></li>
+					<li style="width:430px!important;"><label translate="physicalresource.view.ERROR_STATUS"></label> <span>{{interfDetails.errstatus}}</span></li>					
+				</ul>
+			</div>
+			<!-- <div class="hosts-data-details hosts-data-details-last">
+				<ul>
+					<li><label>FIRMWARE INFO</label> <span>{{switchDetail.firmwareInfo}}</span>
+					</li>
+					li>
+                        <label>BOOT TYPE</label>
+                        <span>{{switchDetail.bootType}}</span>
+                    </li>
+                    <li>
+                        <label>MODEL</label>
+                        <span>{{switchDetail.model}}</span>
+                    </li
+					<li><label>POWERED</label> <span>{{switchDetail.powered}}</span>
+					</li>
+					<li><label>DISCOVERABLE</label> <span>{{switchDetail.discoverable}}</span>
+					</li>
+					<li><label>OS NAME</label> <span>{{switchDetail.osName}}</span>
+					</li>
+					<li><label>OS VERSION</label> <span>{{switchDetail.osVersion}}</span>
+					</li>
+				</ul>
+			</div> -->
+		</div>
+		<div class="system-data-container clearfix" ng-hide="showSwitch" ng-if="null != hostDetail">
+			<div class="system-data-image"
+				ng-if="null != hostDetail.warnings && null == hostDetail.errors">
+				<img src="app/img/host-warning-big.png">
+			</div>
+			<div class="system-data-image" ng-if="null != hostDetail.errors">
+				<img src="app/img/host-error-big.png">
+			</div>
+			<div class="system-data-image"
+				ng-if="null == hostDetail.errors && null == hostDetail.warnings">
+				<img src="app/img/physical-host-big.png">
+			</div>
+			<div class="hosts-data-details">
+				<ul>
+					<li style="width:430px !important;"><label translate="physicalresource.view.MANAGEMENT_IP_ADDRESS"></label> <span>{{hostDetail.ipAddressMgmt}}</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.MANAGEMENT_MAC_ADDRESS"></label> <span>{{hostDetail.managementMacAddress}}</span><br/><br/></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.DISK_UTILIZATION"></label> <span>{{hostDetail.diskUtilization}}</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.CPU"></label> <span>{{hostDetail.cpu.toFixed(2)}} GHz</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.MEMORY"></label> <span>{{hostDetail.memory.toFixed(2)}} GB</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.STORAGE"></label> <span>{{hostDetail.storage.toFixed(2)}}TB</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.POWERED"></label> <span>{{hostDetail.powered}}</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.DISCOVERABLE"></label> <span>{{hostDetail.discoverable}}</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.LOCATION"></label> <span>{{hostDetail.location}}</span><br /></li>	
+					<li style="width:430px !important;"><label translate="physicalresource.view.INTERFACES"></label> <span>
+								<select style="width: 170px !important;" ui-select2
+								ng-model="nic.nicName"
+								ng-change="showHostInterfaceDetails(nic.nicName);">
+							<option ng-repeat="nic in nics"
+										value="{{nic.nicName}}">{{nic.nicName}}</option>
+							</select>
+						</span><br />
+						<br /><br /></li>
+									
+					<li style="width:430px !important;"><label translate="physicalresource.view.MANUFACTURER"></label> <span>{{nicDetails.manufacturer}}</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.PRODUCT_NAME"></label> <span>{{nicDetails.productName}}</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.DRIVER"></label> <span>{{nicDetails.driver}}</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.CURRENT_LINK_SPEED"></label> <span>{{nicDetails.currentLinkSpeed}}</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.MAX_LINK_SPEED"></label> <span>{{nicDetails.maxLinkSpeed}}</span></li>
+					<li style="width:430px !important;"><label translate="physicalresource.view.MAC_ADDRESS"></label> <span>{{nicDetails.macAddress}}</span></li>
+					<!-- <li style="width:430px !important;"><label>GRATITOUS ARP INTERVAL</label> <span>{{nicDetails.gratituousARPInterval}}</span></li>-->
+					<li style="width:430px !important;"><label translate="physicalresource.view.LINK_STATUS"></label> <span>{{nicDetails.linkStatus}}</span></li>				
+				</ul>
+			</div>
+			<!-- <div class="hosts-data-details hosts-data-details-last">
+				<ul>
+					<li><label translate="physicalresource.view.LOCATION"></label> <span>{{hostDetail.location}}</span>
+					</li>
+					<li><label translate="physicalresource.view.STATUS"></label> <span
+						ng-if="hostDetail.powered == 'true'" translate="physicalresource.view.ONLINE"></span> <span
+						ng-if="hostDetail.powered == 'false'" translate="physicalresource.view.OFFLINE"></span></li>
+					<li>
+                        <label>MANAGEMENT</label>
+                        <span>Offline</span>
+                    </li>
+				</ul>
+			</div> -->
+		</div>
+	</div>
+</div>

@@ -1,0 +1,22 @@
+<div class="modal-header" ng-if="p.header">
+    <button class="btn close_btn pull-right" ng-if="p.header.close" ng-click="close()"></button>
+    <p class="page_header" ng-bind="p.header.title"></p>
+</div>
+
+<div class="modal-body" ng-click="close()">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+          <i ng-if="p.icon" class="glyphicon glyphicon-{{p.icon}}" ng-class="{'font-fg-red': p.error, 'font-fg-blue': !p.error}"></i>
+      		<p class="message" ng-if="p.message" ng-bind-html="p.message"></p>
+         </div>
+    </div>
+</div>
+
+<div class="row modal-footer" ng-if="p.actions">
+    <div class="col-xs-12 modal_btn"  ng-if="p.actions.secondary">
+        <button id="secondaryactionId" class="btn stpls_secondary btn_full_width" ng-bind="p.actions.secondary.title" ng-click="path(p.actions.secondary)"></button>
+    </div>
+     <div class="col-xs-12 modal_btn"  ng-if="p.actions.primary">
+        <button id="primaryactionId" class="btn stpls_primary btn_full_width" ng-bind="p.actions.primary.title" ng-click="path(p.actions.primary)"></button>
+    </div>
+</div>

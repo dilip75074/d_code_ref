@@ -1,0 +1,116 @@
+<div class="form-modal" id="form-modal-network-information" style="display:block;">
+    <ul id="step-navi">
+        <li class="step-1"><a href="javascript:;" ng-click="netConf1 = true" ng-class="{'active':netConf1 == true}"><plain translate="networkconfig.view.VRACK_CONFIG" /></a></li>
+        <li class="step-2"><a href="javascript:;" ng-click="netConf1 = false" ng-class="{'active':netConf1 == false}"><plain translate="networkconfig.view.NETWORK_CONFIG" /></a></li>
+    </ul>
+	
+    <div id="physical-network-setup-form-1" ng-show="netConf1">
+        <div class="network-config change-password">
+        	<div ng-show="null!=vrackConfigmessage || formvrackconfig.$invalid && submitted==1" class="error-message-container">
+				<img class="error-icon malign" src="app/img/error-warning-icon.png" />
+				<p class="malign">
+				<!-- <span class="error-title">System Error: </span>--> 
+					<span class="error-msg">{{vrackConfigmessage}}</span>
+				<span class="error-title" ng-show="formvrackconfig.$invalid && submitted==1" translate="networkconfig.view.FILL_MANDATORY_FIELDS"></span>
+				</p>
+			</div>
+
+			<div class="success-message-container" ng-show="null != vrackConfigSuccessMessage">
+				<img class="save-icon malign" src="app/img/save-button.png" />
+				<p class="malign">
+					<!-- <span class="error-title">System Error: </span>--> 
+					<span class="success-msg">{{vrackConfigSuccessMessage}}</span>
+					<!-- <span class="error-title" ng-show="formvrackconfig.$invalid && submitted==1"></span> -->
+				</p>
+			</div>
+
+	        <h2 translate="networkconfig.view.ENTER_VRACK_CONFIG"></h2>
+	        <form name="formvrackconfig" ng-class="{'validate': submitted==1}" ng-submit="vrackConfig(vrackConfigdata)" novalidate>
+
+	            <label for="vrack-name" translate="networkconfig.view.VRACK_NAME"></label>
+	            <input type="text" id="vrack-name" name="vrackName" placeholder="vRack Name" ng-model="vrackConfigdata.vrackName" ng-change="checkAndChangeRackDomain('vrackName')" required />
+	
+	            <label for="company-name" translate="networkconfig.view.COMPANY_NAME"></label>
+	            <input type="text" id="company-name" name="companyName" placeholder="Company Name" ng-model="vrackConfigdata.companyName" ng-change="checkAndChangeRackDomain('companyName')" required />
+	
+	            <label for="company-department" translate="networkconfig.view.COMPANY_DEPARTMENT"></label>
+	            <input type="text" id="company-department" placeholder="Company Departement" ng-model="vrackConfigdata.companyDepartment" required />
+
+				<label for="company-department">Rack Domain</label>
+	            <input type="text" id="company-department" ng-pattern="domainRegEx" placeholder="Somedomain.com" ng-model="vrackConfigdata.pscDomainName" required />
+
+	            <div class="submit-container center-align">
+	                <input type="submit" value="Save" class="submit" >
+	            </div>
+	        </form>
+	     </div>
+    </div>
+
+    <div id="physical-network-setup-form-2" ng-show="netConf1 == false">
+        <div class="network-config change-password">
+        	<div ng-show="null!=networkConfigmessage || formnetworkconfig.$invalid && submitted==2 || isNetworkConfigPresentFlag==false" class="error-message-container">
+				<img class="error-icon malign" src="app/img/error-warning-icon.png" />
+				<p class="malign" ng-show="null!=networkConfigmessage || formnetworkconfig.$invalid && submitted==2">
+					<!-- <span class="error-title">System Error: </span>--> 
+						<span class="error-msg">{{networkConfigmessage}}</span>
+					<span class="error-title" ng-show="formnetworkconfig.$invalid && submitted==2" translate="networkconfig.view.FILL_MANDATORY_FIELDS"></span>
+				</p>
+				<p class="malign" ng-if="isNetworkConfigPresentFlag==false">
+					<span class="error-title" translate="networkconfig.view.ENTER_MANAGEMENT_NETWORK_INFORMATION"></span>
+				</p>
+			</div>
+			<div class="success-message-container" ng-show="null != networkConfigSuccessMessage">
+				<img class="save-icon malign" src="app/img/save-button.png" />
+				<p class="malign">
+					<!-- <span class="error-title">System Error: </span>--> 
+					<span class="success-msg">{{networkConfigSuccessMessage}}</span>
+					<!-- <span class="error-title" ng-show="formvrackconfig.$invalid && submitted==1"></span> -->
+				</p>
+			</div>
+	        <h2 translate="networkconfig.view.ENTER_NETWORK_CONFIGURATION"></h2>
+	        <form name="formnetworkconfig" ng-class="{'validate': submitted==2}" ng-submit="networkConfig(networkConfigdata)" novalidate>
+	            <label for="subnet" translate="networkconfig.view.SUBNET"></label>
+	            <div class="ip-address-form">
+	                <input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-1" placeholder="xxx" maxlength="3" ng-model="networkConfigdata.subnet.part1" required /> <span class="middot">&middot;</span>
+	                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-2" placeholder="xxx" maxlength="3" ng-model="networkConfigdata.subnet.part2" required /> <span class="middot">&middot;</span>
+	                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-3" placeholder="xxx" maxlength="3" ng-model="networkConfigdata.subnet.part3" required /> <span class="middot">&middot;</span>
+	                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-4" placeholder="xxx" maxlength="3" ng-model="networkConfigdata.subnet.part4" required /> 
+	            </div>
+	
+	            <label for="subnet-mask" translate="networkconfig.view.SUBNET_MASK"></label>
+	            <div class="ip-address-form">
+	                <input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="networkConfigdata.subnetMask.part1" required /> <span class="middot">&middot;</span>
+	                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="networkConfigdata.subnetMask.part2" required /> <span class="middot">&middot;</span>
+	                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="networkConfigdata.subnetMask.part3" required /> <span class="middot">&middot;</span>
+	                <input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="networkConfigdata.subnetMask.part4" required />
+	            </div>
+	
+	            <label for="gateway" translate="networkconfig.view.GATEWAY"></label>
+	            <div class="ip-address-form">
+	                <input type="text" ng-trim="false" ng-pattern="part1Ip" id="gateway-1" placeholder="xxx" maxlength="3" ng-model="networkConfigdata.gateway.part1" required /> <span class="middot">&middot;</span>
+	                <input type="text" ng-trim="false" ng-pattern="range" id="gateway-2" placeholder="xxx" maxlength="3" ng-model="networkConfigdata.gateway.part2" required /> <span class="middot">&middot;</span>
+	                <input type="text" ng-trim="false" ng-pattern="range" id="gateway-3" placeholder="xxx" maxlength="3" ng-model="networkConfigdata.gateway.part3" required /> <span class="middot">&middot;</span>
+	                <input type="text" ng-trim="false" ng-pattern="range" id="gateway-4" placeholder="xxx" maxlength="3" ng-model="networkConfigdata.gateway.part4" required> 
+	            </div>
+	
+	            <label for="vlan-id" translate="networkconfig.view.VLAN_ID"></label>
+	            <input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" id="vlan-id" placeholder="ID Number (optional)" ng-model="networkConfigdata.vlanId"/>
+	
+	            <label for="dns" translate="networkconfig.view.DNS"></label>
+	            <input type="text" id="dns" placeholder="DNS" ng-model="networkConfigdata.dns" required/>
+	
+	            <label for="ntp" translate="networkconfig.view.NTP"></label>
+	            <input type="text" ng-trim="false" ng-pattern="ntpRegEx" id="ntp" placeholder="NTP" ng-model="networkConfigdata.ntp" required/>
+	            
+	            <div class="submit-container center-align">
+	                <input type="submit" value="Save" class="submit">
+	                <p style="padding-top:30px;">
+	                	<a style="color: #0095D3;" ng-click="redirect('physical-network-setup')" id="setup-physical-network"><plain translate="networkconfig.view.SETUP_PHYSICAL_NETWORK" /></a>
+	                </p>
+	            	<p>or</p>
+	            	<p><a style="color: #0095D3;" ng-click="redirect('ip-reallocation')" id="setup-physical-network"><plain translate="networkconfig.view.GO_TO_IPREALLOCATION" /></a></p>
+	            </div>
+	        </form>
+	     </div>
+    </div>
+</div>

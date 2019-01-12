@@ -1,0 +1,11 @@
+<div class="homecards-container conveyor-banner-container">
+    <carousel interval="interval" class="card-carousel-row">
+        <slide ng-repeat="slide in data.carouselBanners" active="slide.active">
+            <a stp-href="{{slide.contentSourceUrl}}" title="{{slide.altText}}">
+          <span ng-click="bannerClick($event, slide);">
+            <img class="img-responsive cards-bigger-height" ng-src="{{parseProtocol(slide.contentImageUrl)}}" altText="{{slide.title}}" />
+          </span>
+            </a>
+        </slide>
+    </carousel>
+</div>

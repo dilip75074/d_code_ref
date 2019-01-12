@@ -1,0 +1,114 @@
+<div id="checkout_form" name="ccForm" ng-if="display === 'form'" class="stpls_ccList">
+    <div class="row manage_top">
+        <div ng_show="showCounter" id="cardHeaderId" class="col-xs-12">{{cardCount}} {{'CC_CARDS_HEADER'|translate}}</div>
+
+        <div class="col-xs-12 cc_btn_row" ng-hide="!editable || display === 'inline'">
+            <button id="add_credit_card" type="button" class="btn btn_full_width stpls_tertiary" ng-click="create()">{{'CC_ADD_CARD_BTN'|translate}}</button>
+        </div>
+    </div>
+
+    <!--  LOADING SPINNER -->
+    <div class="row animated loading" ng-show="isLoading" >
+        <div id="spinnerdiv_id" class="col-xs-12 animated loading" >
+            <span id="spinner_id" class="spinner" us-spinner="{top: 400}"></span><br>
+            <p class="center_text"><strong>Updating your profile ...</strong></p>
+        </div>
+    </div>
+
+    <div ng-repeat="card in cards track by $index">
+        <div class="list_row">
+            <div id="card_row" class="row">
+                <div ng-show="selectable" class="col-xs-1 radio">
+                  <input id="card_radioButtonId" ng-click="creditCardSelected(card)" name="cardSelection" type="radio">
+                    <span class="radio_text" ng-click="creditCardSelected(card)"></span>
+                  </input>
+                </div>
+
+                <div class="col-xs-1">
+                    <span id="cctype_id_exist" class="cc_Icon animated fadeInLeft" ng-class="card.type"></span>
+                </div>
+
+                <div class="col-xs-10 pull_right">
+                    <span id="ccnum_id" class="cc_numInline">Card ending in {{card.number.slice(-4)}}</span>
+                    <span ng-if="card.expiry" id="ccexp_id" class="cc_numInline">{{'CC_EXP_DATE'|translate}} {{card.expiry.split('/')[0]}}/{{card.expiry.split('/')[1]}}</span><br/>
+                    <span ng-if="!card.expiry" id="ccexp_id" class="cc_numInline">{{'CC_EXP_DATE'|translate}} {{card.expMonth}}/{{card.expYr}}</span><br/>
+                    <span id="ccnote_id" class="cc_numInline">{{'CC_NOTE'|translate}} {{card.notes}}</span>
+                </div>
+            </div>
+
+            <div class="row cc_btn_row" ng-hide="!editable">
+                <div class="col-xs-6">
+                    <button type="button" class="btn btn_full_width stpls_tertiary" ng-click="edit(card)">{{'CC_EDIT_BTN'|translate}}</button>
+                </div>
+                <div class="col-xs-6">
+                    <button type="button" class="btn btn_full_width stpls_tertiary" ng-click="delete(card.id)">{{'CC_DELETE_BTN'|translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="cc_form" name="ccForm" ng-if="display === 'formchkout'" class="stpls_ccList">
+	<div class="ddStyle">
+		<div class="addr_border" ng-repeat="card in cards track by $index">
+
+			<div class="list_row row addr_forOverlay">
+
+				<div ng-if="card.showOverlay" class="tile-mask-container animated fadeInUp">
+					<div class="tile-message with-actions">
+						<span ng-if="!errorMsg" class="mask_info" translate="CC_CARD_DELETED"></span>
+						<span ng-if="errorMsg" class="mask_info">{{errorMsg}}</span>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="line" ng-click="creditCardSelectedInline(card)">
+
+                    <div class="name">
+                        <span id="cctype_id_exist" class="cc_Icon animated fadeInLeft" ng-class="card.type"></span>
+                        <span id="ccnum_id" class="cc_numInline">{{card.type}} ••••  {{card.number.slice(-4)}}</span>
+                    </div>
+
+                    <span ng-if="card.expiry" id="ccexp_id" class="cc_numInline">{{'CC_EXP'|translate}} {{card.expiry.split('/')[0]}}/{{card.expiry.split('/')[1]}}</span>
+                    <span ng-if="!card.expiry" id="ccexp_id" class="cc_numInline">{{'CC_EXP'|translate}} {{card.expMonth}}/{{card.expYr}}</span>
+                    <div id="ccnote_id" ng-if="card.notes" class="shortNotes">{{'CC_NOTE'|translate}} {{card.notes}}</div>
+
+                    <!--Check mark -->
+                    <i ng-show="card.id == checkoutCcId" class="checkmark"></i>
+				</div>
+			</div>
+		</div>
+
+        <div class="row">
+			<div class="col-xs-12 cc_btn_row" ng-hide="!editable || display === 'inline'">
+				<div id="add_credit_card" type="button" class="addr_list" ng-click="create()">
+                    <span>
+                        <i class="icon-blank-card"></i>
+                    </span>
+                    <span translate="CC_ADD_CARD_BTN"></span>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<!--  Inline CC Credit Card
+<div ng-show="display === 'inline'" class="cc_icon_container">
+<span id="cctypeicon_id" class="cc_numInline glyphicon glyphicon-credit-card" ng-hide="ccType || stplsCCType"></span>
+<span id="cctype_id" class="cc_numInline cc_IconEdit animated fadeInLeft" ng-class="ccType" ng-show="ccType && !stplsCCType"></span>
+<span class="cc_numInline cc_IconEdit animated fadeInLeft" ng-class="stplsCCType" ng-show="stplsCCType"></span>
+</div>
+<input ng-show="display === 'inline'" id="credit_card_num1" type="tel" creditcard-focus="" creditcard-blur="dataChanged()" ng-blur="dataChanged()" name="cardNum" ng-model="card.number"
+payments-validate="card" payments-type-model="ccType" payments-format="card" stpls-payments-validate="stpls" stpls-payments-type-model="stplsCCType"
+placeholder="{{editMode && card.number || 'Credit Card Details*' }}"
+ng-class="{expand: expand}" ng-focus="expandCC()" class="form-control cc_Num cc_numInline" />
+
+<input ng-show="display === 'inline'" id="expiry1" type="expdte" ng-blur="dataChanged()" name="expiry" ng-model="card.expiry"
+class="cc_numInline cc_expiry form-control additional animated" payments-validate="expiry"
+placeholder="{{'CHK_EXP_PH'|translate}}" exp-date ng-pattern="/^(0[1-9]|1[0-2])\/(1[6-9]|2[0-9])$/"/>
+
+<input ng-show="display === 'inline'" id="cvc" type="tel" ng-blur="dataChanged()" name="cvc" ng-model="card.cvc"
+class="cc_numInline cc_cvc form-control additional animated"
+placeholder="{{'CHK_CVV_PH'|translate}}" payments-validate="cvc" payments-format="cvc" payments-type-model="ccType" required />
+-->

@@ -1,0 +1,82 @@
+<div ng-model="template" ng-controller="AddPermissionController" ng-click="hideToolTip()">
+	<div class="manager-header">
+		<span class="manager-head" translate="usermanagement.view.ADD_PERMISSION"></span>
+		<span class="manager-close" ng-click="cancel()">
+			<img src="app/img/close-icon.png">
+		</span>
+	</div>
+	<div class="manager-user-info clearfix">
+		<div class="permission-info l-float malign">
+			<label><plain translate="usermanagement.view.TYPE" />: </label>
+			<select ng-model="selectedType" ng-change="typeChange()">
+				<option value="{{type}}" ng-repeat="type in typeList">{{type}}</option>
+			</select>
+			<label class="space-between"><plain translate="usermanagement.view.DOMAIN" />: </label>
+			<select ng-model="selectedDomain" ng-change="domainChange()">
+				<option value="{{domain}}" ng-if="domain != 'localos'" ng-repeat="domain in domainList">{{domain}}</option>
+			</select>
+		</div>
+		<div class="permission-details malign">
+			<span class="user-role"></span>
+			<span><input type="text" class="" placeholder="Filter by Entity Name..." ng-enter="fetchUsers();" ng-model="filterString"/></span>
+		</div>
+	</div>
+	<div class="detail-info-wrapper">
+		<div ng-hide="showList" style="text-align: center;" translate="usermanagement.view.ADD_USER_BY_TYPE"> </div>
+		<div ng-show="inValidDomain" style="text-align:center!important; color:red;">{{errMsg}}</div>
+		<div ng-show="showList" style="max-height: 350px; overflow: auto;">
+			<div class="user-permission-title">
+				<h2 ng-if="displayType == 'user'" class="l-float" translate="usermanagement.view.USERS"></h2>
+				<h2 ng-if="displayType == 'group'" class="l-float" translate="usermanagement.view.GROUPS"></h2>
+			</div>
+			<ul class="access-wrapper clearfix">
+				<li style="text-align:center!important; color:red;" ng-if="usersList.length==0"><plain translate="usermanagement.view.NO_OTHER_MSG" />{{displayType}}<plain translate="usermanagement.view.FOUND_WITH_MSG" />{{filterString}}<plain translate="usermanagement.view.IN_MSG" /><plain translate="usermanagement.view.DOMAIN_STR" />{{displaySelectedDomain}}</li>
+				<li style="text-align:center!important; color:red;" ng-if="isInvalidUserRole">{{errMsg}}</li>
+				<li class="clearfix" ng-repeat="user in usersList">
+					<div class="new-user-permission l-float" ng-init="flag=true;">
+						<table>
+							<tr>
+								<!-- <td style="width: 35px;"><input type="checkbox" name="" ng-click="updateSelection($event, user)"></td> -->
+								<td><span class="user-role margin-right-medium"></span></td>
+								<td><span>{{user}}</span></td>
+							</tr>
+						</table>
+					</div>
+					<div class="new-users-type">
+						<span ng-show="flag">
+							<select class="malign" ng-change="updateRole(user, selectedRoleId)" ng-model="selectedRoleId">
+								<option ng-repeat="role in roleList" ng-selected="role.id==-1" value="{{role.id}}">{{role.description}}</option>
+							</select>
+							
+							<!-- <img class="malign" src="app/img/permission.png" ng-mouseover="showRolePrivileges(selectedRoleId, $index);" ng-mouseleave="showRolePrivileges(selectedRoleId, $index);"/> -->
+							<span style="width:0px;"><img class="malign" ng-if="selectedRoleId!=-1" tooltip-placement="bottom" tooltip-html-unsafe="{{selectedRolePrivilegesHtml}}" src="app/img/permission.png" ng-mouseover="showRolePrivileges(selectedRoleId, $index);"/></span>
+							
+							<!-- <span class="delete-icon" ng-click="flag=false;"></span><span ng-click="flag=false;">DELETE</span> -->
+							<span style="padding-right: 100px;"></span><span ></span>
+							<!-- <div class="permission-tooltip" style="z-index: 2000; postion:fixed;" ng-if="displayToolTip == $index">
+								<div class="arrow-up" style="margin-left:10px!important;"></div>
+								<ul>
+									<li ng-repeat="privilege in selectedRolePrivileges" style="padding:0px; text-align:left;">{{privilege}}</li>
+								</ul>
+							</div> -->
+						</span>
+						
+						<div ng-hide="flag">
+							<div class="confirm-delete">
+								<span ng-click="usersList.splice($index, 1); confirmDelete(user);" translate="usermanagement.view.CONFIRM_DELETE"></span>
+								<span class="user-cancel" ng-click="flag=true;" translate="usermanagement.view.CANCEL"></span>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		
+		<!-- <div style="font-weight: bold; text-align: center;" ng-show="showListLoading">{{listSuccessErrorMsg}}</div> -->
+		
+		<div ng-if="usersList.length>0" class="permission-btns" ng-show="showList">
+			<button id="permission-confirm" class="permission-confirm" ng-click="submitUserDetails()" ng-if="showConfirm" translate="usermanagement.view.CONFIRM"/>
+			<button id="permission-confirm" class="permission-confirm permission-confirm-disable" ng-if="!showConfirm" translate="usermanagement.view.CONFIRM"/>
+		</div>
+	</div>
+</div>

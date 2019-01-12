@@ -1,0 +1,89 @@
+@import "compass/css3/opacity";
+
+.modal-content {
+  border-radius: $base-radius;
+  background-color: $palette--white;
+  overflow: hidden;
+  position: relative;
+  box-shadow: none;
+  border: none;
+  padding: 0px $base-gutter-width;
+
+  .modal-header {
+    background-color: $palette--header-background;
+    margin-left: (-$base-gutter-width);
+    margin-right: (-$base-gutter-width);
+    padding: 10px $base-gutter-width 0px;
+  }
+  .modal-footer,.modal-body.black {
+    border: none;
+  }
+
+  .modal-footer {
+    margin-top: 0;
+    padding: 6px 0;
+
+    .modal_btn {
+      padding: 0 6px;
+    }
+  }
+
+  .modal-body {
+    $message-font-size: 16px;
+    padding: $base-gutter-width;
+
+    &.edit-modal-body {
+      padding: 0;
+    }
+    .simple_prompt & {
+      i {
+        font-size: $message-font-size + 10;
+      }
+    }
+
+    .message{
+      text-align: center;
+      font-size: 16px;
+      padding: 10px 0px 0px;
+      margin: 0px;
+    }
+
+    .product {
+      margin: 5px 0px 10px;
+
+      .modal_product_img {
+
+        img {
+          max-height: 100px;
+        }
+      }
+    }
+
+    .shipping_flag {
+      padding: 0px 10px;
+
+      .shipping_tag {
+        font-size: 13px;
+        border-radius: 8px;
+        width: 120px;
+      }
+
+      .addOn_flag {
+        width: 120px;
+      }
+
+      .oversize_flag {
+        width: 100px;
+      }
+    }
+  }
+}
+
+.modal-backdrop.in {
+  filter: alpha(opacity=25);
+  @include opacity(0.5);
+}
+
+.modal-dialog {
+  margin: 20px 35px;
+}

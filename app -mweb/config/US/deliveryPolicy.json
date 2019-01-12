@@ -1,0 +1,43 @@
+{
+  "C1": {
+    "Staples delivery policy": [
+      "An estimated delivery date will be provided after your order is placed.",
+      "Software download orders will be fulfilled via a separate email confirmation to the customer. The software download email will include download links and instructions on how to complete download.  Additional questions about software downloads?",
+      "These dates vary due to carrier shipping practices, delivery location and the items you order. Products may be delivered in separate shipments.",
+      "Delivery dates noted apply to orders placed by 5:00 p.m. local time (or 4:00 p.m. local time in stores and in limited locations across the country) and where credit approval and product availability are confirmed by 5:00 p.m. on the same business day* that the order is placed. Items shipped direct from the vendor may require an earlier order placement time. You will be notified of the estimated delivery date in a confirmation e–mail. (Not available for in–store orders if email address is not submitted.)",
+      "Staples' catalog, Web site and US retail businesses are operated within the continental US for customers within the US and therefore do not ship or bill to international addresses. Staples delivers to street addresses (not P.O. Boxes or APO/FPO) in the continental US only."
+    ]
+  },
+  "C12":[
+    "Certain Staples items originate directly from carefully selected vendors and manufacturers. In many instances, delivery personnel will deliver your order to your entrance. Other items are prestocked at warehouses around the country and delivered by a common carrier. For these items a loading dock is needed. If one is not available, delivery personnel will bring your order to the tailgate of the truck and you are responsible for unloading the items and bringing them into your building.",
+    "*Business days are defined as Monday through Friday, except holidays."
+  ],
+
+  "C2":
+    {
+      "How do I get Free Delivery?": "Delivery is free on all orders over $45 or more.  Additional White Glove and Premier Delivery services are available for an additional charge. Staples reserves the right, in our sole discretion, to change our delivery policy and delivery fees.",
+      "When will my Furniture Order arrive?": "Furniture orders from the online catalog are only available within local trading areas (within 20 driving miles of a store). However, furniture deliveries may be scheduled for specific weekdays in certain areas. When you place your order you will be informed of your delivery days or you can contact us for the furniture delivery days in your area.",
+      "Does Staples deliver to Mail Drop locations?": "A \"Mail Drop\" location is an address where a business or service accepts mail deliveries on behalf of a customer.  Staples will deliver to Mail Drop locations such as a UPS Store (formerly Mail Boxes Etc.).  However, Staples is unable to deliver to Post Office Boxes or APO/FPO addresses, which are military overseas mail drops.",
+      "Do I have to sign for my Order?": "For your package safety, it is best to have someone available to sign for your order during the hours of 9:00 a.m. – 5:00 p.m., Monday through Friday, except holidays (UPS may deliver to residential addresses up to 7:00 p.m.). If no one is available and you would like the driver to leave your shipment, please click here for the Driver Release Agreement. In certain instances, your order may not be suitable for driver release. The driver will leave a note with instructions on how to receive your order, or you will be contacted for a redelivery."
+    },
+
+  "C3": {
+    "Delivery to a store near me – how does it work?":{
+      "Free shipping to your Staples® location. Here's how it works...": [
+        "During checkout, choose to have your order delivered to a Staples store and then select your store location.",
+        "Pay for your order online.",
+        "Go to your selected Staples location's Customer Service area to pick up your order.",
+        "You must bring a state–issued ID at the time of pickup."
+      ],
+      "Also Consider... ": [
+        "Orders are available for pickup during regular store hours.",
+        "You'll be required to sign for your order when you pick it up.",
+        "Participating stores cannot accept orders with oversized items such as furniture or safes.",
+        "Once your order is delivered to a store, you are responsible for picking it up.",
+        "We're sorry, but individual stores will not deliver orders once they have arrived in store."
+      ]
+
+    }
+  }
+
+}

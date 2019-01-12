@@ -1,0 +1,104 @@
+{
+  "version": "0.1.1",
+  "locale": "en_US",
+  "takeover": {
+    "type": "deals",
+    "identifier": "BI1142421",
+    "startDate": "2016-02-12T00:00:00Z",
+    "endDate": "2016-02-20T23:23:59Z"
+  },
+  "tophat": {
+    "src": "http://path/to/cre/img.png",
+    "dest": "<href|route>",
+    "startDate": "2016-02-12T00:00:00Z",
+    "endDate": "2016-02-20T23:23:59Z"
+  },
+  "browse": [
+    {
+      "title": "Daily Deals",
+      "identifier": "BI1142421",
+      "expand": false,
+      "type": "deals"
+    },
+    {
+      "title": "Shop By Category",
+      "identifier": "top",
+      "expand": true,
+      "type": ""
+    },
+    {
+      "title": "Shop Electronics",
+      "identifier": 314138924,
+      "expand": true,
+      "type": ""
+    },
+    {
+      "title": "Shop Clearance",
+      "identifier": "CL211635",
+      "expand": false,
+      "type": "category"
+    }
+  ],
+  "conveyor": {
+    "home": {
+      "tophat": false,
+      "banners": {
+        "format": "<stacked|horizontal>",
+        "rotation": "<null|integer>",
+        "items": [
+          {
+            "title": "Banner 1",
+            "src": "http://path/to/cre/img.png",
+            "dest": "<href|route>"
+          }
+        ]
+      },
+      "menu": {
+        "type": "<stacked|dropdown|horizontal>",
+        "items": [
+          {
+            "text": "Weekly Ad",
+            "icon": "weekly-ad",
+            "dest": "<href|route>"
+          },
+          {
+            "text": "Shop Deals",
+            "icon": "daily-deals",
+            "dest": "<href|route>"
+          }
+        ]
+      },
+      "bundle": null
+    },
+    "deals": {
+      "tophat": true,
+      "banners": {
+        "format": "<stacked|horizontal>",
+        "rotation": "<null|integer>",
+        "items": [
+          {
+            "title": "Banner 1",
+            "src": "http://path/to/cre/img.png",
+            "dest": "<href|route>"
+          }
+        ]
+      },
+      "menu": {
+        "type": "<stacked|dropdown|horizontal>",
+        "items": [
+          {
+            "text": "Weekly Ad",
+            "icon": "weekly-ad",
+            "dest": "<href|route>"
+          },
+          {
+            "text": "Shop Deals",
+            "icon": "daily-deals",
+            "dest": "<href|route>"
+          }
+        ]
+      },
+      "bundle": "BI1142421"
+    }
+  }
+}

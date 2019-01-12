@@ -1,0 +1,79 @@
+// main typography
+
+.product_name {
+  @include font-light;
+  font-size: $base-font-size-headline;
+  color: $palette--gray-dark;
+}
+
+.product_price {
+  @include font-light;
+  font-size: $base-font-size-price;
+  color: $palette--gray-dark;
+}
+
+.product_price_strike {
+  @include font-light;
+  font-size: $base-font-size-price-strike;
+  color: $palette--gray-med-light;
+  text-decoration: line-through;
+}
+
+.product_price_uom {
+  font-size: $base-font-size;
+  color: $palette--gray-med-light;
+}
+
+.legal_text {
+  @include font-normal;
+  font-size: $base-font-size-legal;
+  color: $palette--gray-med-dark;
+}
+
+.page_header {
+  @include font-medium;
+  font-size: $base-font-size-page-header;
+  color: $palette--gray-dark;
+}
+
+.page_headline {
+  @include font-bold;
+  font-size: $base-font-size-headline;
+  color: $palette--gray-dark;
+}
+
+// Basic text classes
+
+.normal,
+.font-normal {
+  @include font-normal;
+}
+
+.medium,
+.font-medium {
+  @include font-medium;
+}
+
+.bold,
+.font-bold {
+  @include font-bold;
+}
+
+.center_text {
+ text-align: center;
+}
+
+// colors
+.red,
+.font-fg-red { color: $palette--stpls-red; }
+.font-fg-green { color: $palette--green; }
+.font-fg-blue { color: $palette--blue; }
+.font-fg-orange { color: $palette--orange; }
+.font-fg-gray { color: $palette--gray-med; }
+.font-fg-gray-light { color: $palette--gray-med-light; }
+.font-fg-default { color: $palette--gray-dark; }
+
+//sizes
+.font-hero-default { font-size: 1.5 * $base-font-size-page-header; font-size: 6vw; }
+.font-hero-large { font-size: 2 * $base-font-size-page-header; font-size: 7vw; }
+.font-hero-huge { font-size: 3 * $base-font-size-page-header; font-size: 8vw; }

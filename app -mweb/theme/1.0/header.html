@@ -1,0 +1,28 @@
+<div class="navbar stpls_header">
+
+	<!-- sidebar toggle -->
+	<div class="pull-left">
+
+		<button class="btn stpls_menu_toggle_btn" ng-click="$parent.sidebarToggle()"></button>
+
+		<button class="btn stpls_search_btn" ng-show="state.current.name != 'home'"></button>
+
+	</div>
+
+	<!-- cart button -->
+	<div class="pull-right">
+
+		<button class="btn stpls_cart_btn animated" ng-class="{'indicate fadeInDown': $root.cart_indicate}" ng-click="$root.toRoute('cart')">
+			<span class="stpls_sprite"></span>
+			<strong ng-bind="($root.cart_count ? $root.cart_count : '')"></strong>
+		</button>
+
+	</div>
+
+	<div class="logo_container {{$root.locale}}" ng-class="{home: state.current.name == 'home'}" ng-click="$root.toRoute('home')">
+
+		<button></button>
+
+	</div>
+
+</div>

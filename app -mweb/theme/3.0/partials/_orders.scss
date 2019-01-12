@@ -1,0 +1,72 @@
+.stpls_order_history_container {
+
+  .order_row {
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .orders_header {
+    font-size: 20px;
+  }
+
+  .order_amount {
+    text-align: right;
+    color: $palette--stpls-red;
+   }
+   
+   .order_history_col_heading,
+   .order_amount {
+     @include font-bold;
+   }
+}
+
+.stpls_order_detail_container {
+
+  .results_container {
+    border-top: none;
+  }
+  .text_spacer {
+    margin-top: 10px;
+    margin-left: 12px;
+  }
+
+  .btn:hover,
+  .btn:focus {
+    color: $palette--gray-dark;
+    text-decoration: none;
+  }
+
+  .banner_expand {
+    @include font-bold;
+    text-align: left;
+    border-radius: 0;
+    margin-top: -1px;
+    border: 1px solid $palette--gray-light;
+    border-left: none;
+    border-right: none;
+  }
+
+  .orders_header {
+    font-size: 18px;
+  }
+
+  .order_amount {
+    @include font-bold;
+    text-align: right;
+    color: $palette--black;
+   }
+
+  .order_panel {
+    padding: 10px 0px;
+  }
+
+  .order_status_fields {
+    background: #fff;
+    font-size: 14px;
+  }
+
+
+  .red {
+    color: $palette--stpls-red;
+  }
+}

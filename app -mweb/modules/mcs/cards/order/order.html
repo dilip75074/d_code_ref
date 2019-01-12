@@ -1,0 +1,45 @@
+<div class="homecards-container">
+    <div class="card-header-row">
+        <span class="card-type">{{data.title}}</span>
+        <div class="card-help pull-right">
+            <a ui-sref="deals({seo:'dailyDeals', identifier: identifier})">More</a>
+        </div>
+    </div>
+
+    <div class="card-hero-row">
+        <div class="hero-content">
+            <span ng-bind-html="product.name"></span>
+            <div>
+                <span id="productFinalPrice" class="hero-final-price" ng-bind="product.finalPrice"></span>
+                <!--<span class="hero-units">{{product.units}}</span>-->
+            </div>
+            <div>
+                <span class="hero-save-price" ng-bind="product.saveNow"></span>
+                <span id="productRegPrice" ng-if="showRegPrice" class="hero-original-price" ng-bind="(product.listPrice || product.price) | currency"></span>
+            </div>
+            <div>
+                <star-rating star-rating="{{product.rating}}" rating-show="true" rating-count="{{product.rating}}"></star-rating>
+            </div>
+        </div>
+
+        <div class="tile_image hero-image">
+            <img class="animated fadeIn" lazy-load-image="true" lazy-src="{{product.image}}"/>
+        </div>
+
+    </div>
+
+    <div class="card-footer-row clearfix">
+        <div class="card-btn half-width border-right">
+            <div class="card-btn-icon">
+                <!--<i class="ink-toner pull-left"></i>-->
+            </div>
+            <button ng-click="gotoRewards()">Pickup In-Store</button>
+        </div>
+        <div class="card-btn half-width">
+            <div class="card-btn-icon">
+                <!--<i class="ink-toner pull-left"></i>-->
+            </div>
+            <button ng-click="gotoRewards()">Add To Cart</button>
+        </div>
+    </div>
+</div>

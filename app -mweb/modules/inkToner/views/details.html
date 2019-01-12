@@ -1,0 +1,33 @@
+<div class="stpls_inkandtoner_container">
+
+	<!--  Details is the sub-categories of Ink & Toner
+		  Categories as a result of Browsing -->
+	<div>
+
+		<h4><strong>{{detailName}}</strong></h4>
+
+		<!--  Show details of category Browse -->
+		<div class="category_main">
+			<div class="section">
+
+				<div class="section_back">
+					<button ng-click="$root.back();" class="btn btn_chevron_back">
+						<i class="icon_chevron_back pull-left"></i><span class="back_text pull-right">Back</span>
+					</button>
+				</div>
+
+				<div ng-repeat="det in details track by $index">
+					<div class="row">
+						<div class="col-xs-12">
+							<button class="category_name btn_full_width" nodrag ng-click="goToDetails(det.identifier, det.title)">
+								{{det.title}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>

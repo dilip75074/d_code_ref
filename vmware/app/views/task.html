@@ -1,0 +1,95 @@
+<style>
+.detail-info li {
+	padding: 10px 0;!important;
+}
+</style>
+<div ng-model="template" class="notification-activities-wrapper" ng-controller="ActivityController" ng-init="filterType='ALL'; activityType='tasks'; fetchTasks(true);">
+	<div class="notification-header">
+		<span class="notification-head" translate="activities.view.TASK"></span> 
+		<span class="notification-close"> <img ng-click="close()" src="app/img/close-icon.png"></span>
+	</div>
+	<ul>
+		<li>
+			<ul class="notification-alert clearfix">
+				<li ng-class="{'active' : filterType=='ALL'}"><a ng-click="filterType = 'ALL'; isExpanded=[]; fetchTasks(true);"><plain  translate="activities.view.EVERYTHING" /></a></li>
+				<li ng-class="{'active' : filterType=='NEW'}"><a ng-click="filterType = 'NEW'; isExpanded=[]; fetchTasks(true);"><plain  translate="activities.view.NEW" /></a></li>
+				<li ng-class="{'active' : filterType=='RUNNING'}"><a ng-click="filterType = 'RUNNING'; isExpanded=[]; fetchTasks(true);"><plain translate="activities.view.RUNNING" /></a></li>
+				<li ng-class="{'active' : filterType=='FAILED'}"><a ng-click="filterType = 'FAILED'; isExpanded=[]; fetchTasks(true);"><plain translate="activities.view.FAILED" /></a></li>
+				<li ng-class="{'active' : filterType=='RESUMING'}"><a ng-click="filterType = 'RESUMING'; isExpanded=[]; fetchTasks(true);"><plain translate="activities.view.RESUMING" /></a></li>
+				
+				<!-- <li><a ng-click="filterType = 'system'">SYSTEM</a></li>
+				<li class="alert-right">SORT BY: TYPE<span><img src="app/img/dropdown.png"></span></li> -->
+				<li><input style="width: 170px;" type="text" class="" placeholder="Enter Resource pool name..." ng-enter="fetchTasks(true);" ng-model="filterString"/></li>		
+			</ul>
+		</li>
+		<li ng-hide="showList">
+			<div style="text-align:center; padding-top:20px; padding-bottom:20px">{{errorMsg}}</div>
+		</li>
+		<li ng-show="showList">
+			<ul class="detail-info" style="max-height: 400px!important;">
+				<li ng-show="list.length == 0" style="text-align: center;" translate="activities.view.NO_TASKS_FOUND"></li>
+				<li class="clearfix" ng-repeat="workflow in list">
+					<ul class="detail-info" style="padding: 0px;!important;">
+						<li class="clearfix" style="padding: 0px;!important;">
+							<div class="detail-content">
+								<p>
+									<a style="float:left;" ng-click="isExpanded[$index]=!isExpanded[$index];"><img ng-src="{{isExpanded[$index] && 'app/img/arrow-down-tree.png' || 'app/img/arrow-right-tree.png'}}" /></a>
+									{{workflow.workflow.workflowComponent}} {{workflow.workflow.workflowCategory}} - {{workflow.workflow.workflowName}}
+									<input ng-apply-privilege="VRM_EXECUTE_WORKFLOW" ng-if='workflow.workflow.restartable && workflow.workflow.workflowStatus == "FAILED"' type="button" class="submit" value="Rerun" style="font-size: 0.7em; padding: 3px 20px 4px 20px;" ng-click='rerunWorkflow(workflow.workflow.workflowId)' />
+								</p>
+							</div>
+							<div class="detail-alerts">
+								<p>{{workflow.workflow.workflowStatus}}
+                                <a ng-if='workflow.workflow.workflowStatus == "RUNNING"' ng-click="cancelWorkflow(workflow.workflow.workflowId)">x</a>
+                                </p>
+                            </div>
+							<div class="detail-count">
+								<p>&nbsp;</p>
+							</div>
+						</li>
+					</ul>
+					<ul class="detail-info" style="padding-top:5px;!important;" ng-hide='isExpanded[$index]==false'>
+						<li class="clearfix white-border-bottom" ng-repeat="item in workflow.taskList | filter: {parentTask: '!'}">
+							<ul>
+								<li class="clearfix" style="padding: 0px;!important;">
+									<div class="detail-content">
+										<p>&nbsp;&nbsp;&nbsp;&nbsp;{{item.taskName}}</p>
+									</div>
+									<div class="detail-alerts">
+										{{item.taskStatus}}
+									</div>
+									<div class="detail-count">
+										<p am-time-ago="item.createdDate"></p>
+									</div>
+									<div style="padding-top:20px;" ng-if="item.progressMessages.length > 0">
+										<div ng-repeat="msg in item.progressMessages" style="font-size:14px; padding:10px 0px 0px 14px;">
+											<p><span style="float:left; width:67.5%; padding-left:20px!important;">{{msg.message}}</span><span class="detail-alerts" style="width:15%!important;">{{msg.status}}</span><span style="width:10%!important;" class="detail-count" am-time-ago="msg.startedTime"></span></p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<ul>
+								<li class="clearfix" ng-repeat="composite in workflow.taskList | filter: {parentTask: item.taskName}">
+									<div class="detail-content">
+										<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{composite.taskName}}</p>
+									</div>
+									<div class="detail-alerts">
+										&nbsp;
+									</div>
+									<div class="detail-count">
+										<p am-time-ago="composite.createdDate"></p>
+									</div>
+									<div style="padding-top:20px;" ng-if="composite.progressMessages.length > 0">
+										<div ng-repeat="msg in composite.progressMessages" style="font-size:14px; padding:10px 0px 0px 14px;">
+											<p><span style="float:left; width:67.5%; padding-left:20px!important;">{{msg.message}}</span><span class="detail-alerts" style="width:15%!important;">{{msg.status}}</span><span style="width:10%!important;" class="detail-count" am-time-ago="msg.startedTime"></span></p>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,60 @@
+<div class="stpls_help_container" ng-init="loadHelp('STA')" >
+
+    <span ng-if="!helpContent" class="spinner" us-spinner></span>
+
+    <div class="row help_center animated" ng-class="{fadeIn: helpContent, fadeOutLeft: helpSection}" ng-if="helpContent">
+
+        <div class="col-xs-12 col-sm-2">
+
+          <button id="backButton" class="btn btn_chevron_back" ng-click="$root.back()">
+            <i class="icon_chevron_back pull-left"></i><span class="back_text pull-right">{{'LCR_BACK'|translate}}</span>
+          </button>
+
+        </div>
+
+        <h3 class="header page_header col-xs-12">
+
+            <span class="glyphicon glyphicon-question-sign"></span>
+
+            {{'PROD_HELP_SHIP_POLICY'|translate}}
+
+        </h3>
+
+        <div ng-if="helpContent">
+
+            <div ng-repeat="(header, c) in helpContent.C1" class="col-xs-12 animated fadeIn">
+                <h4 >{{header}}</h4>
+                <ul>
+                    <li ng-repeat="i in c" panel-body animated fadeInDown ng-scope>{{i}}</li>
+                </ul>
+
+            </div>
+
+            <div ng-repeat="c in helpContent.C12" class="col-xs-12 animated fadeIn">
+                <span panel-body animated fadeInDown ng-scope>
+                    {{c}}
+                </span>
+            </div>
+
+            <div ng-repeat="(header, c) in helpContent.C2 track by $index" class="col-xs-12 animated fadeIn">
+                <h4 >{{header}}</h4>
+                <div panel-body animated fadeInDown ng-scope>
+                    <p>{{c}}</p>
+                </div>
+
+            </div>
+
+            <div ng-repeat="(header, c) in helpContent.C3 track by $index" class="col-xs-12 animated fadeIn">
+                <h4 >{{header}}</h4>
+                <div ng-repeat="(headerNext, cNext) in c">
+                    <h5 >{{headerNext}}</h5>
+                    <ul>
+                        <li ng-repeat="i in cNext" panel-body animated fadeInDown ng-scope>{{i}}</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="stpls_help_container">
+
+	<span ng-if="!helpContent" class="spinner" us-spinner></span>
+
+	<div class="row help_center animated" ng-class="{fadeIn: helpContent, fadeOutLeft: helpSection}" ng-if="helpContent && !helpSection">
+
+		<div class="col-xs-6">
+			<div class="header page_header">
+				<span class="glyphicon glyphicon-question-sign"></span><span>Help Center</span>
+			</div>
+		</div>
+
+		<div ng-show="FBMessengerEnabled" class="col-xs-6">
+			<div class="chat_header ">
+				<a class="message_us pull-right" href="{{FBMessengerUrl}}" target="_blank">
+					{{'FB_MESSAGE'|translate}}<i class="fb-messenger_icon pull-right"></i>
+				</a>
+			</div>
+		</div>
+
+		<div ng-if="helpContent">
+			<div class="col-xs-12 col-sm-6">
+				<button class="btn btn-default btn-block help_section_btn" ng-click="openHelpSection('Most Popular Questions', helpContent['Most Popular Questions'])">
+					<span class="glyphicon glyphicon-thumbs-up"></span>
+					<p>Most Popular Questions</p>
+				</button>
+			</div>
+
+			<div class="col-xs-12 col-sm-6">
+				<button class="btn btn-default btn-block help_section_btn" ng-click="openHelpSection('Most Popular Questions', helpContent['Most Popular Questions'])">
+					<span class="glyphicon glyphicon-send"></span>
+					<p>Contact Us</p>
+				</button>
+			</div>
+
+			<div ng-repeat="(header, c) in helpContent track by $index" class="col-xs-12 col-sm-6 col-md-4 animated fadeIn" ng-hide="header == 'Most Popular Questions' || header == 'Contact Us'">
+				<button class="btn btn-default btn-block help_section_btn" ng-click="openHelpSection(header, c)">
+					<p ng-bind="header"></p>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="help_section animated" ng-class="{fadeInRight: helpSection, fadeOutRight: !helpSection}" ng-show="helpSection">
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-2">
+				<button id="backButton" class="btn btn_chevron_back" ng-click="helpSection = false">
+					<i class="icon_chevron_back pull-left"></i><span class="back_text pull-right">{{'LCR_BACK'|translate}}</span>
+				</button>
+			</div>
+
+			<div class="col-xs-12 col-sm-10">
+				<h3 class="header" ng-bind="helpSectionHeader"></h3>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="(q, a) in helpSection" ng-init="show = false">
+				<div class="panel panel-default">
+					<div class="panel-heading" ng-click="show = !show">
+						<h4 ng-bind="q"></h4>
+					</div>
+
+					<div class="panel-body animated fadeInDown" ng-if="show">
+						<p ng-bind="a"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

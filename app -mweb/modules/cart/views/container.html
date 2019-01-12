@@ -1,0 +1,348 @@
+<div id="cartPage" class="stpls_cart_container overlay_view animated fadeIn">
+
+    <!-- Cart Header -->
+    <div class="cart-checkout-header header clearfix">
+        <button id="backbtn_id2" type="button" class="btn btn_chevron_back scTrack scLink" sctype="scLink" scvalue="Back button on header">
+            <i class="icon-back" ng-click="$root.back()"></i>
+        </button>
+        <div class="name">
+            <p ng-show="cart.itemCount > 1">{{cart.itemCount}} items</p>
+            <p ng-show="cart.itemCount == 1">1 item</p>
+            <p ng-show="(cart.itemCount > 0) == false">Cart</p>
+        </div>
+        <div class="pull-right">
+            <p id="signinbtn_id" class="signin" ng-show="!sessionUser" ng-click="$root.toRoute('login', {returnRte : 'cart'})">{{'CHK_SIGNIN'|translate}}</p>
+        </div>
+    </div>
+</div>
+
+    <!--  LOADING SPINNER -->
+    <div class="row loading-cart" ng-show="loading">
+        <div class="loading col-xs-12 animated fadeIn">
+            <span class="spinner" us-spinner="{top: 150}"></span>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <div ng-hide="loading" id="loadingfreeShippingBox">
+      <div class="shipping_notify animated fadeIn" ng-if="cart.itemCount > 0" ng-class="{primary: freeDelivery || showAddOnInfo, warning: !freeDelivery && !showAddOnInfo, oversized: hasOverSizedFee}">
+    			<div ng-hide="hasOverSizedFee">
+    	            <div ng-hide="showAddOnInfo">
+    					<p id="qualifyForFreeShiipingText" ng-if="freeDelivery && !sessionUserFreeDelivery" translate="CART_FREE_SHIPPING"></p>
+    					<p id="freeShippingRewardsText" ng-if="freeDelivery && sessionUserFreeDelivery" translate="CART_FREE_SHIPPING_REWARDS"></p>
+    					<p id="rewardsSpendMoreText" ng-if="!freeDelivery" translate="CART_ADD_TO_FREE_SHIP" translate-values="{value: freeDeliveryRemain}"></p>
+    	            </div>
+    	            <div class="shipping_notify addOn" ng-show="showAddOnInfo">
+    	                <p id="minShippingRequired1" ng-if="cart.itemCount == addOnSKUCount" translate="CART_MIN_BASKET_SHIP" translate-values="{min: minAddOnBasketSize, subtot: cart.subTotal}"></p>
+    	                <p id="minShippingRequired2" ng-if="cart.itemCount != addOnSKUCount" translate="CART_ADDON_SHIP" translate-values="{addon: addOnSKUCount, count: cart.itemCount, min:minAddOnBasketSize, subtot:cart.subTotal}"></p>
+    	            </div>
+    			</div>
+        </div>
+
+        <!--  EMPTY CART MESSAGE -->
+        <div class="row animated fadeIn" ng-if="(cart && (cart.itemCount === 0 || cart.itemCount === undefined)) || !cart">
+            <div class="col-xs-12">
+                <div class="empty_cont">
+                    <div class="empty_cart_text">Your shopping cart<br>is empty.</div>
+                    <div class="empty_btn">
+                        <button ng-click="continueShopping()" class="btn stpls_secondary_half btn_full_width">{{'CART_EMPTY_BTN'|translate}}</button>
+                    </div>
+                </div>
+            </div>
+         </div>
+
+
+        <div ng-if="cart.itemCount > 0" class="cart-content">
+
+            <!--  Gather items by estimated delivery date, filterByDeliverDate returns unique delivery dates
+                  as productItem.expectedBusinessDayDelivery.   Next loop filters only items with that date -->
+            <div ng-repeat="productItem in productsToFilter() | filter: filterByDeliverDate" class="content">
+                 <div>
+                    <div ng-if="productItem.expectedBusinessDayDelivery === ''" class="deliveryInfo"><span>Pick up today</span></div>
+                    <div ng-if="productItem.expectedBusinessDayDelivery !== ''" class="deliveryInfo">Expected Delivery: <span>{{productItem.expectedBusinessDayDelivery}}</span></div>
+                 </div>
+
+                 <div class="items">
+                    <div class="item animated fadeIn" ng-repeat="($idx, c) in cart.productsInCart | isDeliveryDate: productItem.expectedBusinessDayDelivery " ng-class="{fadeOut: !c, loading: c.loading}">
+                        <analytics-item item="c" location="cartitems" slot="{{$idx+1}}" page="1"></analytics-item>
+
+                         <div>
+                            <div class="product-image">
+                                <img ng-click="$root.toRoute('product', {sku: c.sku, seo: $root.SEO.quartz.sku(c).uri})" ng-src="{{c.images[0] | skuSmall}}" />
+                            </div>
+
+                            <div class="cart-price-content">
+                                <p id="itemDescText" class="name" ng-bind-html="c.name" ng-click="$root.toRoute('product', {sku: c.sku, seo: $root.SEO.quartz.sku(c).uri})"></p>
+
+                                <div class="item_price">
+                                    <!--
+                                    <p class="cost-per-unit" ng-bind="c.pricingInfo.price | currency: '$'"></p>
+                                    <p class="reg_price" ng-if="c.pricingInfo.showRegPrice == 'true'">
+                                        Reg. <span  ng-bind="c.pricingInfo.extendedListPrice | currency: '$'"></span>
+                                    </p>
+                                    -->
+                                    <div ng-if="c.pricingInfo.totalOrderItemPrice > 0">
+                                        <p class="cart_price" ng-bind="c.pricingInfo.totalOrderItemPrice | currency: '$'"></p>
+                                        <p ng-if="c.qty < 2" class="unit" ng-bind="c.pricingInfo.uom"></p>
+                                    </div>
+                                    <div ng-if="c.pricingInfo.totalOrderItemPrice == 0">
+                                        <p class="cart_price">FREE</p>
+                                    </div>
+                                    <!--<p ng-show="c.bopis == 'false' && c.shippingInfo.deliveryModeSelected != 'ISP' && c.esd == false" class="expDel">
+                                        Expected Delivery: {{c.expectedBusinessDayDelivery}}
+                                    </p>-->
+                                    <p ng-show="c.esd == true" class="expDownload">
+                                        Download available after purchase
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    	<div>
+                        <div class="cart-shipping-flags">
+                        	<div class=" pull-right" ng-if="c.tag">
+  	                         <shipping-indicator class="shipping_flag" shipping-tag="{{c.tag}}"></shipping-indicator>
+                          </div>
+                        </div>
+                   		</div>
+
+                        <div class="qty">
+                            <div class="cart-qty-content">
+                              <div class="qty-input-content">
+                                <span>Qty: </span> <input class="qty-input" type="tel" value="{{c.qty}}" ng-model="c.qty" ng-blur="modifyItem($event, c, null)" ng-focus="inputFocused($event)" ng-keyup="limitQty($event, c)" />
+                              </div>
+                            </div>
+                            <span class="input-group-btn">
+                                <button id="minusButton"class="btn btn-default minus scTrack cta" bindtype="dom" sctype="cta" ctatype="updatecart" sku="{{c.sku}}" locater="updatecart" ng-class="{hidden: c.qty <= 0}" ng-click="c.qty > 0 ? modifyItem($event, c, -c.qty) : null" ng-disabled="c.loading">Remove</button>
+                            </span>
+                        </div>
+
+                        <!--  BOPIS Treatment, only show for BOPIS-Eligible Products -->
+                        <div class="bopis" ng-show="c.bopis === 'true'">
+                          <hr class="Line" />
+                          <div class="left-content">
+                            <h4>Pickup Today</h4>
+                            <h4 class="store-bopis" ng-if="c.shippingInfo.deliveryModeSelected === 'ISP'" ng-click="checkBopisStores(c)">{{c.shippingInfo.deliveryAddressSelected.city}}, {{c.shippingInfo.deliveryAddressSelected.state}}</h4>
+                            <h4 class="store-bopis" ng-if="c.shippingInfo.deliveryModeSelected !== 'ISP'" ng-click="checkBopisStores(c)">{{defaultStore.city}}, {{defaultStore.state}}</h4>
+                            <div class="pull-right input-group" ng-if="c.retailOnly !== 'true'">
+                                <switch-toggle  id="bopisEligibleCheckbox" ng-model="c.bopisSelected" ng-click="bopisClicked(c)"></switch-toggle>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+            <!--  SHIP-TO-STORE OPTION -->
+            <div ng-show="shouldShowShipToStore && cart.itemCount > 0" class="AllToStoreFooter" style="display: block;">
+                <div class="row">
+                        <toggle-switch ng-model="shipAllToStore" ng-click="shipToStoreClicked()" on-label="YES" off-label="NO"></toggle-switch>
+                    <div class="shipFreeToStore">
+                        <p>Ship everything for free to your store: <br /> <span ng-click="checkShipToStores()">{{shipToStore.city}}, {{shipToStore.state}}</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="coups-n-rewards">
+              <!--  DISPLAY COUPONS / REWARDS SECTION -->
+              <div ng-show="cart.itemCount > 0" class="expand_container">
+                  <button id="couponsAndRewardsButton" class="btn coupon_banner_expand" ng-click="expand.coupons = !expand.coupons">
+                      <span id="couponsAndRewardsLabel" translate="CHK_COUPON_TOTAL"></span>
+                      <span btn-expand ng-model="expand.coupons"></span>
+                  </button>
+              </div>
+
+              <div ng-show="expand.coupons" class="animated fadeInDown">
+              <!--  COUPONS SECTION -->
+              <div class="coupon_container">
+                  <div ng-repeat="couponObj in coupons">
+                      <div class="row">
+                          <div class="col-xs-6">
+                              <p id="indivCouponDesc" class="pull-left earnedCouponInCart_desc">
+                                  {{couponObj.description[0].shortDescription}}
+                              </p>
+                               <p id="indivCouponMsg" class="pull-left earnedCouponInCart_message" ng-bind-html="couponObj.description[0].message"></p>
+                          </div>
+                          <div class="col-xs-3">
+                              <p id="indivRewardAmt" class="pull-right earnedCouponInCart_amount">
+                                  {{couponObj.adjustedAmount | currency:'$'}}
+                              </p>
+                          </div>
+                          <div class="col-xs-3">
+                              <button id="indivCouponRemoveAction" class="btn coupon_btn stpls_secondary_half pull-right" type="submit" ng-click="removeCoupon(couponObj)">Remove</button>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!--  Coupon Add Row -->
+                  <div class="coup-add-content">
+                          <form ng-model="coupon.code" ng-submit="addCoupon(coupon.code, false)">
+                            <input id="addCouponCode" ng-model="coupon.code" class="form-control coupon_Add_Input pull-left item" type="text" ng-keyup="inputKeyPress()" placeholder="Add Coupons and Rewards" input-reset-control/>
+                          </form>
+                      </div>
+                  </div>
+                  <!--  Coupon Error Row -->
+                  <div class="row" ng-show="addCouponError !== null">
+                      <div id="invalidCouponError" class="alert alert-danger coupon_error" ng-bind-html="addCouponError"></div>
+                  </div>
+
+              </div>
+              <!--  END COUPONS SECTION -->
+
+              <!--  REWARDS SECTION -->
+              <div class="coupon_container">
+                  <div class="alert alert-danger" ng-show="rewardsError !== null">
+                      <span ng-show="rewardsError !== null">{{rewardsError}}</span>
+                  </div>
+                  <!--  Ink Reward Checks -->
+                  <div ng-repeat="rewardObj in inkRewards | filter: {isApplied: 'false'}">
+                      <div class="row">
+                          <div class="col-xs-6">
+                              <p id="indivRewardDesc" class="pull-left earnedRewardInCart_desc">
+                                  Ink Reward Check
+                              </p>
+                              <p id="indivInkRewardDate" class="pull-left earnedRewardInCart_datec">
+                                  {{'RWD_EXPIRES'|translate}}{{rewardObj.expiryDate}}
+                              </p>
+                          </div>
+                          <div class="col-xs-3">
+                              <p id="indivInkRewardAmt" class="pull-right earnedRewardInCart_amount">
+                                  {{rewardObj.amount}}
+                              </p>
+                          </div>
+                          <div class="col-xs-3">
+                              <button id="indivInkRewardAddToCartAction" class="btn coupon_btn padding stpls_secondary_half pull-right" type="submit" ng-click="addCoupon(rewardObj.code, true)">
+                                  Redeem
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- Reward Checks -->
+                  <div ng-repeat="rewardObj in rewards | filter: {isApplied: 'false'}">
+                      <div class="row">
+                          <div class="col-xs-6">
+                              <p id="indivRewardDesc" class="pull-left earnedRewardInCart_desc">
+                                  Reward Check
+                              </p>
+                              <p id="indivRewardDate" class="pull-left earnedRewardInCart_date">
+                                  {{'RWD_EXPIRES'|translate}}{{rewardObj.expiryDate}}
+                              </p>
+                          </div>
+                          <div class="col-xs-3">
+                              <p id="indivRewardAmt" class="pull-right earnedRewardInCart_amount">
+                                  {{rewardObj.amount}}
+                              </p>
+                          </div>
+                          <div class="col-xs-3">
+                              <button id="indivRewardAddToCartAction" class="btn coupon_btn stpls_secondary_half pull-right" type="submit" ng-click="addCoupon(rewardObj.code, true)">
+                              	Redeem
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              </div>      <!-- END REWARDS SECTION -->
+            </div>          <!-- END DISPLAY COUPONS SECTION -->
+            </div>
+        </div>          <!-- END IF -->
+    </div>              <!-- END SCROLL SECTION -->
+</div>                  <!-- END OVERLAY VIEW -->
+
+<div class="cart_actions_fixed actions_fixed animated animated-delay-2 fadeIn" ng-if="cart.itemCount > 0">
+    <!--  TOTALS SECTION -->
+    <div class="cartFooter totals_section">
+
+        <div class="not-mobile-landscape expand animated fadeInUp">
+            <div class="row">
+                <div id="itemsLabel" class="col-xs-8 pull-left">{{'CHK_PROD_TOTAL'|translate}}</div>
+                <div class="cart-total">
+                <span id="itemsAmoutText" class="pull-right" ng-bind="cart.subTotal  | currency:'$'"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div id="shippingLabel" class="col-xs-8 pull-left">{{'CHK_SHIPPING_TOTAL'|translate}}</div>
+                <div class="cart-total">
+                    <span id="shippingAmoutText" class="pull-right" ng-if="!freeDelivery" ng-bind="shippingFee | currency:'$'"></span>
+                    <span id="freeDeliveryText" class="pull-right text_freeship" ng-if="freeDelivery">{{'CHK_FREE'|translate}}</span>
+                </div>
+            </div>
+
+            <div class="row" ng-if="oversizeShippingFee > 0">
+                <div id="shippingLabel" class="col-xs-8 pull-left">{{'PROD_OVERSIZ_SHIPPING_FEE'|translate}}</div>
+                <div class="cart-total">
+                    <span id="oversizeShippingFees" class="pull-right" ng-bind="oversizeShippingFee | currency:'$'"></span>
+                </div>
+            </div>
+
+<!--          <div class="row">
+                <div id="couponsAndRewardsLabel" class="col-xs-8 pull-left">Coupons &amp Rewards</div>
+                <div class="col-xs-4">
+                    <span id="couponsAndRewardsAmount"class="pull-right">{{couponTotal | currency:'$'}}</span>
+                </div>
+            </div>
+-->
+        </div>
+        <div id="footer" class="row sub_total">
+            <div id="preTaxSubtotalLabel" ng-if="cart.itemCount <= 1" class="col-xs-8 pull-left">
+                {{'CART_TOTAL_LABEL'|translate}}
+            </div>
+            <div id="preTaxSubtotalLabel" ng-if="cart.itemCount > 1"  class="col-xs-8 pull-left">
+                {{'CART_TOTAL_LABEL'|translate}}
+            </div>
+            <div class="cart-total">
+              <span id="PreTaxSubtotalAmountText" class="pull-right">{{preTaxTotal | currency:'$'}}
+            </div>
+        </div>
+      </div> <!-- END Totals -->
+      <div class="checkout" ng-if="!showAddOnInfo">
+
+      	  <div class="col-xs-12">
+              <span class="red"><strong>{{applepay_error}}</strong></span>
+         </div>
+         <div class="actions row">
+
+          <!--  Apple Pay -->
+          <div class="col-xs-6" ng-if="canShowApplePay">
+            <div id="checkoutButtonApple" ng-click="checkoutMethodSelected(2)" sctype="scLink" scvalue="scCheckout" class="applePay scTrack scLink">
+              <div ng-disabled="cartHasError" class="apple-pay-button apple-pay-button-black"></div>
+            </div>
+          </div>
+
+          <!-- Visa -->
+          <div class="col-xs-6" ng-if="!canShowApplePay" click-visa-checkout="clickVisaCheckout">
+           <span class="visa_checkout_container">
+              <button ng-disabled="cartHasError" class="btn visa_checkout v-button" alt="Visa Checkout by Visa"></button>
+            </span>
+          </div>
+
+          <!-- Secure CC -->
+          <div class="col-xs-6" ng-class="{'apple-pay': canShowApplePay}">
+              <button id="checkoutButton" ng-disabled="cartHasError" class="btn stpls_primary scTrack scLink" sctype="scLink" scvalue="scCheckout" ng-click="checkout()"><span translate="SECURE_CHECKOUT"></span></button>
+              <div class="more-payments-toggle" ng-if="canShowApplePay" ng-click="toggleMorePayments();">
+                <span ng-hide="morePaymentsOpen">&#x2026;</span>
+                <span ng-hide="!morePaymentsOpen">&#8595;</span>
+              </div>
+              <div ng-if="canShowApplePay" class="payment-options" ng-class="{'hide': !morePaymentsOpen}">
+                <!-- Visa -->
+                <div class="col-xs-12" click-visa-checkout="clickVisaCheckout">
+                    <button ng-disabled="cartHasError" class="btn visa_checkout v-button" alt="Visa Checkout by Visa"></button>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout" ng-if="showAddOnInfo">
+          <div class="actions row shoppingRow" >
+              <button id="continueShoppingButton" class="btn stpls_primary btn_full_width" ng-click="$root.toRoute('home')">
+                  <b>{{'ACT_CONTINUE_SHOPPING'|translate}}</b> (add {{minAddOnBasketSize - cart.subTotal | currency:'$'}})
+              </button>
+          </div>
+      </div>
+</div>
+
+<div sprkt-show="expand.terms"
+  sprkt-overlay="/sbd/content/help/yourorder/coupons_popup.html"
+  sprkt-overlay-title="{{'RWD_LINK_TERMS'|translate}}">
+</div>
+
+<!-- scroll target -->
+<div class="cart-bottom"></div>

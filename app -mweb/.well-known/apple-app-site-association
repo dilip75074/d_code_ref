@@ -1,0 +1,24 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [{
+      "appID": "T54A4GSKNR.staples.iPhone.QA",
+      "paths": ["/*/directory_*/", "/*/product_*", "/*/cat_*/"]
+    }, {
+      "appID": "R6VAM48FYZ.com.staples.urbanAirship",
+      "paths": ["/*/directory_*/", "/*/product_*", "/*/cat_*/"]
+    }, {
+      "appID": "T54A4GSKNR.com.staples.urbanAirship",
+      "paths": ["/*/directory_*/", "/*/product_*", "/*/cat_*/"]
+    }, {
+      "appID": "T54A4GSKNR.staples.iPhone.Dev",
+      "paths": ["/*/directory_*/", "/*/product_*", "/*/cat_*/"]
+    }, {
+      "appID": "T54A4GSKNR.staples.iPhone.PreProd",
+      "paths": ["/*/directory_*/", "/*/product_*", "/*/cat_*/"]
+    }, {
+      "appID": "E4Y3UAZ4W5.com.staples.staplesSBD",
+      "paths": ["/*/directory_*/", "/*/product_*", "/*/cat_*/"]
+    }]
+  }
+}

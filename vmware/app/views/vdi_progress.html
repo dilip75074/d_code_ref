@@ -1,0 +1,62 @@
+<style>
+.modal-sm{ width:500px!important; height:330px!important; border-radius:3px; margin-top:7%; }
+.view-rack-container li{ height: 40px!important; background: none;  border: 0px;}
+.btn{
+	background: #0095d3;
+	border-bottom: 2px solid #0082b8;
+	color: #fff;
+	display: inline-block;
+	font-size: 18px;
+	outline: none;
+	text-decoration: none;
+	padding: 12px 42px 11px 41px;
+	margin: 13px 0 48px 0;
+}
+.physical-container-wrapper{ max-width:0px!important; min-width:500px!important; max-height:470px!important;}
+</style>
+
+<div ng-model="template" ng-controller="WorkloadConfigurationController">
+	<div class="physical-container physical-container-wrapper">
+		<header>
+			<span id="edit-configuration" title="Workload Configuration" translate="vdiprogress.view.UPLOAD_PROGRESS"></span>	
+		</header>
+		<div class="view-rack-container clearfix" style=" max-height:94%; max-width: 895px; height:300px;">
+			<div ng-show="isoProgressValue" class="resources-details" style="margin-top: 25px;">
+				<ul class="resources-utilised-list">
+					<li>
+						
+						<div class="workload-progressbar" style="width:360px;padding-left: 20px;">
+							<plain translate="vdiprogress.view.WINDOWS_ISO_FILE_PROGRESS" /> :
+							<div class="workload-progressbar-wrapper" style="width:360px!important;height:15px!important;">
+								<div class="progressbar-value" style="height:15px!important; width:{{existingISOPresent || isoProgressValue*100 | number:0}}%;"></div>
+							</div>
+							<div style="width:360px; text-align:center; line-height: 35px;">{{existingISOPresent || isoProgressValue*100 | number:0}}%<span style="color: red;" ng-show="isoFileUploadError">(<plain translate="vdiprogress.view.ERROR_UPLOADING_ISO_FILE" />)</span></div>
+						</div>
+					</li>
+        		</ul>
+        	</div>
+        	
+        	<div ng-show="ovaProgressValue" class="resources-details">
+				<ul class="resources-utilised-list">
+					<li>
+
+						<div class="workload-progressbar" style="width:360px; padding-left: 20px;">
+							<plain translate="vdiprogress.view.OVA_FILE_PROGRESS" /> :
+							<div class="workload-progressbar-wrapper" style="width:360px!important;height:15px!important;">
+								<div class="progressbar-value" style="height:15px!important; width:{{existingOVAPresent || ovaProgressValue*100 | number:0}}%;"></div>
+							</div>
+							<div style="width:360px; text-align:center; line-height: 35px;">{{existingOVAPresent || ovaProgressValue*100 | number:0}}%<span style="color: red;" ng-show="ovaFileUploadError">(<plain translate="vdiprogress.view.ERROR_UPLOADING_OVA_FILE" />)</span></div>
+						</div>
+						
+					</li>
+        		</ul>
+        	</div>
+		</div>
+		<div class="submit-container center-align">
+			<a class="btn" ng-click="cancelUpload();"><plain translate="vdiprogress.view.CANCEL" /></a>
+			<a class="btn" ng-click="finishedUpload();" ng-show="uploadComplete()"><plain translate="vdiprogress.view.CONTINUE" /></a>
+			<input class="btn" type="button" ng-show="!uploadComplete()" disabled value="{{'vdiprogress.view.CONTINUE'|translate}}"/>
+		</div>
+
+	</div>
+</div>

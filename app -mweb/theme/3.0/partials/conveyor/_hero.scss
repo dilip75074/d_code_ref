@@ -1,0 +1,15 @@
+#{$conveyor-prefix}-hero-container {
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: $base-gutter-width 0;
+  span {
+    @include transition-config($all-transition-config);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    @include font-thin;
+    &:nth-child(odd) {
+      @include font-bold;
+    }
+  }
+}

@@ -1,0 +1,86 @@
+<div class="row address-control input-row">
+	<div class="col-xs-12">
+		<input id="addr_id" type="text" ng-blur="addressChanged()" name="address" onclick="this.focus();this.select()" class="pull-left form-control"
+			ng-model="addressModel.address" ng-class="{'expand addr_enabled': !expand, 'expand addr_disabled': expand}" placeholder="{{'ADR_ADDRESS'|translate}}" autocomplete="off" />
+		<div class="shortFormControl">
+			<button type="button" id="expandAddrBtnId" btn-expand ng-model="expand" class="pull-right" ng-click="userClickChevron()"></button>
+		</div>
+	</div>
+
+	<!--  Dropdown manual address entry.  Only shows when user drops chevron -->
+	<div ng-show="expand" class="row address-control input-row">
+		<div class="col-xs-8">
+			<input id="entry_addressLine1_id" type="text" ng-focus="inputFocused($event)" ng-blur="entryChanged()" name="addrLine1" onclick="this.focus();this.select()" class="addr_dropdown form-control"
+				ng-model="addressModel.addressLine1" placeholder="{{'ADR_STREET1_PH'|translate}}" input-reset-control required/>
+		</div>
+		<div class="col-xs-4">
+			<input id="entry_addressLine2_id" type="text" ng-focus="inputFocused($event)" ng-blur="entryChanged()" name="addrLine2" onclick="this.focus();this.select()" class="addr_dropdown form-control additional"
+				ng-model="addressModel.addressLine2" placeholder="{{'ADR_STREET2_PH'|translate}}" input-reset-control/>
+		</div>
+	</div>
+
+	<div ng-show="expand" class="row address-control input-row">
+		<div class="col-xs-6">
+			<input id="entry_city_id" type="text" ng-focus="inputFocused($event)" ng-blur="entryChanged()" name="city" class="addr_dropdown form-control additional"
+				ng-model="addressModel.city" placeholder="{{'ADR_CITY_PH'|translate}}" input-reset-control required/>
+		</div>
+		<div id="stateselect_id" class="col-xs-2 select2">
+			<select id="entry_state_id" type="text" ng-focus="inputFocused($event)" ng-blur="entryChanged()" name="state" class="form-control addr_dropdown additional" ng-model="addressModel.state" required>
+				<option selected disabled value="">{{'CHK_STATE_DEFAULT'|translate}}</option>
+				<option value="AL">AL</option>
+				<option value="AZ">AZ</option>
+				<option value="AR">AR</option>
+				<option value="CA">CA</option>
+				<option value="CO">CO</option>
+				<option value="CT">CT</option>
+				<option value="DE">DE</option>
+				<option value="DC">DC</option>
+				<option value="FL">FL</option>
+				<option value="GA">GA</option>
+				<option value="ID">ID</option>
+				<option value="IL">IL</option>
+				<option value="IN">IN</option>
+				<option value="IA">IA</option>
+				<option value="KS">KS</option>
+				<option value="KY">KY</option>
+				<option value="LA">LA</option>
+				<option value="ME">ME</option>
+				<option value="MD">MD</option>
+				<option value="MA">MA</option>
+				<option value="MI">MI</option>
+				<option value="MN">MN</option>
+				<option value="MS">MS</option>
+				<option value="MO">MO</option>
+				<option value="MT">MT</option>
+				<option value="NE">NE</option>
+				<option value="NV">NV</option>
+				<option value="NH">NH</option>
+				<option value="NJ">NJ</option>
+				<option value="NM">NM</option>
+				<option value="NY">NY</option>
+				<option value="NC">NC</option>
+				<option value="ND">ND</option>
+				<option value="OH">OH</option>
+				<option value="OK">OK</option>
+				<option value="OR">OR</option>
+				<option value="PA">PA</option>
+				<option value="RI">RI</option>
+				<option value="SC">SC</option>
+				<option value="SD">SD</option>
+				<option value="TN">TN</option>
+				<option value="TX">TX</option>
+				<option value="UT">UT</option>
+				<option value="VT">VT</option>
+				<option value="VA">VA</option>
+				<option value="WA">WA</option>
+				<option value="WV">WV</option>
+				<option value="WI">WI</option>
+				<option value="WY">WY</option>
+			</select>
+		</div>
+		<div class="col-xs-4">
+			<input id="entry_zip_id" ng-focus="inputFocused($event)" type="tel" ng-blur="entryChanged()" name="zip" onclick="this.focus();this.select()" class="addr_dropdown form-control additional"
+				ng-model="addressModel.zip" placeholder="{{'ADR_ZIP_PH'|translate}}" input-reset-control required/>
+		</div>
+	</div>
+</div>

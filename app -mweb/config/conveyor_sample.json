@@ -1,0 +1,206 @@
+{
+  "jumbotron": {
+    "title": "Meet Conveyor",
+    "blurb": "Use this guide for the latest from our factory."
+  },
+  "examples": [{
+    "title": "Tophat",
+    "directive": "<conveyor-tophat />",
+    "config": {
+      "widget": "tophat",
+      "config": {
+        "src": "http://s7d5.scene7.com/is/image/Staples/54142_640x60?$mweb640x60$",
+        "link": "/sbd/cre/marketing/visa-checkout/?icid=HP:MB:TOPHAT:25OFF100:VISA:PROMO:20160404:",
+        "title": "Save with VisaCheckout"
+      }
+    }
+  }, {
+    "title": "Search Bar",
+    "directive": "<conveyor-search />",
+    "config": {
+      "widget": "search",
+      "config": {
+
+      }
+    }
+  }, {
+    "title": "Hero Text",
+    "directive": "<conveyor-hero />",
+    "options": {
+      "color": ["red", "blue", "green", "orange", "gray"],
+      "size": ["default", "large", "huge"],
+      "text": ""
+    },
+    "config": {
+      "widget": "hero",
+      "config": {
+        "color": "orange",
+        "size": "large",
+        "text": "Make More Happen"
+      }
+    }
+  }, {
+    "title": "Navigation",
+    "directive": "<conveyor-nav />",
+    "options": {
+      "title": "",
+      "columns": [1, 2],
+      "presentation": ["stacked", "grid"]
+    },
+    "config": {
+      "widget": "nav",
+      "config": {
+        "title": "Shop Deals by Category",
+        "presentation": "stacked",
+        "columns": 1
+      },
+      "items": [{
+        "text": "Shop our Deals Center",
+        "icon": "deals",
+        "link": "/coupons"
+      }, {
+        "text": "See our Weekly Ad",
+        "icon": "weeklyad",
+        "link": "http://weeklyad.staples.com/staplessd/weeklyad"
+      }]
+    }
+  }, {
+    "title": "Navigation (again)",
+    "directive": "<conveyor-nav />",
+    "options": {
+      "title": "",
+      "columns": [2, 3, 4],
+      "presentation": ["stacked", "grid"]
+    },
+    "config": {
+      "widget": "nav",
+      "config": {
+        "title": "",
+        "presentation": "grid",
+        "columns": 2
+      },
+      "items": [{
+        "text": "Daily Deals",
+        "icon": "dailydeals-lg",
+        "link": "/dailydeals"
+      }, {
+        "text": "Coupons",
+        "icon": "coupons-lg",
+        "link": "/coupons"
+      }, {
+        "text": "Weekly Ad",
+        "icon": "weeklyad-lg",
+        "link": "http://weeklyad.staples.com/staplessd/weeklyad"
+      }, {
+        "text": "Clearance",
+        "icon": "clearance-lg",
+        "link": "http://weeklyad.staples.com/staplessd/weeklyad"
+      }]
+    }
+  }, {
+    "title": "Banners",
+    "directive": "<conveyor-banner />",
+    "options": {
+      "presentation": ["stacked", "carousel"],
+      "columns": [1, 2, 3],
+      "interval": 3,
+      "indicators" : true
+    },
+    "config": {
+      "widget": "banner",
+      "config": {
+        "presentation": "stacked",
+        "indicators": true,
+        "interval": 3,
+        "columns": 1
+      },
+      "items": [{
+        "link": "/dailydeals",
+        "altText": "DD banner",
+        "imageUrl": "http://s7d5.scene7.com/is/image/Staples/45856_m_640x200_dd?$mobileweb640x200$"
+      }, {
+        "link": "/dailydeals",
+        "altText": "iPad Deals",
+        "imageUrl": "http://s7d5.scene7.com/is/image/Staples/53789_ios_960x420_ipad?$iOS%20and%20new%20mWeb$",
+        "couponCode": "97159",
+        "partNumber": "853439"
+      }, {
+        "link": "/deals/Staples-Electronics-Deals/BI1278390?icid=DEALSCENTERMAIN:NAVBANNER:2:ELECTRONICS",
+        "altText": "Exclusive Deal",
+        "imageUrl": "http://images.staples-3p.com/s7/is/image/Staples/53972_640x160?wid=640&hei=160"
+      }]
+    }
+  }, {
+    "title": "Ad Placement",
+    "directive": "<conveyor-ads />",
+    "options": {
+      "engine": ["hooklogic"],
+      "locator": ["home", "search", "sku"]
+    },
+    "config": {
+      "widget": "adplacement",
+      "config": {
+        "engine": "hooklogic",
+        "locator" : "home",
+        "taxonomy" : "home",
+        "pgn" : "1",
+        "MaxAds" : "2",
+        "sku" : "",
+        "keyword" : "",
+        "broadmatchtype" : "",
+        "hlpt": "H",
+        "creative": "150x375_M-C-OG_TI-1_1-1_AboveGrid1"
+      }
+    }
+  }, {
+    "title": "Text Block",
+    "directive": "<conveyor-text />",
+    "options": {
+      "type": ["lead", "normal", "legal"]
+    },
+    "config": {
+      "widget": "text",
+      "config": {
+        "type": "lead",
+        "alignment": "left",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      }
+    }
+  }, {
+    "title": "Template Footer",
+    "directive": "<conveyor-footer />",
+    "options": {
+      "format": ["text", "banner"]
+    },
+    "config": {
+      "widget": "templateFooter",
+      "config": {
+        "format": "text",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "imageUrl": "//assets.staples-static.com/sbd/cre/products/160228/53729/images/53729_hwow_v2.jpg",
+        "link": "/"
+      }
+    }
+  }, {
+    "title": "Products",
+    "directive": "<conveyor-bundle />",
+    "options": {
+      "format": ["deals", "category"],
+      "header": ""
+    },
+    "config": {
+      "widget": "products",
+      "config": {
+        "format": "deals",
+        "header": "Daily Deals",
+        "maxPage": 1,
+        "limit": 10,
+        "filter": null,
+        "identifier": {
+          "preview" : "BI739784",
+          "prod" : "BI1142421"
+        }
+      }
+    }
+  }]
+}

@@ -1,0 +1,224 @@
+// Document setup; Bootstrap adjustments
+* {
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+  min-width: $base-min-width;
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+page-container {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+  display: none !important;
+}
+
+body {
+  @include font-light;
+  font-size: $base-font-size;
+  background: $palette--gray-light;
+  color: $base-font-color;
+  line-height: $base-line-height;
+}
+
+b, optgroup, strong, dt, label {
+  font-weight: normal;
+  @include font-bold;
+}
+
+.page-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100%;
+  background: $palette--white;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+
+  &.active {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y:auto;
+      -webkit-overflow-scrolling: touch;
+  }
+}
+
+.container-fluid {
+    padding-right: $base-gutter-width;
+    padding-left: $base-gutter-width;
+    margin-right: auto;
+    margin-left: auto;
+
+    #{$stp--overlay-page-selector} & {
+      padding: 0 0 105px 0;
+    }
+}
+
+.main_area {
+  min-height: 100%;
+  padding-bottom: 105px;  // Specified the height of the footer
+}
+
+page-container div.container-fluid.main_area.classPage {
+  padding: 0px;
+   min-height: 100%;
+  padding-bottom: 105px;  // Specified the height of the footer
+}
+
+.col-xs-12.stpls_main {
+  height: 100%;
+}
+
+.panel-body {
+  padding: $base-gutter-width;
+}
+
+// Remove webkit blue outline
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover
+{
+    outline:0px !important;
+}
+
+// Main app
+
+.stpls_main {
+  padding: 0 !important;
+
+  .main_area[data-state="termsandConditions"],
+  .main_area[data-state="helpCenter"],
+  .main_area[data-state="orders"],
+  .main_area[data-state="locator"],
+  .main_area[data-state="rewards"],
+  .main_area[data-state="stores"],
+  .main_area[data-state="rewardsEnroll"],
+  .main_area[data-state="profile"],
+  .main_area[data-state="profilelinkrewards"],
+  .main_area[data-state="home"],
+  .main_area[data-state="guestHome"],
+  .main_area[data-state="notfound"],
+  .main_area[data-state="coupons"],
+  .main_area[data-state="login"],
+  .main_area[data-state="account"],
+  .main_area[data-state="rewards"],
+  .main_area[data-state="studio"],
+  .main_area[data-state="optin"],
+  .main_area[data-state="order"],
+  .main_area[data-state="forgotpassword"],
+  .main_area[data-state="sbd"],
+  .main_area[data-state="inkToner"],
+  .main_area[data-state="inkToner.details"],
+  .main_area[data-state="register"],
+  .main_area[data-state="confirmorder"] {
+    padding-top: 10px !important;
+  }
+
+  .main_area[data-state="cart"] .empty_cont {
+    padding-top: 36px;
+  }
+
+
+  .main_area {
+    //crude approx for min-heights;
+    $filled-height: $effective-footer-height + 2 * $header--height;
+    $min-height: nth($device-height-breakpoints, 1);
+    min-height: $min-height - $filled-height;
+
+    @for $bp from length($device-height-breakpoints) through 1 {
+      $h: nth($device-height-breakpoints, $bp);
+      @media (max-height: $h) {
+        min-height: $h - $filled-height;
+      }
+    }
+  }
+  .backgroundGray {
+    background-color: $palette--gray-light;
+  }
+}
+
+
+.main_area > h4 {
+     @include font-bold;
+     margin-top: 15px;
+}
+
+// Generic classes
+
+.no_padding {
+  padding: 0 !important;
+}
+
+.alert {
+  border-radius: 0px;
+}
+
+.hide_image {
+  visibility: hidden;
+  transition:0s none;
+}
+
+.lazy_image {
+  transition: 0s none;
+  border: 1px solid black;
+}
+
+.formFactor, .formFactor > div {
+  height: 100%;
+}
+
+// Fixed actions
+
+.actions_fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $palette--gray-light;
+  padding: 0 $base-gutter-width;
+  z-index: $z-index-actions;
+  box-shadow: 0 0px 3px $palette--gray-med-light;
+}
+
+// Errors
+
+.stpls_error {
+  display: none;
+  background: $palette--gray-light;
+  border-bottom: $palette--gray-med-light;
+
+  .col-xs-8 {
+    margin: 8px 0 4px;
+    text-align: center;
+
+    p {
+      font-size: 15px;
+    }
+  }
+
+  .col-xs-4 {
+    margin: 8px 0 4px;
+    text-align: left;
+  }
+}
+
+.stpls_error.active {
+  display: block;
+}

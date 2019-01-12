@@ -1,0 +1,87 @@
+<!-- Example widgets page -->
+<div class="conveyor-examples">
+  <div ng-show="jumbotron" class="conveyor-hero">
+    <div class="jumbotron">
+      <h1>{{jumbotron.title}}</h1>
+      <p>{{jumbotron.blurb}}</p>
+    </div>
+    <div class="machine">
+      <div class="manifest row">
+        <span class="col-xs-4 glyphicon glyphicon-file animated fadeInDown animated-delay-3"></span>
+        <span class="col-xs-4 glyphicon glyphicon-file animated fadeInDown animated-delay-4"></span>
+        <span class="col-xs-4 glyphicon glyphicon-file animated fadeInDown animated-delay-5"></span>
+      </div>
+      <div class="belt">
+        <div class="row">
+          <span class="col-xs-3 glyphicon glyphicon-cog animated fadeInRight"></span>
+          <span class="col-xs-3 glyphicon glyphicon-cog animated fadeInRight animated-delay-1"></span>
+          <span class="col-xs-3 glyphicon glyphicon-cog animated fadeInRight animated-delay-2"></span>
+          <span class="col-xs-3 glyphicon glyphicon-cog animated fadeInRight animated-delay-3"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="widget-preview col-xs-12 col-sm-6" ng-repeat="widget in examples">
+      <div class="panel panel-default">
+
+        <div class="panel-heading">
+          <h2 class="panel-title">{{widget.title}}
+            <small class="pull-right">{{widget.directive}}</small>
+          </h2>
+        </div>
+
+        <div class="panel-body">
+          <!-- options -->
+          <ul class="widget-options list-group">
+            <li ng-repeat="(k, options) in widget.options" class="list-group-item clearfix">
+              <label>{{k}}</label>
+              <span class="pull-right" ng-switch="optionType(options)">
+                <span ng-switch-when="object" class="btn-group btn-group-xs">
+                  <button ng-repeat="opt in options" ng-model="widget.config.config[k]" btn-radio="'{{opt}}'" type="button" class="btn btn-primary">
+                    {{opt}}
+                  </button>
+                </span>
+                <span ng-switch-when="boolean">
+                  <toggle-switch ng-model="widget.config.config[k]"></toggle-switch>
+                </span>
+                <span ng-switch-default>
+                  <input type="text" ng-model="widget.config.config[k]" class="form-control" placeholder="{{k}}"/>
+                </span>
+              </span>
+            </li>
+
+            <!-- code -->
+            <li class="list-group-item">
+              <accordion>
+                <accordion-group is-open="status.open">
+                  <accordion-heading>
+                    <label>json</label>
+                    <i class="pull-right btn_chevron_expand" ng-class="{expanded: status.open}"></i>
+                  </accordion-heading>
+                  <pre ng-bind="configString(widget.config)"></pre>
+                </accordion-group>
+              </accordion>
+            </li>
+          </ul>
+
+          <!-- render -->
+          <div class="widget-example" ng-switch="widget.config.widget">
+            <conveyor-page-tophat ng-switch-when="tophat" widget="widget.config"></conveyor-page-tophat>
+            <conveyor-search ng-switch-when="search" widget="widget.config"></conveyor-search>
+            <conveyor-nav ng-switch-when="nav" widget="widget.config"></conveyor-nav>
+            <conveyor-hero ng-switch-when="hero" widget="widget.config"></conveyor-hero>
+            <conveyor-banner ng-switch-when="banner" widget="widget.config"></conveyor-banner>
+            <conveyor-ads ng-switch-when="adplacement" widget="widget.config"></conveyor-ads>
+            <conveyor-text ng-switch-when="text" widget="widget.config"></conveyor-text>
+            <conveyor-footer ng-switch-when="templateFooter" widget="widget.config"></conveyor-footer>
+            <conveyor-bundle ng-switch-when="products" widget="widget.config"></conveyor-bundle>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,77 @@
+// reference guide
+#{$conveyor-prefix}-examples {
+  #{$conveyor-prefix}-hero {
+    background: $palette--stpls-red;
+    color: $palette--white;
+    text-align: center;
+    padding-bottom: 30px;
+    .jumbotron {
+      background: none;
+      margin: 0;
+      padding-bottom: $base-gutter-width;
+    }
+    .machine {
+      display: inline-block;
+      width: 75%;
+      font-size: 26px;
+      .manifest {
+        margin: $base-gutter-width 0;
+      }
+      .belt {
+        padding: $base-gutter-width;
+        border-radius: 50px;
+        border: 2px solid $palette--white;
+      }
+    }
+  }
+  .widget-preview {
+    margin-top: 20px;
+    .panel-heading small {
+      font-size: 85%;
+    }
+
+  }
+  .widget-options {
+    position: relative;
+    padding-top: 20px;
+    margin-bottom: $base-gutter-width;
+    &:after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      @include font-normal;
+      font-size: 10px;
+      color: $palette--gray-med-light;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      content: "configuration";
+    }
+    .list-group-item {
+      background: $palette--offwhite;
+    }
+    label {
+      display: inline-block;
+      margin-right: $base-gutter-width;
+      font-size: $base-font-size;
+    }
+
+    accordion {
+      .panel {
+        border: none;
+        box-shadow: none;
+        background: none;
+      }
+      .panel-group {
+        margin: 0;
+      }
+      .panel-heading {
+        background: none;
+        border: none;
+        padding: 0;
+      }
+      .panel-body {
+        padding: $base-gutter-width 0;
+      }
+    }
+  }
+}

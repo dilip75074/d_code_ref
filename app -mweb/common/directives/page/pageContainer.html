@@ -1,0 +1,22 @@
+<div class="page-container stp--page-{{$root.$state.current.name}}" ng-class="{active: sidebar_toggle, 'stp--overlay-page': isOverlayView, 'page-input-focus': hasInputFocus, 'stp--header-search-page': pageSearch}">
+    <div class="row row-offcanvas" ng-class="{active: sidebar_toggle, animating: sidebar_animate}">
+        <!-- stpls_main -->
+        <div class="col-xs-12 stpls_main">
+            <div class="overlay" ng-class="{active: $root.errorMessage}"></div>
+            <div class="overlay" ng-class="{active: sidebar_toggle}" ng-click="sidebarToggle()"></div>
+            <div class="overlay_loading" ng-class="{active: overlay_loading, 'fadeOut': !overlay_loading}">
+                <span class="spinner" us-spinner="{top: 200}"></span>
+            </div>
+            <div id="stpls_header_container" data-header-state="{{header_state}}" data-state="{{$root.$state.current.name}}">
+                <div>
+                    <!-- header -->
+                    <ng-include src="'theme/' + $root.appTheme + '/header.html'"></ng-include>
+                </div>
+            </div>
+            <!-- Page Content -->
+            <div data-state="{{$root.$state.current.name}}" data-home-header="{{sticky_header}}" class="container-fluid main_area" ng-class="{classPage: ['search', 'deals', 'category', 'category.facet', 'reorders'].indexOf($root.$state.current.name) >= 0, backgroundGray: $root.$state.current.name == 'home'}"  ui-view="content"></div>
+        </div>
+	      <!-- footer -->
+        <ng-include src="'theme/' + $root.appTheme + '/footer.html'"></ng-include>
+    </div>
+</div>

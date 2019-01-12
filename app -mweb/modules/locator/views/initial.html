@@ -1,0 +1,52 @@
+<div class="row locator_inital animated animated-delay-1 fadeIn">
+
+
+<div class="col-xs-12 my_store">
+
+    <h5 class="font-bold" translate="LCR_MY_STORE"></h5>
+
+    <div class="locator_store_result  animated animated-delay-1 fadeIn" ng-show="remembered_store" ng-click="viewStoreDetail(remembered_store)">
+
+    <store-result store="remembered_store" hide-distance="true"></store-result>
+
+
+			</div>
+
+			<div ng-show="!remembered_store" class="panel panel-default no_remembered">
+				<div class="panel-body">
+					<h6 class="font-bold" translate="LCR_NO_REM_HEADER"></h6>
+					<p translate="LCR_NO_REM_TEXT"></p>
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="col-xs-12">
+
+			<h5 class="font-bold" translate="LCR_CLOSEST"></h5>
+
+			<span class="spinner" ng-show="loading" us-spinner="{top: 20}"></span>
+
+            <div class="locator_store_result animated animated-delay-2 fadeIn" ng-show="!loading && locator_closest">
+
+                <store-result store="locator_closest" ng-click="viewStoreDetail(locator_closest)"></store-result>
+
+
+			</div>
+
+			<div ng-show="!(has_geo_enabled && locator_closest) && !loading" class="panel panel-default no_remembered">
+				<div class="panel-body">
+					<h6 class="font-bold" translate="LCR_NO_GEO_HEADER"></h6>
+					<p translate="LCR_NO_GEO_TEXT"></p>
+					<button ng-click="reload();" class="btn btn-sm btn-default pull-right retry"><span translate="LCR_RETRY"></span> <span class="glyphicon glyphicon-refresh"></span></button>
+				</div>
+			</div>
+
+
+		</div>
+
+
+
+
+</div>

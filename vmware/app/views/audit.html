@@ -1,0 +1,38 @@
+<div class="notification-activities-wrapper" ng-controller="ActivityController" ng-init="activityType='audits'; fetchList(0);">
+	<div class="notification-header">
+		<span class="notification-head">{{'notification.view.AUDIT'|translate}}</span> <span
+			class="notification-close"> <img ng-click="close()" src="app/img/close-icon.png">
+		</span>
+	</div>
+	<div style="color:red; text-align:center">{{errorMsg}}</div>
+	<ul>
+		<li>
+			<ul class="notification-alert clearfix">
+				<li><a ng-click="filterType = 'ALL'; fetchList(0);">{{'notification.view.EVERYTHING'|translate}}</a></li>
+				<li><a ng-click="filterType = 'ALARM'; fetchList(0);">{{'notification.view.ALARMS'|translate}}</a></li>
+				<li><a ng-click="filterType = 'ERROR'; fetchList(0);">{{'notification.view.ERRORS_U'|translate}}</a></li>
+				<li><a ng-click="filterType = 'WARNING'; fetchList(0);">{{'notification.view.WARNINGS_L'|translate}}</a></li>
+				
+				<!-- <li><a ng-click="filterType = 'system'">SYSTEM</a></li>
+				<li class="alert-right">SORT BY: TYPE<span><img
+						src="app/img/dropdown.png"></span></li> -->
+			</ul>
+		</li>
+		<li>
+			<ul class="detail-info" style="max-height: 400px!important;" ng-whenscroll="fetchListonScroll();">
+				<li ng-show="list.length == 0" style="text-align: center;">No audits found.</li>
+				<li class="clearfix white-border-bottom" ng-repeat="item in list">
+					<div class="detail-content">
+						<p>{{item.message}}</p>
+					</div>
+					<div class="detail-alerts">
+						<p>{{item.type}}</p>
+					</div>
+					<div class="detail-count">
+						<p am-time-ago="item.eventTime"></p>
+					</div>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>

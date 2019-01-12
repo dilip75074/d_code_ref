@@ -1,0 +1,14 @@
+#{$menu-opened-outer-selector},
+#{$stp--overlay-page-selector} {
+  #{$conveyor-prefix}-tophat {
+    display: none;
+  }
+}
+
+#{$conveyor-prefix}-tophat {
+  text-align: center;
+  img {
+    min-height: 1px;
+    display: inline-block;
+  }
+}

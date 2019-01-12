@@ -1,0 +1,137 @@
+// app min width
+
+$base-min-width: 320px;
+$base-min-height: 400px;
+$base-short-height: 400px;
+$device-height-breakpoints: (480px, 568px, 667px, 736px, 768px, 1024px);
+$effective-footer-height: 216px;
+
+// typography
+
+$base-font-stack:  'Helvetica Neue', Helvetica, Arial, sans-serif;
+$base-font-size:   13px;
+$base-font-size-headline: 16px;
+$base-font-size-page-header: 17px;
+$base-font-size-page-header-lg: 20px;
+$base-font-size-page-header-huge: 22px;
+$base-font-size-price: 20px;
+$base-font-size-price-strike: 15px;
+$base-font-size-btn: 17px;
+$base-font-size-btn-med: 14px;
+$base-font-size-legal: 9px;
+$base-font-size-asterisk: 10px;
+$base-font-size-cart: 11px;
+$base-font-size-checkout: 15px;
+$base-font-size-sku-text: 14px;
+$base-font-size-sku-shipping: 12px;
+$base-font-size-sku-number: 12px;
+$base-font-size-carousel: 12px;
+$base-font-size-price-carousel: 14px;
+$base-font-size-checkout-fixed: 14px;
+$base-font-size-search-card-header: 14px;
+
+$base-font-size-search-input: 25px;
+$base-font-size-search-input-pl: 20px;
+
+$base-font-size-sku-tag: 12px;
+$base-font-size-form: 16px;
+$base-font-size-sidenav: 16px;
+$base-font-color: $palette--gray-dark;
+$base-line-height: 1.3;
+
+//Menu animation
+$base-transition-duration: 0.25s;
+$base-transition-timing: $base-transition-duration cubic-bezier(0.175, 0.665, 0.320, 1);
+$all-transition-config: all $base-transition-timing;
+$box-transition-config: padding,margin $base-transition-timing;
+$menu-transition-config: left $base-transition-timing;
+$position-transition-config: left,right $base-transition-timing;
+$base-transition-config: transform $base-transition-timing;
+$menu-width-percentage: 75%;
+
+//buttons
+
+$base-radius: 2px;
+$base-radius-tab: 8px;
+$base-radius-btn: 4px;
+// padding
+
+$base-gutter-width: 12px;
+
+// header
+
+
+$header--height: 175px;
+$header--height-small: 48px;
+
+$checkout-header-height: $header--height-small;
+$header--height-search: $header--height-small;
+
+// cart button
+
+$cart--items-size: 20px;
+$cart--items-line-height: 16px;
+$cart--items-radius: $cart--items-size / 2;
+$cart--items-font-size: 11px;
+
+// Checkout button
+
+$checkout--btn-height: 36px;
+$sign--in-font-size: 15px;
+
+
+// forms
+
+$input--height: 44px;
+
+// Toggle buttons
+
+$toggle--height: 30px;
+$toggle--width: 51px;
+$toggle--width-wide: 80px;
+
+// Visa Checkout button
+$vc--btn-height: 40px;
+$vc--btn-width: 180px;
+
+// SKU page
+
+$sku--section-border: 1px;
+
+// Sliders
+$slider--tile-image-dimension: 90px;
+// z-indexing
+
+$z-index-header: 10;
+$z-index-navtotop: 10;
+$z-index-overlay: $z-index-navtotop * 100;
+$z-index-actions: $z-index-navtotop - 1;
+
+// overlay & device state
+$stp--overlay-page-selector: '.stp--overlay-page';
+$page-input-focus-selector: '.page-input-focus';
+$stp--header-search-page-selector: '.stp--header-search-page';
+$menu-opened-outer-selector: '.row-offcanvas.active';
+
+
+//personalization cards
+$base-cards-padding: 12px;
+$base-cards-less-padding: 1px;
+$base-cards-more-padding: 15px;
+$base-cards-radius: 4px;
+$base-cards-margin: 10px;
+
+$base-cards-font-size-smallest: 10px;
+$base-cards-font-size-smaller: 11px;
+$base-cards-font-size-small: 12px;
+$base-cards-font-size: 14px;
+$base-cards-font-size-little-huge: 16px;
+$base-cards-font-rewards: 19px;
+$base-cards-font-size-huge: 24px;
+$base-cards-header-title: 16px;
+$base-cards-tile-dimension: 115px;
+
+$base-cards-font-weight: 400;
+$base-cards-font-weight-bold: 500;
+
+$base-cards-border: 1px solid $palette--stpls-white-two;

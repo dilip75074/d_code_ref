@@ -1,0 +1,61 @@
+<div class="email-sms-optin" ng-class="{expanded: options.expanded}">
+  <div ng-if="options.header">
+    <h2 ng-click="toggle()">
+      {{options.header|translate}}
+      <span ng-if="options.footer" btn-expand ng-model="options.expanded" class="pull-right"></span>
+    </h2>
+    <p class="subheader" ng-show="options.subheader">{{options.subheader|translate}}</p>
+  </div>
+  <form name="Subscribe" novalidate ng-hide="options.footer && !options.expanded" class="animated fadeInUp">
+
+    <div class="row section_row">
+      <div class="col-xs-12">
+        <label id="dealsEmailLbl_Id" translate="OPT_EMAIL_LBL"></label>
+        <p ng-show="isOpted(Subscribe.email)" ng-click="editOpt(Subscribe.email)" class="success animated fadeIn" translate="OPT_EMAIL_SUCCESS" translate-values="{value: optin.email}"></p>
+      </div>
+      <div ng-hide="isOpted(Subscribe.email)">
+        <div class="col-xs-2">
+          <button id="dealsEmailChk_Id" class="checkbox_input_btn" type="button" ng-click="toggleInput(Subscribe.email)">
+              <span class="check_input" ng-class="{checked_input: yes.email}"></span>
+          </button>
+        </div>
+        <div class="col-xs-10">
+          <span class="close close_btn_sm animated fadeInRight" ng-show="Subscribe.email.$dirty" ng-click="reset(Subscribe.email)"></span>
+          <div email-address>
+            <input id="dealsEmail_Id" class="form-control input_single email" name="email" type="email" ng-model="optin.email" ng-disabled="!yes.email" placeholder="{{'OPT_EMAIL_PH'|translate}}" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row section_row">
+      <div class="col-xs-12">
+        <label id="dealsTextLbl_Id" translate="OPT_SMS_LBL"></label>
+        <p ng-show="isOpted(Subscribe.sms)" ng-click="editOpt(Subscribe.sms)" class="success animated fadeIn" translate="OPT_SMS_SUCCESS" translate-values="{value: optin.sms}"></p>
+        <p ng-show="isOpted(Subscribe.sms)" id="dealsTextWarning_Id" class="caveat_text" translate="OPT_SMS_CAVEAT"></p>
+      </div>
+      <div ng-hide="isOpted(Subscribe.sms)">
+        <div class="col-xs-2">
+          <button id="dealsSmsChk_Id" class="checkbox_input_btn" type="button" ng-click="toggleInput(Subscribe.sms)">
+              <span class="check_input" ng-class="{checked_input: yes.sms}"></span>
+          </button>
+        </div>
+        <div class="col-xs-10">
+          <span class="close close_btn_sm animated fadeInRight" ng-show="Subscribe.sms.$dirty" ng-click="reset(Subscribe.sms)"></span>
+          <input id="dealsSms_Id" class="form-control input_single" phone-number name="sms" type="tel" ng-model="optin.sms" ng-disabled="!yes.sms" placeholder="{{'OPT_SMS_PH'|translate}}" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row section_row">
+      <div class="col-xs-12" ng-switch="done(Subscribe) ? 2 : 1">
+        <button ng-switch-default ng-hide="loading" id="subscribe_button_id" class="btn stpls_primary btn_full_width" type="button" ng-disabled="!ready(Subscribe)" ng-click="updateOptIns(Subscribe, $event)" translate="OPT_ACTION"></button>
+        <button ng-switch-when="2" id="shopping_button_id" class="btn stpls_secondary btn_full_width animated fadeIn" type="button" ng-click="goShop()" translate="OPT_SUCCESS_ACTION"></button>
+      	<span us-spinner spinner-theme="atc" spinner-on="loading"></span>
+        <p ng-hide="isOpted(Subscribe.sms)" id="dealsTextWarning_Id" class="caveat_text" translate="OPT_SMS_CAVEAT"></p>
+      </div>
+    </div>
+
+  </form>
+  <div class="opt-toggle-scroll"></div>
+</div>

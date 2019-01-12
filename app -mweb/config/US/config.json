@@ -1,0 +1,693 @@
+{
+  "appVersion": 0.1,
+  "environment": "dev-local",
+  "locale": "en_US",
+  "countryCode": "US",
+  "catalogId": "10051",
+  "defaultZip": "01702",
+  "appTheme": "3.0",
+  "seo": {
+    "staples": "Staples",
+    "canonicalDomain": "http://www.staples.com",
+    "siteName": "Staples.com",
+    "fbAppId": "361004070585054",
+    "ogTracking": "?cid=SM:SBD:FACEBOOK:SITELIKES:20111002:EVENT",
+    "siteVerification": "NufknHLyFfKz_1NDDcLXCc2-3UWbNsTLi3s75SacodY",
+    "ogImage": "http://m.staples.com/assets/images/sprites/spls_logo.png"
+  },
+
+  "localization": {
+    "en_US": {
+      "seo": {
+        "title": "Office Supplies, Printer Ink, Toner, Computers, Printers & Office Furniture",
+        "description": "Shop Staples for office supplies, technology, printer ink, furniture, cleaning supplies, copy & print services, coffee and snacks and more.",
+        "description_category": "Shop Staples for {{name}}. Enjoy everyday low prices and get everything you need for a home office or business.",
+        "description_product": "Shop Staples for great deals on {{name}}.",
+        "description_stores": "Come visit Staples at {{name}} for office supplies, printer ink & toner, copy paper, back to school supplies, printers and more.",
+        "keywords": ""
+      }
+    }
+  },
+
+  "mobileServiceEnvironments": {
+    "local_prod": {
+      "host": "http://m-local.staples.com:3030/mobileServices",
+      "channel": "/chapi",
+      "powserver": ""
+    },
+    "local_sapi": {
+      "host": "http://m-local.staples.com:3030/mobileServices",
+      "channel": "/chapi/s",
+      "powserver": "/qa"
+    },
+    "dev_prod": {
+      "host": "https://minternal-dev.staples.com/mobileServices",
+      "channel": "/chapi",
+      "powserver": ""
+    },
+    "dev_sapi": {
+      "host": "https://minternal-dev.staples.com/mobileServices",
+      "channel": "/chapi/s",
+      "powserver": "/qa"
+    },
+    "qa_prod": {
+      "host": "https://minternal-qa.staples.com/mobileServices",
+      "channel": "/chapi",
+      "powserver": ""
+    },
+    "qa_sapi": {
+      "host": "https://minternal-qa.staples.com/mobileServices",
+      "channel": "/chapi/s",
+      "powserver": "/qa"
+    },
+    "pre_prod": {
+      "host": "https://minternal-preprod.staples.com/mobileServices",
+      "channel": "/chapi",
+      "powserver": ""
+    },
+
+    "prod": {
+      "host": "https://minternal.staples.com/mobileServices",
+      "channel": "/chapi",
+      "powserver": ""
+    }
+  },
+
+  "mobileServiceEnvironment": "pre_prod",
+
+  "google": {
+    "client": "gme-staplesinc"
+  },
+
+  "sprocket": {
+    "server": {
+      "default": "www.staples.com"
+    },
+    "prefix": "",
+    "skipPrefix": false,
+    "exclusions": [],
+    "parser": {
+      "type": "default",
+      "config": {
+        "bodySelector": "#wrapall",
+        "ignore": [
+          "#logobar",
+          "#hdr",
+          "#headerNavigationWrapper",
+          ".layoutWidth12.header",
+          "link[href*=\"/copyandprint/\"],script[src*=\"/copyandprint/\"]",
+          "[src*=\"modernizr\"]"
+        ]
+      }
+    }
+  },
+
+  "soasta": {
+
+    "dev-local": "H5JLM-86NKT-VQ7A3-9XM77-CMNRL",
+    "dev": "KZ5EL-4UBJ6-2JHSL-JEK98-27CQE",
+    "qa": "KZ5EL-4UBJ6-2JHSL-JEK98-27CQE",
+    "accept": "KZ5EL-4UBJ6-2JHSL-JEK98-27CQE",
+    "preview": "KZ5EL-4UBJ6-2JHSL-JEK98-27CQE",
+    "preprod": "KZ5EL-4UBJ6-2JHSL-JEK98-27CQE",
+    "prod": "LM6JE-BRJ7E-TBGDJ-GCC5L-EPGHN"
+
+  },
+
+  "facebook": {
+     "default": {
+       "messenger_app_id": "1504517376522119",
+      "messenger_url": "https://m.me/684748695000677",
+       "msgEnabled": true
+      },
+     "prod": {
+       "messenger_app_id": "1118350898217175",
+       "messenger_url": "https://m.me/Staples",
+       "msgEnabled": true
+      },
+    "accept": {
+       "messenger_app_id": "1118350898217175",
+       "messenger_url": "https://m.me/Staples",
+       "msgEnabled": true
+      }
+   },
+
+  "mcs": {
+    "default": "qa",
+    "dev": "dev",
+    "accept": "preprod",
+    "prod": "prod"
+  },
+
+  "nudata": {
+	"default": {
+		"client_id": "1.w-747414.1.ztZ506yHcRJbYzKg0IeM4g==.73964",
+		"nudata_server": "https://api-staples.nd.nudatasecurity.com/2.2/w/",
+		"website_id": "w-747414",
+		"enabled": false
+	},
+	"prod": {
+		"client_id": "1.w-416554.1.4KJGK4zQszoDQINzy67NIA==.81756",
+		"nudata_server": "https://api-staples.nd.nudatasecurity.com/2.2/w/",
+		"website_id": "w-416554",
+		"enabled": false
+	},
+	"accept": {
+		"client_id": "1.w-416554.1.4KJGK4zQszoDQINzy67NIA==.81756",
+		"nudata_server": "https://api-staples.nd.nudatasecurity.com/2.2/w/",
+		"website_id": "w-416554",
+		"enabled": false
+	},
+	"performance": {
+		"client_id": "1.w-875663.1.1y21a/RKOZhMmYtr6px/qg==.52266",
+		"nudata_server": "https://api-staples.nd.nudatasecurity.com/2.2/w/",
+		"website_id": "w-875663",
+		"enabled": false
+	}
+  },
+
+  "inside": {
+    "default": {
+      "server": "//us-sandbox-track.inside-graph.com",
+      "accountKey": "IN-1000461",
+      "chatEnabled": true
+     },
+    "prod": {
+      "server": "//us-sandbox-track.inside-graph.com",
+      "accountKey": "IN-1000461",
+      "chatEnabled": false
+     },
+  	"accept": {
+      "server": "//us-sandbox-track.inside-graph.com",
+      "accountKey": "IN-1000461",
+      "chatEnabled": false
+     }
+  },
+
+  "shippingConfig": {
+    "default": {
+      "baseShippingCharge": 9.95,
+      "addOnBasketSize": 25,
+      "channel": "INTERNAL_MWEB_US",
+      "minimumBasketSizeForFreeShipping": 49.99,
+      "heavyWeightShipCharge": 14.99
+    },
+    "prod": {
+      "baseShippingCharge": 9.95,
+      "addOnBasketSize": 25,
+      "channel": "INTERNAL_MWEB_US",
+      "minimumBasketSizeForFreeShipping": 49.99,
+      "heavyWeightShipCharge": 14.99
+    }
+  },
+
+ "payment_vendors": {
+    "default": {
+    	"vendorlist": [
+			{	"translate_name": "PAY_CHECKOUT",
+				"enabled": true,
+				"id": "1"
+			},
+			{	"translate_name": "PAY_APPLEPAY",
+				"enabled": true,
+				"id": "2"
+			},
+			{	"translate_name": "PAY_VME",
+				"enabled": true,
+				"id": "3"
+			},
+			{	"translate_name": "PAY_AMEXPAY",
+				"enabled": false,
+				"id": "4"
+			}
+		]
+    }
+  },
+
+  "applepay": {
+     "currencyCode": "USD",
+     "countryCode": "US",
+     "merchantId": "merchant.com.staples",
+     "merchantCapabilities": ["supports3DS"],
+
+    "default": {
+       "version": "1",
+       "enabled": true,
+       "domain": "m-local.staples.com",
+       "payNetworks": ["amex", "discover", "masterCard", "visa"]
+      },
+    "prod": {
+       "version": "1",
+       "enabled": true,
+       "domain": "m.staples.com",
+       "payNetworks": ["amex", "discover", "masterCard", "visa"]
+      },
+    "accept": {
+       "version": "1",
+       "enabled": true,
+       "domain": "mweb-accept.staples.com",
+       "payNetworks": ["amex", "discover", "masterCard", "visa"]
+      }
+  },
+
+  "visa_sdk_url": {
+    "default": "https://sandbox-assets.v.me/checkout-widget/resources/js/integration/v1/sdk.js",
+    "accept": "https://assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js",
+    "prod": "https://assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js"
+  },
+
+  "sparx": {
+    "host": "https://ui.staples-sparx.com/js/{env}/analytics.min.js",
+    "env": {
+      "prod": "75ba92ac-d950-59d3-404f-cad319637171",
+      "accept": "75ba92ac-d950-59d3-404f-cad319637171",
+      "perf": "28897aaa-00f2-00f7-b7dc-cd2138915a9f",
+      "qa":  "fd79a0dd-76c7-2d97-b9c8-d043d4b18cf9",
+      "dev": "4ecfd563-b783-3261-9585-f8c84fc89275",
+      "dev-local": "4ecfd563-b783-3261-9585-f8c84fc89275"
+     },
+    "appid": "staples01"
+  },
+
+  "thirdPartyAssets": {
+    "default": [
+      "//nexus.ensighten.com/staples2/dev-dotcom-mobile2/Bootstrap.js",
+      "//d3c3cq33003psk.cloudfront.net/opentag-25674-1606470.js"
+    ],
+    "prod": [
+      "//nexus.ensighten.com/staples2/prod-dotcom-mobile2/Bootstrap.js",
+      "//d3c3cq33003psk.cloudfront.net/opentag-25674-1606445.js"
+    ]
+  },
+
+  "store_features": [
+	{
+	  "name": "F1",
+	  "label": "SF_F1_LABEL",
+	  "image": "comp_workstation",
+	  "tooltip": "SF_F1_TOOLTIP"
+	},
+	{
+	  "name": "F2",
+	  "label": "SF_F2_LABEL",
+	  "image": "mobile_store",
+	  "tooltip": "SF_F2_TOOLTIP"
+	},
+	{
+	  "name": "F4",
+	  "label": "SF_F4_LABEL",
+	  "image": "usps",
+	  "tooltip": "SF_F4_TOOLTIP"
+	},
+	{
+	  "name": "CPC",
+	  "label": "SF_CPC_LABEL",
+	  "image": "copy_print",
+	  "tooltip": "SF_CPC_TOOLTIP"
+	},
+	{
+	  "name": "ISP",
+	  "label": "SF_ISP_LABEL",
+	  "image": "pick_up_store",
+	  "tooltip": "SF_ISP_TOOLTIP"
+	},
+	{
+	  "name": "MPR",
+	  "label": "SF_MPR_LABEL",
+	  "image": "mobile_printing",
+	  "tooltip": "SF_MPR_TOOLTIP"
+	},
+	{
+	  "name": "STS",
+	  "label": "SF_STS_LABEL",
+	  "image": "ship_to_store",
+	  "tooltip": "SF_STS_TOOLTIP"
+	},
+	{
+	  "name": "TS",
+	  "label": "SF_TS_LABEL",
+	  "image": "tech_services",
+	  "tooltip": "SF_TS_TOOLTIP"
+	},
+	{
+	  "name": "UPS",
+	  "label": "SF_UPS_LABEL",
+	  "image": "ups_shipping",
+	  "tooltip": "SF_UPS_TOOLTIP"
+	}
+  ],
+
+  "inktoner_dept_filter": {
+    "local_prod": "Department_id:2735",
+    "local_sapi": "Department_id:306",
+    "dev_prod": "Department_id:2735",
+    "dev_sapi": "Department_id:306",
+    "qa_prod": "Department_id:2735",
+    "qa_sapi": "Department_id:306"
+  },
+
+  "apps": {
+    "ios": "376393873",
+    "android": "app.staples"
+  },
+
+  "externalLinks": {
+    "ios_app": "https://itunes.apple.com/us/app/staples/id376393873?mt=8&uo=4",
+    "android_app": "https://play.google.com/store/apps/details?id=app.staples&amp;hl=en",
+    "desktop": "http://staples.com/",
+    "terms": "http://m.staples.com/sbd/content/help-center/policies-and-legal.html#terms_conditions?desktopSiteActive=true"
+  },
+
+  "deals": {
+    "default" : "BI739784",
+    "accept" : "BI1142421",
+    "prod" : "BI1142421"
+  },
+
+  "browse": [{
+    "id": "2",
+    "title": "SM_TECH",
+    "identifier": "314138924",
+    "openCategoryPage": true,
+    "collapsed": true,
+    "isTop": true,
+    "isFirst": true,
+    "isSuper": true,
+    "sub": []
+  }, {
+    "id": "3",
+    "title": "SM_CLEAR",
+    "identifier": "CL211635",
+    "collapsed": true,
+    "isTop": true,
+    "isFirst": true,
+    "isSuper": true,
+    "sub": []
+  }],
+
+
+  "welcomeOverlay": {
+    "enabled": false
+  },
+
+  "codeBroker" : {
+    "path" : "/sms/optin",
+    "id": "1514-1137DD",
+    "key": "#traYe_wap6XagedU-ebraWUDRachUrAp",
+    "name": "PRPMXB0A14TRATQU7E51",
+    "shortcode" : "555444",
+    "upref" : "yes",
+    "uprefhod": 17
+  },
+
+  "asgard": {
+
+    "environments": {
+      "qa": "/mobile",
+      "local": "http://m-local.staples.com:8000"
+    },
+
+    "assetEnvironment": "http://mweb-integration.staples.com",
+
+    "activeEnvironment": "local"
+
+  },
+
+  "sprocketGlobals": {
+    "nav": {
+      "origin": "/html/header.html",
+      "parser": {
+        "type": "nav",
+        "config": {
+          "replacements": {
+            "deals": {
+              "href": {
+                "(adref=)\\w+": "$1mobile_nav",
+                "/deals/[\\w-]+/BI1142421": "/content/studio/deal-center"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "defaultRoute": "/",
+
+
+  "routes": {
+
+    "home": {
+      "internalActive": true,
+      "asgardActive": false,
+      "asgardURL": "/home"
+    },
+
+    "product": {
+      "internalActive": true,
+      "asgardActive": false,
+      "asgardURL": "/sku?partNumber={sku}"
+    },
+    "productReviews": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+    "cart": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "login": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "logout": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+    "forgotpassword": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+    "account": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "checkout": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "confirmorder": {
+      "internalActive": true
+    },
+
+    "checkoutaddresslist": {
+      "internalActive": true
+    },
+
+    "checkoutcardlist": {
+      "internalActive": true
+    },
+
+    "browse": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "category": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "deals": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "search": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "inkToner": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "inkToner.details": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "locator": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "locator.results": {
+      "internalActive": true
+    },
+
+    "stores": {
+      "internalActive": true
+    },
+
+    "profile": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "profilelinkrewards": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "orders": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "order": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "sbd": {
+      "sprocket": {
+        "prefix": "/sbd/",
+        "exclusions": ["/copyandprint/"]
+      }
+    },
+
+    "coupons": {
+      "internalActive": true,
+      "sprocket": {
+        "prefix": "/sbd/cre/"
+      }
+    },
+
+    "conveyor": {
+      "internalActive": true
+    },
+
+    "weeklyAd": {
+      "internalActive": false,
+      "externalURL": "http://weeklyad.staples.com?adref={adref}&storeInfo={storeInfo}"
+    },
+
+    "helpCenter": {
+      "internalActive": true,
+      "externalURL": "http://www.staples.com/sbd/content/help-center/index.html"
+    },
+
+    "feedback": {
+      "internalActive": false,
+      "externalURL": "https://secure.opinionlab.com/ccc01/comment_card_d.asp"
+    },
+
+    "helpShipToStore": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "helpDeliveryPolicy": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "termsandConditions": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "rewards": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "rewardsEnroll": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+    "rewardsTerms": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+    "rewardsAbout": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+    "register": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "reorders": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+
+    "bopisStores": {
+      "internalActive": true,
+      "asgardActive": false
+    },
+    "shipToStores": {
+      "internalActive": true
+    },
+    "displayStores": {
+      "internalActive": true
+    },
+    "hotDeals": {
+      "internalActive": false,
+      "externalURL": "/touch/hotdeals.html?type=topweeklydeals"
+    },
+
+    "couponWallet": {
+      "internalActive": false,
+      "externalURL": "/touch/couponwallet.html"
+    },
+
+    "favoriteList": {
+      "internalActive": false,
+      "externalURL": "/touch/favoritelist.html"
+    },
+
+    "easyReorder": {
+      "internalActive": false,
+      "externalURL": "/touch/easyreorder.html"
+    },
+
+    "mailingList": {
+      "internalActive": false,
+      "externalURL": "/office/supplies/StaplesEmailSubscriptionChange?fromUrl=extemail&errorUrl=emailsuberror&langId=-1&emailSubAction=emailCapture&successUrl=emailsubdetails&storeId=10001"
+    },
+
+    "followUs": {
+      "internalActive": false,
+      "externalURL": "/touch/followus.html"
+    }
+
+  },
+
+  "hookLogicParams":{
+    "apiKey": "dad14646-3ca8-402a-9e30-0a64c898fd71",
+    "creative" : "150x375_M-C-OG_TI-1_1-1_AboveGrid1",
+    "minads" : "1",
+    "maxads": "10",
+    "platform": "mobile",
+    "hlpt": "H"
+  },
+
+  "triadConstants": {
+    "ngDfpUrl": "//www.googletagservices.com/tag/js/gpt.js",
+    "dfpNetworkId": "64719166",
+    "siteName": "mweb",
+    "sku_ad_unit_1_div_id": "div-gpt-ad-422046966796444518-1",
+    "search_ad_unit_1_div_id": "div-gpt-ad-440987380103006414-1",
+    "category_ad_unit_1_div_id": "div-gpt-ad-566107680454206357-1"
+  }
+
+}

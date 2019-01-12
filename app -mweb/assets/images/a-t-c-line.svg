@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>AAB71C28-CBEA-4263-82DF-0460E675F296</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Home-Screen" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="02-Home---Signed-in" transform="translate(-630.000000, -522.000000)">
+            <g id="Reorder" transform="translate(20.000000, 370.000000)">
+                <g id="ATC-Line" transform="translate(611.000000, 153.000000)">
+                    <circle id="Oval" stroke="#4A90E2" stroke-width="2" fill="#FFFFFF" cx="26" cy="26" r="26"></circle>
+                    <rect id="Rectangle" fill="#4A90E2" x="25" y="15" width="3" height="23"></rect>
+                    <rect id="Rectangle" fill="#4A90E2" transform="translate(26.500000, 26.500000) rotate(90.000000) translate(-26.500000, -26.500000) " x="25" y="15" width="3" height="23"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

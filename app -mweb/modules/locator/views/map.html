@@ -1,0 +1,14 @@
+<div id="map_container animated" ng-class="{hide_map: !show, fadeIn: show}">
+	<google-map ng-show="mapLoaded" refresh="refresh" center="map.center" zoom="map.zoom" draggable="true" events="map.idle" options="{height: map_height}" control="map.control">
+		<marker ng-repeat="store in map_results" coords="store.loc" events="map.events" icon="map.store_icon" idkey="'$index'" options="{index: $index, animation: 2}" click="map.events.click(store)"></marker>
+		<marker ng-if="map.my_store" coords="map.my_store.loc" events="map.events" icon="map.my_store_icon" idkey="myStore" options="{index: 'REM', animation: 2}"></marker>
+		<marker coords="map.user" icon="map.location_icon" idkey="userLoc"></marker>
+	</google-map>
+</div>
+
+<div class="panel panel-default locator_store_result map_store_detail" ng-show="map.store_detail" ng-click="viewStoreDetail(map.store_detail)">
+	<h6>{{map.store_detail.store_address.city}}</h6>
+	<p class="pull-right">{{map.store_detail.dis | number: 1}} {{$root.locale == 'en_US' ? 'mi' : 'km'}} <span class="forward_btn pull-right"></span></p>
+	<p class="addr_first">{{map.store_detail.store_address.address_line1}}</p>
+	<p>{{map.store_detail.store_address.city}}, {{map.store_detail.store_address.state}}, {{map.store_detail.store_address.zip}}</p>
+</div>

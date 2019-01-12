@@ -1,0 +1,72 @@
+<div class="stpls_account_container animated fadeIn" ng-if="login_state">
+
+	<div class="login row">
+		<div class="col-xs-12">
+			<p class="page_headline" translate="LGN_HEADER"></p>
+			<p translate="LGN_SUB_HEADER"></p>
+
+			<div class="animated loading" ng-class="{'fadeInUp animated-delay-1': login_state == 'processing', 'hide': login_state != 'processing'}">
+				<span class="spinner" us-spinner></span>
+				<p translate="LGN_ATTEMP_LGN"></p>
+			</div>
+		</div>
+
+		<form name="loginForm" ng-submit="attemptLogin(loginForm)" class="animated" ng-class="{'fadeIn': login_state == 'input', 'fadeOutDown': login_state == 'processing', 'fadeInUp': login_state == 'error', 'hide': login_state == 'success'}" novalidate>
+			<div class="col-xs-12 login_form">
+				<p class="username">
+					<input name="username" type="text" ng-model="login.userID" class="form-control input_single"
+					placeholder="Username or email address" required
+					autocomplete="off" autocorrect="off" autocapitalize="off" input-reset-control />
+					<div class="error-messages"
+					ng-if="loginForm.$submitted && loginForm.username.$invalid"
+					ng-messages="loginForm.username.$error"
+					ng-messages-include="common/form-messages/common.html"></div>
+				</p>
+
+				<p>
+					<input name="password" type="password" ng-model="login.password" class="form-control input_single" placeholder="Password" required  input-reset-control/>
+					<div class="error-messages"
+					ng-if="loginForm.$submitted && loginForm.password.$invalid && !FORCEFTP"
+					ng-messages="loginForm.password.$error"
+					ng-messages-include="common/form-messages/common.html"></div>
+					<div class="alert alert-danger" ng-if="errorMsg && !loginForm.username.$viewValue && !FORCEFTP">
+						{{errorMsg}}
+					</div>
+				</p>
+
+				<div ng-if="FORCEFTP">
+					<div class="alert alert-danger-other">
+						{{'LGN_RESET_MESSAGE'|translate}}<br />
+						<a ng-click="forceResetPassword()" translate="LGN_RESET_LINK"></a>
+					</div>
+				</div>
+       			<div ng-show="forgotRtnMessage">
+            		<div class="row">
+		                <div class="col-xs-12">
+		                    <label id="pwd_InfoText_Id" class="password_normallabel red" id="forgotPwdInfo_Id">{{forgotRtnMessage}}</label>
+		                </div>
+            	</div>
+        </div>
+			</div>
+
+			<div ng-if="!FORCEFTP" class="col-xs-6 pull-right">
+				<button type="submit" class="btn stpls_primary pull-right" translate="LGN"></button>
+			</div>
+
+			<div ng-if="!FORCEFTP" class="col-xs-6">
+				<button type="button" class="btn remember_me" ng-click="login.remember = !login.remember">
+					<span class="check" ng-class="{checked: login.remember}"></span>
+					<span class="remember_text pull-right" translate="LGN_REM"></span>
+				</button>
+				<br />
+				<button type="button" class="btn forgot_pw" ng-click="forgotMyPassword()" translate="LGN_FORGOT"></button>
+			</div>
+		</form>
+
+		<div ng-if="!FORCEFTP" class="new_account col-xs-12">
+			<p class="page_headline" translate="ACT_NEW"></p>
+			<button type="button" class="btn stpls_secondary_half btn_full_width" translate="ACT_CR_NEW" ng-click="$root.toRoute('register', null, {location: 'replace'})"></button>
+		</div>
+	</div>
+
+</div>

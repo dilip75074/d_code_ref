@@ -1,0 +1,522 @@
+// Main buttons
+.btn {
+    color: $palette--white;
+    font-size: $base-font-size-btn;
+    border-radius: $base-radius-btn;
+    border: 1px solid transparent;
+    box-shadow: none;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    padding: $base-gutter-width / 2 $base-gutter-width;
+    &:active,
+    &.active {
+        box-shadow: none;
+    }
+
+    &:hover,
+    &:focus {
+        color: $palette--offwhite;
+    }
+}
+
+.coupon_btn {
+    font-size: $base-font-size-btn-med;
+    width: 65px;
+    padding: 3px 6px;
+    &:hover,
+    &:focus {
+        color: $palette--black;
+    }
+}
+.btn_full_width {
+    width: 100%;
+}
+
+.stpls_primary {
+    @include font-light;
+    background-color: $palette--stpls-dark-sky-blue;
+    &:disabled,
+    &.disabled {
+        background-color: $palette--gray-med-light;
+    }
+}
+
+.stpls_secondary {
+    @include font-normal;
+    background-color: $palette--gray-dark;
+}
+
+.stpls_secondary_half {
+    // Use only when a primary and a secondary button are side by side
+    @include font-normal;
+    background-color: $palette--white;
+    border-color: $palette--gray-dark;
+    color: $palette--gray-dark;
+    &:hover,
+    &:focus {
+        color: $palette--gray-dark;
+    }
+}
+
+.stpls_tertiary {
+    @include font-normal;
+    background-color: $palette--gray-light;
+    color: $palette--gray-dark;
+}
+
+.stpls_inactive {
+    background-color: $palette--gray-med-light;
+}
+
+
+// Text link buttons
+
+.text_primary {
+    @include font-bold;
+    color: $palette--stpls-red;
+    background: transparent;
+    border: none;
+}
+
+// Buttons with icons
+
+// Search bar button
+
+/*.stpls_search_btn {
+    @include retina-sprite($search-group);
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}*/
+
+// Upper right corner cart button
+
+.stpls_cart_btn, .stpls_account_btn, .stpls_chat_btn  {
+    width: $cart-width + (2 * $base-gutter-width);
+    i {
+      position: relative;
+      .indicator {
+          position: absolute;
+          right: -($cart--items-size / 4);
+          top: -($cart--items-size / 4);
+          padding: 0;
+          background-color: $palette--stpls-red;
+          @include font-normal;
+          font-style: normal;
+          font-size: $cart--items-font-size;
+          min-width: $cart--items-size;
+          min-height: $cart--items-size;
+          line-height: $cart--items-line-height;
+          color: $palette--white;
+          text-align: center;
+          border: 2px solid $palette--nav-background;
+          border-radius: $cart--items-radius;
+      }
+  }
+}
+
+// Ink and Toner header button
+
+.ink_header_btn {
+    position: relative;
+    display: inline-block;
+    border-radius: 0;
+    height: $header--height;
+    background: none;
+    padding: 0 2px;
+}
+// Add to Cart button
+
+.add_to_cart_btn {
+    @include retina-sprite($atc-btn-group);
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    bottom: 0;
+    right: $base-gutter-width;
+    z-index: $z-index-actions;
+    &.loading {
+        background: transparent;
+    }
+    &.skuset {
+        @include retina-sprite($skuset-btn-group);
+    }
+}
+
+// Remove from cart button
+
+.removeBtn {
+    background-color: transparent;
+
+    .remove {
+        @include retina-sprite($remove-group);
+        background-color: transparent;
+        border: none;
+    }
+}
+
+// Filtering buttons
+
+.sort_filter {
+
+    .filters {
+        padding: 0 0 10px $base-gutter-width;
+    }
+
+    .filter_btn {
+        border: none;
+        background-color: transparent;
+        color: $palette--blue;
+        font-size: 12px;
+        padding: 0 4px 0 0;
+        border-right: 1px solid $palette--gray-light;
+        border-radius: 0;
+
+        &.filter_shown {
+            @include font-bold;
+        }
+
+        .filter_selected_num {
+            color: $palette--blue;
+        }
+
+        .filter_sort_arrows {
+            padding: 0 5px;
+        }
+
+        &.active {
+            box-shadow: none;
+            margin-top: -1px;
+
+            .filter_text {
+                @include font-bold;
+                color: $palette--black;
+            }
+        }
+        &:last-of-type {
+            border-right: none;
+        }
+
+        .dailydeals & {
+            font-size: $base-font-size-headline;
+        }
+    }
+}
+
+.sort_down_btn {
+    display: block;
+    @include retina-sprite($chevron-sort-down-group);
+    margin: 2px 0;
+
+    &.active {
+        @include retina-sprite($chevron-sort-down-active-group);
+    }
+}
+
+.sort_up_btn {
+    display: block;
+    @include retina-sprite($chevron-sort-up-group);
+    margin: 2px 0;
+
+    &.active {
+        @include retina-sprite($chevron-sort-up-active-group);
+    }
+}
+
+// Side menu
+
+.signin_btn {
+    display: inline-block;
+    background: transparent;
+    padding: 0;
+    color: $palette--white;
+    font-size: 14px;
+    border: none;
+    box-shadow: none;
+}
+
+.sidenav_btn {
+    font-size: $base-font-size-sidenav;
+    color: $palette--sidenav-link;
+    @include font-light;
+    position: relative;
+    width: 100%;
+    text-align: left;
+    background: none;
+    line-height: 18px;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid $palette--sidenav-border;
+    padding: $base-gutter-width;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    /*&.l0 { //with icon
+      padding-left: 3 * $base-gutter-width;
+    }*/
+
+    &.section_blue {
+        color: $palette--blue;
+    }
+}
+
+// Back button
+.btn_chevron_back,
+.btn_chevron_back:active {
+    padding: 15px 2px;
+    color: $palette--gray-dark;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+
+    .back_text {
+        color: $palette--gray-dark;
+        line-height: 15px;
+        padding-left: 20px;
+    }
+}
+
+// Forward (right chevron) button
+.forward_btn,
+.forward_btn:active {
+    display: inline-block;
+    @include retina-sprite($chevron-right-group);
+}
+
+.previous_btn, .previous_btn:active {
+  display: inline-block;
+  @include retina-sprite($chevron-left-group);
+}
+
+// Expand (down chevron) button (see btnExpand.js)
+.btn_chevron_expand {
+  display: inline-block;
+  @include transition-config($base-transition-config);
+  @include retina-sprite($chevron-down-group);
+  &.forward_btn {
+    @include retina-sprite($chevron-right-group);
+  }
+  &.expanded {
+    transform: rotateX(180deg);
+    &.forward_btn {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+// Collapse (up chevron) button
+//TODO: deprecate
+.btn_chevron_collapse,
+.btn_chevron_collapse:active {
+    display: inline-block;
+    @include retina-sprite($chevron-up-group);
+}
+
+// Close buttons
+.close_btn,
+.close_btn:active {
+    display: block;
+    @include retina-sprite($close-lg-group);
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.close_btn_sm {
+    @include retina-sprite($close-group);
+}
+
+// Help Center buttons
+
+.help_section_btn {
+    border-radius: $base-radius;
+    margin-bottom: 10px;
+    padding: 10px;
+    color: $base-font-color;
+    background-color: $palette--white;
+    border: 1px solid $palette--gray-dark;
+
+    p {
+        margin-bottom: 0;
+    }
+
+}
+
+/* Check button - remember me  */
+
+.remember_me {
+    background: none;
+    display: inline-block;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+    font-size: 12px;
+    color: $palette--blue;
+
+    .remember_text {
+        padding: 4px 3px;
+    }
+}
+
+.forgot_pw {
+    background: none;
+    box-shadow: none;
+    margin-top: 5px;
+    padding: 0;
+    font-size: 12px;
+    color: $palette--blue;
+}
+
+span.check {
+    display: inline-block;
+    @include retina-sprite($checkbox-sm-group);
+}
+
+span.checked {
+    @include retina-sprite($checkbox-sm-checked-group);
+}
+
+span.check_input {
+    display: inline-block;
+    @include retina-sprite($checkbox-input-group);
+}
+
+span.checked_input {
+    @include retina-sprite($checkbox-input-checked-group);
+}
+
+.checkbox_btn, .checkbox_input_btn {
+    background: none;
+    border: none;
+    display: inline-block;
+    padding: 0;
+    text-align: left;
+    span:not(.check):not(.check_input) {
+        vertical-align: top;
+    }
+}
+
+//  Temp solutions
+ .secure_checkout {
+   display: inline-block;
+   background-color: $palette--stpls-red;
+   border: 1px solid $palette--stpls-red;
+   color: $palette--white;
+   font-size: 16px;
+   background-size: 100% 100%;
+   border-radius: 5px;
+   box-sizing: border-box;
+   height: $vc--btn-height;
+   margin: 5px auto;
+   min-height: 40px;
+   min-width: 100px;
+   padding: 0px;
+   transition: .15s;
+   width: $vc--btn-width;
+  }
+
+ .visa_checkout {
+   display: inline-block;
+   background-color: $palette--white;
+   background-image: url("https://assets.secure.checkout.visa.com/wallet-services-web/xo/button.png?style=mono&cardBrands=VISA,MASTERCARD,DISCOVER,AMEX");
+   background-position: 50% 50%;
+   background-repeat: no-repeat;
+   background-size: 100% 100%;
+   border-radius: 5px;
+   border: 1px solid white;
+   box-sizing: border-box;
+   height: $vc--btn-height;
+   margin: 5px auto;
+   min-height: 40px;
+   min-width: 100px;
+   padding: 0px;
+   transition: .15s;
+   width: $vc--btn-width;
+  }
+
+/* Apple Pay Buttons */
+.apple-pay-button {
+    display: inline-block;
+    background-size: 100% 60%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    border-radius: 5px;
+    padding: 0px;
+    box-sizing: border-box;
+    min-width: 72%;
+    min-height: 48px;
+    max-height: 64px;
+    margin-left: -10%;
+}
+
+.apple-pay-button-black {
+    background-image: -webkit-named-image(apple-pay-logo-white);
+    background-color: black;
+}
+
+.apple-pay-button-white {
+    background-image: -webkit-named-image(apple-pay-logo-black);
+    background-color: white;
+}
+
+.apple-pay-button-white-with-line {
+    background-image: -webkit-named-image(apple-pay-logo-black);
+    background-color: white;
+    border: .5px solid black;
+}
+
+.apple-pay-button-with-text {
+    --apple-pay-scale: 1; /* (height / 32) */
+    display: inline-flex;
+    justify-content: center;
+    font-size: 12px;
+    border-radius: 5px;
+    padding: 0px;
+    box-sizing: border-box;
+    min-width: 90%;
+    min-height: 48px;
+    max-height: 64px;
+}
+.apple-pay-button-black-with-text {
+    background-color: black;
+    color: white;
+}
+.apple-pay-button-white-with-text {
+    background-color: white;
+    color: black;
+}
+.apple-pay-button-white-with-line-with-text {
+    background-color: white;
+    color: black;
+    border: .5px solid black;
+}
+.apple-pay-button-with-text.apple-pay-button-black-with-text > .logo {
+    background-image: -webkit-named-image(apple-pay-logo-white);
+    background-color: black;
+}
+.apple-pay-button-with-text.apple-pay-button-white-with-text > .logo {
+    background-image: -webkit-named-image(apple-pay-logo-black);
+    background-color: white;
+}
+.apple-pay-button-with-text.apple-pay-button-white-with-line-with-text > .logo {
+    background-image: -webkit-named-image(apple-pay-logo-black);
+    background-color: white;
+}
+.apple-pay-button-with-text > .text {
+    font-family: -apple-system;
+    font-size: calc(1em * var(--apple-pay-scale));
+    font-weight: 300;
+    align-self: center;
+    margin-right: calc(2px * var(--apple-pay-scale));
+}
+.apple-pay-button-with-text > .logo {
+    width: calc(35px * var(--scale));
+    height: 100%;
+    background-size: 100% 60%;
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    margin-left: calc(2px * var(--apple-pay-scale));
+    border: none;
+}

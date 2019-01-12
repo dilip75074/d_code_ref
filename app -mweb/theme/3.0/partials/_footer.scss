@@ -1,0 +1,191 @@
+
+.stpls_footer_container.bottomPad {
+  padding-bottom: 20px;
+}
+
+.stpls_footer_container {
+  text-align: center;
+  padding: 0px 12px;
+  position: absolute; 
+  bottom: 0; 
+  width: 100%;
+
+  .footer-links {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    margin-bottom: 15.5px;
+    width: 296px;
+    height: 17px;
+    font-size: 14px;
+    letter-spacing: -0.3px;
+    color: $palette--stpls-brownish-grey;
+    color: var(--brownish-grey);
+
+    p {
+      display: inline-block;
+      padding: 0px 9px;
+      a {
+        color: $palette--stpls-brownish-grey;
+        color: var(--brownish-grey);
+        text-decoration: none;
+      }
+    }
+  }
+
+
+  .staples-inc-copyright {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 32.5px;
+    width: 118px;
+    height: 15.5px;
+    font-size: 13px;
+    letter-spacing: -0.3px;
+    text-align: left;
+    color: #9b9b9b;
+  }
+
+  .small {
+    font-size: 85%;
+  }
+}
+/*
+.stpls_footer {
+margin: 0;
+padding: $base-gutter-width;
+text-align: center;
+
+.button {
+    display: inline-block;
+    font-size: $base-font-size - 2;
+    color: $palette--gray-dark;
+    background: none;
+    padding: 0 3px;
+
+    .flag {
+        display: inline-block;
+        vertical-align: text-bottom;
+        @include retina-sprite($flag-c-a-group);
+    }
+
+  &:hover,
+  &:focus {
+    color: $palette--gray-med-light;
+    text-decoration: none;
+  }
+
+}
+
+not in footer anymore
+.download {
+  margin: 10px 0;
+
+  a {
+    display: block;
+    margin: 15px 0;
+    font-weight: bold;
+    color: $palette--gray-med-dark;
+
+    .ios {
+      display: inline-block;
+      margin: 0 0 -8px 5px;
+      height: 26px;
+      width: 15px;
+      background-position: -32px -74px;
+      background-repeat: no-repeat;
+    }
+
+    .android {
+      display: inline-block;
+      margin: 0 0 -8px 5px;
+      height: 27px;
+      width: 23px;
+      background-position: -32px -101px;
+      background-repeat: no-repeat;
+    }
+  }
+}
+
+  &.footer_valprop {
+    background-color: $palette--white;
+
+    .valprop_col {
+      padding: 0px 2px;
+
+      .valprop_headline, .valprop_subhead {
+        color: $palette--stpls-red;
+        line-height: $base-font-size;
+        display: block;
+      }
+      .valprop_headline {
+        @include font-bold;
+        font-size: $base-font-size;
+      }
+      .valprop_subhead {
+        font-size: $base-font-size - 1;
+      }
+
+      .valprop_body {
+        margin: 0px;
+        font-size: $base-font-size - 6;
+        line-height: $base-font-size - 4;
+        color: $palette--gray-dark;
+
+        &:first-of-type {
+          padding-top: $base-gutter-width;
+        }
+      }
+      //slightly larger screen adjustments
+      @media (min-width: 321px) {
+        .valprop_headline {
+          font-size: $base-font-size + 2;
+        }
+        .valprop_subhead {
+          font-size: $base-font-size + 1;
+        }
+        .valprop_body {
+          font-size: $base-font-size - 5;
+          line-height: $base-font-size - 3;
+        }
+      }
+
+      .valprop_footnote {
+        padding-top: 12px;
+      }
+    }
+
+    .valprop_icon i {
+      margin: 3px auto;
+    }
+
+    .valprop_sprite {
+      display: block;
+
+      &.ico_shipping {
+        @include retina-sprite($footer-shipping-group);
+      }
+
+      &.ico_pricematch {
+        @include retina-sprite($footer-pricematch-group);
+      }
+
+      &.ico_returns {
+        @include retina-sprite($footer-easyreturns-group);
+      }
+    }
+  }
+
+  &.footer_buttons {
+    border-top: 2px solid $palette--gray-light;
+    padding-bottom: 0;
+  }
+
+
+
+
+
+}
+
+}
+*/

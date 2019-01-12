@@ -1,0 +1,56 @@
+<div class="stpls_favorites_container animated fadeIn">
+
+    <h3 class="favorites_heading">Favorites Lists: ({{favorites.length}} List)</h3>
+    <h4 class="favorites_subtitle">Make ordering and reordering a snap! Create favorite lists for yourself and your office.</h4>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-default col-xs-12">Create New List</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 select_all">
+            <div>
+                <label>Select All</label>
+                <input name="selectall" type="checkbox" ng-click="selectAll()" ng-checked="selectedAll()" />
+            </div>
+            <div>
+                <button class="btn btn-default blue_bg">Email</button>
+                <button class="btn btn-default">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-repeat="favoritelist in favorites">
+        <div class="col-xs-12 favoritelist_row">
+            <div class="selectbox">
+                <input name="select" type="checkbox" ng-model="favoritelist.checked" />
+            </div>
+            <div class="item" ng-click="openList(favoritelist)">
+                <span class="favoritelist_title">{{favoritelist.listName}}</span>
+                <br>
+                item(s)
+                <div class="favoritelist_thumbs">
+                    <span ng-repeat="product in favoritelist.products">
+                        <img class="favorites_thumb" ng-src="{{product.images[0] | skuSmall}}" />
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 select_all">
+            <div>
+                <label>Select All</label>
+                <input name="selectall" type="checkbox" ng-click="selectAll()" ng-checked="selectedAll()" />
+            </div>
+            <div>
+                <button class="btn btn-default blue_bg">Email</button>
+                <button class="btn btn-default">Delete</button>
+            </div>
+        </div>
+    </div>
+
+</div>

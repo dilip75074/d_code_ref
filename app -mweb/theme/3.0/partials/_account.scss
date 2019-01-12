@@ -1,0 +1,179 @@
+/* Account */
+
+.stpls_account_container {
+  margin-top: 15px;
+
+  .password_header {
+    margin-bottom:-3px;
+  }
+
+  .password_head_div {
+    background: $palette--gray-light;
+    height: 40px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+
+  .password_head_label {
+    background: $palette--gray-light;
+    height: 20px;
+    font-size: 16px;
+    margin-top: 9px;
+  }
+
+  .password_normallabel {
+    @include font-normal;
+  }
+
+  .password_button {
+    background: $palette--gray-light;
+  }
+
+  .password_head_label,
+  .password_button {
+    @include font-bold;
+  }
+  .subheader {
+    font-size: 14px;
+    line-height: 15px;
+
+  }
+
+  .login {
+    position: relative;
+
+  .alert-danger-other {
+    color: $palette--black;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    font-size: $base-font-size-sku-text;
+  }
+
+  .alert-danger-other hr {
+    border-top-color: #e4b9c0;
+  }
+
+  .alert-danger-other .alert-link {
+    color: $palette--blue;
+  }
+
+    .login_form {
+      margin-top: 25px;
+    }
+
+    .loading {
+      position: absolute;
+      top: 95px;
+      width: 100%;
+      text-align: center;
+
+      p {
+        margin-top: 35px;
+        text-align: center;
+        @include font-bold;
+      }
+    }
+  }
+
+
+  .new_account {
+    margin-top: 20px;
+  }
+
+  .account-row {
+    border-bottom: 1px solid $palette--gray-med-light;
+    font-size: 15px;
+    min-height: 51px;
+    height: 51px;
+    line-height: 51px;
+    color: #666 !important;
+    > div {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      vertical-align: middle;
+      display: inline-block;
+      margin-right: $base-gutter-width;
+      .icon {
+        display: inline-block;
+      }
+    }
+
+    span {
+      display: inline-block;
+    }
+
+    .forward_btn {
+      margin-top: 18px;
+      float: right;
+    }
+
+  }
+
+  .rewards-row .icon {
+    @include retina-sprite($account-rewardsicon-group);
+  }
+
+  .profile-row .icon {
+    @include sprite($account-profile);
+  }
+
+  .orders-row .icon {
+    @include sprite($account-orders);
+  }
+
+  .reservations-row .icon {
+    @include sprite($account-reservations);
+  }
+
+  .reorder-row .icon {
+    @include sprite($account-reorder);
+  }
+
+  .favorites-row .icon {
+    @include sprite($account-favorites);
+  }
+
+
+}
+
+.stpls_register_container {
+
+  .req_info_label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+
+  .input_row {
+    margin: 0px (-$base-gutter-width);
+
+    .reward_header {
+      padding: 0px $base-gutter-width;
+      margin: 0;
+    }
+
+    .checkbox_row {
+      padding: 10px $base-gutter-width 10px;
+    }
+  }
+
+  select {
+    display: block;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .rewards_row {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  .stpls_rewards_container {
+    margin: 15px 0;
+  }
+}
+
+button#user_logout {
+  color: $palette--black;
+  text-align: center;
+  float: none !important;
+  width: 100%;
+}

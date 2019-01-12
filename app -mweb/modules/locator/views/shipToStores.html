@@ -1,0 +1,101 @@
+<div class="overlay_view bopis_overlay_view animated store-locate">
+
+    <div class="header clearfix">
+      <div class="pull-left">
+        <button id="backButton" class="btn btn_chevron_back scTrack scLink" sctype="scLink" scvalue="Back button on header" ng-click="$root.back()"></button>
+      </div>
+      <div class="pull-right"></div>
+      <p class="page_header">Select Store</p>
+    </div>
+
+    <div id="id_SearchContainer" class="SearchContainer">
+      <div id="id_SearchContent" class="row SearchContent">
+        <div class="SearchInputDiv col-xs-8">
+            <form name="searchByZipForm" action ng-submit="searchByZip();$event.preventDefault()">
+                <input id="id_searchInput" name="zipsearch" class="SearchInput form-control" ng-model="zipSearch.input" type="search" placeholder="Type zip code" value="" input-reset-control/>
+            </form>
+        </div>
+        <div id="id_SearchIcon" class="col-xs-2">
+            <button id="id_SearchIcon" ng-click="searchByZip()" class="SearchIcon btn stpls_secondary_half"><span class="search"></span></button>
+        </div>
+        <div id="id_GEOSearchIcon" class="col-xs-2">
+            <button id="id_GEOSearchIcon" class="GEOIcon" ng-click="searchByGeo()"><span class="geo_icon"></span></button>
+        </div>
+      </div>
+      <div ng-show="geoMsg" class="row">
+        <div class="GeoMsg col-xs-12">{{geoMsg}}</div>
+      </div>
+    </div>
+
+    <div class="row animated my-store-label">
+      <div class="col-xs-12">
+          <div id="id_MystoreCont" class="MystoreCont page_headline">Your store:</div>
+        </div>
+    </div>
+
+    <div class="ScrollWrapper store-wrapper">
+
+    </div>
+
+    <div id="id_BopisDetailsPanel" ng-show="!showError" class="BopisDetailsPanel">
+        <div class="SearchMsg"></div>
+        <div class="ScrollWrapper store-wrapper">
+
+            <!-- Current Store -->
+            <div class="StoreDetailContCurrent current-store store" ng-init="store.selected = true" ng-repeat="store in stores | isCurrentShipToStore: currentStoreNo">
+
+              <div ng-if="store.selected" ng-click="radioButtonClicked(store)" class="store-selector active">	&#x2713;</div>
+              <div ng-if="!store.selected" ng-click="radioButtonClicked(store)" class="store-selector"></div>
+
+              <div id="id_currentStore" ng-click="storeSelected(store)" class="BopisStoreDetail">
+                  <div class="BopisStoreAddress">
+                      <div class="StoreTitle">
+                          {{store.store_address.city}}, {{store.store_address.state}}
+                      </div>
+                      <div class="StoreAddr">
+                          {{store.store_address.address_line1}}
+                      </div>
+                      <div class="StoreNum">
+                          <a class="storeNumLink" href="tel:{{store.store_address.phone_number}}">{{store.store_address.phone_number | formatPhoneNumber}}</a>
+                      </div>
+                  </div>
+                  <div class="StoreDist RtArrow pull-right">
+                      <span class="StoreDistVal">{{store.dis}} mi</span>
+                  </div>
+              </div>
+            </div>
+
+            <!-- Other Stores to choose from -->
+            <div class="store" ng-show="!showError" ng-repeat="store in searchStores | notCurrentShipToStore: currentStoreNo">
+
+              	<div ng-if="store.selected" ng-click="radioButtonClicked(store)" class="store-selector active">	&#x2713;</div>
+              	<div ng-if="!store.selected" ng-click="radioButtonClicked(store)" class="store-selector"></div>
+
+                <div id="id_StoreDetailCont" class="StoreDetailCont">
+                    <div id="id_BopisStoreDetail_1" ng-click="storeSelected(store)" class="BopisStoreDetail">
+                        <div class="BopisStoreAddress">
+                            <div class="StoreTitle">
+                                {{store.store_address.city}}, {{store.store_address.state}}
+                            </div>
+                            <div class="StoreAddr">
+                                {{store.store_address.address_line1}}
+                            </div>
+                            <div class="StoreNum">
+                                <a class="storeNumLink" href="tel:{{store.store_address.phone_number}}">{{store.store_address.phone_number | formatPhoneNumber}}</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="StoreDist RtArrow pull-right">
+                                <span class="StoreDistVal">{{store.dis}} mi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="showError">
+        <p class="ErrorSearchContainer">No stores found within 50 miles of this location.</p>
+    </div>
+</div>

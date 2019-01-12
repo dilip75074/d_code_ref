@@ -1,0 +1,523 @@
+
+<div class="product-page-header">
+	<button id="backButton" type="button" class="btn btn_chevron_back scTrack scLink" sctype="scLink" scvalue="Back button on header" ng-click="$root.back()"></button>
+	<h1>Item Details</h1>
+	<button id="search_btn" class="btn" focus-search="searchTextfield"><i class="search"></i></button>
+    <div class="cart-white" ng-click="$root.toRoute('cart')">
+        <i class="cart"></i>
+        <span class="indicator animated fadeInDown" ng-show="$root.cart_count > 0" ng-bind="($root.cart_count || '')"></span>
+    </div>
+</div>
+<div class="stpls_product_container">
+
+	<div ng-show="product_data">
+		<analytics-item item="product_data" location="pdhero" slot="1" page="1"></analytics-item>
+
+		<!--  PRODUCT IMAGE SECTION -->
+		<div class="row product_img" ng-class="{selector: product_data.images.length > 1}">
+			<div class="col-xs-12 no_padding">
+				<div id="scene7_zoom_viewer" class="animated" ng-class="{s7ready: s7ready}" ng-swipe-left="swipeImage(1)" ng-swipe-right="swipeImage(-1)">
+					<div class="init_img" class="animated fadeIn" ng-if="!s7ready">
+						<img ng-if="product_data && !pre_populated" ng-src="{{product_data.images[0] | s7Image : 'splssku'}}" />
+					</div>
+					<!-- .s7container goes here -->
+				</div>
+
+				<div class="page-control-container" ng-if="product_data.images.length > 1">
+					<div class="page-control" ng-repeat="image in product_data.images track by $index" ng-click="switchImage($index)" ng-class="{active: $index === selected_img}">
+						<span></span>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="product-microformat" ng-if="product_data" style="display: none;">
+			<div itemscope itemtype="http://schema.org/Product">
+				<span itemprop="name">{{product_data.name}}</span>
+				<img itemprop="image" ng-src="{{product_data.images[0] | s7Image : 'splssku'}}" />
+				<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" ng-if="product_data.custReview.rating > 0">
+					<span itemprop="ratingValue">{{product_data.custReview.rating | ratingValue}}</span> stars - based on
+					<span itemprop="reviewCount">{{product_data.custReview.count}}</span> reviews
+				</div>
+				<a itemprop="url" ui-sref="product({sku: product_data.sku, seo: $root.SEO.quartz.sku(product_data).uri})"></a>
+				<div itemprop="description">{{$root.seo.description}}</div>
+				<div>Product ID: <span itemprop="sku">{{product_data.sku}}</span></div>
+				<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+					<span itemprop="price" ng-if="product_data.priceInCartOnly !== 'true' || !product_data.priceInCartOnly">{{product_data.price.finalPrice}}</span>
+					<meta itemprop="priceCurrency" content="USD"/>
+					<link itemprop="itemCondition" href="http://schema.org/NewCondition" /> New
+					<div ng-if="product_data.inStock =='true'">
+						<link itemprop="availability" href="http://schema.org/InStock"/>In stock
+					</div>
+					<div ng-if="product_data.inStock =='false'">
+						<link itemprop="availability" href="http://schema.org/OutOfStock" >Out Of Stock
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--  PRODUCT DESCRIPTION SECTION -->
+		<div class="sku_section product_info">
+			<!--  h1 tag desired by SEO team -->
+			<h1 ng-bind-html="product_data.name" class="product_name"></h1>
+		</div>
+
+		<!--  PRODUCT Item -->
+		<div class="itemModel">
+			{{'SKU_PROD_ITEM_LABEL'|translate}}<span ng-bind="product_data.sku"></span>&nbsp;&nbsp;
+			{{'SKU_PROD_MODEL_LABEL'|translate}}<span ng-bind="product_data.mfr.pn"></span>
+		</div>
+
+		<!--  PRODUCT PRICING SECTION -->
+		<div class="price_info sku_section">
+			<div class="animated fadeInDown">
+				<div ng-if="product_data.price.instantSavings" class="expanded_price_text">
+					<p>{{'PROD_SAVE'|translate}} <span class="red">{{product_data.price.instantSavings | currency: '$'}}</span>
+						<span>{{'PROD_SAVE_INSTANT'|translate}}</span>
+					</p>
+				</div>
+			</div>
+
+			<!--  Price in Cart -->
+			<div class="price" ng-if="product_data.priceInCartOnly === 'true'">
+					<span ng-if="product_data.price" class="product_price_strike" ng-bind="product_data.price.listPrice | currency: '$'"></span>
+					<span class="priceincart">{{'CART_SEEPRICE'|translate}}</span>
+			</div>
+
+			<!--  Show Price -->
+			<div  ng-if="product_data.priceInCartOnly !== 'true' || !product_data.priceInCartOnly">
+				<div ng-if="product_data.hasParts">
+					<span id="productFinalPriceForSS" class="final bold" itemprop="price" translate="PRC_ASLOWAS"></span>
+				</div>
+				<div class="price">
+					<span ng-if="product_data.price" class="product_price" ng-bind="product_data.price.finalPrice | currency: '$'"></span>
+					<span ng-if="product_data.price && showRegPrice()" class="product_price_strike" ng-bind="product_data.price.listPrice | currency: '$'"></span>
+					<span ng-if="product_data.price" class="product_price_uom" ng-bind="product_data.price.uom"></span>
+					<!-- Show Rebate Math -->
+					<div ng-if="product_data.rebate" id="rebateFlag_id" class="rebate_flag" type="button" name="rebateFlag">
+						<span ng-bind="product_data.rebate | currency: '$'"></span>&nbsp;Rebate
+					</div>
+				</div>
+			</div>
+
+			<!--   Show all flags on 1 line -->
+			<div class="tag_row">
+				<!--  This will only show oversize or add-on tags-->
+				<shipping-indicator ng-if="product_data.tag" class="shipping_flag" shipping-tag="{{product_data.tag}}"></shipping-indicator>
+			</div>
+		</div>
+
+		<!-- Rating -->
+		<div class="review_overall_score">
+			<star-rating star-rating="{{product_data.custReview.rating}}" rating-show="false" rating-count="{{product_data.custReview.count}}"></star-rating>
+		</div>
+
+		<!--  PRODUCT SKUSET MASTER SECTION -->
+		<div class="sku_section skuset_info" ng-if="product_data.hasParts">
+			<div class="row" ng-click="expand.skuset = !expand.skuset">
+				<div class="col-xs-11 skuset_header">{{'SKU_MASTER_SELECT_LBL'|translate}}</div>
+				<div class="col-xs-1 pull-right chevron_toggle">
+					<span btn-expand ng-model="expand.skuset"></span>
+				</div>
+			</div>
+
+			<div class="animated fadeInDown skuset_part" ng-show="expand.skuset">
+				<div class="tile" ng-repeat="product in product_data.products | filter: skuSetFilter">
+					<product-item skuset="true" loc="pd:selectanitem" data="product"></product-item>
+				</div>
+			</div>
+		</div>
+
+		<!--  PRODUCT SHIPPING SECTION -->
+		<div class="clearfix row sku_section shipping_info" ng-show="!product_data.hasParts && !product_data.businessService">
+
+			<!--  BOPIS Options -->
+			<div ng-show="product_data.bopis === 'true'" class="shipping_row">
+
+				<!--  Regular BOPIS - not Retail Only -->
+				<div ng-show="product_data.retailOnly !== 'true'">
+
+					<!--  In Stock Online, and BOPIS -->
+					<div ng-show="product_data.inStock === 'true'" class="row option_row">
+						<div class="col-xs-9">
+							<p id="bopisPickupLabel" class="shipping_header">{{'PROD_BOPIS_MSG'|translate}}</p>
+							<a id="bopisQtyInStock" class="link_see_all" ng-click="checkBopisStores(product_data)">{{invMsg}} {{defaultStore.city}}, {{defaultStore.state}}</a>
+							<!--<a id="checkAnotherStoreLink" class="link_see_all" ng-click="checkBopisStores(product_data)">{{'PROD_BOPIS_CHK_STORE'|translate}}</a>-->
+						</div>
+						<div class="col-xs-3">
+							<div class="pull-right input-group price_qty_rocker">
+								<switch-toggle ng-model="product_data.bopisSelected" ng-click="bopisClicked()"></switch-toggle >
+							</div>
+						</div>
+					</div>
+
+					<!--  OOS Online, but BOPIS Qty Available -->
+					<div ng-show="product_data.inStock === 'false'">
+						<div class="row option_row">
+							<div class="col-xs-12">
+								<p id="bopisPickupLabel" class="shipping_header red">{{'SKU_BOPIS_OOS_ONLINE'|translate}}</p>
+							</div>
+						</div>
+						<div class="row option_row">
+							<div class="col-xs-9">
+								<p id="bopisPickupLabel" class="shipping_header">{{'PROD_BOPIS_MSG'|translate}}</p>
+								<p id="bopisQtyInStock" class="shipping_text">{{invMsg}} {{defaultStore.city}}, {{defaultStore.state}}</p>
+								<a id="checkAnotherStoreLink" class="link_see_all" ng-click="checkBopisStores(product_data)">{{'PROD_BOPIS_CHK_STORE'|translate}}</a>
+							</div>
+							<div class="col-xs-3">
+								<div class="pull-right input-group price_qty_rocker">
+									<switch-toggle  id="bopisEligibleCheckbox" ng-click="bopisClicked()" ng-model="product_data.bopisSelected"></switch-toggle >
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div ng-show="product_data.retailOnly === 'true'" class="row option_row">
+					<div class="col-xs-9">
+						<p id="bopisPickupLabel" class="shipping_header">{{'PROD_BOPIS_MSG'|translate}}</p>
+						<p id="bopisQtyInStock" class="shipping_text">{{invMsg}} {{defaultStore.city}}, {{defaultStore.state}}</p>
+						<a id="checkAnotherStoreLink" class="link_see_all" ng-click="checkBopisStores(product_data)">{{'PROD_BOPIS_CHK_STORE'|translate}}</a>
+					</div>
+					<div class="col-xs-3">
+						<div class="pull-right input-group price_qty_rocker">
+							<switch-toggle  disabled id="bopisEligibleCheckbox" ng-model="product_data.bopisSelected"></switch-toggle >
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--  NON-BOPIS Options -->
+			<div ng-show="product_data.bopis !== 'true'" class="shipping_row">
+
+				<div ng-show="product_data.retailOnly !== 'true'">
+					<!--  In Stock Online -->
+					<div ng-show="product_data.inStock === 'true'" class="row option_row">
+						<div class="col-xs-12">
+							<p id="bopisPickupLabel" class="shipping_header red">{{'SKU_ONLINE_ONLY'|translate}}</p>
+						</div>
+					</div>
+
+					<!--  OOS Online, but has in-store qty available -->
+					<div ng-show="product_data.inStock === 'false' && defaultStore.invQty > 0" class="row option_row">
+						<div class="col-xs-12">
+							<p id="bopisPickupLabel" class="shipping_header">{{'PROD_BUYINSTORE_MSG'|translate}}</p>
+							<p id="bopisQtyInStock" class="shipping_text">{{invMsg}} {{defaultStore.city}}, {{defaultStore.state}}</p>
+							<a id="checkAnotherStoreLink" class="link_see_all" ng-click="checkBopisStores(product_data)">{{'PROD_BOPIS_CHK_STORE'|translate}}</a>
+						</div>
+					</div>
+
+					<!--  OOS Online, but NO BOPIS Qty Available -->
+					<div ng-show="product_data.inStock === 'false' && defaultStore.invQty === 0" class="row option_row">
+						<div class="col-xs-12">
+							<p id="bopisPickupLabel" class="shipping_header red">{{'SKU_BOPIS_OOS_ONLINE'|translate}}</p>
+						</div>
+					</div>
+				</div>
+
+				<div ng-show="product_data.retailOnly === 'true'">
+
+					<!--  OOS Online, but has in-store qty available -->
+					<div class="row option_row">
+						<div class="col-xs-12">
+							<p id="bopisPickupLabel" class="shipping_header">{{'PROD_BUYINSTORE_MSG'|translate}}</p>
+							<p id="bopisQtyInStock" class="shipping_text">{{invMsg}} {{defaultStore.city}}, {{defaultStore.state}}</p>
+							<a id="checkAnotherStoreLink" class="link_see_all" ng-click="checkBopisStores(product_data)">{{'PROD_BOPIS_CHK_STORE'|translate}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--  SHIPPING Options -->
+			<div class="shipping_row">
+
+				<div ng-show="product_data.retailOnly === 'true'" class="row option_row">
+					<!--  Retail Only -->
+					<div class="col-xs-12">
+						<p id="roshipLabel" class="shipping_header red">{{'SKU_INSTORE_ONLY'|translate}}</p>
+					</div>
+				</div>
+
+				<!--  Free shipping -->
+				<div ng-show="product_data.freeShipping === 'true' && product_data.retailOnly !== 'true'">
+					<div class="row option_row">
+						<div class="col-xs-12">
+							<p id="freeShippingLabel" class="shipping_header">{{'CLS_FREE_SHIPPING'|translate}}</p>
+							<p ng-if="product_data.leadTime" id="bopisQtyInStock" class="shipping_text">
+								{{'PROD_EXP_DEL_LBL'|translate}} <span ng-bind="product_data.leadTime.desc"></span>&nbsp;
+								<span class="glyphicon glyphicon-info-sign" ng-click="$root.toRoute('helpDeliveryPolicy')"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--  PRODUCT DETAILS SECTION -->
+		<div class="row sku_section product_info">
+				<div class="row option_row">
+					<div class="col-xs-12">
+						<tabset class="product_detail_tabs">
+							<!--  FULL PRODUCT DETAILS -->
+							<tab class="product_detail_tab" heading="{{'SKU_PROD_DETAIL_HEADER'|translate}}">
+								<div class="row option_row" ng-hide="expand.detailsSpec">
+									<div class="col-xs-12 itemDetails">
+										<ul class="product_details_bullets">
+											<li ng-repeat="bullet in product_data.bullets | limitTo: 3" ng-bind-html="bullet"></li>
+										</ul>
+									</div>
+								</div>
+
+								<div ng-show="expand.detailsSpec">
+									<p class="headline" ng-if="product_data.headlines && product_data.headlines.length > 0" ng-bind-html="product_data.headlines[0]"></p>
+
+									<div ng-repeat="desc in product_data.description">
+										<p ng-bind-html="desc"></p>
+									</div>
+
+									<div ng-repeat="expDesc in product_data.expandedDescription">
+										<p ng-bind-html="expDesc"></p>
+									</div>
+
+									<div class="row">
+										<div class="col-xs-12 itemDetails">
+											<ul class="product_details_bullets">
+												<li ng-repeat="bullet in product_data.bullets track by $index" ng-bind-html="bullet"></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="link_see_all">
+									<a  ng-click="expand.detailsSpec=!expand.detailsSpec" ng-model="expandInfo">
+										<span translate="SKU_PROD_SEE_MORE" ng-show="!expand.detailsSpec"></span>
+										<span translate="SKU_PROD_SEE_LESS" ng-show="expand.detailsSpec"></span>
+									</a>
+								</div>
+							</tab>
+
+							<!--  FULL PRODUCT SPECS -->
+							<tab class="product_detail_tab" heading="{{'SKU_SPECS_LABEL'|translate}}">
+								<p class="spec" ng-repeat="spec in product_data.specifications">
+									<span ng-bind="spec.name"></span><span ng-bind="spec.text"></span>
+								</p>
+							</tab>
+
+							<!--  REVIEW SECTION -->
+							<tab id="reviewTab" class="product_detail_tab" heading="{{'SKU_REVIEWS_LABEL'|translate}}" ng-click="expand.reviews = true">
+								<!--  REVIEWS SECTION -->
+								<div class="row sku_section review_info">
+									<div class="row option_row">
+										<div class="col-xs-12">
+											<div class="animated fadeInDown" ng-show="reviewsData && reviewsData.response.reviews.length > 0">
+												<tabset class="product_detail_tabs">
+													<!--  MOST LIKED POSITIVE -->
+													<tab class="product_detail_tab review_tab" heading="{{'SKU_REVIEW_MOST_LIKE_POS'|translate}}">
+														<div ng-if="reviewsPos.length > 0">
+															<div class="row">
+																<div class="col-xs-12">
+																	<star-rating star-rating="{{reviewsPos[0].score}}" rating-show="true"></star-rating>
+																</div>
+															</div>
+															<div class="row review_title">
+																<div class="col-xs-12">
+																	<p ng-bind-html="reviewsPos[0].title"></p>
+																</div>
+															</div>
+
+															<div class="row review_user_info">
+																<div class="col-xs-12">
+																	{{'SKU_REVIEWS_BY'|translate}}&nbsp;<span class="review_username">{{reviewsPos[0].user.display_name}}</span>&nbsp;-&nbsp;{{reviewsPos[0].created_at | date:'MM-dd-yyyy'}}
+																	&nbsp;&nbsp;<span ng_if="reviewsPos[0].verified_buyer" class="verified"><label>{{'SKU_REVIEWS_VBUYER'|translate}}</label></span>
+																</div>
+
+															</div>
+
+															<div class="row review_content">
+																<div class="col-xs-12" ng-if="reviewsPos.length > 0">
+																	<p ng-bind-html="reviewsPos[0].content"></p>
+																</div>
+															</div>
+														</div>
+													</tab>
+
+													<!--  MOST LIKED NEGATIVE -->
+													<tab class="product_detail_tab review_tab" heading="{{'SKU_REVIEW_MOST_LIKE_NEG'|translate}}">
+														<div ng-if="reviewsNeg.length > 0">
+															<div class="row">
+																<div class="col-xs-12">
+																	<star-rating star-rating="{{reviewsNeg[0].score}}" rating-show="true"></star-rating>
+																</div>
+															</div>
+															<div class="row review_title">
+																<div class="col-xs-12">
+																	<p ng-bind-html="reviewsNeg[0].title"></p>
+																</div>
+															</div>
+
+															<div class="row review_user_info">
+																<div class="col-xs-12">
+																	{{'SKU_REVIEWS_BY'|translate}}&nbsp;<span class="review_username">{{reviewsNeg[0].user.display_name}}</span>&nbsp;-&nbsp;{{reviewsNeg[0].created_at | date:'MM-dd-yyyy'}}
+																	&nbsp;&nbsp;<span ng_if="reviewsNeg[0].verified_buyer" class="verified"><label>{{'SKU_REVIEWS_VBUYER'|translate}}</label></span>
+																</div>
+
+															</div>
+
+															<div class="row review_content">
+																<div class="col-xs-12" ng-if="reviewsNeg.length > 0">
+																	<p ng-bind-html="reviewsNeg[0].content"></p>
+																</div>
+															</div>
+														</div>
+													</tab>
+												</tabset>
+
+												<div class="row" ng-if="product_data.custReview.count > 0">
+													<div class="col-xs-12 link_see_all">
+														<a ng-click="$root.toRoute('productReviews', {sku: product_data.sku})">{{'SKU_REVIEWS_SEEALL'|translate}}</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</tab>
+						</tabset>
+					</div>
+				</div>
+			</div>
+
+
+		<div class="row sku_section product_info">
+			<div ng-if="$root.switchBoard.GPT_SKU_MAIN_SWITCH && $root.switchBoard.ENABLE_GPT_SKU_ADSLOT_BELOW_PRODUCT_BAR && product_data" class = "banner_row">
+				<div data-ng-dfp-ad="{{triad.sku_ad_unit_1_div_id}}" data-ng-dfp-params="setDfpParams()" page-type="sku" ad-slot="1"></div>
+			</div>
+		</div>
+
+		<!--  FREQUENTLY BOUGHT TOGETHER SECTION -->
+		<div class="sku_section fbt_section" ng-if="FBT_Products && FBT_Products.length > 1 && product_data.retailOnly !== 'true'">
+		    <div class="carousel_header">{{'PROD_FREQ_BOT_HDR'|translate}}</div>
+		    <div class="row option_row" >
+		        <div ng-repeat="product in FBT_Products track by $index | limitTo: 2" class="fbt_sku">
+					<analytics-item ng-if="product.sku !== product_data.sku" item="product" location="pd:fbt" intelligence="Sparx" slot="1" page="1"></analytics-item>
+					<div class="row option_row list_products" ng-switch="product.sku === product_data.sku ? 1 : 0">
+						<div class="col-xs-4">
+							<img ng-switch-when="1" class="img-responsive" lazy-load-image="true" lazy-src="{{product.images[0] | skuSmall}}" />
+							<a ng-switch-default class="scTrack pfm" sctype="pfm" sku="{{product.sku}}" locater="pd:fbt" ui-sref="product({sku: product.sku, seo: $root.SEO.quartz.sku(product).uri})">
+								<img class="img-responsive" lazy-load-image="true" lazy-src="{{product.images[0] | skuSmall}}" />
+							</a>
+			            </div>
+
+			            <div class="col-xs-8">
+			                <p ng-switch-when="1" class="name" ng-bind-html="product.name"></p>
+							<a ng-switch-default class="scTrack pfm" sctype="pfm" sku="{{product.sku}}" locater="pd:fbt" ui-sref="product({sku: product.sku, seo: $root.SEO.quartz.sku(product).uri})">
+								<p class="name" ng-bind-html="product.name"></p>
+							</a>
+			                <star-rating star-rating="{{product.custReview.rating}}" rating-show="false" count-show="false" rating-count="{{product.custReview.count}}"></star-rating>
+
+							<!--  Price -->
+							<p ng-if="product.priceInCartOnly !== 'true'" class="price bold">
+								<span ng-bind="product.price.finalPrice | currency"></span>
+								<span ng-switch="product.price.showWasPrice ? 1 : 0">
+									<span ng-switch-when="1" class="reg normal">
+										<span ng-if="product.price.showWasPrice === 'true'" ng-bind="product.price.wasPrice | currency"></span>
+									</span>
+									<span ng-switch-default>
+										<span ng-if="product.price.listPrice && showRegPrice(data)" class="reg normal">
+											<span ng-bind="product.price.listPrice | currency"></span>
+										</span>
+									</span>
+								</span>
+								<span ng-if="product.price" class="product_price_uom" ng-bind="product.price.uom"></span>
+							</p>
+							<p ng-if="product.priceInCartOnly === 'true'">
+								<span class="price price-in-cart">{{'CART_SEEPRICE'|translate}}</span>
+							</p>
+
+			            </div>
+					</div>
+		        </div>
+		    </div>
+
+			<div class="row option_row fbt_option_row">
+				<div class="price">
+			            <span ng-if="FBT_Products_SeePriceInCart" class="priceincart">{{'CART_SEEPRICE'|translate}}</span>
+			            <span ng-if="!FBT_Products_SeePriceInCart">
+			                <span class="totPrice">{{'PROD_TOTAL_PRICE'|translate}}</span><span class="priceincart">{{FBT_Products_TotalPrice | currency}}</span>
+			            </span>
+			    </div>
+				<div class="price">
+					<div class="col-xs-12">
+						<button id="add_FBT_id" class="btn fbt_button scTrack cta" sctype="cta" ctatype="addtocart" locater="pd:fbt" bindtype="dom" type="button" ng-click="addFBTItemsToCart()" name="fbt_atc_btn" translate="PROD_ATC_BOTH_BTN"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--  CUSTOMERS ULTIMATELY BOUGHT PRODUCTS SECTION -->
+		<div class="sku_section sku_carousel" ng-if="CustBought_Products && CustBought_Products.length > 0">
+			<div class="row option_row">
+				<div class="carousel_header">{{'PROD_ULT_BOUGHT'|translate}}</div>
+			</div>
+			<div class="row option_row">
+				<div id="similarSlider" lazy-scroller class="slider_container">
+					<div class="tile" ng-repeat="product in CustBought_Products">
+						<product-item skuset="false" analytics="true" loc="pd:cwvtub" intelligence="Sparx" data="product"></product-item>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--  ADS SECTION -->
+		<div id="hl_1" hook-logic-ad-carousel="setHookLogicAdCarouselParams()" hook-logic-products="hookLogic_products" page-type="sku"></div>
+
+		<!--  ADD-TO-CART BUTTON -->
+		<div class="atc_section product_actions_fixed actions_fixed animated animated-delay-2 fadeIn">
+			<div class="row">
+				<div class="col-xs-12">
+					<!--  ADD-TO-CART SUCCESS OVERLAY -->
+					<add-cart-overlay item="product_data"></add-cart-overlay>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12">
+
+					<div ng-show="product_data.retailOnly === 'true' && !product_data.businessService">
+						<button disabled ng-show="product_data.bopis === 'true' && defaultStore.invQty === 0" class="btn stpls_primary btn-block">
+							{{'SKU_OOSSTORE_BTN'|translate}}
+						</button>
+						<button ng-disabled="product_data.hasParts" name="atc_btn" ng-show="product_data.bopis === 'true' && defaultStore.invQty > 0" class="btn stpls_primary btn-block add_to_cart scTrack cta" bindtype="dom" sctype="cta" ctatype="addtocart" sku="{{product_data.sku}}" locater="{{$root.$state.current.name}}" ng-class="{disabled: adding_to_cart}" ng-click="addToCart(product_data);$event.stopPropagation();">
+							{{'PROD_ATC_BTN'|translate}}
+						</button>
+						<button disabled ng-show="product_data.bopis !== 'true'" class="btn stpls_primary btn-block">
+							{{'SKU_INSTORE_BTN'|translate}}
+						</button>
+					</div>
+
+					<div ng-show="product_data.retailOnly !== 'true'">
+						<button ng-disabled="product_data.hasParts" name="atc_btn" ng-show="product_data.inStock === 'true' && !product_data.businessService" class="btn stpls_primary btn-block add_to_cart scTrack cta" bindtype="dom" sctype="cta" ctatype="addtocart" sku="{{product_data.sku}}" locater="{{$root.$state.current.name}}" ng-class="{disabled: adding_to_cart}" ng-click="addToCart(product_data);$event.stopPropagation();">
+							{{'PROD_ATC_BTN'|translate}}
+						</button>
+						<button ng-disabled="product_data.hasParts" ng-show="product_data.inStock === 'false' && defaultStore.invQty > 0 && product_data.bopis === 'true' && !product_data.businessService" class="btn stpls_primary btn-block add_to_cart scTrack cta" bindtype="dom" sctype="cta" ctatype="addtocart" sku="{{product_data.sku}}" locater="{{$root.$state.current.name}}" ng-class="{disabled: adding_to_cart}" ng-click="addToCart(product_data)">
+							{{'PROD_PUTODAY_BTN'|translate}}
+						</button>
+						<button disabled ng-show="product_data.inStock === 'false' && !product_data.businessService || (product_data.bopis === 'true' && defaultStore.invQty === 0)" class="btn stpls_inactive btn-block add_to_cart">
+							{{'SKU_OOS_BTN'|translate}}
+						</button>
+						<button ng-show="product_data.businessService" class="btn stpls_primary btn-block add_to_cart" ng-class="{disabled: adding_to_cart}" ng-click="getStarted()">
+							{{'PROD_GETSTARTED_BTN'|translate}}
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--  PRODUCT NOT FOUND -->
+	<div class="sku_section" ng-show="!product_data && !loading">
+		<p class="red details_header" translate="PROD_NOT_FOUND_MSG" translate-values="{sku: sku}"></p>
+	</div>
+</div>

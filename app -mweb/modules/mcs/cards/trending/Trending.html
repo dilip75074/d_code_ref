@@ -1,0 +1,22 @@
+<div class="homecards-container">
+    <div class="card-header-row">
+        <span class="card-type">{{data.title}}</span>
+        <div class="card-help pull-right scTrack scLink" sctype="scLink" scvalue="{{data.title}}:Search">
+            <a ui-sref="deals({seo:'dailyDeals', identifier: identifier})">Search</a>
+        </div>
+    </div>
+    <div class="card-categories-row">
+        <div class="each-category" ng-repeat="product in products">
+            <div class="category-image scTrack pfm" sctype="pfm" sku="{{product.skuNumber}}" locater="home:trendingnow">
+                <img class="img-responsive animated fadeIn" lazy-load-image="true" lazy-src="{{product.image}}" ng-click="clickProduct(product, $event)"/>
+            </div>
+            <div class="category-name scTrack pfm" sctype="pfm" sku="{{product.skuNumber}}" locater="home:trendingnow">
+                <span class="category-subtitle">{{product.productName}}</span>
+                <span class="category-title" ng-click="clickProduct(product, $event)">
+                    {{product.productPrice}}
+                    <span class="category-unit">{{product.unit}}</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

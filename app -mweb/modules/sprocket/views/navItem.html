@@ -1,0 +1,14 @@
+<div ui-tree-handle class="animated fadeInDown" ng-hide="this.hidden || node.hidden">
+  <i ng-if="node.top" ng-class="{category: 'icon-browse', deals: 'icon-deals'}[node.navItem]"></i>
+  <a class="btn sidenav_btn category_name animated"
+    ng-class="{selected: !collapsed, fadeInUp: !collapsed && !node.top, root: node.top}"
+    title="{{node.label}}"
+    stp-href="{{node.href}}" stp-click="false"
+    ng-click="toggleItem(this.$parent, $event)"
+    ng-bind-html="node.label">
+  </a>
+</div>
+<ol ng-if="node.items.length && depth() < allowDepth()" ui-tree-nodes class="animated fadeInDown" ng-model="node.items" ng-class="{hidden: collapsed}">
+  <li ng-repeat="node in node.items" ui-tree-node data-nodrag data-collapsed="true" ng-include="'modules/sprocket/views/navItem.html'">
+  </li>
+</ol>

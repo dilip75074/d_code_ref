@@ -1,0 +1,27 @@
+<div id="progress-bar-container" ng-init="getRedirectUrl()">
+	<h2 translate="configuresystem.view.CONFIGURING_SYSTEM"></h2>
+	<div id="configuring-progress-bar" class="progress-bar" ng-show="undefined==message||message==''">
+		<div id="progress-bar-filling" style="width:{{vrackProgressPercentage}}%" ><span class="number-container"><span class="number" ng-bind="vrackProgressPercentage"></span>%</span></div>
+	</div>
+	<h4><plain translate="configuresystem.view.LOADING_CONFIGURING_SYSTEM" /></h4>
+	<h4><b><a ng-href="{{newIPUrl}}">{{newIPUrl}}</a></b> <plain translate="configuresystem.view.ACCESS_NEW_UI" /></h4>
+	<div style="text-align:center; color:red;" ng-show="undefined==message||message==''">{{configureSystemErrorMessage}}</div> 
+	
+	<div style="color: #444; font-weight: 300;" ng-if="failedTasks.length>0">
+		<p style="font-weight: bold; padding-bottom: 10px;" translate="configuresystem.view.FAILED_TASKS"></p>
+		<p ng-repeat="taskName in failedTasks" ng-bind="taskName"></p>
+		<br />
+		<p style="font-weight: bold; padding-bottom: 10px;">Error Messages</p>
+		<p ng-repeat="errorMessage in errorMessages" ng-bind="errorMessage"></p>
+		<br />
+		<div class="submit-container center-align">
+		    <input type="submit" value="Rerun" class="review-connect" ng-click="rerunIpReallocationWorkflow()">
+		</div>
+	</div>
+	
+	<div style="color: #444; font-weight: 300;" ng-if="failedTasks.length==0 && runningTasks.length>0">
+		<p style="font-weight: bold; padding-bottom: 10px;" translate="configuresystem.view.RUNNING_TASKS"></p>
+		<p ng-repeat="taskName in runningTasks" ng-bind="taskName"></p>
+	</div>
+	
+</div>

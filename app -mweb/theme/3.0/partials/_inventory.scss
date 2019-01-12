@@ -1,0 +1,394 @@
+/* Store Inventory */
+.BopisDetailsPanel {
+  background-color:$palette--header-background;
+}
+
+div.bopisProdName {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: right;
+
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+  }
+}
+
+.MystoreCont {
+  top:1px solid $palette--gray-light;
+  padding:12px $base-gutter-width 15px;
+}
+
+.MystoreCont .BopisStoreDetail {
+  border:none;
+}
+
+.inv_loading {
+  font-size: $base-font-size;
+  margin-left: 16px;
+  margin-top: $base-gutter-width;
+}
+
+.BopisStorePhNum {
+  float:left;
+  margin-top: 4px;
+  color:$palette--white;
+  text-decoration:none;
+  @include retina-sprite($call-store-group);
+}
+
+.BopisStoreDetail {
+  border-left:1px solid $palette--gray-med-light;
+  margin-left:40px;
+  overflow:hidden;
+}
+
+.BopisStoreArrow {
+  padding:20px 0 5px 0;
+  border:none;
+  margin-right:3px;
+  overflow:hidden;
+}
+
+.BopisStoreAddress {
+  padding-left:5px;
+  float:left;
+  font-weight:normal;
+}
+
+.FindStoreCont {
+  padding:13px $base-gutter-width;
+}
+
+.StoreDetailCont {
+  padding: 10px $base-gutter-width;
+  border-top:1px solid $palette--gray-med-light;
+}
+
+.StoreDetailContCurrent {
+  padding: 10px $base-gutter-width;
+  border-top:1px solid $palette--gray-light;
+  border-bottom:1px solid $palette--gray-light;
+}
+
+.StoreTitle,.StoreInvLevel,.StoreDistVal,.MystoreCont,.FindStoreCont,.SearchMsg {
+  @include font-bold;
+}
+
+.StoreAddr,.StoreDist,.StoreStock {
+  @include font-normal;
+}
+
+.StoreInvLevel {
+  padding-right: 2px;
+  line-height: $base-font-size;
+}
+
+.SearchMsg {
+  padding: 10px $base-gutter-width 8px;
+}
+
+.GeoMsg {
+  padding: $base-gutter-width;
+  color: $palette--stpls-red;
+  font-size: $base-font-size;
+}
+
+.ErrorSearchContainer {
+  margin-top: $base-gutter-width;
+  font-size:13px;
+  padding:0 0 5px 15px;
+  color:$palette--stpls-red;
+  font-weight:bold;
+}
+
+.SearchContent {
+  float:left;
+  height:36px;
+  padding-left:$base-gutter-width;
+  position:relative;
+}
+
+.SearchInputDiv {
+  border-top-left-radius: $base-radius;
+  border-bottom-left-radius: $base-radius;
+  border-top:1px solid $palette--gray-med-light;
+  border-left:1px solid $palette--gray-med-light;
+  border-bottom:1px solid $palette--gray-med-light;
+  border-right: none;
+  height:34px;
+  padding:0;
+  display:block;
+  background-color:$palette--white;
+  overflow: hidden;
+
+  .input-reset {
+    top: -5px;
+  }
+}
+
+.SearchInput {
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:14px;
+  border:0;
+  background:$palette--white;
+  outline:0;
+  height:100%;
+  margin:0;
+  width:100%;
+  -webkit-appearance:none;
+}
+
+.SearchIcon {
+  height:34px;
+  position:absolute;
+  left:0;
+  top:0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: none;
+  border-color: $palette--gray-med-light;
+  padding: 0 $base-gutter-width / 2;
+}
+
+.GEOIcon {
+  background-color:$palette--white;
+  height:34px;
+  position:absolute;
+  right:0;
+  top:0;
+  border:none;
+}
+
+.SearchContainer {
+  height:40px;
+}
+
+.ScrollWrapper {
+  overflow:hidden;
+  overflow-y:scroll;
+  -webkit-overflow-scrolling:touch;
+
+  .storeDisclaimer {
+    .storeDisclaimerText {
+      font-size: 12px;
+      @include font-normal;
+      padding: $base-gutter-width;
+
+    }
+  }
+}
+
+.StoreAddr {
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+.StorePanelWrapper .BopisStorePhNum {
+  height:35px;
+  min-width:40px;
+}
+
+.StorePanelWrapper .BopisStoreDetail {
+  min-height:35px;
+}
+
+.StorePanelWrapper .StoreStock {
+  line-height:35px;
+}
+
+.bopis_overlay_view {
+  padding-bottom: 0px;
+}
+
+.overlay_view.store-locate {
+  background-color: #F1F1F1;
+
+  .header {
+    background-color: #fff;
+    border-bottom: 1px solid $palette--gray-light-3;
+
+    #backButton {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: url("../../assets/images/back.svg") 0 0 no-repeat transparent;
+      background-size: contain;
+      width: 23px;
+      height: 23px;
+      display: block;
+    }
+
+    p {
+      color: #333;
+      font-weight: 200;
+      font-size: 16px;
+      line-height: 48px;
+      @include font-light;
+    }
+  }
+
+  .my-store-label {
+    display: none;
+  }
+
+  #id_SearchContainer {
+    padding-top: 6px;
+    width: 100%;
+    display: block;
+
+    div#id_SearchContent {
+      width: 100%;
+      padding: 0px 12px;
+
+      .SearchInputDiv {
+        width: 100%;
+        border: 1px solid $palette--gray-light-3;
+        overflow: hidden;
+        border-radius: 4px;
+        height: 43px;
+      }
+
+      #id_searchInput {
+        width: 90%;
+        height: 43px;
+        float: left;
+        font-size: 16px;
+        font-weight: 200;
+        color: #9b9b9b;
+        @include font-light;
+      }
+
+      div#id_SearchIcon, div#id_GEOSearchIcon {
+        margin-top: -38px;
+        float: right;
+      }
+
+      button#id_SearchIcon {
+        border: none;
+      }
+
+      .input-reset.active {
+        display: block;
+        background: none !important;
+        right: 48px;
+        top: -2px;
+      }
+    }
+  }
+
+  .store.current_store {
+   border-top-left-radius: 4px;
+   border-top-right-radius: 4px;
+  }
+
+  .store {
+    background: #fff;
+    border: 1px solid $palette--gray-light-3 !important;
+    border-bottom: none;
+    padding: 0px;
+    height: 90px;
+    width: calc(100% - 24px);
+    margin: 0 auto;
+    overflow: hidden;
+
+    .store-selector {
+      top: calc(50% - 12.5px);
+      left: 15px;
+      width: 25px;
+      height: 25px;
+      border-radius: 12.5px;
+      border: 1px solid $palette--gray-light-3;
+      background: #fff;
+      display: block;
+      position: relative;
+      color: #fff;
+      padding-left: 6px;
+      padding-top: 4px;
+
+      &.active {
+        background: #4a90e2;
+        padding-left: 7px;
+        padding-top: 5px;
+        span {
+          display: inline-block;
+        }
+      }
+    }
+
+    .BopisStoreDetail {
+      border: none;
+      margin: -15px 0px 0px 50px;
+      padding: 0px;
+
+      .BopisStoreAddress {
+        font-size: 16px;
+        font-weight: 200;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.19;
+        color: #333333;
+        @include font-light;
+
+        .StoreTitle {
+          font-weight: 200;
+          @include font-light;
+          margin-bottom: 2px;
+        }
+
+        .StoreAddr {
+          font-size: 14px;
+          font-weight: normal;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: 1.57;
+          color: #9b9b9b;
+          margin: 0px;
+          max-width: 165px;
+        }
+
+        a.storeNumLink {
+          font-size: 14px;
+          font-weight: normal;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: 1.57;
+          color: #4a90e2;
+        }
+      }
+    }
+
+    span.StoreDistVal {
+      font-size: 17px;
+      font-weight: 200;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.12;
+      text-align: right;
+      color: #333333;
+      float: right;
+      margin: 5px;
+      padding-right: 7px;
+    }
+
+    .StoreDetailCont {
+      border: none;
+      padding: 0px;
+    }
+
+    span.StoreInvLevel {
+      padding-right: 12px;
+      font-size: 14px;
+      font-weight: 300;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.36;
+      text-align: right;
+      color: #333333;
+      @include font-light;
+    }
+
+  }
+}

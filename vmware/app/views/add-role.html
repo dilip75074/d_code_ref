@@ -1,0 +1,49 @@
+<style>
+.modal-sm { width:500px!important;}
+.physical-container { max-width:0px!important; min-width:500px!important;}
+.form-modal {margin: 0px; padding-top: 20px; width: 500px;}
+.change-password {width: 420px;}
+.invalid-role{border-color:red!important}
+</style>
+<div ng-model="template" ng-controller="RoleController">
+	<div class="physical-container">
+		<header>
+			<span id="edit-configuration" title="Workload Configuration" translate="usermanagement.view.ADD_ROLE"></span><span class="dialog-close" ng-click="cancel()"> <img
+				src="app/img/close-icon.png">
+			</span>
+		</header>
+
+	<div class="form-modal">
+		<div class="change-password">
+			<div class="error-message-container" style=" margin-bottom: 25px;" ng-show="errorMsg!=''">
+					<img class="error-icon malign" src="app/img/error-warning-icon.png" />
+					<p class="malign">
+						<span class="error-title">{{errorMsg}}</span>
+					</p>
+				</div>
+			<input focus-me="focusInput" ng-class="{'invalid-role':errorMsg!=''}" type="text" maxlength="20" placeholder="Role Name" ng-model="newRoleName" ng-change="checkIsRoleValid(newRoleName)"/>
+			<div class="roles-options">
+            	<div class="role-options-type">
+                	<form>
+                        <div ng-repeat="privilege in privilegeList">
+                            <label class="tree-inactive">
+                                <input ng-click="editParentPrivilege(privilege, $event)" value="{{privilege}}" ng-checked="privilege.selected" type="checkbox" class="role-checkbox">
+                                {{privilege.categoryName}}
+                            </label>
+
+                            <div class="form-group"  ng-if="null != privilege.subCat && privilege.subCat.length > 0">
+                                <label class="tree-inactive" ng-repeat="item in privilege.subCat" ng-if="null != item">
+                                    <input ng-click="editChildPrivilege(privilege, $event, item)" value="{{item}}" ng-checked="item.selected" type="checkbox" class="role-checkbox">
+                                    {{item.name}}
+                                </label>
+                            </div>
+                        </div>
+                	</form>
+            	</div>
+        	</div>
+        	<div class="submit-container center-align">
+                <input type="button" value="Confirm" class="submit" ng-click="newRole();"/>
+		    </div>
+	    </div>
+	</div>
+</div>

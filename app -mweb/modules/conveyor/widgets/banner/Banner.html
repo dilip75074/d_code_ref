@@ -1,0 +1,22 @@
+<div class="conveyor-banner-container" ng-switch="config.presentation" ng-class="{'opt-indicators': config.indicators && config.indicators != 'hide'}">
+  <div ng-switch-default class="row"> <!-- stacked -->
+    <div class="conveyor-banner no_padding" ng-repeat="item in items" widget-cols>
+      <a stp-href="{{item.link}}" title="{{item.altText}}">
+        <span ng-click="bannerClick($event, item);">
+          <img class="img-responsive nofade" ng-src="{{item.imageUrl | bannerImage}}" altText="{{item.altText}}" />
+        </span>
+      </a>
+    </div>
+  </div>
+  <div ng-switch-when="carousel"> <!-- carousel -->
+    <carousel interval="interval">
+      <slide ng-repeat="slide in items" active="slide.active">
+        <a stp-href="{{slide.link}}" title="{{slide.altText}}">
+          <span ng-click="bannerClick($event, slide);">
+            <img class="img-responsive" ng-src="{{slide.imageUrl | bannerImage}}" altText="{{slide.altText}}" />
+          </span>
+        </a>
+      </slide>
+    </carousel>
+  </div>
+</div>

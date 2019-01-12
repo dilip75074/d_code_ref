@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title ng-bind-html="seo.title">mWeb DEV-LOCAL</title>
+    <meta name="robots" content="index, follow" ng-attr-content="{{seo.robots}}">
+    <meta seo-meta-description>
+    <link seo-canonical />
+    <meta property="og:type" content="" ng-attr-content="{{seo.og.type}}">
+    <meta property="og:title" content="" ng-attr-content="{{seo.og.title}}">
+    <meta property="og:url" content="" ng-attr-content="{{seo.og.url}}">
+    <meta property="og:site_name" content="" ng-attr-content="{{seo.og.siteName}}">
+    <meta property="og:image" content="" ng-if="seo.og.image" ng-attr-content="{{seo.og.image}}">
+    <meta property="fb:app_id" content="" ng-attr-content="{{seo.og.fbAppId}}">
+    <meta property="product:payment_method" content="ApplePay" />
+    <link seo-page-prev />
+    <link seo-page-next />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="stpls-internal" content="true" />
+    <meta name="apple-itunes-app" content="app-id=376393873" />
+
+    <meta name="fragment" content="!" />
+    <base href="/">
+
+    <link rel="shortcut icon"href="assets/images/stpls.ico"type="image/x-icon">
+
+    <!-- staged for dev-local, gets injected based on locale on server -->
+    <script type="text/javascript">
+
+     window.stpls_env = 'dev-local';
+
+     window.mobileServiceCache = null;
+
+     window.stpls_locale = false;
+
+     window.stpls_global = false;
+
+     window.stpls_asgard_views = false;
+
+     window.sprocketData = null;
+
+     window.conveyorData = null;
+
+     window.seoPreload = null;
+
+    </script>
+
+    <!-- build:css(.tmp) styles/vendor.css -->
+    <link rel="stylesheet" href="assets/vendor_custom/styles/bootstrap.css" />
+    <link rel="stylesheet" href="assets/vendor_custom/styles/angular-carousel.css" />
+    <link rel="stylesheet" href="assets/vendor_custom/styles/animate.css">
+    <link rel="stylesheet" href="assets/vendor_custom/styles/barcode.css"/>
+    <link rel="stylesheet" href="assets/vendor_custom/styles/oo_style.css" />
+    <!-- endbuild -->
+
+    <!-- removing deprecated stylesheets -->
+    <!--<link rel="stylesheet" href="assets/styles/stpls.css" />-->
+    <!--<link rel="stylesheet" href="assets/styles/stpls_hd.css" />-->
+    <!--<link rel="stylesheet" href="theme/1.0/1.css" />-->
+    <!--<link rel="stylesheet" href="theme/1.5/1.5.css" />-->
+    <!--<link rel="stylesheet" href="theme/2.0/2.css" />-->
+    <!-- end deprecated -->
+
+    <!-- build:css(.tmp) theme/3.0.css -->
+    <link rel="stylesheet" href="theme/3.0/3.css" />
+    <!-- endbuild -->
+  </head>
+
+  <body class="{{$root.formFactor}} {{$root.displayType}}" ng-if="$root.app_loaded">
+
+    <page-container></page-container>
+    <script src="//nexus.ensighten.com/staples2/dev-dotcom-mobile2/Bootstrap.js"></script>
+    <script src="//d3c3cq33003psk.cloudfront.net/opentag-25674-1606470.js"></script>
+
+    <!-- Bower Scripts (first) -->
+    <!-- build:js({.,app}) scripts/angular.libs.js -->
+    <!-- bower:js -->
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/spin.js/spin.js"></script>
+    <script src="bower_components/angular-spinner/angular-spinner.js"></script>
+    <script src="bower_components/ocLazyLoad/dist/ocLazyLoad.js"></script>
+    <script src="bower_components/angular-carousel/dist/angular-carousel.min.js"></script>
+    <script src="bower_components/angular-cache/src/angular-cache.js"></script>
+    <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-ui-utils/mask.js"></script>
+    <script src="bower_components/angular-toggle-switch/angular-toggle-switch.js"></script>
+    <script src="bower_components/ngmap/build/scripts/ng-map.js"></script>
+    <script src="bower_components/angular-payments/lib/angular-payments.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- Skynet Scripts (second) -->
+    <!-- build:js({.tmp,app}) scripts/stpls.js -->
+    <script src="common/stpls.js"></script>
+    <script src="common/stpls_routing.js"></script>
+    <script src="common/stpls_filters.js"></script>
+    <script src="common/stpls_switches.js"></script>
+    <!-- NOTE: This is a dynamically generated file, and must be kept in place for build purposes -->
+    <script src="common/templates.js"></script>
+
+    <script src="common/services/Analytics.js"></script>
+    <script src="common/services/Config.js"></script>
+    <script src="common/services/Device.js"></script>
+    <script src="common/services/GoogleMapLoader.js"></script>
+    <script src="common/services/MobileService.js"></script>
+    <script src="common/services/Routes.js"></script>
+    <script src="common/services/shippingConfig.js"></script>
+    <script src="common/services/Soasta.js"></script>
+    <script src="common/services/Personalization.js"></script>
+    <script src="common/services/FBMessenger.js"></script>
+    <script src="common/services/DFPInitialization.js"></script>
+	<script src="common/services/NuData.js"></script>
+    <script src="common/services/paymentHandlers/ApplePayHandler.js"></script>
+    <script src="common/services/paymentHandlers/ApplePayService.js"></script>
+
+    <script src="common/directives/infiniteScrolling.js"></script>
+    <script src="common/directives/supporting.js"></script>
+    <script src="common/directives/headerSearch/HeaderSearchCtrl.js"></script>
+    <script src="common/directives/headerSearch/headerSearch.js"></script>
+    <script src="common/directives/lazyLoadImage.js"></script>
+
+    <script src="common/directives/controls/btnExpand.js"></script>
+    <script src="common/directives/controls/inputResetControl.js"></script>
+    <script src="common/directives/switchToggle/switchToggle.js"></script>
+
+    <script src="common/directives/page/pageCtrl.js"></script>
+    <script src="common/directives/page/pageContainer.js"></script>
+    <script src="common/directives/phoneNumber.js"></script>
+    <script src="common/directives/rewardsNumber.js"></script>
+    <script src="common/directives/emailAddress.js"></script>
+    <script src="common/directives/expDate.js"></script>
+    <script src="common/directives/storeHeader/StoreHeader.js"></script>
+    <script src="common/directives/storeHeader/StoreHeaderCtrl.js"></script>
+
+    <script src="common/directives/analytics/AnalyticsItem.js"></script>
+    <script src="common/directives/hookLogic/hookLogic.js"></script>
+
+    <script src="common/controllers/UserPromptCtrl.js"></script>
+
+    <script src="modules/account/Account.js"></script>
+    <script src="modules/account/AccountCtrl.js"></script>
+    <script src="modules/account/RegisterCtrl.js"></script>
+
+    <script src="modules/address/directives/Address.js"></script>
+    <script src="modules/address/directives/AddressEntry.js"></script>
+    <script src="modules/address/Addresses.js"></script>
+    <script src="modules/address/AddressPromptCtrl.js"></script>
+
+    <!-- <script src="modules/asgardContainer/Asgard.js"></script>
+         <script src="modules/asgardContainer/AsgardContainerCtrl.js"></script> -->
+
+    <script src="modules/conveyor/Conveyor.js"></script>
+    <script src="modules/conveyor/ConveyorCtrl.js"></script>
+    <script src="modules/conveyor/ConveyorRefCtrl.js"></script>
+
+    <script src="modules/conveyor/directives/Template.js"></script>
+    <script src="modules/conveyor/widgets/Widget.js"></script>
+    <script src="modules/conveyor/widgets/ads/AdPlacement.js"></script>
+    <script src="modules/conveyor/widgets/banner/Banner.js"></script>
+    <script src="modules/conveyor/widgets/bundle/Bundle.js"></script>
+    <script src="modules/conveyor/widgets/hero/Hero.js"></script>
+    <script src="modules/conveyor/widgets/nav/Nav.js"></script>
+    <script src="modules/conveyor/widgets/search/Search.js"></script>
+    <script src="modules/conveyor/widgets/text/Text.js"></script>
+    <script src="modules/conveyor/widgets/tophat/Tophat.js"></script>
+    <script src="modules/conveyor/widgets/footer/Footer.js"></script>
+
+    <script src="modules/sprocket/Sprocket.js"></script>
+    <script src="modules/sprocket/SprocketCtrl.js"></script>
+    <script src="modules/sprocket/directives/SprocketOverlay.js"></script>
+    <script src="modules/sprocket/submodules/Creative.js"></script>
+    <script src="modules/sprocket/submodules/Navigation.js"></script>
+
+    <script src="modules/seo/Seo.js"></script>
+    <script src="modules/seo/util/Meta.js"></script>
+    <script src="modules/seo/util/Quartz.js"></script>
+    <script src="modules/seo/util/Pumice.js"></script>
+    <script src="modules/seo/util/Sanitizer.js"></script>
+
+    <script src="modules/browse/directives/categoryListTree.js"></script>
+    <script src="modules/browse/Browse.js"></script>
+    <script src="modules/browse/BrowseCtrl.js"></script>
+
+    <script src="modules/cart/directives/shippingIndicator.js"></script>
+    <script src="modules/cart/directives/AddCartOverlay.js"></script>
+    <script src="modules/cart/directives/clickVisaCheckout.js"></script>
+    <script src="modules/cart/Cart.js"></script>
+    <script src="modules/cart/CartCtrl.js"></script>
+    <script src="modules/cart/AtcCtrl.js"></script>
+    <script src="modules/cart/Coupons.js"></script>
+
+    <script src="modules/checkout/Checkout.js"></script>
+    <script src="modules/checkout/CheckoutCtrl.js"></script>
+    <script src="modules/checkout/ConfirmCtrl.js"></script>
+    <script src="modules/checkout/VisaCheckout.js"></script>
+
+    <script src="modules/class/ClassCtrl.js"></script>
+    <script src="modules/class/ClassSearch.js"></script>
+
+    <script src="modules/creditcard/directives/CreditCard.js"></script>
+    <script src="modules/creditcard/directives/creditCardFocus.js"></script>
+    <script src="modules/creditcard/directives/stapleCreditCard.js"></script>
+    <script src="modules/creditcard/CreditCardPromptCtrl.js"></script>
+    <script src="modules/creditcard/CreditCards.js"></script>
+
+    <script src="modules/deals/Deals.js"></script>
+    <script src="modules/deals/DealsService.js"></script>
+
+    <script src="modules/favorites/FavoriteDetailsCtrl.js"></script>
+    <script src="modules/favorites/Favorites.js"></script>
+    <script src="modules/favorites/FavoritesCtrl.js"></script>
+
+    <script src="modules/footer/footerCtrl.js"></script>
+
+    <script src="modules/help/product/ProductHelpCtrl.js"></script>
+    <script src="modules/help/Help.js"></script>
+    <script src="modules/help/HelpCtrl.js"></script>
+
+    <script src="modules/marketing/OptinCtrl.js"></script>
+
+    <script src="modules/home/home.js"></script>
+    <script src="modules/home/HomeCtrl.js"></script>
+
+    <script src="modules/guestHome/guestHomeCtrl.js"></script>
+
+    <script src="modules/inkToner/inkToner.js"></script>
+    <script src="modules/inkToner/inkTonerCtrl.js"></script>
+
+    <script src="modules/inside/InsideChat.js"></script>
+
+    <script src="modules/inventory/InventoryCtrl.js"></script>
+    <script src="modules/inventory/StoreInventory.js"></script>
+    <script src="modules/inventory/DefaultStore.js"></script>
+
+    <script src="modules/locator/directives/storeResult.js"></script>
+    <script src="modules/locator/Locator.js"></script>
+    <script src="modules/locator/ShipToStoreCtrl.js"></script>
+    <script src="modules/locator/StoreLocatorCtrl.js"></script>
+
+    <script src="modules/login/LoginCtrl.js"></script>
+
+    <script src="modules/mcs/McsCtrl.js"></script>
+    <script src="modules/mcs/directives/Template.js"></script>
+    <script src="modules/mcs/cards/carousel/Carousel.js"></script>
+    <script src="modules/mcs/cards/coupons/Coupons.js"></script>
+    <script src="modules/mcs/cards/deals/Deals.js"></script>
+    <script src="modules/mcs/cards/inktoner/InkToner.js"></script>
+    <script src="modules/mcs/cards/rewards/Rewards.js"></script>
+    <script src="modules/mcs/cards/store/Store.js"></script>
+    <script src="modules/mcs/cards/trending/Trending.js"></script>
+    <script src="modules/mcs/cards/user/User.js"></script>
+    <script src="modules/mcs/cards/weeklyad/WeeklyAd.js"></script>
+    <script src="modules/mcs/cards/services/services.js"></script>
+    <script src="modules/mcs/cards/dealsCenter/dealsCenter.js"></script>
+    <script src="modules/mcs/cards/timeToReorder/timeToReorder.js"></script>
+    <script src="modules/mcs/cards/orderTracking/orderTracking.js"></script>
+    <script src="modules/mcs/cards/valueProp/valueProp.js"></script>
+    <script src="modules/mcs/cards/staplesApp/staplesApp.js"></script>
+    <script src="modules/mcs/cards/tophat/tophat.js"></script>
+
+    <script src="modules/orders/OrderDetailCtrl.js"></script>
+    <script src="modules/orders/Orders.js"></script>
+    <script src="modules/orders/OrdersCtrl.js"></script>
+
+    <script src="modules/product/productCell/productCell.js"></script>
+    <script src="modules/product/productCell/productItem.js"></script>
+    <script src="modules/product/Product.js"></script>
+    <script src="modules/product/ProductCtrl.js"></script>
+
+    <script src="modules/profile/directives/changePassword.js"></script>
+    <script src="modules/profile/Profile.js"></script>
+    <script src="modules/profile/ProfileCtrl.js"></script>
+
+    <script src="modules/reOrder/reOrder.js"></script>
+    <script src="modules/reOrder/EZReorder.js"></script>
+
+    <script src="modules/reviews/directives/starRating.js"></script>
+
+    <script src="modules/rewards/Rewards.js"></script>
+    <script src="modules/rewards/RewardsCheckCtrl.js"></script>
+    <script src="modules/rewards/RewardsCtrl.js"></script>
+    <script src="modules/rewards/RewardsHelpCtrl.js"></script>
+
+    <script src="config/US/translate.js"></script>
+    <script src="config/CA/translate.js"></script>
+    <!-- endbuild -->
+
+    <!-- Custom vendor scripts (last) -->
+    <!-- build:js({.,app}) scripts/vendor.js -->
+    <script src="assets/vendor_custom/scripts/scene7.js"></script>
+    <script src="assets/vendor_custom/scripts/soasta.js"></script>
+    <script src="assets/vendor_custom/scripts/barcodeGenerator.js"></script>
+    <script src="assets/vendor_custom/scripts/ui-bootstrap-tpls.js"></script>
+
+
+    <!--
+         OnlineOpinion v5.9.0
+         Released: 11/17/2014. Compiled 11/17/2014 01:01:01 PM -0600
+         Branch: master 7cffc7b9a0b11594d56b71ca0cb042d9b0fc24f5
+         Components: Full
+         UMD: disabled
+         The following code is Copyright 1998-2014 Opinionlab, Inc. All rights reserved. Unauthorized use is prohibited. This product and other products of OpinionLab, Inc. are protected by U.S. Patent No. 6606581, 6421724, 6785717 B1 and other patents pending. http://www.opinionlab.com
+       -->
+    <!-- MAIN OL ENGINE -->
+    <script language="javascript" type="text/javascript" charset="windows-1252" src="assets/vendor_custom/scripts/oo_engine.min.js"></script>
+    <!-- FEEDBACK CONFIGURATION -->
+    <script language="javascript" type="text/javascript" charset="windows-1252" src="assets/vendor_custom/scripts/oo_conf_mobile_inline.js"></script>
+    <noscript>This JavaScript enables OnlineOpinion, a method for collecting secure feedback data.</noscript>
+    <!-- END: OnlineOpinion v5.9.0 -->
+    <!-- endbuild -->
+  </body>
+</html>

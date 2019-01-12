@@ -1,0 +1,47 @@
+<div class="homecards-container">
+    <div class="card-header-row">
+        <span class="card-type">The Staples® App</span>
+        <div class="card-help pull-right scTrack scLink" sctype="scLink" scvalue="Learn more">
+            <a href="/sbd/cre/marketing/mobile-application/">Learn More</a>
+        </div>
+    </div>
+
+    <a href="/sbd/cre/marketing/mobile-application/">
+        <div class="card-staplesapp-row">
+            <div class="staplesapp-image">
+                <img class="animated fadeIn" src="../../assets/images/app-icon.png"/>
+            </div>
+
+            <div class="staplesapp-content">
+                <span class="bold">Download the Staples® App </span>
+                <span class="normal">for iPhone, iPad and Android.</span>
+            </div>
+        </div>
+    </a>
+
+    <div class="card-footer-row scTrack scLink" sctype="scLink" scvalue="Download now">
+        <div ng-if="!androidDevice && !iOSDevice">
+            <div class="card-btn app-card left" ng-click="googlePlayStore()">
+                <button>Available for</button>
+                <img class="animated fadeIn" src="../../assets/images/android-logo.png"/>
+            </div>
+            <div class="card-btn app-card right card-icon-border" ng-click="appleStore()">
+                <button>Get it on</button>
+                <img class="animated fadeIn" src="../../assets/images/apple-logo.png"/>
+            </div>
+        </div>
+        <div ng-if="androidDevice && !iOSDevice">
+            <div class="card-btn" ng-click="googlePlayStore()">
+                <button>Available for</button>
+                <img class="animated fadeIn" src="../../assets/images/android-logo.png"/>
+            </div>
+        </div>
+        <div ng-if="iOSDevice && !androidDevice">
+            <div class="card-btn" ng-click="appleStore()">
+                <button>Get it on</button>
+                <img class="animated fadeIn" src="../../assets/images/apple-logo.png"/>
+            </div>
+        </div>
+    </div>
+
+</div>

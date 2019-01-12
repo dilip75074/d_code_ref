@@ -1,0 +1,304 @@
+<div ng-model="template" class="physical-network-setup-form form-modal" ng-init="proceedIfNetworkConfigFilled()" ng-show="networkConfigAlreadyFilled">
+	<div id="form-modal" class="form-modal">
+		<ul id="step-navi" ng-init="phySetup=1">
+			<li class="step-1" style="float:left;" ng-click="back();"><a href="javascript:;" ng-click="phySetup=6;" ng-class="{'active':phySetup==6}"><plain translate="logicalresource.view.BACK"/></a></li>
+			<li class="step-1"><a href="javascript:;" ng-click="phySetup=1;" ng-class="{'active':phySetup==1}"><plain translate="physicalnetworksetup.view.VMOTION"/></a></li>
+			<li class="step-2"><a href="javascript:;" ng-click="phySetup=2;" ng-class="{'active':phySetup==2}"><plain translate="physicalnetworksetup.view.VSAN"/></a></li>
+			<li class="step-3"><a href="javascript:;" ng-click="phySetup=3;" ng-class="{'active':phySetup==3}"><plain translate="physicalnetworksetup.view.VXLAN"/></a></li>
+			<!-- li class="step-4"><a href="javascript:;" ng-click="phySetup=4;" ng-class="{'active':phySetup==4}">VCENTER</a></li-->
+			<li class="step-4"><a href="javascript:;" ng-click="phySetup=4;" ng-class="{'active':phySetup==4}"><plain translate="physicalnetworksetup.view.EXTERNAL_CONNECTIONS"/></a></li>
+			<li class="step-review"><a href="javascript:;" ng-click="phySetup=5;showValidNetworks()" ng-class="{'active':phySetup==5}"><plain translate="physicalnetworksetup.view.REVIEW"/></a></li>
+		</ul>
+		
+		<form ng-class="{'validate': submitted==1}" name="formvmotion" ng-submit="validateTab('VMOTION')" novalidate>
+			<div id="physical-network-setup-form-1" ng-show="phySetup==1" class="physical-vxlan change-password">
+				<div ng-show="(formvmotion.$invalid && submitted==1) || (formvmotion.$valid && showUpdateMessage==1)" class="error-message-container">
+					<img class="error-icon malign" src="app/img/error-warning-icon.png" />
+					<p class="malign">
+						<!-- <span class="error-title">System Error: </span>-->
+						<span class="error-title"
+							ng-show="formvmotion.$invalid && submitted==1" translate="physicalnetworksetup.view.FILL_MANDATORY_FIELDS"></span>
+						<span class="error-title"
+							ng-show="formvmotion.$valid && showUpdateMessage==1" translate="physicalnetworksetup.view.CLICK_NEXT_SAVE_UPDATES"></span>
+
+					</p>
+				</div>
+				<h2 translate="physicalnetworksetup.view.ENTER_VMOTION_INFORMATION"></h2>
+				<label for="vlan-id" translate="physicalnetworksetup.view.VLAN_ID"></label>
+				<input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" name="vlan-id" placeholder="ID Number" ng-model="vMOTIONdata.vlanId"/>
+				<label for="network-start-ip" translate="physicalnetworksetup.view.NETWORK_START_IP"></label>
+				<div class="ip-address-form">
+					<input type="text" ng-trim="false" ng-pattern="part1Ip" id="network-start-ip-1" placeholder="xxx" maxlength="3" ng-model="vMOTIONdata.subnet.part1" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-2" placeholder="xxx" maxlength="3" ng-model="vMOTIONdata.subnet.part2" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-3" placeholder="xxx" maxlength="3" ng-model="vMOTIONdata.subnet.part3" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-4" placeholder="xxx" maxlength="3" ng-model="vMOTIONdata.subnet.part4" required/> 
+					<div class="error-field"><label for="network-start-ip" class="error" generated="true"></label></div>
+				</div>
+				<label for="subnet-mask" translate="physicalnetworksetup.view.SUBNET_MASK"></label>
+				<div class="ip-address-form">
+					<input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="vMOTIONdata.subnetMask.part1" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="vMOTIONdata.subnetMask.part2" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="vMOTIONdata.subnetMask.part3" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="vMOTIONdata.subnetMask.part4" required/> 
+					<div class="error-field"><label for="subnet-mask" class="error" generated="true"></label></div>
+				</div>
+				<label for="gateway" translate="physicalnetworksetup.view.GATEWAY"></label>
+				<div class="ip-address-form">
+					<input type="text" ng-trim="false" ng-pattern="part1Ip" id="gateway-1" placeholder="xxx" maxlength="3" ng-model="vMOTIONdata.gateway.part1" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="gateway-2" placeholder="xxx" maxlength="3" ng-model="vMOTIONdata.gateway.part2" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="gateway-3" placeholder="xxx" maxlength="3" ng-model="vMOTIONdata.gateway.part3" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="gateway-4" placeholder="xxx" maxlength="3" ng-model="vMOTIONdata.gateway.part4" required/> 
+					<div class="error-field"><label for="gateway" class="error" generated="true"></label></div>
+				</div>
+				<div class="next-container center-align">
+					<input type="submit" value="Next" class="physical-network-setup-button">
+				</div>
+			</div>
+		</form>
+	
+		<form ng-class="{'validate': submitted==2}" name="formvsan" ng-submit="validateTab('VSAN')" novalidate>
+			<div id="physical-network-setup-form-2" ng-show="phySetup==2" class="physical-vxlan change-password">
+				<div ng-show="((formvsan.$invalid && submitted==2) || (formvsan.$valid && showUpdateMessage==2))"
+					class="error-message-container">
+					<img class="error-icon malign" src="app/img/error-warning-icon.png" />
+					<p class="malign">
+						<!-- <span class="error-title">System Error: </span>-->
+						<span class="error-title"
+							ng-show="formvsan.$invalid && submitted==2" translate="physicalnetworksetup.view.FILL_MANDATORY_FIELDS"></span>
+						<span class="error-title"
+							ng-show="formvsan.$valid && showUpdateMessage==2" translate="physicalnetworksetup.view.CLICK_NEXT_SAVE_UPDATES"></span>
+					</p>
+				</div>
+				<h2 translate="physicalnetworksetup.view.ENTER_VSAN_INFORMATION"></h2>
+				<label for="vlan-id" translate="physicalnetworksetup.view.VLAN_ID"></label>
+				<input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" id="vlan-id" placeholder="ID Number" ng-model="vSANdata.vlanId"/>
+				<label for="network-start-ip" translate="physicalnetworksetup.view.NETWORK_START_IP"></label>
+				<div class="ip-address-form">
+					<input type="text" ng-trim="false" ng-pattern="part1Ip" id="network-start-ip-1" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnet.part1" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-2" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnet.part2" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-3" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnet.part3" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-4" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnet.part4" required/> 
+					<div class="error-field"><label for="network-start-ip" class="error" generated="true"></label></div>
+				</div>
+				<label for="subnet-mask" translate="physicalnetworksetup.view.SUBNET_MASK"></label>
+				<div class="ip-address-form">
+					<input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnetMask.part1" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnetMask.part2" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnetMask.part3" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="vSANdata.subnetMask.part4" required/> 
+					<div class="error-field"><label for="subnet-mask" class="error" generated="true"></label></div>
+				</div>
+				<label for="gateway" translate="physicalnetworksetup.view.GATEWAY"></label>
+				<div class="ip-address-form">
+					<input type="text" ng-trim="false" ng-pattern="part1Ip" id="gateway-1" placeholder="xxx" maxlength="3" ng-model="vSANdata.gateway.part1" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="gateway-2" placeholder="xxx" maxlength="3" ng-model="vSANdata.gateway.part2" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="gateway-3" placeholder="xxx" maxlength="3" ng-model="vSANdata.gateway.part3" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="gateway-4" placeholder="xxx" maxlength="3" ng-model="vSANdata.gateway.part4" required/> 
+					<div class="error-field"><label for="gateway" class="error" generated="true"></label></div>
+				</div>
+				
+				<div class="next-container center-align">
+					<input type="submit" value="Next" class="physical-network-setup-button">
+				</div>
+			</div>
+		</form>
+		
+		<form ng-class="{'validate': submitted==3}" name="formvxlan" ng-submit="validateTab('VXLAN')" novalidate>
+			<div id="physical-network-setup-form-3" ng-show="phySetup==3" class="physical-vxlan change-password">
+				<div ng-show="((formvxlan.$invalid && submitted==3) || (formvxlan.$valid && showUpdateMessage==3))"
+					class="error-message-container">
+					<img class="error-icon malign" src="app/img/error-warning-icon.png" />
+					<p class="malign">
+						<!-- <span class="error-title">System Error: </span>-->
+						<span class="error-title"
+							ng-show="formvxlan.$invalid && submitted==3" translate="physicalnetworksetup.view.FILL_MANDATORY_FIELDS"></span>
+						<span class="error-title"
+							ng-show="formvxlan.$valid && showUpdateMessage==3" translate="physicalnetworksetup.view.CLICK_NEXT_SAVE_UPDATES"></span>
+					</p>
+				</div>
+				<h2 translate="physicalnetworksetup.view.ENTER_VXLAN_INFORMATION"></h2>
+				<label for="vlan-id" translate="physicalnetworksetup.view.VLAN_ID"></label>
+				<input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" id="vlan-id" placeholder="ID Number" ng-model="vXLANdata.vlanId"/>
+				<label for="network-start-ip" translate="physicalnetworksetup.view.NETWORK_START_IP"></label>
+				<div class="ip-address-form">
+					<input type="text" ng-trim="false" ng-pattern="part1Ip" id="network-start-ip-1" placeholder="xxx" maxlength="3" ng-model="vXLANdata.subnet.part1" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-2" placeholder="xxx" maxlength="3" ng-model="vXLANdata.subnet.part2" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-3" placeholder="xxx" maxlength="3" ng-model="vXLANdata.subnet.part3" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-4" placeholder="xxx" maxlength="3" ng-model="vXLANdata.subnet.part4" required/> 
+					<div class="error-field"><label for="network-start-ip" class="error" generated="true"></label></div>
+				</div>
+				<label for="subnet-mask" translate="physicalnetworksetup.view.SUBNET_MASK"></label>
+				<div class="ip-address-form">
+					<input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="vXLANdata.subnetMask.part1" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="vXLANdata.subnetMask.part2" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="vXLANdata.subnetMask.part3" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="vXLANdata.subnetMask.part4" required/> 
+					<div class="error-field"><label for="subnet-mask" class="error" generated="true"></label></div>
+				</div>
+				<label for="gateway" translate="physicalnetworksetup.view.GATEWAY"></label>
+				<div class="ip-address-form">
+					<input type="text" ng-trim="false" ng-pattern="part1Ip" id="gateway-1" placeholder="xxx" maxlength="3" ng-model="vXLANdata.gateway.part1" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="gateway-2" placeholder="xxx" maxlength="3" ng-model="vXLANdata.gateway.part2" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="gateway-3" placeholder="xxx" maxlength="3" ng-model="vXLANdata.gateway.part3" required/> <span class="middot">&middot;</span>
+					<input type="text" ng-trim="false" ng-pattern="range" id="gateway-4" placeholder="xxx" maxlength="3" ng-model="vXLANdata.gateway.part4" required/> 
+					<div class="error-field"><label for="gateway" class="error" generated="true"></label></div>
+				</div>
+				
+				<div class="next-container center-align">
+					<input type="submit" value="Next" class="physical-network-setup-button">
+				</div>
+			</div>
+		</form>
+	
+		<div id="physical-network-setup-form-4" ng-show="phySetup==4" class="external-connections">
+			<div class="change-password">
+				<div ng-show="((formexternalconnections.$invalid && submitted==4) || (formexternalconnections.$valid && showUpdateMessage==4))" class="error-message-container">
+					<img class="error-icon malign" src="app/img/error-warning-icon.png" />
+					<p class="malign">
+						<!-- <span class="error-title">System Error: </span>-->
+						<span class="error-title"
+							ng-show="formexternalconnections.$invalid && submitted==4" translate="physicalnetworksetup.view.FILL_MANDATORY_FIELDS"></span>
+						<span class="error-title"
+							ng-show="formexternalconnections.$valid && showUpdateMessage==4" translate="physicalnetworksetup.view.CLICK_NEXT_SAVE_UPDATES"></span>
+					</p>
+				</div>
+			</div>
+			<h2 translate="physicalnetworksetup.view.ENTER_EXTERNAL_CONNECTIONS"></h2>
+			<p class="center-align" translate="physicalnetworksetup.view.CANNOT_VALIDATE_EXTERNAL_CONNECTION"></p>
+			<div class="external-connections-form">
+				<form ng-class="{'validate' : submitted==4}" name="formexternalconnections" ng-submit="validateTab('EXTERNAL_CONNECTION')" novalidate>
+					<div class="vlan-number">
+						<label for="vlan-id" translate="physicalnetworksetup.view.VLAN_ID"></label>
+						<input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" name="vlan-id" placeholder="ID Number" ng-model="externalConnectionsdata.vlanId"/>
+					</div>
+					<div class="grey-container">
+						<label for="connection-name" translate="physicalnetworksetup.view.CONNECTION_NAME"></label>
+						<input type="text" ng-trim="false" name="connection-name" ng-model="externalConnectionsdata.networkName" placeholder="Custom Name" required/>
+						<label for="network-start-ip" translate="physicalnetworksetup.view.NETWORK_START_IP"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" name="network-start-ip-1" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.subnet.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="network-start-ip-2" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.subnet.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="network-start-ip-3" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.subnet.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="network-start-ip-4" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.subnet.part4" required/> 
+							<div class="error-field"><label for="network-start-ip" class="error" generated="true"></label></div>
+						</div>
+						<label for="subnet-mask" translate="physicalnetworksetup.view.SUBNET_MASK"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" name="subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.subnetMask.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.subnetMask.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.subnetMask.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.subnetMask.part4" required/> 
+							<div class="error-field"><label for="subnet-mask" class="error" generated="true"></label></div>
+						</div>
+						<label for="gateway" translate="physicalnetworksetup.view.GATEWAY"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" name="gateway-1" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.gateway.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="gateway-2" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.gateway.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="gateway-3" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.gateway.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="gateway-4" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.gateway.part4" required/> 
+							<div class="error-field"><label for="gateway" class="error" generated="true"></label></div>
+						</div>
+						<label for="dns" translate="physicalnetworksetup.view.DNS"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" name="dns-1" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.dns.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="dns-2" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.dns.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="dns-3" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.dns.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="dns-4" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.dns.part4" required/> 
+							<div class="error-field"><label for="dns" class="error" generated="true"></label></div>
+						</div>
+						<label for="ntp" translate="physicalnetworksetup.view.NTP"></label>
+						<div class="ip-address-form">
+							<input type="text" ng-trim="false" ng-pattern="part1Ip" name="ntp-1" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.ntp.part1" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="ntp-2" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.ntp.part2" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="ntp-3" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.ntp.part3" required/> <span class="middot">&middot;</span>
+							<input type="text" ng-trim="false" ng-pattern="range" name="ntp-4" placeholder="xxx" maxlength="3" ng-model="externalConnectionsdata.ntp.part4" required/> 
+							<div class="error-field"><label for="dns" class="error" generated="true"></label></div>
+						</div>						
+					</div>
+					
+					<div class="next-container center-align">
+					<input type="submit" value="Next" class="physical-network-setup-button">
+				</div>
+				</form>
+				<!-- div class="external-controls lfloat">
+					<span class="external-prev-btn" ng-click="showPreviousConnection()" ng-show="showBack" ng-init="showBack=false"></span>
+					<span class="external-add-btn" ng-click="addExternalConnection()" ng-show="showAdd==true" ng-init="showAdd=true"></span>
+					<span class="external-next-btn" ng-click="showNextConnection()" ng-show="showAdd==false"></span>
+				</div-->
+			</div>
+		</div>
+		
+		<div id="physical-review" ng-show="phySetup==5" class="physical-review"> 
+				<h2 translate="physicalnetworksetup.view.REVIEW"></h2>
+				<p class="center-align" translate="physicalnetworksetup.view.CANNOT_VALIDATE_EXTERNAL_CONNECTION"></p>
+				<div class="clearfix review-config">
+					<div class="configuration-section">
+						<h3 translate="physicalnetworksetup.view.PHYSICAL_NETWORKS"></h3>
+						
+						<div class="content-general">
+							<p class="title" translate="physicalnetworksetup.view.VMOTION"></p>
+							<ul class="general-list">
+								<li><p class="list-title"><plain translate="physicalnetworksetup.view.VLAN_ID"/>:</p><span>{{VMOTION.vlanId}}</span></li>
+								<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNET"/>:</p><span>{{VMOTION.subnet}}</span></li>
+								<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNETMASK"/>:</p><span>{{VMOTION.subnetMask}}</span></li>
+								<li><p class="list-title"><plain translate="physicalnetworksetup.view.GATEWAY_U"/>:</p><span>{{VMOTION.gateway}}</span></li>
+							</ul>
+						</div>
+						<div class="content-general availability">
+							<p class="title" translate="physicalnetworksetup.view.VSAN_L"></p>
+							<ul class="general-list">
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.VLAN_ID"/>:</p><span>{{VSAN.vlanId}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNET"/>:</p><span>{{VSAN.subnet}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNETMASK"/>:</p><span>{{VSAN.subnetMask}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.GATEWAY_U">:</p><span>{{VSAN.gateway}}</span></li>
+						</ul>
+					</div>
+					<div class="content-general availability">
+						<p class="title" translate="physicalnetworksetup.view.VXLAN"></p>
+						<ul class="general-list">
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.VLAN_ID"/>:</p><span>{{VXLAN.vlanId}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNET"/>:</p><span>{{VXLAN.subnet}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNETMASK"/>:</p><span>{{VXLAN.subnetMask}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.GATEWAY_U"/>:</p><span>{{VXLAN.gateway}}</span></li>
+						</ul>
+					</div>
+					
+				</div>
+				<div class="configuration-section components">
+					<h3 translate="physicalnetworksetup.view.EXTERNAL"></h3>
+					<div class="content-components content-general">
+						<p class="title">{{EXTERNAL_CONNECTION.networkName}}</p>
+						<ul class="general-list">
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.VLAN_ID"/>:</p><span>{{EXTERNAL_CONNECTION.vlanId}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNET"/>:</p><span>{{EXTERNAL_CONNECTION.subnet}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNETMASK"/>:</p><span>{{EXTERNAL_CONNECTION.subnetMask}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.GATEWAY_U"/>:</p><span>{{EXTERNAL_CONNECTION.gateway}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.DNS"/>:</p><span>{{EXTERNAL_CONNECTION.dns}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.NTP"/>:</p><span>{{EXTERNAL_CONNECTION.ntp}}</span></li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="configuration-section components">
+					<h3>Management</h3>
+					<div class="content-components content-general">
+						<ul class="general-list">
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.VLAN_ID"/>:</p><span>{{magmtData.vlanId}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNET"/>:</p><span>{{magmtData.subnet}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.SUBNETMASK"/>:</p><span>{{magmtData.subnetMask}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.GATEWAY_U"/>:</p><span>{{magmtData.gateway}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.DNS"/>:</p><span>{{magmtData.dns}}</span></li>
+							<li><p class="list-title"><plain translate="physicalnetworksetup.view.NTP"/>:</p><span>{{magmtData.ntp}}</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div ng-show="saveSuccess==true" style="text-align:center; color:green;">{{'physicalnetworksetup.view.NETWORK_SETUP_SAVED'}}</div>
+			<div style="color:red">{{networkSetupError}}</div>
+			<div class="review-btns" ng-click="submitAllNetworkSetups()">
+				<button id="review-connect" class="review-connect"><plain translate="physicalnetworksetup.view.CONNECT" /></button>
+			</div>
+		</div>
+	</div>
+</div>

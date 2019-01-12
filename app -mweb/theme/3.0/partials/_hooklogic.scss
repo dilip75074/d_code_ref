@@ -1,0 +1,96 @@
+.ad-img-container {
+  text-align: center;
+  padding: 1px;
+  font-size: 9px;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  color: $palette--gray-med;
+  border: 1px solid $palette--gray-med;
+}
+
+.hl-banner-container {
+  max-width: 2 * $base-min-width;
+  margin: 0 auto;
+  padding: 0 $base-gutter-width $base-gutter-width;
+  position: relative;
+  a {
+    display: block;
+    padding: $base-gutter-width 0;
+    &.row > div {
+      padding: 0 $base-gutter-width;
+      &:last-child {
+        padding-left: 0;
+      }
+    }
+  }
+
+  $width-bounds: 640px;
+  .price {
+    color: $palette--stpls-red;
+    .elements {
+      $px-height: 44px;
+      $flex-height: 8vw;
+      white-space: nowrap;
+      letter-spacing: 0.1em;
+      display: block;
+      > span {
+        @include font-medium;
+        display: inline-block;
+        font-size: $px-height;
+        @media (max-width: $width-bounds) {
+          font-size: $flex-height;
+        }
+        vertical-align: top;
+        margin-right: -5px;
+        &.major {
+          font-size: 2 * $px-height;
+          line-height: 2 * $px-height;
+          @media (max-width: $width-bounds) {
+            font-size: 2 * $flex-height;
+            line-height: (2 * $flex-height) - 1;
+          }
+        }
+      }
+
+      &.reg {
+        color: $palette--gray-med-light;
+        display: inline-block;
+        &:after {
+          display: block;
+          border-top: 2px solid $palette--gray-med-light;
+          content: " ";
+          transform: translateY(-22px) translateX(10px) rotate(-15deg);
+          @media (max-width: $width-bounds) {
+            transform: translateY(-4vw) translateX(2vw) rotate(-15deg);
+          }
+        }
+        > span {
+          font-size: $px-height / 2;
+          @media (max-width: $width-bounds) {
+            font-size: $flex-height / 2;
+          }
+          &.major {
+            font-size: $px-height;
+            line-height: $px-height;
+            @media (max-width: $width-bounds) {
+              font-size: $flex-height;
+              line-height: $flex-height;
+            }
+          }
+        }
+      }
+    } //end elements
+  }
+  .name {
+    color: $palette--gray-dark;
+    font-size: 22px;
+    margin-left: 20px;
+    @media (max-width: $width-bounds) {
+      font-size: 4vw;
+      margin-left: 6vw;
+    }
+    @include line-clamp(2);
+  }
+}

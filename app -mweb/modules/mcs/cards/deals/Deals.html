@@ -1,0 +1,24 @@
+<div class="homecards-container" ng-show="product">
+    <div class="card-header-row">
+        <span class="card-type">{{data.title}}</span>
+        <div class="card-help pull-right scTrack scLink" sctype="scLink" scvalue="Daily deals:More">
+            <a ui-sref="deals({seo:'dailyDeals', identifier: identifier})">More</a>
+        </div>
+    </div>
+
+    <div class="details">
+        <add-cart-overlay item="product"></add-cart-overlay>
+        <ng-include src="'modules/mcs/views/common/hero-product.html'"></ng-include>
+
+        <div class="card-footer-row">
+            <div class="card-btn scTrack cta" bindtype="dom" sctype="cta" ctatype="addtocart" sku="{{product.sku}}" locater="{{location}}">
+                <i class="add-to-cart-line"></i>
+                <button ng-click="addToCart(product)">
+                    <span ng-if="data.cart == ''">Add To Cart</span>
+                    <span ng-if="data.cart == 'loading'">Adding To Cart</span>
+                    <span ng-if="data.cart == 'added'">Added To Cart</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,255 @@
+<div ng-model="template" ng-controller="LogicalResourcesController">
+    <div id="div1" ng-show="div1Flag" class="physical-container logical-conatiner">
+        <header>
+            <span id="edit-configuration" title="Workload Configuration" translate="logicalresource.view.LOGICAL_RESOURCE_POOLS"></span>
+            <span class="dialog-close" ng-click="cancel()">
+                <img src="app/img/close-icon.png">
+            </span>     
+        </header>           
+        <div id="logical-tabs" class="edit-tabs clearfix">
+            <div class="graph-loading" ng-hide="showVcenters" style="color:red; text-align:center; font-weight: normal!important;">
+                {{waitAndErrorMsg}}
+            </div>
+            <div ng-show="showVcenters">
+                <!-- tabs selectors -->
+                <div class="clearfix">
+                    <ul class="view-tabs">
+                        <li class="listview"><a ng-init="selected = 1" ng:click="selected = 1;
+                                shoWDiv('div1');
+                                shoWDiv('listview');" ng:class="{'active' : selected == 2}"><plain translate="logicalresource.view.LIST_VIEW"/></a></li>
+                        <li class="mapview"><a ng:click="selected = 2;
+                                shoWDiv('div1');
+                                shoWDiv('mapview');" ng:class="{'active' : selected == 1}"><plain translate="logicalresource.view.MAP_VIEW"/></a></li>
+                    </ul>
+                </div>
+                <!-- content for list view -->
+                <div id="tab1" class="tabContent" id="listview" ng-show="listViewFlag">
+                    <div class="physical-resource-block switch-toggle switch1 clearfix">
+                        <h3 translate="logicalresource.view.AVAILABLE_VCENTERS"></h3>
+                        <div ng-if="vcenterList == null || vcenterList.length == 0" style="color:red; text-align:center">{{vcenterListError}}</div>
+                        <center ng-if="vcenterList.length > 0">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th translate="logicalresource.view.VCENTER"></th>
+                                        <th translate="logicalresource.view.HOSTS"></th>
+                                        <th translate="logicalresource.view.VCPU_GHZ"></th>
+                                        <th translate="logicalresource.view.NIC"></th>
+                                        <th translate="logicalresource.view.MEMORY_GB"></th>
+                                        <th translate="logicalresource.view.STORAGE_TB"></th>
+                                        <th translate="logicalresource.view.STATUS"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in vcenterList">
+                                        <td ng-click="loadVcenterDetails($index)"><a class="list-content-title">{{item.name}}</a></td>
+                                        <td>{{item.hosts}}</td>
+                                        <td>{{item.vCPU.toFixed(2)}}</td>
+                                        <td>{{item.pNIC}}</td>
+                                        <td>{{item.memory.toFixed(2)}}</td>
+                                        <td>{{item.storage.toFixed(2)}}</td>
+                                        <td>
+                                            <div>
+                                                <!-- <img class="middle-align" src="img/successfull-icon.png"><span>99</span> -->
+                                                <img class="middle-align" src="app/img/successfull-icon.png" ng-if="item.statusMap.green && item.statusMap.green>0"/>
+                                                <img class="middle-align" src="app/img/successfull_inactive.png" ng-if="null == item.statusMap.green || item.statusMap.green == 0"/>    
+                                                <span ng-bind="{{ item.statusMap.green || 0 }}"></span> 
+                                            </div>
+                                            <div>
+                                                <!-- <img class="middle-align" src="img/warning-icon.png"><span>22</span> -->
+                                                <img class="middle-align" src="app/img/warning-icon.png" ng-if="item.statusMap.yellow && item.statusMap.yellow>0"/>
+                                                <img class="middle-align" src="app/img/warning-disable.png" ng-if="null == item.statusMap.yellow || item.statusMap.yellow == 0"/>
+                                                <span ng-bind="{{ item.statusMap.yellow || 0 }}"></span>
+                                            </div>
+                                            <div>
+                                                <!-- <img class="middle-align" src="img/unsuccessfull-icon.png"><span>77</span> -->
+                                                <img class="middle-align" src="app/img/error-icon.png" ng-if="item.statusMap.red && item.statusMap.red>0"/>
+                                                <img class="middle-align" src="app/img/unsuccessfull-disable.png" ng-if="null == item.statusMap.red || item.statusMap.red == 0"/>
+                                                <span ng-bind="{{ item.statusMap.red || 0 }}"></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <div id="mapview" ng-show="mapViewFlag">
+                    <div class="physical-data-mapview switch-toggle switch1 clearfix">
+                        <h3 translate="logicalresource.view.AVAILABLE_VCENTERS"></h3>
+                        <div style="color:red; text-align:center">{{vcenterListError}}</div>
+                        <div class="rack-data-section-wrapper">
+                            <div class="rack-data-section" ng-repeat="item in vcenterList">
+                                <div class="logical-data-center" ng-click="loadVcenterDetails($index)">
+                                    <div><img src="app/img/cloud-icon.png" alt="PHYSICAL RESOURCES"></div>
+                                    <p class="data-numbers-vcenter">{{item.name}}</p>
+                                    <p>{{item.hosts}} hosts</p>
+                                </div>
+                                <div class="rack-content-wrapper">
+                                    <div class="rack-progressbar">
+                                        <div class="rack-progressbar-wrapper">
+                                            <div class="progressbar-value" style="width: {{((item.statusMap.green || 0) / ((item.statusMap.gray || 0) + (item.statusMap.red || 0) + (item.statusMap.yellow || 0) + (item.statusMap.green || 0))) * 100}}%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="hosts-status clearfix">
+                                        <div>
+                                            <div ng-if="item.statusMap.green && item.statusMap.green>0">
+                                                <span class="successfull-status"><img src="app/img/successfull-icon.png">{{item.statusMap.green}}</span>
+                                            </div>
+                                            <div ng-if="null == item.statusMap.green || item.statusMap.green == 0">
+                                                <span class="successfull-status"><img src="app/img/successfull_inactive.png">0</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div ng-if="item.statusMap.yellow && item.statusMap.yellow>0">
+                                                <span class="warning-status"><img src="app/img/warning-icon.png">{{item.statusMap.yellow}}</span>
+                                            </div>
+                                            <div ng-if="null == item.statusMap.yellow || item.statusMap.yellow == 0">
+                                                <span class="warning-status"><img src="app/img/warning-disable.png">0</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div ng-if="item.statusMap.red && item.statusMap.red>0">
+                                                <span class="unsuccessfull-status"><img src="app/img/error-icon.png">{{item.statusMap.red}}</span>
+                                            </div>
+                                            <div ng-if="null == item.statusMap.red || item.statusMap.red == 0">
+                                                <span class="unsuccessfull-status"><img src="app/img/unsuccessfull-disable.png">0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hosts-data-details clearfix">
+                                        <ul>
+                                            <li>
+                                                <label translate="logicalresource.view.VCPU"></label>
+                                                <span>{{item.vCPU.toFixed(2)}} GHz</span>
+                                            </li>
+                                            <li>
+                                                <label translate="logicalresource.view.NIC"></label>
+                                                <span>{{item.pNIC}}</span>
+                                            </li>
+                                            <li>
+                                                <label translate="logicalresource.view.MEMORY"></label>
+                                                <span>{{item.memory.toFixed(2)}} GB</span>
+                                            </li>
+                                            <li>
+                                                <label translate="logicalresource.view.STORAGE"></label>
+                                                <span>{{item.storage.toFixed(2)}} TB</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="div2" ng-show="div2Flag" class="physical-container">
+        <header>
+            <a id="back-btn" ng-click="shoWDiv('div1');
+                    shoWDiv('listview');
+                    selected = 1;"><img src="app/img/header-back-btn.png"/> <plain translate="logicalresource.view.BACK"/></a>
+            <span id="edit-configuration" title="Workload Configuration" translate="logicalresource.view.LOGICAL_RESOURCE"></span>
+            <span class="dialog-close" ng-click="cancel()">
+                <img src="app/img/close-icon.png">
+            </span>     
+        </header>
+        <div class="view-rack-container clearfix">
+            <h3>{{selectedVcenter}}</h3>
+            <div ng-if="hostList == null || hostList.length == 0">
+                <div style="color:red; text-align:center;" translate="logicalresource.view.NO_HOSTS_PRESENT"></div>
+            </div>
+            <ul style="max-height: 300px; overflow-y: auto;position: relative;">
+                <li ng-repeat="item in hostList" ng-click="loadHostDetails(item.name)" ng-class="{selected : item.status == 'yellow'}">
+                    <a>
+                        <div class="host-image">
+                            <img src="app/img/hdd-vcenter.png" ng-if="item.status == 'green'" />
+                            <img src="app/img/hdd-warning.png" ng-if="item.status == 'yellow'" />
+                            <img src="app/img/hdd-error.png" ng-if="item.status == 'red'" />    
+                        </div>
+                        <div class="host-data">
+                            <span class="host-title-node" title="{{item.name}}" alt="{{item.name}}">{{item.name}}</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="div3" ng-show="div3Flag" class="physical-container host-details-wrapper clearfix">
+        <header>
+            <a id="back-btn" ng-click="shoWDiv('div2')"><img src="app/img/header-back-btn.png"> <plain translate="logicalresource.view.BACK"/></a>
+            <span id="edit-configuration" title="Workload Configuration" translate="logicalresource.view.LOGICAL_RESOURCE"></span>
+            <span class="dialog-close" ng-click="cancel()">
+                <img src="app/img/close-icon.png">
+            </span>     
+        </header>
+        <!--<div class="menubar clearfix">
+            <ul class="edit-buttons">
+                <li><a class="quick-maintenance">QUICK MAINTENANCE</a></li>
+                <li><a class="maintenance">MAINTENANCE</a></li>
+                <li><a class="retire">RETIRE</a></li>
+            </ul>
+        </div>
+        <div class="error-message-container">
+            <div class="error-message-content">
+                <img src="app/img/error-warning-icon.png">
+                <p><span>System Error:</span> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+            </div>
+        </div>-->
+        <div class="error-message-container" ng-class="{'host-error': hostDetails.status == 'red'}" ng-show="hostDetails.eventMessages.length > 0" style="height: auto;">
+            <div class="error-message-content">
+                <table>
+                    <tr>
+                        <td style="vertical-align: top"><img src="app/img/error-warning-icon.png"
+                            ng-show="hostDetails.status == 'yellow'" /> <img
+                            src="app/img/VMW-State-Icon-Error_Active_med.png"
+                            ng-show="hostDetails.status == 'red'" /></td>
+                        <td>
+                            <p>
+                                <span><plain translate="logicalresource.view.SYSTEM_WARNING" />:</span><br/>
+                                <p ng-repeat="event in hostDetails.eventMessages">
+                                    - {{ event }}<br />
+                                </p>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+        </div>
+        <h3>{{selectedHost}}</h3>         
+        <div class="system-data-container clearfix">
+            <div class="system-data-image">
+                <img src="app/img/logical-host-success-big.png" ng-if="hostDetails.status == 'green'">
+                <img src="app/img/host-warning-big.png" ng-show="hostDetails.status == 'yellow'">
+                <!-- <img src="app/img/host-error-big.png" ng-show="hostDetails.status == 'gray'"> -->
+                <img src="app/img/host-error-big.png" ng-show="hostDetails.status == 'red'">
+            </div>
+            <div class="hosts-data-details" style="width: 350px!important">
+                <ul>
+                    <li>
+                        <label translate="logicalresource.view.CPU"></label>
+                        <span ng-if="hostDetails.cpuHz != null && hostDetails.numCpuCores != null">{{(hostDetails.cpuHz * hostDetails.numCpuCores).toFixed(2)}} GHz</span>
+                        <span ng-if="hostDetails.cpuHz == null || hostDetails.numCpuCores == null">0.00 GHz</span>
+                    </li>
+                    <li>
+                        <label translate="logicalresource.view.MEMORY"></label>
+                        <span>{{hostDetails.memorySize.toFixed(2)}} GB</span>
+                    </li>
+                    <li>
+                        <label translate="logicalresource.view.STORAGE"></label>
+                        <span>{{hostDetails.overallStorage.toFixed(2)}} TB</span>
+                    </li>
+                    <li>
+                        <label translate="logicalresource.view.DISK_UTILIZATION"></label>
+                        <span>{{hostDetails.overallStorageUsage.toFixed(2)}} TB</span>
+                    </li>       
+                </ul>       
+            </div>
+        </div>
+    </div>
+</div>

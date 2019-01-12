@@ -1,0 +1,87 @@
+<div class="row locator_result_container" ng-show="!$parent.store_detail">
+		<!-- result headers -->
+		<div class="col-xs-12 locator_results_header" ng-show="!$parent.loading">
+
+			<p ng-show="locator_results != undefined">
+				<span ng-if="!locator_search.refine"><strong>{{locator_results.length}}</strong> {{'LCR_WITHIN' | translate}}</span>
+				<span ng-if="locator_search.refine"><strong class="animated" ng-class="{flash: refine_changed}">{{(locator_results | filter: locatorStoreAttrFilter).length}}</strong> {{'LCR_WITHIN' | translate}}</span>
+
+                <select ng-model="locator_search.radius" ng-change="refreshStoreResults()" class="form-control input-sm" convert-to-number="">
+
+                    <option ng-repeat="(key, label) in locator_search.radius_options" value="{{key}}" ng-bind="label"></option>
+
+				</select>
+			</p>
+
+			<p class="error font-bold" ng-show="locator_results == undefined" translate="LCR_ERROR_STR"></p>
+
+		</div>
+
+		<div class="col-xs-4 map_button_container" ng-show="locator_results && !$parent.loading && formFactor == 'mobile' && locator_view == 'map'">
+
+			<button ng-show="locator_view == 'list'" class="btn btn-default" ng-class="{disabled: !map_api_loaded}" ng-click="$parent.toggleResultView()"><span class="glyphicon glyphicon-globe"></span> {{'LCR_MAP'|translate}}</button>
+
+			<button ng-show="locator_view == 'map'" class="btn btn-default" ng-click="$parent.toggleResultView()"><span class="glyphicon glyphicon glyphicon-list"></span> {{'LCR_LIST'|translate}}</button>
+
+		</div>
+
+
+		<div class="col-xs-12 locator_results">
+
+			<div ng-if="!has_geo_enabled">
+
+				<h6 translate="LCR_NO_GEO_HEADER"></h6>
+				<p translate="LCR_NO_GEO_TEXT"></p>
+
+			</div>
+
+
+			<ul ng-if="locator_view == 'list'" class="media-list">
+
+				<li class="spinner" ng-show="loading" ><span us-spinner="{top: '75px'}"></span></li>
+
+				<div ng-if="!locator_search.refine" ng-hide="loading">
+
+					<li class="locator_store_result" ng-repeat="store in locator_results" ng-click="viewStoreDetail(store)">
+
+						<store-result store="store"></store-result>
+
+					</li>
+
+				</div>
+
+				<div ng-if="locator_search.refine" ng-hide="loading">
+
+					<li class="locator_store_result" ng-repeat="store in locator_results | filter: locatorStoreAttrFilter" ng-click="viewStoreDetail(store)">
+
+						<store-result store="store"></store-result>
+
+					</li>
+
+
+				</div>
+
+
+
+			</ul>
+
+			<div id="locator_map" class="locator_map" ng-if="locator_view == 'map'">
+
+				<div ng-controller="StoreLocatorMapCtrl">
+
+					<div class="map_loading" ng-if="!loaded">
+						<us-spinner></us-spinner>
+					</div>
+
+					<ng-include ng-if="loaded" src="'modules/locator/views/map.html'"></ng-include>
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+
+
+</div>

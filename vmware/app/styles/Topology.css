@@ -1,0 +1,126 @@
+
+<!--
+Created
+
+ 
+
+by 
+
+Kapil
+,
+for
+
+displaying
+
+
+networkTopology--
+>
+ @CHARSET "UTF-8";
+
+.ui-effects-transfer {
+	border: 2px dotted #b48484;
+}
+
+.brush .extent {
+	fill-opacity: .1;
+	stroke: #fff;
+	shape-rendering: crispEdges;
+}
+
+.label {
+	font-size: 16px;
+	text-anchor: middle;
+	stroke: #5C5C5C;
+	stroke-width: 0.7px;
+}
+
+.node {
+	stroke: #fff;
+	stroke-width: 1.5px;
+	fill: #5C5C5C;
+	cursor: pointer;
+}
+
+.circleDevice {
+	fill: #5C5C5C;
+	stroke: steelblue;
+	stroke-width: 1.5px;
+}
+
+.nodeDevice {
+	font: 12px sans-serif;
+	cursor: pointer;
+}
+
+.linkDevice {
+	fill: none;
+	stroke: #ccc;
+	stroke-width: 2px;
+}
+
+.selected text {
+	stroke: red;
+	text-decoration: underline;
+}
+
+.link {
+	stroke: #999999;
+}
+
+.paths {
+	stroke: #999999;
+}
+
+#minimalTopology {
+	cursor: pointer;
+}
+
+​#taggedVlan{
+	
+	font: 12px/22px Helvetica Neue, Helvetica, Arial;
+	margin-bottom: 15px;
+}
+#vlans {
+	font: 12px/22px Helvetica Neue, Helvetica, Arial;
+	
+}
+
+#backtotop{
+//	background-color:white;
+}
+
+ #topoheader { 
+	padding-top: 10px;
+	background-color: #0095d3;
+	font-size : 30px;
+	text-align:center; 
+	color:white; 
+	font:Helvetica Neue, Helvetica, Arial;
+}
+ 
+.tooltip {
+	position: absolute;
+	text-align: left;
+	width: auto;
+	height: auto;
+	font: 12px/22px Helvetica Neue, Helvetica, Arial;
+	background: skyblue;
+	border: 0px;
+	border-radius: 8px;
+	pointer-events: none;
+	padding-top: 7px;
+	padding-right: 10px;
+	padding-bottom: 13px;
+	padding-left: 10px;
+}
+
+.styled-dropbox {
+	font-weight: bold;
+	font: 12px/22px Helvetica Neue, Helvetica, Arial;
+	width: 150px;
+	height: 26px;
+	overflow: hidden;
+	background: white;
+	border: 1px solid #aaaab6;
+	color: #424246;
+}

@@ -1,0 +1,150 @@
+<form id="edit_overlay" name="addressEditForm" role="form" class="stpls_ccForm form-horizontal" novalidate>
+
+    <div class="modal-header">
+        <!--<button id="close_btn_id" class="button close addr_closebtn" ng-click="close()"><span class="glyphicon glyphicon-remove"></span></button>-->
+        <p id="adr_edit_header" ng-show="p.editMode" class="page_header">{{'ADR_EDIT_HEADER'|translate}}</p>
+        <p id="adr_add_header"  ng-show="p.addMode"  class="page_header">{{'ADR_ADD_HEADER'|translate}}</p>
+    </div>
+
+    <div class="modal-body edit-modal-body">
+        <div class="row">
+            <div id="adr_instruct_id" class="col-xs-12">
+                <p class="addr_instruct">{{'PRF_SHIP'|translate}}</p>
+            </div>
+        </div>
+        <div class="row input-row">
+            <div class="col-xs-12">
+                <p id="adr_req_msgId" class="addr_required"><span id="adr_req_id" class="red">*</span>{{'ACT_IND_REQ_INFO'|translate}}</p>
+            </div>
+        </div>
+        <div class="row req_spacer"></div>
+
+        <div class="row input-row">
+            <div class="col-xs-12">
+                <input id="name_id" type="text" name="name" class="nameCap form-control"
+                    ng-model="p.fullname" placeholder="{{'ADR_NAME_PH'|translate}}" input-reset-control required/>
+            </div>
+        </div>
+
+        <div class="row input-row">
+            <div class="col-xs-12">
+                <input id="company_id" type="text" name="company" class="form-control"
+                    ng-model="p.addressIn.company" placeholder="{{'ADR_COMPANY_PH'|translate}}" autocomplete="off" input-reset-control/>
+            </div>
+        </div>
+
+        <div class="row input-row">
+            <div class="col-xs-12">
+                <input id="addr_id" type="text" name="address" class="pull-left form-control address_modal"
+                    ng-model="p.fulladdress" ng-class="{'expand addr_enabled': !expand, 'expand addr_disabled': expand}" placeholder="{{'ADR_ADDRESS'|translate}}" autocomplete="off" input-reset-control/>
+                <span>
+                    <div class="shortFormControl">
+                      <button id="expandAddrBtnId" btn-expand ng-model="expand">
+                      </button>
+                    </div>
+                </span>
+            </div>
+        </div>
+
+        <!--  Dropdown manual address entry.  Only shows when user drops chevron -->
+        <div ng-show="expand" class="row input-row animated fadeInDown">
+            <div class="col-xs-8">
+                <input id="entry_addressLine1_id" type="text" name="addrLine1" class="addr_dropdown form-control"
+                    ng-model="p.addressIn.addressLine1" placeholder="{{'ADR_STREET1_PH'|translate}}" input-reset-control required/>
+            </div>
+            <div class="col-xs-4">
+                <input id="entry_addressLine2_id" type="text" name="addrLine2" class="addr_dropdown form-control additional"
+                    ng-model="p.addressIn.addressLine2" placeholder="{{'ADR_STREET2_PH'|translate}}" input-reset-control/>
+            </div>
+            <div class="col-xs-6">
+                <input id="entry_city_id" type="text" name="city" class="addr_dropdown form-control"
+                    ng-model="p.addressIn.city" placeholder="{{'ADR_CITY_PH'|translate}}" input-reset-control required/>
+            </div>
+            <div class="col-xs-2 select1">
+                <select id="entry_state_id" type="text" name="state" class="form-control addr_dropdown additional" ng-model="p.addressIn.state" required>
+					<option selected disabled value="">{{'CHK_STATE_DEFAULT'|translate}}</option>
+                    <option value="AL">AL</option>
+                    <option value="AZ">AZ</option>
+                    <option value="AR">AR</option>
+                    <option value="CA">CA</option>
+                    <option value="CO">CO</option>
+                    <option value="CT">CT</option>
+                    <option value="DE">DE</option>
+                    <option value="DC">DC</option>
+                    <option value="FL">FL</option>
+                    <option value="GA">GA</option>
+                    <option value="ID">ID</option>
+                    <option value="IL">IL</option>
+                    <option value="IN">IN</option>
+                    <option value="IA">IA</option>
+                    <option value="KS">KS</option>
+                    <option value="KY">KY</option>
+                    <option value="LA">LA</option>
+                    <option value="ME">ME</option>
+                    <option value="MD">MD</option>
+                    <option value="MA">MA</option>
+                    <option value="MI">MI</option>
+                    <option value="MN">MN</option>
+                    <option value="MS">MS</option>
+                    <option value="MO">MO</option>
+                    <option value="MT">MT</option>
+                    <option value="NE">NE</option>
+                    <option value="NV">NV</option>
+                    <option value="NH">NH</option>
+                    <option value="NJ">NJ</option>
+                    <option value="NM">NM</option>
+                    <option value="NY">NY</option>
+                    <option value="NC">NC</option>
+                    <option value="ND">ND</option>
+                    <option value="OH">OH</option>
+                    <option value="OK">OK</option>
+                    <option value="OR">OR</option>
+                    <option value="PA">PA</option>
+                    <option value="RI">RI</option>
+                    <option value="SC">SC</option>
+                    <option value="SD">SD</option>
+                    <option value="TN">TN</option>
+                    <option value="TX">TX</option>
+                    <option value="UT">UT</option>
+                    <option value="VT">VT</option>
+                    <option value="VA">VA</option>
+                    <option value="WA">WA</option>
+                    <option value="WV">WV</option>
+                    <option value="WI">WI</option>
+                    <option value="WY">WY</option>
+                </select>
+            </div>
+            <div class="col-xs-4">
+                <input id="entry_zip_id" type="tel" name="zip" class="addr_dropdown form-control additional"
+                    ng-model="p.addressIn.zip" placeholder="{{'ADR_ZIP_PH'|translate}}" maxlength="5" required input-reset-control/>
+            </div>
+        </div>
+
+        <div class="row input-row">
+            <div class="col-xs-8">
+                <input id="phone_id" type="tel" name="phone" class="form-control" ng-model="p.addressIn.phone" placeholder="{{'ADR_PHONE_PH'|translate}}" phone-number input-reset-control required/>
+            </div>
+            <div class="col-xs-4">
+                <input id="phone_ext_id" type="tel" name="extension" onclick="this.focus();this.select()" class="form-control additional" ng-model="p.addressIn.phoneExt" placeholder="{{'ADR_PHONE_EXT_PH'|translate}}" input-reset-control/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 alert alert-danger" ng-show="errorMsg">
+                <span id="addr_edit_error">{{errorMsg}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-xs-6">
+                <button id="save_address_id" type="button" class="btn btn_full_width stpls_primary" ng-click="save(p.addressIn)">{{'CC_SAVE_BTN'|translate}}</button>
+            </div>
+            <div class="col-xs-6">
+                <button id="cancel_address_id" type="button" class="btn btn_full_width stpls_secondary_half" ng-click="cancel(addressEditForm)">{{'CC_CANCEL_BTN'|translate}}</button>
+            </div>
+        </div>
+    </div>
+
+</form>

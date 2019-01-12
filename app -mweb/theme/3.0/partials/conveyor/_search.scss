@@ -1,0 +1,7 @@
+.container-fluid {
+  #{$conveyor-prefix}-layout {
+    #{$conveyor-prefix}-search-container {
+      padding: 0 $base-gutter-width;
+    }
+  }
+}

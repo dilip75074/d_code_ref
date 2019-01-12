@@ -1,0 +1,17 @@
+<style>
+	.manager-close{ top: 92px; right: 5px;}
+	.modal-content{width: 820px; margin-left: 60px;}
+</style>
+<div id="review-dialog" class="review-dialog configure-dialog" ng-model="template" ng-controller="SelectConfigurationController" style="width:820px;">
+	<div class="ui-dialog-titlebar ui-widget-header ui-corner-all clearfix">
+		<span class="ui-dialog-title" translate="selectconfiguration.view.SELECT_CONFIGURATION"></span>
+		<span class="manager-close" ng-click="cancel()" style="margin:-80px 10px 0 0!important;">
+			<img src="app/img/close-icon.png">
+		</span>
+	</div>
+
+	<div style="padding:80px;">
+		<input ng-apply-privilege="VRM_EXECUTE_VDI" type="submit" value="VDI Configuration" class="submit" ng-click="showVDIConfiguration()">
+		<input ng-apply-privilege="VRM_EXECUTE_IAAS" type="submit" value="IAAS Configuration" class="submit" ng-click="showIAASConfiguration()" style="margin-left: 20px;">
+	</div>
+</div>

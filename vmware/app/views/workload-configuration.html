@@ -1,0 +1,517 @@
+<style>
+	.modal-dialog{ width:1050px!important;}
+	.manager-close{ top: 92px; right: 5px;}
+	.disableOVA {
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background-color:#eee;
+		z-index:10000;
+		opacity:0.7;
+		cursor: arrow;
+	}
+</style>
+<div id="review-dialog" class="review-dialog configure-dialog" ng-model="template" style="width: 1050px!important;" ng-controller="WorkloadConfigurationController" ng-init="createNewWorkloadConfiguration()">
+	<div class="ui-dialog-titlebar ui-widget-header ui-corner-all clearfix">
+		<span class="ui-dialog-title" translate="workloadconfiguration.view.RESOURCE_POOL"></span>
+		<span class="manager-close" ng-click="cancel()" style="margin:-80px 10px 0 0!important;">
+			<img src="app/img/close-icon.png">
+		</span>
+	</div>
+	<div class="edit-tabs" style="width: 1044px!important;">
+		<div id="configure-parent">
+			<!-- <ul class="view-tabs clearfix" ng-init="workloadScreenShow='general'">
+				<li><a ng-click="workloadWorkflowNavigation('general')" ng-class="{'active':workloadScreenShow=='general'}" href="javascript:;">General <span class="serial">1</span></a></li>
+				<li><a ng-click="workloadWorkflowNavigation('security')" ng-class="{'active':workloadScreenShow=='security'}" href="javascript:;">Security<span class="serial">2</span></a></li>
+				<li><a ng-click="workloadWorkflowNavigation('system-config')" ng-class="{'active':workloadScreenShow=='system-config'}" href="javascript:;">System <span class="serial">3</span></a></li>
+				<li><a ng-click="workloadWorkflowNavigation('review')" ng-class="{'active':workloadScreenShow=='review'}" href="javascript:;">Review<span class="serial">4</span></a></li>
+				<li><a ng-click="workloadWorkflowNavigation('workload-progress')" ng-class="{'active':workloadScreenShow=='workload-progress'}" href="javascript:;">Progress<span class="serial">5</span></a></li>
+			</ul> -->
+			<ul class="view-tabs clearfix" ng-init="workloadScreenShow='general'">
+				<li>
+					<a href="javascript:;" class="active" ng-click="workloadWorkflowNavigation('general')" ng-class="{'active':workloadScreenShow=='general'}">
+						<plain translate="workloadconfiguration.view.GENERAL" />
+						<span class="serial">1</span>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" ng-click="workloadWorkflowNavigation('network');activeNetworkSubtab=1" ng-class="{'active':workloadScreenShow=='network'}">
+						<plain translate="workloadconfiguration.view.NETWORK" />
+						<span class="serial">2</span>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" ng-click="workloadWorkflowNavigation('security')" ng-class="{'active':workloadScreenShow=='security'}">
+						<plain translate="workloadconfiguration.view.WORKLOAD" />
+						<span class="serial">3</span>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:;" ng-click="workloadWorkflowNavigation('system-config')" ng-class="{'active':workloadScreenShow=='system-config'}">
+						<plain translate="workloadconfiguration.view.SYSTEM" />
+						<span class="serial">4</span>
+					</a>
+				</li>
+				<li class="last">
+					<a href="javascript:;" ng-click="workloadWorkflowNavigation('review')" ng-class="{'active':workloadScreenShow=='review'}">
+						<plain translate="workloadconfiguration.view.REVIEW" />
+						<span class="serial">5</span>
+					</a>
+				</li>
+				
+				<!--<li class="last">
+					<a href="javascript:;" ng-click="workloadWorkflowNavigation('workload-progress')" ng-class="{'active':workloadScreenShow=='workload-progress'}">
+						progress
+						<span class="serial">5</span>
+					</a>
+				</li>-->
+			</ul>
+		</div>
+		
+		<div class="error-message-container" ng-show="workloadConfigurationErrorMessage != ''" style="height: auto;">
+			<div class="error-message-content">
+				<img src="app/img/error-warning-icon.png" />
+				<p>
+					<span translate="workloadconfiguration.view.SYSTEM_WARNING"></span><p> {{workloadConfigurationErrorMessage}}></p>
+				</p>
+			</div>
+		</div>
+
+		<div class="tabContent form-modal" ng-show="workloadScreenShow=='general'" style="margin-left:78px!important; margin-top:0px!important;">
+			<div  class="network-config">
+		    	<h2 translate="workloadconfiguration.view.GENERAL_CONFIG"></h2>
+		    	    
+		    	<form name="formGeneralConfiguration" ng-class="{'validate': submitted==1}" ng-submit="generalScreenSubmit(generalConfig)" novalidate>
+					<input type="text" placeholder="Name" ng-model="generalConfig.workloadName" required />
+		    		
+			    	<div class="configure-checkbx" ng-init="generalConfig.persistence='linked'">
+				      	<p translate="workloadconfiguration.view.PERSISTENCE"></p>
+				      	<span ng-click="generalConfig.persistence='linked'" ng-class="{'cheked':generalConfig.persistence == 'linked', 'uncheked':generalConfig.persistence == 'full' || generalConfig.persistence == null}">
+				      		<input type="radio" name="radio" id="yes" value="linked" ng-model="generalConfig.persistence" required />
+				      	</span>
+						<label for="yes" translate="workloadconfiguration.view.LINKED"></label>
+
+						<span ng-click="generalConfig.persistence='full'" ng-class="{'cheked':generalConfig.persistence == 'full', 'uncheked':generalConfig.persistence == 'linked' || generalConfig.persistence == null}">
+							<input type="radio" name="radio" id="no" value="full" ng-model="generalConfig.persistence" required />
+						</span>
+						<label for="no" translate="workloadconfiguration.view.FULL"></label>
+		    		</div>
+
+				    <div style="text-align:left ! important">
+				    	<p style="color: #666;font-size: 13px;font-weight: bold;margin: 0 0 18px 0;line-height: 13px;" translate="workloadconfiguration.view.SECURITY"></p>
+				    	<input type="checkbox" name="" style="margin-bottom: 20px;" ng-model="generalConfig.connectVDI"/><plain translate="workloadconfiguration.view.CONNECT_TO_VDI" />
+				    </div>
+				    
+				    <div style="text-align:left ! important">
+				    	<input type="checkbox" name="" style="margin-bottom: 20px;" ng-model="generalConfig.reserveResourcesOnly"/>{{'workloadconfiguration.view.RESERVE_RESOURCES_ONLY'|translate}}
+				    </div>
+
+				    <p style="color: #666;font-size: 13px;font-weight: bold;margin: 0 0 18px 0;line-height: 13px;text-align:left" translate="workloadconfiguration.view.PERFORMANCE"></p>
+				    <div style="height: 85px; border:1px solid #ccc;">
+				    	<div class="range-slider-vdi" style="padding: 15px 0 0 15px; margin-left:45px;">
+				           <p class="range-slider-title" translate="workloadconfiguration.view.NUM_VDI"></p><input type="range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" min="1" max="3000" step="1" ng-model="generalConfig.numberOfVDI" ng-init="generalConfig.numberOfVDI=1"/>
+				           <label for="amount" class="range-count">{{generalConfig.numberOfVDI}} of 3000</label>
+						</div>
+					</div>
+
+					<p style="color: #666;font-size: 13px;font-weight: bold;margin: 0 0 18px 0;line-height: 13px;text-align:left;width: 295px;" translate="workloadconfiguration.view.VDI_CONFIG"></p>
+					<div style="border:1px solid #ccc; height:275px">
+						<div class="range-slider-vdi" style="padding: 15px 0 0 15px; margin-left:45px;">
+				           <p class="range-slider-title" translate="workloadconfiguration.view.CPU_VDI"></p><input type="range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" min="1" max="4" step="1" ng-model="generalConfig.cpu" ng-init="generalConfig.cpu=1"/>
+				           <label for="amount" class="range-count">{{generalConfig.cpu}} of 4</label>
+						</div>
+
+						<div class="range-slider-vdi" style="padding: 0 0 0 15px; margin-left:45px;">
+				           <p class="range-slider-title" translate="workloadconfiguration.view.RAM_VDI"></p><input type="range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" min="1" max="8" step="1" ng-model="generalConfig.ram" ng-init="generalConfig.ram=1"/>
+				           <label for="amount" class="range-count">{{generalConfig.ram}} of 8GB</label>
+						</div>
+
+						<div class="range-slider-vdi" style="padding: 0 0 0 15px; margin-left:45px;">
+				           <p class="range-slider-title" translate="workloadconfiguration.view.STORAGE_VDI"></p><input type="range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" min="0" max="100" step="1" ng-model="generalConfig.storage" ng-init="generalConfig.storage=0"/>
+				           <label for="amount" class="range-count">{{generalConfig.storage}} of 100GB</label>
+						</div>
+					</div>
+		 			<div class="submit-container center-align">
+		 				<input type="submit" value="Next" class="submit">
+		            </div>
+		 		</form>
+			</div>
+  		</div>
+
+		<div id="form-modal" class="form-modal" style="margin-top: 0px!important;" ng-show="workloadScreenShow=='network'">
+			<ul id="step-navi" style="padding-top: 20px;margin-bottom: 0px;">
+				<li class="step-1" style="float:left;" ng-click=""><a href="javascript:;" ng-click="workloadWorkflowNavigation('general');"><plain translate="logicalresource.view.BACK"/></a></li>
+			
+				<li class="step-1"><a href="javascript:;" ng-click="activeNetworkSubtab=1" ng-class="{'active':activeNetworkSubtab==1}"><plain translate="workloadconfiguration.view.EXTERNAL" /></a></li>
+				<li class="step-2"><a href="javascript:;" ng-click="activeNetworkSubtab=2" ng-class="{'active':activeNetworkSubtab==2}"><plain translate="workloadconfiguration.view.MANAGEMENT" /></a></li>
+				<li class="step-3" ng-show="generalConfig.connectVDI"><a href="javascript:;" ng-click="activeNetworkSubtab=3" ng-class="{'active':activeNetworkSubtab==3}"><plain translate="workloadconfiguration.view.DMZ" /></a></li>
+			</ul>
+			
+			<form name="formExternalNetworkConfiguration" ng-class="{'validate': submitted==4}" novalidate ng-show="activeNetworkSubtab==1" ng-submit="validateNetworkDetails('EXTERNAL', networkConfig.external, generalConfig.connectVDI)">
+				<div id="physical-network-setup-form-1" class="physical-vxlan change-password">
+					<div class="configure-checkbx">
+				      	<div style="margin-bottom: 20px;" ng-click="networkConfig.external.useExistingNetwork = true; enableDisableNetworkConfiguration('EXTERNAL', networkConfig.external.useExistingNetwork)">
+					      	<span ng-class="{'cheked':networkConfig.external.useExistingNetwork, 'uncheked':!networkConfig.external.useExistingNetwork}">
+					      		<input ng-disabled="disableExistingExternalOption" type="radio" name="externalNetworkRadio" value="externalExistingOption" ng-model="networkConfig.external.useExistingNetwork"/>
+					      	</span>
+							<label >Use Existing Network</label>
+						</div>
+
+						<div style="margin-bottom: 20px;" ng-click="networkConfig.external.useExistingNetwork = false; enableDisableNetworkConfiguration('EXTERNAL', networkConfig.external.useExistingNetwork)">
+							<span ng-class="{'cheked':!networkConfig.external.useExistingNetwork, 'uncheked':networkConfig.external.useExistingNetwork}">
+								<input type="radio" name="externalNetworkRadio" value="externalConfigureNew" ng-model="networkConfig.external.useExistingNetwork"/>
+							</span>
+							<label>Configure External Network</label>
+						</div>
+			    	</div>
+					<h2>Enter Network Details</h2>
+					<label for="name">Name</label>
+					<input type="text" ng-disabled="disableExternalNetworkConfiguration" name="name" placeholder="Name" ng-model="networkConfig.external.subnetName" required/>
+					<label for="vlan-id" translate="physicalnetworksetup.view.VLAN_ID"></label>
+					<input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" ng-disabled="disableExternalNetworkConfiguration" name="vlan-id" placeholder="ID Number (optional)" ng-model="networkConfig.external.vlanId"/>
+					<label for="network-start-ip" translate="iaasconfiguration.view.SUBNET"></label>
+					<div class="ip-address-form">
+						<input type="text" ng-trim="false" ng-pattern="part1Ip" ng-disabled="disableExternalNetworkConfiguration" id="external-subnet-1" placeholder="xxx" maxlength="3" ng-model="networkConfig.external.subnet.part1" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableExternalNetworkConfiguration" id="external-subnet-2" placeholder="xxx" maxlength="3" ng-model="networkConfig.external.subnet.part2" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableExternalNetworkConfiguration" id="external-subnet-3" placeholder="xxx" maxlength="3" ng-model="networkConfig.external.subnet.part3" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableExternalNetworkConfiguration" id="external-subnet-4" placeholder="xxx" maxlength="3" ng-model="networkConfig.external.subnet.part4" required/> 
+					</div>
+					<label for="subnet-mask" translate="physicalnetworksetup.view.SUBNET_MASK"></label>
+					<div class="ip-address-form">
+						<input type="text" ng-trim="false" ng-pattern="part1Ip" ng-disabled="disableExternalNetworkConfiguration" id="external-subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="networkConfig.external.subnetMask.part1" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableExternalNetworkConfiguration" id="external-subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="networkConfig.external.subnetMask.part2" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableExternalNetworkConfiguration" id="external-subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="networkConfig.external.subnetMask.part3" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableExternalNetworkConfiguration" id="external-subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="networkConfig.external.subnetMask.part4" required/> 
+					</div>
+					<label for="gateway" translate="physicalnetworksetup.view.GATEWAY"></label>
+					<div class="ip-address-form">
+						<input type="text" ng-trim="false" ng-pattern="part1Ip" ng-disabled="disableExternalNetworkConfiguration" id="external-gateway-1" placeholder="xxx" maxlength="3" ng-model="networkConfig.external.gateway.part1" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableExternalNetworkConfiguration" id="external-gateway-2" placeholder="xxx" maxlength="3" ng-model="networkConfig.external.gateway.part2" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableExternalNetworkConfiguration" id="external-gateway-3" placeholder="xxx" maxlength="3" ng-model="networkConfig.external.gateway.part3" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableExternalNetworkConfiguration" id="external-gateway-4" placeholder="xxx" maxlength="3" ng-model="networkConfig.external.gateway.part4" required/> 
+					</div>
+					<div class="submit-container center-align">
+		 				<input type="submit" value="Next" class="submit">
+		            </div>
+				</div>
+			</form>
+
+			<form name="formMgmtNetworkConfiguration" ng-class="{'validate': submitted==5}" novalidate ng-show="activeNetworkSubtab==2" ng-submit="validateNetworkDetails('MGMT', networkConfig.mgmt, generalConfig.connectVDI)">
+				<div id="physical-network-setup-form-1" class="physical-vxlan change-password">
+					<div class="configure-checkbx">
+				      	<div style="margin-bottom: 20px;" ng-click="networkConfig.mgmt.useExistingNetwork = true; enableDisableNetworkConfiguration('MGMT', networkConfig.mgmt.useExistingNetwork)">
+					      	<span ng-class="{'cheked':networkConfig.mgmt.useExistingNetwork, 'uncheked':!networkConfig.mgmt.useExistingNetwork}">
+					      		<input type="radio" name="mgmtNetworkRadio" value="mgmtUseExisting" ng-model="networkConfig.mgmt.useExistingNetwork"/>
+					      	</span>
+							<label >Use Existing Network</label>
+						</div>
+
+						<div style="margin-bottom: 20px;" ng-click="networkConfig.mgmt.useExistingNetwork = false; enableDisableNetworkConfiguration('MGMT', networkConfig.mgmt.useExistingNetwork)">
+							<span ng-class="{'cheked':!networkConfig.mgmt.useExistingNetwork, 'uncheked':networkConfig.mgmt.useExistingNetwork}">
+								<input type="radio" name="mgmtNetworkRadio" value="mgmtConfigureNew" ng-model="networkConfig.mgmt.useExistingNetwork"/>
+							</span>
+							<label>Configure Mamagement Network</label>
+						</div>
+			    	</div>
+					<h2>Enter Network Details</h2>
+					<label for="name">Name</label>
+					<input type="text" name="name" ng-disabled="disableMgmtNetworkConfiguration" placeholder="Name" ng-model="networkConfig.mgmt.subnetName" required/>
+					<label for="vlan-id" translate="physicalnetworksetup.view.VLAN_ID"></label>
+					<input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" ng-disabled="disableMgmtNetworkConfiguration" name="vlan-id" placeholder="ID Number (optional)" ng-model="networkConfig.mgmt.vlanId"/>
+					<label for="network-start-ip" translate="iaasconfiguration.view.SUBNET"></label>
+					<div class="ip-address-form">
+						<input type="text" ng-trim="false" ng-pattern="part1Ip" ng-disabled="disableMgmtNetworkConfiguration" id="mgmt-subnet-1" placeholder="xxx" maxlength="3" ng-model="networkConfig.mgmt.subnet.part1" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableMgmtNetworkConfiguration" id="mgmt-subnet-2" placeholder="xxx" maxlength="3" ng-model="networkConfig.mgmt.subnet.part2" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableMgmtNetworkConfiguration" id="mgmt-subnet-3" placeholder="xxx" maxlength="3" ng-model="networkConfig.mgmt.subnet.part3" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableMgmtNetworkConfiguration" id="mgmt-subnet-4" placeholder="xxx" maxlength="3" ng-model="networkConfig.mgmt.subnet.part4" required/> 
+					</div>
+					<label for="subnet-mask" translate="physicalnetworksetup.view.SUBNET_MASK"></label>
+					<div class="ip-address-form">
+						<input type="text" ng-trim="false" ng-pattern="part1Ip" ng-disabled="disableMgmtNetworkConfiguration" id="mgmt-subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="networkConfig.mgmt.subnetMask.part1" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableMgmtNetworkConfiguration" id="mgmt-subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="networkConfig.mgmt.subnetMask.part2" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableMgmtNetworkConfiguration" id="mgmt-subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="networkConfig.mgmt.subnetMask.part3" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableMgmtNetworkConfiguration" id="mgmt-subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="networkConfig.mgmt.subnetMask.part4" required/> 
+					</div>
+					<label for="gateway" translate="physicalnetworksetup.view.GATEWAY"></label>
+					<div class="ip-address-form">
+						<input type="text" ng-trim="false" ng-pattern="part1Ip" ng-disabled="disableMgmtNetworkConfiguration" id="mgmt-gateway-1" placeholder="xxx" maxlength="3" ng-model="networkConfig.mgmt.gateway.part1" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableMgmtNetworkConfiguration" id="mgmt-gateway-2" placeholder="xxx" maxlength="3" ng-model="networkConfig.mgmt.gateway.part2" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableMgmtNetworkConfiguration" id="mgmt-gateway-3" placeholder="xxx" maxlength="3" ng-model="networkConfig.mgmt.gateway.part3" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" ng-disabled="disableMgmtNetworkConfiguration" id="mgmt-gateway-4" placeholder="xxx" maxlength="3" ng-model="networkConfig.mgmt.gateway.part4" required/> 
+					</div>
+					<div class="submit-container center-align">
+		 				<input type="submit" value="Next" class="submit">
+		            </div>
+				</div>
+			</form>
+
+			<form name="formDMZNetworkConfiguration" ng-class="{'validate': submitted==6}" novalidate ng-show="activeNetworkSubtab==3" ng-submit="validateNetworkDetails('DMZ', networkConfig.dmz, generalConfig.connectVDI)">
+				<div id="physical-network-setup-form-1" class="physical-vxlan change-password">
+					<h2>Enter Network Details</h2>
+					<label for="name">Name</label>
+					<input type="text" name="name" placeholder="Name" ng-model="networkConfig.dmz.subnetName" required/>
+					<label for="vlan-id" translate="physicalnetworksetup.view.VLAN_ID"></label>
+					<input type="text" ng-trim="false" ng-pattern="vlanIdRegEx" name="vlan-id" placeholder="ID Number (optional)" ng-model="networkConfig.dmz.vlanId"/>
+					<label for="network-start-ip" translate="iaasconfiguration.view.SUBNET"></label>
+					<div class="ip-address-form">
+						<input type="text" ng-trim="false" ng-pattern="part1Ip" id="network-start-ip-1" placeholder="xxx" maxlength="3" ng-model="networkConfig.dmz.subnet.part1" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-2" placeholder="xxx" maxlength="3" ng-model="networkConfig.dmz.subnet.part2" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-3" placeholder="xxx" maxlength="3" ng-model="networkConfig.dmz.subnet.part3" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" id="network-start-ip-4" placeholder="xxx" maxlength="3" ng-model="networkConfig.dmz.subnet.part4" required/> 
+					</div>
+					<label for="subnet-mask" translate="physicalnetworksetup.view.SUBNET_MASK"></label>
+					<div class="ip-address-form">
+						<input type="text" ng-trim="false" ng-pattern="part1Ip" id="subnet-mask-1" placeholder="xxx" maxlength="3" ng-model="networkConfig.dmz.subnetMask.part1" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-2" placeholder="xxx" maxlength="3" ng-model="networkConfig.dmz.subnetMask.part2" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-3" placeholder="xxx" maxlength="3" ng-model="networkConfig.dmz.subnetMask.part3" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" id="subnet-mask-4" placeholder="xxx" maxlength="3" ng-model="networkConfig.dmz.subnetMask.part4" required/> 
+					</div>
+					<label for="gateway" translate="physicalnetworksetup.view.GATEWAY"></label>
+					<div class="ip-address-form">
+						<input type="text" ng-trim="false" ng-pattern="part1Ip" id="gateway-1" placeholder="xxx" maxlength="3" ng-model="networkConfig.dmz.gateway.part1" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" id="gateway-2" placeholder="xxx" maxlength="3" ng-model="networkConfig.dmz.gateway.part2" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" id="gateway-3" placeholder="xxx" maxlength="3" ng-model="networkConfig.dmz.gateway.part3" required/> <span class="middot">&middot;</span>
+						<input type="text" ng-trim="false" ng-pattern="range" id="gateway-4" placeholder="xxx" maxlength="3" ng-model="networkConfig.dmz.gateway.part4" required/> 
+					</div>
+					<div class="submit-container center-align">
+		 				<input type="submit" value="Next" class="submit">
+		            </div>
+				</div>
+			</form>
+		</div>
+		
+		<div class="form-modal" style="margin-left:78px!important; margin-top:0px!important;" ng-show="workloadScreenShow=='security'">
+			<div  class="network-config">
+				<h2 translate="workloadconfiguration.view.SECURITY_CONFIG"></h2>
+				<form name="formSecurityConfiguration" ng-class="{'validate': submitted==2}" ng-submit="securityScreenSubmit(securityConfig)" novalidate>
+		            <input type="password" ng-trim="false" placeholder="System Administrator password" ng-model="securityConfig.adminPassword" required />
+
+		            <input type="password" ng-trim="false" name="confirm_password" placeholder="Confirm password" ng-model="securityConfig.adminConfirmPassword" confirmpassword="{{securityConfig.adminPassword}}" required />
+
+		            <label for="subnet" translate="workloadconfiguration.view.DNS_SERVER_IP"></label>
+		            <div class="ip-address-form">
+		                <input type="text" ng-pattern="range" ng-trim="false" placeholder="xxx" maxlength="3" ng-model="securityConfig.dnsIP.part1" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-pattern="range" ng-trim="false" placeholder="xxx" maxlength="3" ng-model="securityConfig.dnsIP.part2" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-pattern="range" ng-trim="false" placeholder="xxx" maxlength="3" ng-model="securityConfig.dnsIP.part3" required /> <span class="middot">&middot;</span>
+		                <input type="text" ng-pattern="range" ng-trim="false" placeholder="xxx" maxlength="3" ng-model="securityConfig.dnsIP.part4" required /> 
+		            </div>
+		            
+			        <div style="text-align:left ! important;display:none;">
+				    	<input type="checkbox" name="" style="margin-bottom: 20px;" ng-model="securityConfig.checkTrustAD"/><plain translate="workloadconfiguration.view.TRUST_AD" />
+				    	<input type="text" ng-trim="false" ng-model="securityConfig.trustInput"/>
+				    </div>
+
+					<div class="submit-container center-align">
+						<input value="Back" class="submit" type="button" ng-click="workloadWorkflowNavigation('network');activeNetworkSubtab=1;">
+		                <input type="submit" value="Next" class="submit">
+		            </div>
+				</form>
+			</div>
+		</div>
+
+		<div class="form-modal" style="margin-left:0px!important; margin-top:0px!important; width:1044px!important;" ng-show="workloadScreenShow=='system-config'">
+			<div  class="network-config" style="width:1044px!important;">
+				<h2 translate="workloadconfiguration.view.SYSTEM_CONFIG"></h2>
+				<form name="formSystemConfiguration" ng-class="{'validate': submitted==3}" novalidate>
+		            			
+		            			<div style="margin:0px 30px 20px 301px !important; width:450px;   height:190px;">
+			            			<p style="color: #666;font-size: 13px;font-weight: bold;margin: 0 0 18px 0;line-height: 13px;text-align:left;width: 295px;" translate="workloadconfiguration.view.UPLOAD_WINDOWS_ISO"></p>
+			            			<p style="color: #666;font-size: 12px;font-weight: bold;line-height: 12px;text-align:left;width: 510px;" translate="workloadconfiguration.view.LICENSE_KEY"></p>
+			            			
+			            			<div style="padding:10px 10px 10px 10px!important; border: solid 1px #ccc; width:510px; height:175px;"  flow-init flow-file-added="isoFileAdded()" flow-file-success="isoFileComplete()" flow-file-progress="isoFileProgress($flow)" flow-file-error="isoFileError($flow)">
+						            	<input type="file" required flow-btn/>
+						            	<input id="cancleISOUpload" type="hidden" ng-click="$flow.cancel();" value="Cancel" style="float:right;"/>&nbsp;<input id="selectedIsoFile" type="hidden" ng-click="$flow.upload();" value="Upload" style="float:right;"/>
+						            	<div style="margin-top:25px; height: 45px;" flow-transfers><label style="word-wrap: break-word;" ng-show="$flow.files.length == 0"><plain translate="workloadconfiguration.view.FILE_NAME" /> {{systemConfig.isoFileName}}</label><label style="word-wrap: break-word;" ng-repeat="file in $flow.files" ng-init="systemConfig.isoFileName = $flow.files[0].name"><plain translate="workloadconfiguration.view.FILE_NAME" />: {{file.name}}</label></div> <br />
+						            	
+						            	<!-- <div class="resources-details">
+											<ul class="resources-utilised-list">
+												<li>
+													<div class="workload-progressbar" style="width:445px;">
+														<div class="workload-progressbar-wrapper" style="width:445px!important;height:15px!important;">
+															<div class="progressbar-value" style="height:15px!important; width:{{existingISOPresent || $flow.progress()*100 | number:0}}%;"></div>
+														</div>
+													</div>
+													
+													<div style="width:445px; text-align:center;">{{existingISOPresent || $flow.progress()*100 | number:0}}%</div>
+												</li>
+							        		</ul>
+							        	</div> -->
+							        	
+							        	<input type="text" placeholder="Windows license key" ng-model="systemConfig.licenseKey" maxlength="29" ng-pattern="/^\(?([a-zA-Z0-9]{5})\)?[-]([a-zA-Z0-9]{5})[-]([a-zA-Z0-9]{5})[-]([a-zA-Z0-9]{5})[-]([a-zA-Z0-9]{5})$/" style="margin-top:20px; margin-left: -2px; width:510px;" required/>
+						            	<input type="hidden" ng-model="systemConfig.isoFileName" />
+			            			</div>
+		            			</div>
+		            			
+		            			<!-- We need to disable this div in case if user selects Reserve Resources only -->
+		            			<div style="margin:105px 10px 20px 301px !important; width:510px;" ng-class="{true:'disableOVA'}[reserveResourcesOnly]">
+			            			<p style="color: #666;font-size: 13px;font-weight: bold;margin: 0 0 18px 0;line-height: 13px;text-align:left;width: 295px;" translate="workloadconfiguration.view.UPLOAD_OVA"></p>
+			            			<p style="color: #666;font-size: 12px;font-weight: bold;line-height: 12px;text-align:left;width: 510px;" translate="workloadconfiguration.view.WINDOWS7_IMG"></p>
+			            			<div style="padding:10px 10px 10px 10px!important; border: solid 1px #ccc; width:510px; float:left; height:120px;" flow-init flow-file-added="ovaFileAdded()" flow-file-success="ovaFileComplete()" flow-file-progress="ovaFileProgress($flow)" flow-file-error="ovaFileError($flow)"  ng-class="{true:'disableOVA'}[reserveResourcesOnly]">
+						            	<input type="file" required flow-btn  ng-disabled="{true:'disableOVA'}[reserveResourcesOnly]"/>
+						            	<input id="cancleOVAUpload"  type="hidden" ng-click="$flow.cancel();" value="Cancel" style="float:right;"/>&nbsp;<input id="selectedOvaFile" type="hidden" ng-click="$flow.upload();" value="Upload" style="float:right;"/>
+						            	<div style="margin-top:25px; height: 45px;" flow-transfers><label style="width: 100px;word-wrap: break-word;" ng-show="$flow.files.length == 0" translate="workloadconfiguration.view.FILE_NAME"> {{systemConfig.ovaFileName}}</label><label style="word-wrap: break-word;" ng-repeat="file in $flow.files" ng-init="systemConfig.ovaFileName = $flow.files[0].name"><plain translate="workloadconfiguration.view.FILE_NAME" />: {{file.name}}</label></div> <br />
+						            	<input type="hidden" ng-model="systemConfig.ovaFileName" />
+						            	<!-- <div class="resources-details">
+											<ul class="resources-utilised-list">
+												<li>
+													<div class="workload-progressbar" style="width:445px;">
+														<div class="workload-progressbar-wrapper" style="width:445px!important;height:15px!important;">
+															<div class="progressbar-value" style="height:15px!important; width:{{existingOVAPresent || $flow.progress()*100 | number:0}}%;"></div>
+														</div>
+													</div>
+													
+													<div style="width:445px; text-align:center;">{{ existingOVAPresent || $flow.progress()*100 | number:0 }}%</div>	
+												</li>
+							        		</ul>
+							        	</div> -->
+						            </div>
+					            </div><br style="clear:both" /><br />
+		            <div class="submit-container center-align" padding="padding:30px 0!important;">
+		        		<input value="Back" class="submit" type="button" ng-click="workloadWorkflowNavigation('security');">
+		        		<input type="submit" value="Next" class="submit" id="systemConfigNxt" ng-click="systemConfigScreenSubmit(systemConfig)">
+		    		</div>
+				</form>
+			</div>
+		
+			
+		</div>
+
+		<div class="form-modal" style="margin-left:57px!important; margin-top:0px!important;" ng-show="workloadScreenShow=='review'">
+			<div class="container review-container" style="margin-top: 20px !important;">
+				<h2 translate="workloadconfiguration.view.REVIEW_RESOURCE_POOL_PROFILE"></h2>
+				<div class="clearfix">
+					<div class="configuration-section">
+						<h3 translate="workloadconfiguration.view.CONFIGURATION"></h3>
+						<div class="content-general">
+							<p class="title bold" translate="workloadconfiguration.view.GENERAL_VDI"></p>
+							<ul class="general-list">
+								<li><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.PERSISTENCE" /></div><div class="vdi-review-li-value"><span style="margin-right:5px">:</span>{{ generalConfig.persistence }}</div></li>
+								<li><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.CPU" /></div><div class="vdi-review-li-value"><span style="margin-right:5px">:</span>{{ generalConfig.cpu }}</div></li>
+								<li><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.MEMORY" /></div><div class="vdi-review-li-value"><span style="margin-right:5px">:</span>{{ generalConfig.ram }}GB</div></li>
+								<li><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.STORAGE" /></div><div class="vdi-review-li-value"><span style="margin-right:5px">:</span>{{ generalConfig.storage }}GB</div></li>
+								<li><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.VDI_SEATS" /></div><div class="vdi-review-li-value"><span style="margin-right:5px">:</span>{{ generalConfig.numberOfVDI }}</div></li>
+							</ul>
+						</div>
+						<div class="content-general availability">
+							<p class="title bold" translate="workloadconfiguration.view.SECURITY"></p>
+							<ul class="general-list">
+								<li style="width: 550px !important;"><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.AD_NAME" /></div><div class="vdi-review-li-value"><span style="margin-right:5px">:</span>{{ securityConfig.trustInput }}</div></li>
+								<li style="width: 550px !important;"><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.VIEW_SERVERS_OU" /></div><div class="vdi-review-li-value"><span style="margin-right:5px;">:</span>{{ securityConfig.viewServersOu }}</div></li>
+								<li style="width: 550px !important;"><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.VDI_OU" /></div><div class="vdi-review-li-value"><span style="margin-right:5px">:</span><plain translate="workloadconfiguration.view.COMPUTERS"/></div></li>
+								<li style="width: 550px !important;"><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.DNS_SERVER_IP" /></div><div style="width:62%;float:right"><span style="margin-right:5px">:</span><span ng-show="securityConfig.dnsIP.part1 != ''">{{ securityConfig.dnsIP.part1 }}.{{ securityConfig.dnsIP.part2 }}.{{ securityConfig.dnsIP.part3 }}.{{ securityConfig.dnsIP.part4 }}</span></div></li>
+								<li style="width: 550px !important;"><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.INTERNET_IP" /></div><div style="width:62%;float:right"><span style="margin-right:5px">:</span><span ng-repeat="dcServer in viewServers.domainControllerServerList">{{ dcServer }}</span></div></li>
+							</ul>
+						</div>
+						<div class="content-general availability">
+							
+						</div>
+						<div class="content-general availability">
+							
+						</div>
+					</div>
+					<div class="configuration-section components">
+						<h3 translate="workloadconfiguration.view.COMPONENTS"></h3>
+						<div class="content-components content-general">
+							<p class="title bold" translate="workloadconfiguration.view.CONNECTION_SERVERS"></p>
+							<ul class="general-list">
+								<li><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.NODES" /></div><div class="vdi-review-li-value"><span style="margin-right:5px">:</span>{{ viewServers.connectionServers }}</div></li>
+								<li>
+									<div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.IP_ADDRESSES" /></div>
+								    <ul class="general-list vdi-ipList">
+                            			<li ng-repeat="connServer in viewServers.connectionServerList"><span>{{ connServer }}</span></li>
+                        			</ul>
+								</li>
+							</ul>
+							<p style="color:red;text-align: left;" ng-show="connectionServersIPAMError">{{ connectionServersIPAMError }}</p>
+						</div>
+						<div class="content-components content-general">
+							<p class="title bold" translate="workloadconfiguration.view.SECURITY_SERVERS"></p>
+							<ul class="general-list">
+								<li><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.NODES" /></div><div class="vdi-review-li-value"><span style="margin-right:5px">:</span>{{ viewServers.securityServers }}</div></li>
+								<li></li>
+								<li><p class="list-title" translate="workloadconfiguration.view.IP_ADDRESSES"></p><br />
+									<table border="1" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+										<tr>
+											<th style="color: grey;padding:4px;" translate="workloadconfiguration.view.SECURITY_SERVERS_INTERNAL"></th>
+											<th style="color: grey;padding:4px;" translate="workloadconfiguration.view.SECURITY_SERVERS_EXTERNAL"></th>
+										</tr>
+										<tr ng-repeat="securityServer in viewServers.securityServerList">
+											<td style="color: grey;padding:4px;">{{ securityServer.internalIp }}</td>
+											<td style="color: grey;padding:4px;">{{ securityServer.externalIp }}</td>
+										</tr>
+									</table>
+								    <!--<ul class="general-list vdi-ipList">
+                            			<li ng-repeat="securityServer in viewServers.securityServerList"><span>{{ securityServer }}</span></li>
+                        			</ul>-->
+								</li>
+							</ul>
+							<p style="color:red;text-align: left;" ng-show="securityServersIPAMError">{{ securityServersIPAMError }}</p>
+						</div>
+						<div class="content-components content-general">
+							<p class="title bold" translate="workloadconfiguration.view.COMPOSER_SERVERS"></p>
+							<ul class="general-list">
+								<li><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.NODES" /></div><div class="vdi-review-li-value"><span style="margin-right:5px">:</span>{{ viewServers.composerServers }}</div></li>
+								<li></li>
+								<li><p class="list-title" translate="workloadconfiguration.view.IP_ADDRESSES"></p>
+								    <ul class="general-list vdi-ipList">
+                            			<!-- <li ng-repeat="ip in ipList"><span>{{ip}}</span></li> -->
+                            			<li ng-repeat="composerServer in viewServers.composerServerList"><span>{{composerServer.publicIp}}</span></li>
+                        			</ul>
+								</li>
+							</ul>
+							<p style="color:red;text-align: left;" ng-show="composerServersIPAMError">{{ composerServersIPAMError }}</p>
+						</div>
+						<div class="content-components content-general">
+							<p class="title bold" translate="workloadconfiguration.view.VCENTER_SERVERS"></p>
+							<ul class="general-list">
+								<li><div class="list-title vdi-review-li"><plain translate="workloadconfiguration.view.NODES" /></div><div class="vdi-review-li-value"><span style="margin-right:5px">:</span>{{ viewServers.vCenterServers }}</div></li>
+								<li><div class="list-title vdi-review-li" style="width:70% !important;"><plain translate="workloadconfiguration.view.INITIAL_VCENTER" /></div><div style="width:62%;float:right; color: #666;font-family: inherit!important; font-size: 15px!important;"><span style="margin-right:5px">:</span>{{ viewServers.initialVcenter }}</div></li>
+								<li><p class="list-title" translate="workloadconfiguration.view.IP_ADDRESSES"></p>
+								    <ul class="general-list vdi-ipList">
+                            			<li ng-repeat="vCenterServer in viewServers.vCenterServerList"><span>{{ vCenterServer }}</span></li>
+                        			</ul>
+								</li>
+							</ul>
+							<p style="color:red;text-align: left;" ng-show="vCenterServersIPAMError">{{ vCenterServersIPAMError }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" ng-model="workloadId" />
+			<div class="submit-container center-align">
+				<input value="Back" class="submit" type="button" ng-click="workloadWorkflowNavigation('system-config');">
+				<input type="button" value="Finish" class="submit" ng-disabled="workloadTriggerDisabled" ng-click=triggerWorkloadConfiguration(workloadId) />
+			</div>
+		</div>
+	
+		<!--<div class="form-modal" style="margin-left:0px!important; margin-top:0px!important;" ng-show="workloadScreenShow=='workload-progress'">
+			<div class="detail-info-wrapper">
+				<ul ng-show="progressStatus" class="access-wrapper clearfix">
+					<li class="clearfix">
+						<div class="new-user-permission l-float" style="width:80%">
+							<span style="cursor: auto;text-align: left;">{{ progressStatus }}</span>
+						</div>
+						<div class="new-users-type">
+							&nbsp;
+						</div>
+						<hr>
+					</li>
+				</ul>
+				<ul class="access-wrapper clearfix" style="height:300px; overflow: auto;">
+					<li class="clearfix" ng-repeat="progress in progressMessages">
+						<div class="new-user-permission l-float" style="width:80%">
+							<span style="cursor: auto;text-align: left;">{{ progress.message }}</span>
+						</div>
+						<div class="new-users-type">
+							<span ng-if="progress.status == 'RUNNING'" style="color:blue;">[{{ progress.status }}]</span>
+							<span ng-if="progress.status == 'DONE'" style="color:green;">[{{ progress.status }}]</span>
+							<span ng-if="progress.status == 'FAILURE'" style="color:red;">[{{ progress.status }}]</span>
+						</div>
+						<hr>
+					</li>
+				</ul>
+			</div>
+		</div>-->
+	</div>
+</div>

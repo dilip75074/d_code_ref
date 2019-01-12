@@ -1,0 +1,201 @@
+<div class="stpls_register_container animated fadeIn">
+
+    <div class="row">
+        <div class="col-xs-12"><p class="page_header" translate="ACT_CRT_ACT"></p></div>
+    </div>
+    <div class="row req_info_label">
+        <div class="col-xs-12"><span class="red">*</span>{{'ACT_IND_REQ_INFO'|translate}}</div>
+    </div>
+
+    <div class="row register">
+        <div class="col-xs-12">
+
+            <form name="registerForm" novalidate>
+
+                <div class="input_row">
+					<div email-address>
+                        <input name="email1" type="email" ng-model="data.email1" class="form-control email" placeholder="*{{'ACT_EML_ADD'|translate}}"
+                        autocomplete="off"  input-reset-control/>
+					</div>
+ 					<div class="error-messages"
+                        ng-if="registerForm.$submitted && !registerForm.email1.$valid"
+                        ng-messages="registerForm.email1.$error"
+                        ng-messages-include="common/form-messages/common.html"></div>
+                     <div class="checkbox_row">
+                        <button class="checkbox_btn" type="button" name="emailPreference" ng-click="changeSubscribeStatus()">
+                            <span class="check" ng-class="{checked: data.emailPreference}"></span>
+                            <span translate="ACT_NTFY_DEAL"></span>
+                        </button>
+                      </div>
+                </div>
+
+				<div class="input_row">
+                        <input name="logonId" type="text" ng-model="data.logonId" ng-maxlength="160" ng-pattern="/^[a-zA-Z0-9.\-_@]{1,256}$/" ng-focus="populateUserName(registerForm.logonId, registerForm.email1.$viewValue)"
+                        	class="form-control" placeholder="*{{'ACT_UNME'|translate}}" required
+                        	autocomplete="off" autocorrect="off" autocapitalize="off"  input-reset-control/>
+                          <div class="error-messages"
+                            ng-if="registerForm.$submitted && !registerForm.logonId.$valid"
+                            ng-messages="registerForm.logonId.$error"
+                            ng-messages-include="common/form-messages/common.html"></div>
+                </div>
+                <div class="input_row">
+                    <input type="password"
+                        name="logonPassword"
+                        class="form-control"
+                        ng-minlength="8"
+                        ng-maxlength="255"
+                        ng-model="data.logonPassword"
+                        ng-pattern="/^([a-zA-Z0-9#?!@$%^&*-])+$/"
+                        placeholder="*{{'ACT_PWD'|translate}}"
+                        input-reset-control
+                        required />
+                    <div class="error-messages"
+                        ng-if="registerForm.$submitted && !registerForm.logonPassword.$valid"
+                        ng-messages="registerForm.logonPassword.$error"
+                        ng-messages-include="common/form-messages/password.html"></div>
+                </div>
+
+                <div class="input_row">
+                    <input type="password"
+                        name="logonPasswordVerify"
+                        class="form-control"
+                        ng-minlength="8"
+                        ng-maxlength="255"
+                        ng-model="data.logonPasswordVerify"
+                        ng-pattern="/^([a-zA-Z0-9#?!@$%^&*-])+$/"
+                        match-validator="data.logonPassword"
+                        placeholder="*{{'ACT_RENTR_PWD'|translate}}"
+                        input-reset-control
+                        required />
+                    <div class="error-messages"
+                        ng-if="registerForm.$submitted && !registerForm.logonPasswordVerify.$valid"
+                        ng-messages="registerForm.logonPasswordVerify.$error"
+                        ng-messages-include="common/form-messages/password.html"></div>
+                    <div class="checkbox_row">
+                        <button class="checkbox_btn" type="button" name="autoLogin" ng-click="autoLogin()">
+                            <span class="check" ng-class="{checked: data.autoLoginPreference}"></span>
+                            <span>{{'ACT_LGN_AUTO'|translate}}</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="radio_row input_row rewards_row">
+                        <label class="reward_header">{{'ACT_STPL_RWD1'|translate}}&reg;{{'ACT_STPL_RWD2'|translate}}</label>
+                        <div class="radio">
+                            <label for="alreadyRewardsMember">
+                              <input type="radio" ng-model="data.rewardsMemberOption" name="rewardsMemberOption" value="alreadyRewardsMember" id="alreadyRewardsMember">
+                              <span class="radio_text">{{'ACT_ALREADY_MBM'|translate}}</span>
+                            </label>
+
+                        </div>
+                        <div class="radio">
+                            <label for="becomeRewardsMember">
+                              <input type="radio" ng-model="data.rewardsMemberOption" name="rewardsMemberOption" value="becomeRewardsMember" id="becomeRewardsMember">
+                              <span class="radio_text">{{'ACT_RWD_SIGNUP'|translate}}</span>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label for="doNotJoinRewards">
+                              <input type="radio" ng-model="data.rewardsMemberOption" name="rewardsMemberOption" value="doNotJoinRewards" id="doNotJoinRewards">
+                              <span class="radio_text">{{'ACT_NT_NW'|translate}}</span>
+                            </label>
+                        </div>
+                </div>
+                <div class="option_row stpls_rewards_container" ng-if="data.rewardsMemberOption === 'alreadyRewardsMember'">
+                  <div class="input_row">
+                        <input type="text" class="form-control" name="rewardsNumber" rewards-number ng-model="data.rewardsNumber" placeholder="{{'ACT_STPL_RWD_NBR'|translate}}" ng-minlength="2" ng-maxlength="10" ng-pattern="/^[0-9]+$/" input-reset-control required>
+                        <div class="error-messages alert alert-danger"
+                            ng-if="registerForm.$submitted && !registerForm.rewardsNumber.$valid"
+                            ng-messages="registerForm.rewardsNumber.$error">
+                            <div ng-message="pattern">{{'ACT_RWD_NUM_ERR'|translate}}</div>
+                            <div ng-message="required">{{'RWD_NUMBER_ERR'|translate}}</div>
+                            <div ng-message-exp="['minlength', 'maxlength']">{{'RWD_NUMBERLEN_ERR'|translate}}</div>
+                            <div ng-messages-include="common/form-messages/common.html"></div>
+                        </div>
+                    </div>
+                    <div class="input_row">
+                        <input type="tel" class="form-control" name="rewardsPhoneNumber" ng-model="data.rewardsPhoneNumber" placeholder="{{'RWD_PHN_PH'|translate}}"
+                            ng-required="registerForm.rewardsNumber.$viewValue" ng-pattern="/^[2-9][0-9]{2}[\ ]{0,1}[0-9]{3}[\ ]{0,1}[0-9]{4}$/" ng-disabled="data.rewardsMemberOption === 'becomeRewardsMember'" input-reset-control/>
+                         <div class="error-messages alert alert-danger"
+                            ng-if="registerForm.$submitted && !registerForm.rewardsPhoneNumber.$valid"
+                            ng-messages="registerForm.rewardsPhoneNumber.$error">
+                            <div ng-message="pattern">{{'RWD_PHN_ERR'|translate}}</div>
+                            <div ng-message="required">{{'RWD_PHN_ERR'|translate}}</div>
+                            <div ng-messages-include="common/form-messages/common.html"></div>
+                        </div>
+                    </div>
+                  </div>
+                <div class="option_row stpls_rewards_container" ng-if="data.rewardsMemberOption === 'becomeRewardsMember'">
+                  <div class="info_row">
+                        <label>{{'RWD_NEW_MEM'|translate}}</label>
+                    </div>
+                    <div class="row req_info_label">
+                        <span class="red">*</span> <span translate="ACT_IND_REQ_INFO"></span>
+                    </div>
+                    <div id="acctTypeDiv" class="input_row">
+                        <select class="form-control" name="acctType" id="enrollAcctType" ng-model="data.rewardsAccountType" required>
+                            <option value="" translate="RWD_ACT_TYPE">*</option>
+                            <option value="Business" translate="RWD_BSNS"></option>
+                            <option value="Personal" translate="RWD_PERS"></option>
+                            <option value="Teacher" translate="RWD_TCH"></option>
+                        </select>
+                        <div class="alert alert-danger" ng-show="registerForm.$submitted && registerForm.acctType.$error.required" translate="RWD_SEL_ACT_TYPE"></div>
+                    </div>
+                    <div class="row input_row">
+                    <div id="fnameDiv" class="col-xs-6 no_padding">
+                        <input type="text" name="fName" placeholder="{{'ADR_FIRSTNAME_PH'|translate}}" class="form-control" id="enrollFirstName" ng-model="data.rewardsFirstName" input-reset-control required/>
+                        <div class="alert alert-danger" ng-show="registerForm.$submitted && registerForm.fName.$error.required" translate="RWD_FNAME_ERR"></div>
+                    </div>
+                    <div id="lnameDiv" class="col-xs-6 no_padding">
+                        <input type="text" name="lName" placeholder="{{'ADR_LASTNAME_PH'|translate}}" class="form-control" id="enrollLastName" ng-model="data.rewardsLastName" input-reset-control required/>
+                        <div class="alert alert-danger" ng-show="registerForm.$submitted && registerForm.lName.$error.required" translate="RWD_LNAME_ERR"></div>
+                    </div>
+                    </div>
+                    <div id="addrDiv" class="input_row">
+                        <address-entry name="enrollAddr" address-model="dataAddress.rewardsAddress" address-type="rewards" autocomplete="off" session-user="false"></address-entry>
+                        <div class="alert alert-danger" ng-show="registerForm.$submitted && dataAddress.rewardsAddress.addressLine1 === ''" translate="ADR_INVALID_ADDRESSENTRY"></div>
+                    </div>
+                    <div class="row input_row">
+                    <div id="phoneDiv" class="col-xs-6 no_padding">
+                        <input type="tel" name="phone" placeholder="{{'ADR_PHONE_PH'|translate}}" class="form-control" id="enrollPhone" phone-number ng-model="data.rewardsPhoneNumber" input-reset-control required/>
+
+                        <div class="error-messages alert alert-danger"
+                            ng-if="registerForm.$submitted && !registerForm.phone.$valid"
+                            ng-messages="registerForm.phone.$error">
+                            <div ng-message="required">{{'RWD_PHN_ERR'|translate}}</div>
+                            <div ng-messages-include="common/form-messages/common.html"></div>
+                        </div>
+                     </div>
+
+                    <div id="phoneExtId" class="col-xs-6 no_padding">
+                        <input type="text" placeholder="{{'ADR_PHONE_EXT_PH'|translate}}" class="form-control additional" id="enrollPhoneExt" ng-model="data.rewardsExtension" input-reset-control />
+                    </div>
+                    </div>
+                    <div id="delTypeId" class="row input_row">
+                        <select class="form-control" name="delType" id="enrollDelType" ng-model="data.rewardsDeliveryMethod" required>
+                            <option value="" translate="RWD_DEL_MTH"></option>
+                            <option value="E" translate="RWD_EML"></option>
+                            <option value="D" translate="RWD_PST"></option>
+                        </select>
+                        <div class="alert alert-danger" ng-show="registerForm.$submitted && registerForm.delType.$error.required" translate="RWD_DEL_MTH_ERR"></div>
+                    </div>
+                  </div>
+
+                <div class="input_row">
+                        <div class="alert alert-danger" ng-show="errorMsg"><span>{{errorMsg}}</span></div>
+                </div>
+                <!-- Loading Spinner, put here for positioning -->
+                <div ng-show="isLoading" class="row loading">
+                    <div class="enrollSpinner wait_text">
+                        <span class="spinner" us-spinner></span>
+                        <p class="text_spacer" translate="RWD_PLS_NEW_ACCT"></p>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                        <button class="btn stpls_primary btn_full_width" ng-click="save(registerForm, data)" translate="ACT_SUBMIT"></button>
+                      </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

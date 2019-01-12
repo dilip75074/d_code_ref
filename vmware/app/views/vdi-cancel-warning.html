@@ -1,0 +1,31 @@
+<style>
+.modal-sm{ width:500px!important; height:330px!important; border-radius:3px; margin-top:7%; }
+.view-rack-container li{ height: 40px!important; background: none;  border: 0px;}
+.btn{
+	background: #0095d3;
+	border-bottom: 2px solid #0082b8;
+	color: #fff;
+	display: inline-block;
+	font-size: 18px;
+	outline: none;
+	text-decoration: none;
+	padding: 12px 42px 11px 41px;
+	margin: 13px 0 48px 0;
+}
+.physical-container-wrapper{ max-width:0px!important; min-width:500px!important; max-height:470px!important;}
+</style>
+
+<div ng-model="template" ng-controller="WorkloadConfigurationController">
+	<div class="physical-container physical-container-wrapper">
+		<header>
+			<span id="edit-configuration" title="Workload Configuration" translate="vdicancelprocess.view.VDI_WORKLOAD_CANCEL_CONFIRM_TITIE"></span>	
+		</header>
+		<div class="view-rack-container clearfix" style=" max-height:94%; max-width: 895px; overflow: auto; height:100px;">
+			<div style="padding:20px;"><plain translate="vdicancelprocess.view.VDI_WORKLOAD_CANCEL_CONFIRM_MESSAGE" /></div>
+		</div>
+		<div class="submit-container center-align">
+			<a class="btn" ng-click="cancelConfirmClose()"><plain translate="vdicancelprocess.view.VDI_WORKLOAD_CANCEL_CANCEL" /></a>
+			<a class="btn" ng-click="cancelConfirmOk()"><plain translate="vdicancelprocess.view.VDI_WORKLOAD_CANCEL_OK" /></a>
+		</div>
+	</div>
+</div>

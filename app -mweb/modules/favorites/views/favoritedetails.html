@@ -1,0 +1,68 @@
+<div class="stpls_favoritedetails_container animated fadeIn">
+
+    <div class="col-xs-12"><span class="favorites_header pull-left">favorite list name here</span><a class="pull-right">Edit</a></div>
+    <div class="col-xs-12"><span class="favorites_subtitle">To add new items to this list, use the Add to Favorites button on the specific product page.</span></div>
+
+    <div class="row">
+        <div class="col-xs-12">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 select_all">
+            <div>
+                <label>Select All</label>
+                <input name="selectall" type="checkbox" ng-click="selectAll()" ng-checked="selectedAll()" />
+            </div>
+            <div>
+                <button class="btn stpls_primary btn-block add_to_cart" ng-class="{'stpls_inactive': ! selectedAny()}" type="submit" ng-click="addToCart()">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product_list">
+        <div class="product_row row" ng-repeat="product in products track by $index">
+            <analytics-item item="product" slot="{{$index+1}}" page="1"></analytics-item>
+            <div class="col-xs-1">
+                <input type="checkbox" ng-model="product.checked">
+            </div>
+            <div class="col-xs-5">
+                <a href="/product/{{product.sku}}">
+                    <p ng-bind-html="product.name"></p>
+                    <img ng-src="{{product.images[0] | skuSmall}}" height="60" width="60">
+                </a>
+
+                <div class="input-group price_qty_rocker" ng-if="product.inStock">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default minus" ng-disabled="!product.checked || product.qty < 2" ng-click="changeQty(product, -1)"><span class="glyphicon glyphicon-minus"></span></button>
+                    </span>
+                    <input type="text" class="form-control" ng-model="product.qty" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default add" ng-disabled="!product.checked" ng-click="changeQty(product, 1)"><span class="glyphicon glyphicon-plus"></span></button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <p ng-if="product.custReview.rating > 0"><rating max="5" ng-model="product.custReview.rating" readonly="true"></rating> <span class="rating_link" ng-bind="product.custReview.count"></span></p>
+                <p ng-if="product.custReview.rating == 0" class="no_reviews"><rating max="5" ng-init="r=5" ng-model="r" readonly="true"></rating> <span class="rating_link">No reviews</span></p>
+            </div>
+            <div class="col-xs-3">
+                <p><span class="red">{{product.pricing[0].finalPrice | currency}}</span> each</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 select_all">
+            <div>
+                <label>Select All</label>
+                <input name="selectall" type="checkbox" ng-click="selectAll()" ng-checked="selectedAll()" />
+            </div>
+            <div>
+                <button class="btn stpls_primary btn-block add_to_cart" ng-class="{'stpls_inactive': ! selectedAny()}" type="submit" ng-click="addToCart()">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+
+</div>

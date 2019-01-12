@@ -1,0 +1,6 @@
+<div class="container-fluid">
+  <div class="conveyor-layout" ng-switch="config.format">
+    <conveyor-text ng-switch-when="text" widget="widget" widget-config-type="legal"></conveyor-text>
+    <conveyor-banner ng-switch-when="banner" widget="widget" widget-config-presentation="stacked"></conveyor-banner>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+#{$homecards-prefix}-container {
+  .card-categories-row {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding: $base-cards-padding;
+
+    .each-category {
+      width: 50%;
+      float: left;
+
+      .category-image {
+        display: block;
+        padding:$base-gutter-width;
+
+        img {
+          display: block;
+          margin: 0 auto;
+          max-width: 70px;
+          max-height: 70px;
+        }
+      }
+
+      .category-title {
+        @include font-bold;
+        font-size: 16px;
+        display: block;
+
+        .category-unit {
+          color: $palette--stpls-warm-grey;
+          font-size: $base-cards-font-size-smallest;
+        }
+      }
+
+      .category-subtitle {
+        display: block;
+        font-size: $base-font-size;
+        color: $palette--gray-dark;
+
+        &.coupons {
+          font-size: $base-cards-font-size-small;
+          color: $palette--stpls-brownish-grey;
+        }
+      }
+    }
+  }
+}

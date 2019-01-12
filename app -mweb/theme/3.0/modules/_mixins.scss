@@ -1,0 +1,82 @@
+//Mixin for menu animation configs
+@mixin transition-config($transition) {
+  -webkit-transition: $transition;
+  transition: $transition;
+}
+
+@mixin transition-delay($delay) {
+  -webkit-transition-delay: $delay;
+  transition-delay: $delay;
+}
+
+@mixin pill($color) {
+  border-radius: $base-radius;
+  font-size: $base-font-size-sku-tag;
+  padding: 4px 6.5px;
+  color: $palette--white;
+  text-align: center;
+  text-transform: lowercase;
+  display: inline-block;
+  background: $color;
+}
+
+@mixin pill2($color) {
+  background: $color;
+  border: .5px solid #afc4dd;
+  color: #4a90e2;
+  display: inline-block;
+  font-size: $base-font-size-asterisk;
+  padding: 2px 5px;
+  text-align: center;
+  text-transform: lowercase;
+}
+
+@mixin border--base-bottom {
+  border-bottom: 1px solid $palette--gray-light;
+}
+
+@mixin border--base-top {
+  border-top: 1px solid $palette--gray-light;
+}
+
+@mixin no-flicker {
+  //Old Trick: fixes choppy/flicker in WK
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+@mixin hide-short($height:$base-short-height) {
+  @media (max-height: $height) {
+    display: none;
+  }
+}
+
+@mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin line-clamp($lines) {
+  text-overflow: ellipsis;
+  white-space: normal;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+
+
+@mixin cards-border {
+  border: 1px solid $palette--stpls-white-two;
+}
+
+@mixin cart-border {
+  border: 1px solid $palette--gray-light-3;
+  border-radius: $base-radius-btn;
+  overflow: hidden;
+  margin-top: $base-gutter-width * 2;
+  margin-bottom: $base-gutter-width * 2;
+  padding-bottom: $base-radius-tab/2;
+}

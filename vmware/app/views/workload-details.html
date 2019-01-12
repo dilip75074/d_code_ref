@@ -1,0 +1,93 @@
+<div class="edit-container clearfix" ng-controller="WorkloadDetailsController">
+	<header>
+		<span id="edit-configuration" title="Workload Configuration" translate="workloaddetails.view.WORKLOAD_PROFILES"></span>
+		<span class="dialog-close" ng-click="cancel()">
+			<img src="app/img/close-icon.png">
+		</span>
+	</header>
+	<div id="edit-tabs" class="edit-tabs" style="overflow: auto;">
+		<!-- tabs selectors -->
+		<!-- <div class="menubar clearfix">
+			<ul class="view-tabs">
+				<li class="listview"><a href="#tab1" class="active">List view</a></li>
+				<li class="mapview"><a href="#tab2">Map view</a></li>
+			</ul>
+			<ul class="edit-buttons">
+				<li><a class="edit-configuration">EDIT CONFIGURATION</a></li>
+			</ul>
+		</div> -->
+		<div class="error-message-container" ng-show="workloadDetailsErrorMessage != ''" style="height: auto;">
+			<div class="error-message-content">
+				<img src="app/img/error-warning-icon.png" />
+				<p>
+					<span><plain translate="workloaddetails.view.SYSTEM_WARNING" />:</span><p>{{ workloadDetailsErrorMessage }}</p>
+				</p>
+			</div>
+		</div>
+		
+		<!-- content for map view -->
+		<div id="tab1" class="tabContent">
+			<div class="slider">
+				<span class="l-float switch-prev" ng-click="showPreviousWorkload();" ng-show="showLeftArrow"><img src="app/img/left-arrow.png"></span>
+				<h2 style="display: inline;" ng-bind="selectedWorkload.name"></h2>
+				<span class="switch-next" ng-click="showNextWorkload();" ng-show="showRightArrow"><img src="app/img/right-arrow.png"></span>
+			</div>
+			<div class="switch-toggle switch1">
+				<ul class="system-status">					
+					<li>
+						<div class="status-image">
+							<img src="app/img/pc1.png">
+							<h3>{{selectedWorkload.type}}</h3>
+						</div>
+						<div class="status-content">
+							<div class="workload-progressbar">
+								<p class="progressbar-label" translate="workloaddetails.view.CPUS"></p>
+								<span class="number-container">{{selectedWorkload.cpuUsage}}% ({{ selectedWorkload.usedCpu.toFixed(2) }}GHz)</span>
+								<div id="configuring-progress-bar" class="workload-progressbar-wrapper">
+									<div class="progressbar-value" style="width:{{selectedWorkload.cpuUsage}}%"></div>
+								</div>
+							</div>
+							<div class="workload-progressbar">
+								<p class="progressbar-label" translate="workloaddetails.view.MEMORY"></p>
+								<span class="number-container">{{selectedWorkload.memoryUsage}}% ({{ selectedWorkload.usedMemory.toFixed(2) }}GB)</span>
+								<div id="configuring-progress-bar" class="workload-progressbar-wrapper">
+									<div class="progressbar-value" style="width:{{selectedWorkload.memoryUsage}}%"></div>
+								</div>
+							</div>
+							<div class="workload-progressbar">
+								<p class="progressbar-label" translate="workloaddetails.view.STORAGE"></p>
+								<span class="number-container">{{selectedWorkload.storageUsage}}% ({{ selectedWorkload.usedStorage.toFixed(2) }}TB)</span>
+								<div id="configuring-progress-bar" class="workload-progressbar-wrapper">
+									<div class="progressbar-value" style="width:{{selectedWorkload.storageUsage}}%"></div>
+								</div>               
+							</div>
+						</div>
+					</li>
+					<!-- <p>To move a host to a different vCenter, drag the host to the preferred vCenter on the same rack.</p> -->
+				</ul>
+				<div class="layer-top-edited" style="{{resetTop($index, selectedWorkload.vcenters)}};" ng-repeat="rack in selectedWorkload.racks"></div>
+
+				<ul class="workload-mapview-container clearfix" style="width: {{determineWidth(selectedWorkload.vcenters)}}px">
+					<li class="mapview-rack-title">
+						<h3 class="rack-blue-header" ng-repeat="rack in selectedWorkload.racks">{{ rack.rackName }}</h3>
+					</li>
+					<li class="mapview-rack-content" ng-repeat="vcenter in selectedWorkload.vcenters" style="{{setvCenterHeight(selectedWorkload.racks)}}">
+						<div class="vcenter-blue">
+							<span style="cursor: pointer;" ng-click="showvCenterDetails(vcenter.eth0IpAddress)"><img src="app/img/white-cloud.png"></span>
+							<span style="cursor: pointer;" ng-click="showvCenterDetails(vcenter.eth0IpAddress)">{{ vcenter.eth0IpAddress }}</span>
+						</div>
+						<div ng-repeat="rack in selectedWorkload.racks">
+							<ul class="vcenter-rack-list" style="height:220px;overflow-y: auto;">
+								<li ng-repeat="host in selectedWorkload.hosts" ng-show="host.rackUUID==rack.rackUUID && host.vcenterId == vcenter.vcenterId">
+									<img alt="Host" src="app/img/drive.png">
+									<span>{{host.hostIpAddress}}</span>
+								</li>
+							</ul>
+							<span class="seperater" style="height:50px"></span>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

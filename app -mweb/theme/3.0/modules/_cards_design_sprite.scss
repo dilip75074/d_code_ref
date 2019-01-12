@@ -1,0 +1,176 @@
+/*
+SCSS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: $icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+$icon-home: x y offset_x offset_y width height total_width total_height image_path;
+
+At the bottom of this section, we provide information about the spritesheet itself
+$spritesheet: width height image $spritesheet-sprites;
+*/
+$a-t-c-line-name: 'a-t-c-line';
+$a-t-c-line-x: 0px;
+$a-t-c-line-y: 0px;
+$a-t-c-line-offset-x: 0px;
+$a-t-c-line-offset-y: 0px;
+$a-t-c-line-width: 21px;
+$a-t-c-line-height: 21px;
+$a-t-c-line-total-width: 75px;
+$a-t-c-line-total-height: 40px;
+$a-t-c-line-image: '../../../assets/images/cards_design_sprite_5d72267b.png';
+$a-t-c-line: (0px, 0px, 0px, 0px, 21px, 21px, 75px, 40px, '../../../assets/images/cards_design_sprite_5d72267b.png', 'a-t-c-line', );
+$cart-white-name: 'cart-white';
+$cart-white-x: 0px;
+$cart-white-y: 21px;
+$cart-white-offset-x: 0px;
+$cart-white-offset-y: -21px;
+$cart-white-width: 20px;
+$cart-white-height: 19px;
+$cart-white-total-width: 75px;
+$cart-white-total-height: 40px;
+$cart-white-image: '../../../assets/images/cards_design_sprite_5d72267b.png';
+$cart-white: (0px, 21px, 0px, -21px, 20px, 19px, 75px, 40px, '../../../assets/images/cards_design_sprite_5d72267b.png', 'cart-white', );
+$chat-name: 'chat';
+$chat-x: 20px;
+$chat-y: 21px;
+$chat-offset-x: -20px;
+$chat-offset-y: -21px;
+$chat-width: 19px;
+$chat-height: 18px;
+$chat-total-width: 75px;
+$chat-total-height: 40px;
+$chat-image: '../../../assets/images/cards_design_sprite_5d72267b.png';
+$chat: (20px, 21px, -20px, -21px, 19px, 18px, 75px, 40px, '../../../assets/images/cards_design_sprite_5d72267b.png', 'chat', );
+$ink-toner-name: 'ink-toner';
+$ink-toner-x: 41px;
+$ink-toner-y: 0px;
+$ink-toner-offset-x: -41px;
+$ink-toner-offset-y: 0px;
+$ink-toner-width: 18px;
+$ink-toner-height: 20px;
+$ink-toner-total-width: 75px;
+$ink-toner-total-height: 40px;
+$ink-toner-image: '../../../assets/images/cards_design_sprite_5d72267b.png';
+$ink-toner: (41px, 0px, -41px, 0px, 18px, 20px, 75px, 40px, '../../../assets/images/cards_design_sprite_5d72267b.png', 'ink-toner', );
+$location-name: 'location';
+$location-x: 59px;
+$location-y: 0px;
+$location-offset-x: -59px;
+$location-offset-y: 0px;
+$location-width: 16px;
+$location-height: 21px;
+$location-total-width: 75px;
+$location-total-height: 40px;
+$location-image: '../../../assets/images/cards_design_sprite_5d72267b.png';
+$location: (59px, 0px, -59px, 0px, 16px, 21px, 75px, 40px, '../../../assets/images/cards_design_sprite_5d72267b.png', 'location', );
+$profile-white-name: 'profile-white';
+$profile-white-x: 21px;
+$profile-white-y: 0px;
+$profile-white-offset-x: -21px;
+$profile-white-offset-y: 0px;
+$profile-white-width: 20px;
+$profile-white-height: 20px;
+$profile-white-total-width: 75px;
+$profile-white-total-height: 40px;
+$profile-white-image: '../../../assets/images/cards_design_sprite_5d72267b.png';
+$profile-white: (21px, 0px, -21px, 0px, 20px, 20px, 75px, 40px, '../../../assets/images/cards_design_sprite_5d72267b.png', 'profile-white', );
+$a-t-c-line-2x-name: 'a-t-c-line@2x';
+$a-t-c-line-2x-x: 0px;
+$a-t-c-line-2x-y: 0px;
+$a-t-c-line-2x-offset-x: 0px;
+$a-t-c-line-2x-offset-y: 0px;
+$a-t-c-line-2x-width: 42px;
+$a-t-c-line-2x-height: 42px;
+$a-t-c-line-2x-total-width: 150px;
+$a-t-c-line-2x-total-height: 79px;
+$a-t-c-line-2x-image: '../../../assets/images/cards_design_sprite_5d72267b@2x.png';
+$a-t-c-line-2x: (0px, 0px, 0px, 0px, 42px, 42px, 150px, 79px, '../../../assets/images/cards_design_sprite_5d72267b@2x.png', 'a-t-c-line@2x', );
+$cart-white-2x-name: 'cart-white@2x';
+$cart-white-2x-x: 0px;
+$cart-white-2x-y: 42px;
+$cart-white-2x-offset-x: 0px;
+$cart-white-2x-offset-y: -42px;
+$cart-white-2x-width: 40px;
+$cart-white-2x-height: 37px;
+$cart-white-2x-total-width: 150px;
+$cart-white-2x-total-height: 79px;
+$cart-white-2x-image: '../../../assets/images/cards_design_sprite_5d72267b@2x.png';
+$cart-white-2x: (0px, 42px, 0px, -42px, 40px, 37px, 150px, 79px, '../../../assets/images/cards_design_sprite_5d72267b@2x.png', 'cart-white@2x', );
+$chat-2x-name: 'chat@2x';
+$chat-2x-x: 40px;
+$chat-2x-y: 42px;
+$chat-2x-offset-x: -40px;
+$chat-2x-offset-y: -42px;
+$chat-2x-width: 38px;
+$chat-2x-height: 36px;
+$chat-2x-total-width: 150px;
+$chat-2x-total-height: 79px;
+$chat-2x-image: '../../../assets/images/cards_design_sprite_5d72267b@2x.png';
+$chat-2x: (40px, 42px, -40px, -42px, 38px, 36px, 150px, 79px, '../../../assets/images/cards_design_sprite_5d72267b@2x.png', 'chat@2x', );
+$ink-toner-2x-name: 'ink-toner@2x';
+$ink-toner-2x-x: 82px;
+$ink-toner-2x-y: 0px;
+$ink-toner-2x-offset-x: -82px;
+$ink-toner-2x-offset-y: 0px;
+$ink-toner-2x-width: 36px;
+$ink-toner-2x-height: 39px;
+$ink-toner-2x-total-width: 150px;
+$ink-toner-2x-total-height: 79px;
+$ink-toner-2x-image: '../../../assets/images/cards_design_sprite_5d72267b@2x.png';
+$ink-toner-2x: (82px, 0px, -82px, 0px, 36px, 39px, 150px, 79px, '../../../assets/images/cards_design_sprite_5d72267b@2x.png', 'ink-toner@2x', );
+$location-2x-name: 'location@2x';
+$location-2x-x: 118px;
+$location-2x-y: 0px;
+$location-2x-offset-x: -118px;
+$location-2x-offset-y: 0px;
+$location-2x-width: 32px;
+$location-2x-height: 42px;
+$location-2x-total-width: 150px;
+$location-2x-total-height: 79px;
+$location-2x-image: '../../../assets/images/cards_design_sprite_5d72267b@2x.png';
+$location-2x: (118px, 0px, -118px, 0px, 32px, 42px, 150px, 79px, '../../../assets/images/cards_design_sprite_5d72267b@2x.png', 'location@2x', );
+$profile-white-2x-name: 'profile-white@2x';
+$profile-white-2x-x: 42px;
+$profile-white-2x-y: 0px;
+$profile-white-2x-offset-x: -42px;
+$profile-white-2x-offset-y: 0px;
+$profile-white-2x-width: 40px;
+$profile-white-2x-height: 40px;
+$profile-white-2x-total-width: 150px;
+$profile-white-2x-total-height: 79px;
+$profile-white-2x-image: '../../../assets/images/cards_design_sprite_5d72267b@2x.png';
+$profile-white-2x: (42px, 0px, -42px, 0px, 40px, 40px, 150px, 79px, '../../../assets/images/cards_design_sprite_5d72267b@2x.png', 'profile-white@2x', );
+$spritesheet-width: 75px;
+$spritesheet-height: 40px;
+$spritesheet-image: '../../../assets/images/cards_design_sprite_5d72267b.png';
+$spritesheet-sprites: ($a-t-c-line, $cart-white, $chat, $ink-toner, $location, $profile-white, );
+$spritesheet: (75px, 40px, '../../../assets/images/cards_design_sprite_5d72267b.png', $spritesheet-sprites, );
+$retina-spritesheet-width: 150px;
+$retina-spritesheet-height: 79px;
+$retina-spritesheet-image: '../../../assets/images/cards_design_sprite_5d72267b@2x.png';
+$retina-spritesheet-sprites: ($a-t-c-line-2x, $cart-white-2x, $chat-2x, $ink-toner-2x, $location-2x, $profile-white-2x, );
+$retina-spritesheet: (150px, 79px, '../../../assets/images/cards_design_sprite_5d72267b@2x.png', $retina-spritesheet-sprites, );
+
+/*
+These "retina group" variables are mappings for the naming and pairing of normal and retina sprites.
+
+The list formatted variables are intended for mixins like `retina-sprite` and `retina-sprites`.
+*/
+$a-t-c-line-group-name: 'a-t-c-line';
+$a-t-c-line-group: ('a-t-c-line', $a-t-c-line, $a-t-c-line-2x, );
+$cart-white-group-name: 'cart-white';
+$cart-white-group: ('cart-white', $cart-white, $cart-white-2x, );
+$chat-group-name: 'chat';
+$chat-group: ('chat', $chat, $chat-2x, );
+$ink-toner-group-name: 'ink-toner';
+$ink-toner-group: ('ink-toner', $ink-toner, $ink-toner-2x, );
+$location-group-name: 'location';
+$location-group: ('location', $location, $location-2x, );
+$profile-white-group-name: 'profile-white';
+$profile-white-group: ('profile-white', $profile-white, $profile-white-2x, );
+$retina-groups: ($a-t-c-line-group, $cart-white-group, $chat-group, $ink-toner-group, $location-group, $profile-white-group, );
+
+

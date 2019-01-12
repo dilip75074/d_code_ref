@@ -1,0 +1,70 @@
+#{$homecards-prefix}-container {
+  .card-reorder-row {
+    display: inline-flex;
+    width: 100%;
+    padding: $base-cards-padding;
+    border-bottom: $base-cards-border;
+    vertical-align: middle;
+    position: relative;
+
+    .item_added_overlay_pending {
+      position: absolute;
+    }
+
+    .product-image {
+      width: 30%;
+      float: left;
+      display: inline-block;
+      margin: auto;
+
+      img {
+        display: block;
+        max-width: 70px;
+        max-height: 60px;
+      }
+    }
+
+    .product-content {
+      width: 55%;
+      float: left;
+      margin: 0 auto;
+      padding: 5px;
+      display: inline-block;
+      font-size: $base-cards-font-size;
+      color: $palette--gray-dark;
+
+      .product-name {
+        display: block;
+      }
+
+      .product-final-price {
+        font-size: $base-cards-font-size-little-huge;
+        display: inline-block;
+        @include font-medium;
+        color: $palette--gray-dark;
+      }
+
+      .product_price_strike {
+        font-size: $base-cards-font-size-smaller;
+        text-decoration: line-through;
+        color: $palette--stpls-gray-light-3;
+      }
+    }
+
+    .product-action {
+      width: 15%;
+      float: right;
+      display: inline-block;
+      margin: auto;
+      text-align: center;
+
+      .add-to-cart-line {
+        background: url(/assets/images/a-t-c-line.svg) no-repeat center center;
+        background-size: contain;
+        display: inline-block;
+        height: 26px;
+        width: 26px;
+      }
+    }
+  }
+}

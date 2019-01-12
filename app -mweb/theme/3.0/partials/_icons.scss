@@ -1,0 +1,202 @@
+// Reused icons not included as button backgrounds
+
+i {
+  &.icon-back {
+    display: block;
+    @include retina-sprite($back-group);
+  }
+
+  &.icon-home {
+    display: block;
+    background-image: url(../../../assets/images/home-1.png);
+    height: 24px;
+    width: 24px;
+    background-size: contain;
+  }
+
+  &.icon-browse {
+    display: inline-block;
+    @include retina-sprite($browse-group);
+  }
+
+  &.icon-deals {
+    display: inline-block;
+    @include retina-sprite($deals-group);
+  }
+
+  &.icon-shippingaddress {
+    display: block;
+    @include retina-sprite($shippingaddress-group);
+  }
+
+  &.icon-blank-card {
+    display: block;
+    @include retina-sprite($blank-card-group);
+  }
+
+  &.icon_chevron_back {
+    display: block;
+    @include retina-sprite($chevron-left-group);
+  }
+  &.logo {
+    @include retina-sprite($spls-logo-group);
+  }
+
+  &.add-to-cart-line {
+    display: inline-block;
+    @include retina-sprite($a-t-c-line-group);
+    vertical-align: top;
+  }
+
+  &.add-to-cart-line-big {
+    display: inline-block;
+    @include sprite($a-t-c-line-2x);
+    //vertical-align: top;
+  }
+
+  &.chat-white {
+    display: inline-block;
+    @include retina-sprite($chat-group);
+    vertical-align: top;
+  }
+
+  &.cart-white {
+    display: inline-block;
+    @include retina-sprite($cart-white-group);
+    vertical-align: top;
+  }
+
+  &.ink-toner-white {
+    display: inline-block;
+    @include retina-sprite($ink-toner-group);
+    vertical-align: top;
+  }
+
+  &.location-white {
+    display: inline-block;
+    @include retina-sprite($location-group);
+    vertical-align: top;
+  }
+
+  &.profile-white {
+    display: inline-block;
+    @include retina-sprite($profile-white-group);
+    vertical-align: top;
+  }
+
+  &.cart {
+    display: block;
+    @include retina-sprite($cart-group);
+  }
+
+  &.ink-toner {
+    display: block;
+    @include retina-sprite($inkheader-group);
+  }
+
+  &.store-locator {
+    display: block;
+    @include retina-sprite($location-icon-group);
+  }
+
+  &.fb-messenger_icon {
+    display: inline-block;
+    margin-left: 10px;
+    @include retina-sprite($fb-messenger-group);
+  }
+
+  &.icon-star {
+    display: inline-block;
+    margin: 2px 0px 0px -2px;
+    @include retina-sprite($star-solid-group);
+    &.lg {@include retina-sprite($star-solid-lg-group);}
+    &.star-half {
+      @include retina-sprite($star-half-group);
+      &.lg {@include retina-sprite($star-half-lg-group);}
+    }
+    &.star-empty {
+      @include retina-sprite($star-empty-group);
+      &.lg {@include retina-sprite($star-empty-group);}
+    }
+  }
+
+  &.close-icon {
+    display: block;
+    @include retina-sprite($close-icon-group);
+  }
+
+  &.checkmark {
+    display: block;
+    @include retina-sprite($checkmark-group);
+  }
+
+  // added for use with conveyor.
+  // TODO: establish library for these, and use SVG
+  &.nav-icon {
+    display: inline-block;
+  }
+  &.deals {
+    @include retina-sprite($deals-icon-group);
+  }
+  &.weeklyad {
+    @include retina-sprite($weekly-ad-icon-group);
+  }
+  &.dailydeals-lg {
+    @include retina-sprite($daily-deals-icon-group);
+  }
+  &.weeklyad-lg {
+    @include retina-sprite($weekly-ad-icon-lg-group);
+  }
+  &.coupons-lg {
+    @include retina-sprite($coupons-icon-group);
+  }
+  &.clearance-lg {
+    @include retina-sprite($clearance-icon-group);
+  }
+
+}
+
+span {
+  &.confirm_check {
+    display: block;
+    @include retina-sprite($thanks-check-group);
+    margin: 0 auto;
+  }
+
+  &.checkout_lock {
+    display: block;
+    @include retina-sprite($checkout-lock-group);
+  }
+
+  &.geo_icon {
+    display: block;
+    @include retina-sprite($locator-group);
+  }
+
+  &.icon_chevron_forward {
+    display: block;
+    @include retina-sprite($chevron-right-group);
+  }
+
+  &.icon_delete {
+    display: block;
+    @include retina-sprite($close-group);
+  }
+
+  &.icon_plus {
+    display: block;
+    @include retina-sprite($plus-group);
+  }
+
+  &.icon_minus {
+    display: block;
+    @include retina-sprite($minus-group);
+  }
+}
+
+i, span {
+  &.search {
+      display: block;
+      @include retina-sprite($search-group);
+  }
+}

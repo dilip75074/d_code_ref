@@ -1,0 +1,89 @@
+<div class="stpls_rewards_container" id="rewardsEnrollContainer">
+
+    <div id="rewardsEnroll">
+
+        <div class="rewards_header" id="rewardsHeader">
+            {{'RWD_HEADER'|translate}}
+          </div>
+
+        <form name="enrollform" role="form" class="form-horizontal register" novalidate>
+
+            <div class="enrollForm_oneline">
+                <span class="red_text">*</span> <span translate="ACT_IND_REQ_INFO"></span>
+            </div>
+
+            <div id="acctTypeDiv" class="form-group enrollForm_oneline has-feedback">
+                <label for="enrollAcctType"><span class="red">*</span>{{'RWD_ACT_TYPE'|translate}}</label>
+                <select class="form-control" name="acctType" id="enrollAcctType" ng-model="enrollObj.acctType" required>
+                    <option value="" translate="RWD_ACT_TYPE">*</option>
+                    <option value="Business" translate="RWD_BSNS"></option>
+                    <option value="Personal" translate="RWD_PERS"></option>
+                    <option value="Teacher" translate="RWD_TCH"></option>
+                </select>
+                <span class="errorMessage" ng-show="enrollform.acctType.$error.required">{{'RWD_SEL_ACT_TYPE'|translate}}</span>
+            </div>
+
+            <div class="form-group enrollForm_twoline">
+                <div id="fnameDiv" class="col-xs-6 has-feedback">
+                    <label for="enrollFirstName">{{'RWD_FRST_NAME'|translate}}</label>
+                    <input type="text" name="fName" placeholder="{{'ADR_FIRSTNAME_PH'|translate}}" class="form-control" id="enrollFirstName" ng-model="enrollObj.firstName" input-reset-control required/>
+                    <span class="errorMessage" ng-show="enrollform.fName.$error.required">{{'RWD_FNAME_ERR'|translate}}</span>
+                </div>
+                <div id="lnameDiv" class="col-xs-6 has-feedback">
+                    <label for="enrollLastName">{{'RWD_LST_NME'|translate}}</label>
+                    <input type="text" name="lName" placeholder="{{'ADR_LASTNAME_PH'|translate}}" class="form-control" id="enrollLastName" ng-model="enrollObj.lastName" input-reset-control required/>
+                    <span class="errorMessage" ng-show="enrollform.lName.$error.required">{{'RWD_LNAME_ERR'|translate}}</span>
+                </div>
+            </div>
+
+            <div id="addrDiv" class="form-group enrollForm_oneline has-feedback address_control">
+                <label for="enrollAddr"><span class="red">*</span>{{'RWD_ADDR'|translate}}</label>
+                <address-entry required name="enrollAddr" address-model="enrollObj.rewardsAddress" address-type="rewards" autocomplete="off" session-user="false"></address-entry>
+                <span class="errorMessage pull-left" ng-show="!enrollObj.rewardsAddress">{{'RWD_ADDRESS_ERR'|translate}}</span>
+            </div>
+
+             <!-- Loading Spinner, put here for positioning -->
+            <div ng-show="isLoading" class="row loading">
+                <div class="enrollSpinner wait_text">
+                    <span class="spinner" us-spinner></span>
+                    <p class="text_spacer">
+                        {{'RWD_WAIT_ENROLL'|translate}}
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-group enrollForm_twoline">
+                <div id="phoneDiv" class="col-xs-6 has-feedback">
+                    <label for="enrollPhone">{{'RWD_PHN'|translate}}</label>
+                    <input type="tel" phone-number name="phone" placeholder="{{'ADR_PHONE_PH'|translate}}" class="form-control" id="enrollPhone" ng-model="enrollObj.phone" input-reset-control required/>
+                    <span class="errorMessage" ng-show="enrollform.phone.$error.required">{{'RWD_PHN_ERR'|translate}}</span>
+
+                </div>
+                <div id="phoneExtId" class="col-xs-6 has-feedback">
+                    <label for="enrollPhoneExt">{{'RWD_EXT'|translate}}</label>
+                    <input type="text" placeholder="{{'ADR_PHONE_EXT_PH'|translate}}" class="form-control" id="enrollPhoneExt" ng-model="enrollObj.phoneExt" input-reset-control required/>
+                </div>
+            </div>
+
+            <div id="delTypeId" class="form-group enrollForm_oneline has-feedback">
+                <label for="enrollDelType">{{'RWD_DEL_MTH'|translate}}</label>
+                <select class="form-control" name="delType" id="enrollDelType" ng-model="enrollObj.deliveryType" required>
+                    <option value="" translate="RWD_MTH"></option>
+                    <option value="E" translate="RWD_EML"></option>
+                    <option value="D" translate="RWD_PST"></option>
+                </select>
+                <span class="errorMessage" ng-show="enrollform.delType.$error.required">{{'RWD_DEL_MTH_ERR'|translate}}</span>
+              </div>
+
+            <div class="form-group enrollForm_oneline">
+                <div class="col-xs-6">
+                    <button class="btn stpls_primary enrollForm_buttons" translate="RWD_ENROLL" ng-click="performEnrollment()" type="submit"></button>
+                </div>
+                <div class="col-xs-6">
+                    <button class="btn enrollForm_buttons" ng-click="cancelEnrollment()" translate="CANCEL"></button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

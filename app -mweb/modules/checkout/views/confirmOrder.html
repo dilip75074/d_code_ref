@@ -1,0 +1,185 @@
+<div class="stpls_confirm_container animated fadeIn">
+
+	<div class="row">
+		<div class="col-xs-12">
+			<p><span id="green_tickId" class="confirm_check"></span></p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12 thankyou_text">
+			<p id="thank_youId" class="text-center">&nbsp;{{'ORD_THKYOU'|translate}}</p>
+		</div>
+	</div>
+
+	<div ng-show="confirmData">
+		<div class="row">
+			<div class="col-xs-12 emailinfo_text text-center">
+				<p id="emailInfo_Id" class="text-center">&nbsp;{{'ORD_EMAILINFO'|translate}} <span id="shipemail_id"><strong>{{confirmData.eMailAddr}}</strong></span>.</p>
+			</div>
+		</div>
+
+		<!--  REWARDS & USER SIGN-UP SECTION -->
+		<div id="rewards_section_id" class="confirm_section rewards" ng-show="isGuest">
+			<div class="row section_row">
+				<div id="rewards_logo_Id" class="rewards_logo"></div>
+				<div id="rewards_blurb_Id" class="rewards_info_txt">
+					{{'RWD_GETUPTO'|translate}}<span class="red_text">{{'RWD_5PCT'|translate}}</span>
+					{{'RWD_FREESHIP'|translate}}<br>
+					<span class="rewards_excl_txt">{{'RWD_EXCLUSIONS'|translate}}</span>
+				</div>
+			</div>
+
+			<!--  LOADING SPINNER -->
+			<div class="animated loading" ng-show="isLoading" >
+				<div id="spinnerdiv_id" class="animated loading" >
+					<span id="spinner_id" class="spinner" us-spinner="{top: 400}"></span>
+					<p id="spinnermsg_id" class="text_spacer">{{processingMessage}}</p>
+				</div>
+			</div>
+			<div class="row section_row">
+				<div id="createAcctLbl_Id" class="rewards_info_txt">{{'ORD_CREATE_ACCT_HDR'|translate}}</div>
+			</div>
+
+			<form name="rewardsForm" novalidate>
+				<div class="row section_row">
+					<input id="pwd_Id" type="password" name="password" class="form-control" ng-minlength="8" ng-maxlength="255"
+						ng-model="confirmDataIn.password" ng-pattern="/^([a-zA-Z0-9#?!@$%^&*-])+$/" placeholder="{{'ORD_PASS_PH'|translate}}" input-reset-control/>
+					<div id="pwdErr_Id" class="error-messages" ng-if="rewardsForm.$submitted && !rewardsForm.password.$valid"
+						ng-messages="rewardsForm.password.$error"
+						ng-messages-include="common/form-messages/password.html"></div>
+				</div>
+				<div class="row section_row checkbox_row checkrow_spacer">
+					<button id="notifyEmailChk_Id" class="checkbox_btn" type="button" name="notifyByEmail" ng-click="changeNotifyByEmail()">
+						<span class="check" ng-class="{checked: confirmDataIn.notifyByEmail}"></span>
+						<span translate="ACT_NTFY_DEAL"></span>
+					</button>
+				</div>
+
+				<div class="row section_row">
+					<button id="createaccount_button_id" type="button" ng-click="createAccount()" class="btn stpls_primary btn_full_width">
+						{{'ORD_CREATE_ACCT_BTN'|translate}}
+					</button>
+				</div>
+				<div class="row section_row">
+					<span ng-show="errorMsg" class="red_text" ng-bind-html="errorMsg"></span>
+				</div>
+			</form>
+		</div>
+
+		<!-- DEALS OPTIN -->
+		<div id="deals_section_id" class="confirm_section deals" ng-if="showOptins()" ng-include="'modules/marketing/views/optin.html'" ng-controller="OptinCtrl" onload="initOrder(confirmData);"></div>
+
+		<div id="PageContent">
+			<div class="row order_info_row">
+				<div class="col-xs-12">
+					<div id="ordernumtext_id"><img id="kountId" ng-show="kountSuccess" align="left" src="https://www.staples.com/sbd/img/ico/lock_88x31.gif" />&nbsp;{{'ORD_ORDNUM'|translate}}
+						<span id="ordernum_id"><strong>{{confirmData.staplesOrderNum}}</strong></span>
+					</div>
+				</div>
+			</div>
+
+			<!--  Show the pick up items, if any -->
+			<div class="row order_info_row" ng-if="bopisAny">
+				<div class="col-xs-12">
+					<div id="bopis_waitId">{{'CFM_BOPIS_MSG'|translate}}</div>
+					<div id="pickuptext_id" class="DeliveryTxt"><strong>{{'CFM_PU_MSG'|translate}}</strong></div>
+
+					<div ng-repeat="address in bopisStoreAddresses track by $index">
+						<div class="row" id="pickupaddr_id">
+							<div class="col-xs-12">{{address}}</div>
+						</div>
+						<div class="ProductsDetailWrap">
+							<product-cell ng-repeat="product in confirmData.cart.productsInCart | bopisItems: bopisStoreNums[$index]" data="product" loc="orderitems" reviews="false" buy="false" class="animated fadeIn"></product-cell>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--  Show ship-to-address items, if any -->
+			<div class="row order_info_row" ng-if="nonBopisAny">
+				<div class="col-xs-12">
+					<div id="delivertext_id" class="DeliveryTxt"><strong>{{'ORD_DELTO'|translate}}</strong></div>
+					<div id="delivershipaddr_id">{{confirmData.shipAddr}}</div>
+				</div>
+			</div>
+
+			<div class="ProductsDetailWrap">
+				<product-cell ng-repeat="product in confirmData.cart.productsInCart | nonBopisItems track by $index" data="product" loc="orderitems" reviews="false" buy="false" class="animated fadeIn"></product-cell>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="ordertottext_id" class="OrderTxt">{{'ORD_ORDTOT'|translate}}</div>
+	<div class="OrderDetailCont">
+		<div class="row">
+			<div class="col-xs-9">
+				<span id="prodsubtottext_id" class="OrderContTxt">{{'ORD_PRODTOT'|translate}}</span>
+			</div>
+			<div class="col-xs-3">
+				<span id="prodsubtot_id" class="OrderContVal">{{confirmData.subtotal | currency:'$'}}</span>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-9">
+				<span id="prodshiptext_id" class="OrderContTxt">{{'ORD_SHIPPING'|translate}}</span>
+			</div>
+			<div class="col-xs-3">
+				<span id="prodship_id" class="OrderContVal clsBoldTxt clsCapitalize">{{confirmData.shippingFee | currency:'$'}}</span>
+			</div>
+		</div>
+
+		<div class="row" ng-if="confirmData.handling > 0">
+			<div class="col-xs-9">
+				<span id="prodoversizeshiptext_id" class="OrderContTxt">{{'CHK_OVERSIZE_SHIPPING_FEE'|translate}}:</span>
+			</div>
+			<div class="col-xs-3">
+				<span id="prodoversizeship_id" class="OrderContVal clsBoldTxt clsCapitalize">{{confirmData.handling | currency:'$'}}</span>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-9">
+				<span id="prodtaxtext_id" class="OrderContTxt">{{'ORD_TAX'|translate}}</span>
+			</div>
+			<div class="col-xs-3">
+				<span id="prodtax_id" class="OrderContVal">{{confirmData.tax | currency:'$'}}</span>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-9">
+				<span id="prodtotaltext_id" class="OrderContTxt">{{'ORD_TOTAL'|translate}}</span>
+			</div>
+			<div class="col-xs-3">
+				<span id="prodtotal_id" class="OrderContVal">{{confirmData.orderTotal | currency:'$'}}</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<button id="continuebutton_id" ng-click="continueShopping()" type="button" class="btn stpls_secondary btn_full_width btn_confirmation">
+			{{'ORD_CONTSHOP'|translate}}
+		</button>
+	</div>
+</div>
+<br>
+
+<div ng-show="confirmData">
+	<div id="mademistaketext_id" class="MadeMistake"><strong>{{'ORD_MISTAKE'|translate}}</strong></div>
+
+	<div id="canceltext_id">{{'ORD_CANCELINFO'|translate}}</div>
+
+	<button id="cancelorderbtn_id" type="button" class="btn stpls_secondary_half btn_full_width btn_confirmation btn_cancel_order">
+		<a href="tel:1-800-333-3330" onclick="s_objectID=&quot;tel:1-800-333-3330_1&quot;;return this.s_oc?this.s_oc(e):true">{{'ORD_CONTACTUS'|translate}}</a>
+	</button>
+</div>
+
+<!-- Directive to call HL API for order confirmation page-->
+<div id="hl_1" hook-logic-ad-carousel="setHookLogicAdCarouselParams()"  page-type="confirmOrder">
+</div>
+</div>

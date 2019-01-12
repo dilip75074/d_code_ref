@@ -1,0 +1,112 @@
+<style>
+.help-support-section{ padding: 50px 0;}
+.help-support-section .help-summary-box{ background: #00688f; 
+  background: -webkit-gradient(linear,left top,left bottom, color-stop(0, #005B7C), color-stop(1, #00688E));
+  background: -o-linear-gradient(bottom, #005B7C 0%, #00688E 100%);
+  background: -moz-linear-gradient(bottom, #005B7C 0%, #00688E 100%);
+  background: -webkit-linear-gradient(bottom, #005B7C 0%, #00688E 100%);
+  background: -ms-linear-gradient(bottom, #005B7C 0%, #00688E 100%);
+  background: linear-gradient(to bottom, #005B7C 0%, #00688E 100%);
+  float: left; padding: 30px 27px 27px; height: 181px; width: 240px;
+}
+.help-summary-box h2{ color: #fff; font-size: 52px;}
+.help-summary-box ul { margin: 40px 0 13px;}
+.help-summary-box li label{ color: #0095d3; float: left; font-family: "ProximaNova-Sbold"; font-size: 13px; text-transform: uppercase; width:70%; margin-top: 3px;}
+.help-summary-box li span{ color: #fff; float: left; font-family: "ProximaNova-Light"; font-size: 17px; width: 30%; vertical-align: middle;}
+.help-summary-box p{ color: #0095d3; font-family: "ProximaNova-Light"; font-size: 13px;}
+
+.help-support-menu{ float: left; margin-left: 22px; width: 295px;}
+/*.help-support-menu ul{ display: table-cell; table-layout: fixed;}*/
+.help-support-menu li{ border:1px solid #ccc; display: table; height: 107px; margin:0 0 20px 0; width: 293px;}
+
+.help-support-menu li a{ color: #fff; display: table-cell; font-size: 20px; font-family: "ProximaNova-Sbold"; padding-left: 27px; vertical-align: middle;}
+.help-support-menu li i{ background: url("app/img/support-menu-sprite.png") no-repeat 0 0; display: inline-block; margin-right: 26px; vertical-align: middle;}
+.help-support-menu li span{ display: inline-block; vertical-align: middle;}
+
+.help-support-menu li.documentation{ background: #269a74;}
+.help-support-menu li.documentation i{ height: 42px; width: 48px;}
+
+.help-support-menu li.support-request{ background: #32a2af;}
+.help-support-menu li.support-request i{ background-position: -60px 0; height: 45px; width: 44px;}
+.help-support-menu li.knowledge-base{ background: #68a643;}
+.help-support-menu li.knowledge-base i{ background-position:0 -60px; margin-left: 5px; height: 43px; width: 43px;}
+.help-support-menu li.communities{ background: #127269;}
+.help-support-menu li.communities i{background-position:-60px -60px; margin-left: 5px; height: 42px; width: 48px;}
+.help-support-menu li:last-child{ margin: 0;}
+
+.help-support-section .faq-wrapper{ padding:43px 25px 0 0; clear: both;}
+.faq-wrapper h3{ color: #999; font-family: "ProximaNova-Light"; font-size: 32px; margin-bottom: 9px;}
+.faq-wrapper .faq-help-category-column{ float: left; margin-right: 43px; width: 430px;}
+.faq-wrapper .faq-help-category-column:last-child{ margin-right: 0;}
+.faq-help-category-column .faq-help-category-content{ border-top: 1px solid #cdcdcd;}
+.faq-help-category-content h4{ color: #666; font-family: "ProximaNova-Sbold"; font-size: 20px; margin-top: 15px;}
+.faq-help-category-content ul{ margin-bottom: 32px;}
+.faq-help-category-content li{ margin: 14px 0 0 0;}
+.faq-help-category-content li a{ color: #006990; font-size: 18px;}
+</style>
+
+<div class="content-panel" ng-init="$parent.activeTab=5">
+	<div class="help-support-section clearfix"style=" padding: 50px 0; ">
+		<div class="help-summary-box">
+			<h2 translate="help.view.EVO_RACK"></h2>
+			<ul class="clearfix">
+				<li>
+					<label><plain translate="help.view.VERSION"></plain>:</label>
+					<span>0.0.1</span>
+				</li>
+				<li>
+					<label><plain translate="help.view.BUILD_NUM"></plain>:</label>
+					<span></span>
+				</li>
+			</ul>
+			<p translate="help.view.COPYRIGHT"></p>
+		</div>
+		<div class="help-support-menu">
+			<ul>
+				<li class="documentation"><a href=""><i></i><span translate="help.view.DOCUMENTATION"></span></a></li>
+				<li class="knowledge-base"><a href=""><i></i><span translate="help.view.KNOWLEDGE_BASE"></span></a></li>
+			</ul>
+		</div>
+		<div class="help-support-menu">
+			<ul>
+				<li class="support-request"><a href=""><i></i><span translate="help.view.SUPPORT_REQUEST"></span></a></li>
+				<li class="communities"><a href=""><i></i><span translate="help.view.COMMUNITIES"></span></a></li>
+			</ul>
+		</div>
+		<div class="faq-wrapper clearfix">
+			<h3 translate="help.view.FAQ"></h3>
+			<div class="faq-help-category-column">
+				<div class="faq-help-category-content">
+					<h4 translate="help.view.CAT_A"></h4>
+					<ul>
+						<li><a href="">How to lorem ipsum dolor ait amet, adipsicing consectetur elit sed libero turpis</a></li>
+						<li><a href="">How to etiam ut purus mattis mauris sodales aliquam duis arcu tortor, suscipit eget, imperdiet nec</a></li>
+						<li><a href="">How to donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas</a></li>
+					</ul>
+				</div>
+				<div class="faq-help-category-content">
+					<h4 translate="help.view.CAT_B"></h4>
+					<ul>
+						<li><a href="">How to donec interdum, diam sagittis ligula eget egestasmetus et hendrerit aliquet, dolor</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="faq-help-category-column">
+				<div class="faq-help-category-content">
+					<h4 translate="help.view.CAT_C"></h4>
+					<ul>
+						<li><a href="">How to etiam ut purus mattis mauris sodales aliquam duis arcu tortor, suscipit eget, imperdiet nec</a></li>
+						<li><a href="">How to donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas</a></li>
+					</ul>
+				</div>
+				<div class="faq-help-category-content">
+					<h4 translate="help.view.CAT_D"></h4>
+					<ul>
+						<li><a href="">How to lorem ipsum dolor ait amet, adipsicing consectetur elit sed libero turpis</a></li>
+						<li><a href="">How to donec interdum, ut purus mattis mauris sodales aliquam sed consectetur elit</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
